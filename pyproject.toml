@@ -1,0 +1,23 @@
+[project]
+name = "satori-docs"
+version = "1.0"
+description = "Satori CI - Automated Software Testing Platform Documents"
+authors = [
+    {name = "Satori CI", email = "info@satori-ci.com"},
+]
+dependencies = [
+    "textual>=0.27.0"
+]
+requires-python = ">=3.9"
+readme = "README.md"
+license = {file = "LICENSE"}
+
+[project.urls]
+Homepage = "https://www.satori-ci.com"
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[project.scripts]
+satori-docs = "satori_help.main:main"

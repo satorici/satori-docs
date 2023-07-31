@@ -1,0 +1,17 @@
+settings:
+    name: "Nmap: did any service changed?"
+    #cron: "*/10 * * * *"
+    #logOnFail: slack
+install:
+    assertReturnCode: 0
+    nmap:
+    - [ apt install -y nmap ]
+nmap:
+    assertReturnCode: 0
+    run:
+    - [ "nmap -n 1.1.1.1/24 -Pn -p 21,22,23,80,443 -sT -oG nmap" ]
+services:
+    assertStdoutSHA256:
+    - "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    running:
+    - [ "grep Ports nmap | sort -u" ]

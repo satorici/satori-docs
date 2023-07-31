@@ -1,0 +1,7 @@
+install:
+  inetutils-ping:
+  - [ apt install inetutils-ping ]
+ping:
+  assertStdoutContains: "4 packets received"
+  run:
+  - [ ping -c 4 $(HOST) ]
