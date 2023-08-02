@@ -1,4 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono|Source+Sans+Pro:300,400,600");
+:root {
+  --theme-color: hsl(76deg 60% 52%);
+  --code-background: #282828;
+  --code-color: #96a3a8;
+}
 * {
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch;
@@ -628,7 +633,7 @@ body {
 .markdown-section h3,
 .markdown-section h4,
 .markdown-section strong {
-  color: #657b83;
+  color: #87a0a9;
   font-weight: 600;
 }
 .markdown-section a {
@@ -692,9 +697,9 @@ body {
   color: #7f8c8d;
 }
 .markdown-section code {
-  background-color: #282828;
+  background-color: var(--code-background);
   border-radius: 2px;
-  color: #657b83;
+  color: var(--code-color);
   font-family: 'Roboto Mono', Monaco, courier, monospace;
   margin: 0 2px;
   padding: 3px 5px;
@@ -796,9 +801,9 @@ body {
 .markdown-section pre > code {
   -moz-osx-font-smoothing: initial;
   -webkit-font-smoothing: initial;
-  background-color: #282828;
+  background-color: var(--code-background);
   border-radius: 2px;
-  color: #96a3a8;
+  color: var(--code-color);
   display: block;
   font-family: 'Roboto Mono', Monaco, courier, monospace;
   font-size: 0.8rem;
