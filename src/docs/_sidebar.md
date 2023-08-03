@@ -1,5 +1,5 @@
 * Getting started
-  * [Quick start](Readme.md)
+  * [Quick start](README.md)
   * [Install](install.md)
   * [Configuration](config.md)
   * [Mode](mode.md)
