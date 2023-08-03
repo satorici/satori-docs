@@ -1,5 +1,4 @@
-# Intro
-## Install
+# Install
 
 ### Install Satori CLI
 

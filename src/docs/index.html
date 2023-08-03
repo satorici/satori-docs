@@ -9,15 +9,33 @@
   <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+  <nav>
+    <a href="https://satori-ci.com">satori-ci.com</a>
+  </nav>
   <div id="app"></div>
   <script>
     window.$docsify = {
-      name: '',
+      name: 'Satori CI Documentation',
       repo: '',
       loadSidebar: true,
+      mergeNavbar: true,//TODO: check this
+      auto2top: true,
+      autoHeader: true,
+      maxLevel   : 3,
+      subMaxLevel: 3,
+      search: {
+        depth      : 3,
+        noData     : 'No results!',
+        placeholder: 'Search...'
+      },
     }
   </script>
   <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="https://unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
 </body>
 </html>
