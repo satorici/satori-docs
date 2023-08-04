@@ -1,6 +1,6 @@
-from textual.app import App, ComposeResult  # , events
-from textual.widgets import Footer, Header, MarkdownViewer, Markdown
-
+from textual.app import App, ComposeResult
+from textual.widgets import Footer, Header, Markdown
+from textual.containers import Horizontal, VerticalScroll
 from pathlib import Path
 
 
@@ -15,6 +15,22 @@ class HelpGui(App):
         ("q", "quit", "Quit"),
     ]
     TITLE = "Satori Docs"
+    CSS = """
+        #scroll-sidebar{
+            width: 26;
+            padding: 0;
+            scrollbar-size: 1 1;
+        }
+        #sidebar{
+            width: 1fr;
+            padding: 1 0;
+        }
+        #scroll-content{
+            padding: 0;
+            scrollbar-size: 1 1;
+            width: 1fr
+        }
+    """
 
     def __init__(self, **kargs):
         super().__init__(**kargs)
@@ -23,9 +39,17 @@ class HelpGui(App):
         """Create child widgets for the app."""
         yield Header(show_clock=True)
         yield Footer()
-        yield Markdown2(id="markdown")
+        yield Horizontal(
+            VerticalScroll(CustomMarkdown("a", id="sidebar"), id="scroll-sidebar"),
+            VerticalScroll(CustomMarkdown(id="content"), id="scroll-content"),
+        )
 
     def on_mount(self) -> None:
+        path = DOCS_FOLDER + "_sidebar.md"
+        with open(path) as f:
+            readme = f.read()
+        toc = self.query_one("#sidebar", Markdown)
+        toc.update(readme)
         self.action_home()
 
     def action_toggle_dark(self) -> None:
@@ -33,24 +57,15 @@ class HelpGui(App):
         self.dark = not self.dark
 
     def action_home(self) -> None:
-        md: Markdown2 = self.query_one("#markdown")  # type: ignore
+        md = self.query_one("#content", CustomMarkdown)
         with open(DOCS_FOLDER + "README.md") as f:
             readme = f.read()
-        md.document.update(readme)
-
-    # def action_back(self) -> None:
-    #     md: Markdown2 = self.query_one("#markdown")  # type: ignore
-    #     md.back()
+        md.update(readme)
 
 
-class Markdown2(MarkdownViewer):
+class CustomMarkdown(Markdown):
     def _on_markdown_link_clicked(self, message: Markdown.LinkClicked) -> None:
         path = DOCS_FOLDER + message.href
         with open(path) as f:
             readme = f.read()
-        self.document.update(readme)
-
-    # def _on_key(self, event: events.Key) -> None:
-    #     self.table_of_contents.set_table_of_contents([(1, "str", "link")])
-    #     if event.key == "tab":
-    #         pass
+        self.app.query_one("#content", CustomMarkdown).update(readme)

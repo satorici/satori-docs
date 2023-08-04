@@ -4,14 +4,14 @@ from argparse import ArgumentParser
 import sys
 from functools import partial
 from http.server import HTTPServer, SimpleHTTPRequestHandler
-from.gui import HelpGui, DOCS_FOLDER
+from .gui import HelpGui, DOCS_FOLDER
+
 
 def main():
-
     baseparser = ArgumentParser(add_help=False)
     parser = ArgumentParser(parents=[baseparser], prog="satori-docs")
     parser.add_argument("-w", "--web", default=False, action="store_true")
-    
+
     args = parser.parse_args()
     try:
         if args.web:
@@ -25,3 +25,7 @@ def main():
     except KeyboardInterrupt:
         print("Interrupted by user")
         sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
