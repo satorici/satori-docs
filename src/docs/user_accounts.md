@@ -1,7 +1,7 @@
-# Intro
-## User Accounts
+# User Accounts
 
 All Satori CI users get the common benefits of the platform:
+
 - [Run](mode_run.md)
 - [CI](github_ci.md)
 - [Monitor](mode_monitor.md)

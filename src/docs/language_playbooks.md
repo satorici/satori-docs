@@ -1,13 +1,14 @@
-# [Intro](README.md)
-## [Language](language.md)
-### Playbooks
+# Language Playbooks
+
+## Playbooks
 
 Playbooks store tests that will [execute](language_execute.md) commands to [assert](language_asserts.md) its behavior with potentially different forms of [inputs](language_input.md). 
 
 Playbooks can have undefined variables that can be supplied as dynamic parameters. Consider the following playbook that uses the undefined VAR variable:
 
 echo.yml:
-```yml
+
+```yaml
 test:
     - [ echo $(VAR) ]
 ```
@@ -18,7 +19,7 @@ The previous playbook can be executed on the following way by Satori CLI:
 $ satori-cli run echo.yml --data="{'VAR':'Hello World'}"
 ```
 
-#### Public Playbooks
+### Public Playbooks
 
 At Satori we have defined multiple playbooks to execute some of the most common functionalities of devops and secdevops processes, such as:
 - Static source code analyzers
@@ -43,7 +44,7 @@ Here is a sample output:
 
 If you notice, some playbooks have predefined parameters that will be expected to be executed. Parameters try to be self descriptive, so a URL is expected whenever the parameter is called `URL`.
 
-#### Private Playbooks
+### Private Playbooks
 
 In case you need to check your previously executed playbooks, you may do so with the following command:
 `satori-cli playbook`
@@ -56,16 +57,17 @@ Or to delete them:
 
 `satori-cli playbook ID delete`
 
-#### Import Playbooks
+### Import Playbooks
 
 Playbooks can be imported by other playbooks. Local files or publicly available playbooks from Satori can be imported by other playbooks. They are executed on the order that they were introduced on the YAML file.
 
-##### Import of Local Playbooks
+#### Import of Local Playbooks
 
 The reserved word `import` can be used in playbooks to import local and public playbooks:
 
 PositiveHelloWorldTest.yml
-```yml
+
+```yaml
 PositiveHelloWorldTest:
     assertStdoutEquals: "Hello World"
     run:
@@ -73,6 +75,7 @@ PositiveHelloWorldTest:
 ```
 
 NegativeHelloWorldTest.yml
+
 ```yml
 NegativeHelloWorldTest:
     assertStdoutNotEquals: "Hello World"
@@ -86,7 +89,8 @@ NegativeHelloWorldTest:
 Then you can execute:
 
 HelloWorldTest.yml
-```yml
+
+```yaml
 import:
     - "PositiveHelloWorldTest.yml"
     - "NegativeHelloWorldTest.yml"
@@ -94,20 +98,22 @@ import:
 
 `satori-cli run HelloWorldTest.yml`
 
-##### Import of Public Playbooks
+#### Import of Public Playbooks
 
 Include on the root folder of your GitHub repository a file named `.satori.yml` with the following line to automatically verify for secrets in the code:
-```yml
+
+```yaml
 import:
     - "satori://code/trufflehog.yml"
 ```
 
-#### Run referencing Playbooks
+### Run referencing Playbooks
 
-##### Run Local Playbook
+#### Run Local Playbook
 
 If you create the following HelloWorld.yml playbook file:
-```
+
+```yaml
 test:
     assertStdoutEqual: "Hello World"
     run:
@@ -119,7 +125,7 @@ You can execute it with the following oneliner to check its output:
 
 The optional `--report` parameter will run satori synchronously and print its report. If you want to check the output instead, you would use `--output`
 
-##### Run Public Playbook
+#### Run Public Playbook
 
 If you want to use some of our public playbooks, you can do so referencing by referencing any of the public list (`satori-cli playbook --public`) 
 `satori-cli repo satorici/satori-cli run --playbook "satori://code/trufflehog.yml" --report`

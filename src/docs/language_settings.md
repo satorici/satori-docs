@@ -1,14 +1,14 @@
-# [Intro](README.md)
-## [Language](language.md)
-### Settings
+# Language Settings
+
+## Settings
 
 There are several settings that can be applied to your Satori CI playbooks to better define the information and conditions that need to be met by your test. They can only be defined for the root playbook, not within imported playbooks.
 
-#### Name, Description, Mitigation
+### Name, Description, Mitigation
 
 You can define your playbook name to easily identify it, along with a description and a mitigation for deeper follow ups:
 
-```yml
+```yaml
 settings:
     name: Find Secrets using Semgrep
     description: A free open-source static code analysis tool with stable support for C#, Go, Java, JavaScript, JSON, Python, PHP, Ruby, and Scala. It has experimental support for nineteen other languages, as well as a language agnostic mode.
@@ -25,18 +25,18 @@ semgrep:
 
 Having this information associated to the playbook's execution is valuable for context and follow up on the understanding of the situation and the potential following actions required in case it fails and a mitigation is required.
 
-#### Cron
+### Cron
 
 If you define a cron schedule for a playbook, it will execute with the defined frequency:
 
-```yml
+```yaml
 settings:
     cron: 5 8 * * 0 # Run this playbook every Sunday at 8:05am
 ```
 
 As another example, this playbook runs an nmap every 10 minutes and notifies in case the expected result output changes:
 
-```yml
+```yaml
 settings:
     name: "Nmap: did any service changed?"
     cron: "*/10 * * * *"
@@ -64,13 +64,13 @@ For more details on the `assertReturnCode` and `assertStdoutSHA256` please check
 
 For more details on the logOnFail, please check the [notifications](notifications.md) section.
 
-#### Rate
+### Rate
 
 Another terminology that may be easier than `cron` is the `rate` setting. You can define a time lapse such as `30 minutes` or 
 
 **Rate expression examples**:
 
-|Frequency	       | Expression       |
+|Frequency         | Expression       |
 |------------------|------------------|
 | Every 10 minutes | rate: 10 minutes |
 | Every hour       | rate: 1 hour     |
@@ -78,12 +78,12 @@ Another terminology that may be easier than `cron` is the `rate` setting. You ca
 
 For example:
 
-```yml
+```yaml
 settings:
     rate: 10 minutes
 ```
 
-#### Log
+### Log
 
 You can choose between the three different results and how you would like to be notified once the execution is complete. These are your options:
 
@@ -92,6 +92,7 @@ You can choose between the three different results and how you would like to be 
 - **logOnPass**: Be notified in case the result is Pass
 
 Which can be used with the following parameters:
+
 - **slack-** followed by the alias that you defined for the channel
 - **email-** followed by the alias that you defined for the channel
 - **telegram-** followed by the alias that you defined for the channel
@@ -102,25 +103,25 @@ The previous aliases can be defined on your [Team Settings](https://www.satori-c
 
 Different log types can be specified simultaneously to notify people on different ways:
 
-```yml
+```yaml
 settings:
     #log: slack-logs
     logOnFail: slack-fails
     #logOnPass: email-auditor
 ```
 
-#### Timeout
+### Timeout
 
 You can define a maximum amount of time in seconds that the execution should run for:
 
-```yml
+```yaml
 settings:
     timeout: 60 # the default value is 3600 seconds
 ```
 
 In case it reaches the timeout without completing, the instance will be shutdown killing current executions.
 
-#### Count
+### Count
 
 Multiple instances can be launched independently by the Satori Cloud infrastructure in parallel using the same playbook with the count parameters and the number of instances with each execution having its own report. Consider the following case of a playbook that performs a DDoS test:
 
@@ -148,11 +149,11 @@ host:
   - [ curl -s $(URL) -m 3 ]
 ```
 
-#### Report
+### Report
 
 Do you want to save yourself a click? Send a PDF version of our report with this setting:
 
-```yml
+```yaml
 settings:
     report: pdf
 ```

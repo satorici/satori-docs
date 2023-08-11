@@ -1,21 +1,20 @@
-# [Intro](README.md)
-## Github CI App
+# Github CI App
 
 Each time you push code to your Github repository, there's a risk that it could affect the security of your project. Furthermore, should your data ever be compromised, it's crucial to minimize the exposure of sensitive information. Two primary areas of concern are:
+
 - Secrets on your code
 - Vulnerable code from yourself or third parties
 
 Automatically test your GitHub repositories by installing our App:
 
-1. Go to https://github.com/apps/satorici
+1. Go to <https://github.com/apps/satorici>
 2. Click on Install
 3. Select the repositories where you will be installing it or select all repositories
 
-We care about your security, so we will only store your email, your repositories names, and the reports. Your code only lives within the virtual machines that are present during the execution. 
+We care about your security, so we will only store your email, your repositories names, and the reports. Your code only lives within the virtual machines that are present during the execution.
 
 Within the repositories that you will connect, you want to create a file named .satori.yml that may look like this:
 . This file will contain the tests that you will execute with every push. For example, you can choose to start by checking your code for secrets and from a static source code audit point of view:
-
 
 ```yml
 settings:

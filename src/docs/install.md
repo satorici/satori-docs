@@ -1,11 +1,12 @@
 # Install
 
-### Install Satori CLI
+## Install Satori CLI
 
 Three steps:
+
 1. Execute on your command line terminal:
 
-```console 
+```console
 pip3 install satori-ci
 ```
 
@@ -17,7 +18,7 @@ pip3 install satori-ci
 
 3. Replace the string YOUR_TOKEN with your clipboard on the next command: 
 
-```console 
+```console
 satori-cli config token YOUR_TOKEN`
 ```
 
@@ -37,7 +38,6 @@ We tested on demand. Now let's do it as part of your regular Github CI process.
 
 By default you can get notifications via email and Github issues. If you want to get notified in slack, discord or telegram go to https://www.satori-ci.com/user-settings/ to define their details. 
 
-
 If you want to detail in your playbook to be notified when the scans are ready, add the following to them:
 
 ```yml
@@ -46,6 +46,7 @@ settings:
 ```
 
 For example:
+
 ```yml
 settings:
     logOnFail: slack
@@ -57,4 +58,3 @@ test:
 ```
 
 and put it on a file named .satori.yml inside your repository.
-

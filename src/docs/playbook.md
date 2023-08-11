@@ -1,8 +1,7 @@
-# [Intro](README.md)
-## Playbook
+# Playbook
 
 
-### Private playbooks
+## Private playbooks
 
 Your previously executed playbooks can be retrieved with the command:
 
@@ -22,7 +21,7 @@ And eventually if you want to remove any of your playbooks, you can do so with:
 $ satori-cli playbook ID delete
 ```
 
-### Public playbooks
+## Public playbooks
 
 Public playbooks can be seen on the command line with:
 ```sh

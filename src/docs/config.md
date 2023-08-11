@@ -1,5 +1,4 @@
-# [Intro](README.md)
-## Config
+# Config
 
 The config command is used to store configuration settings for satori-cli. The most common use case for it is the following:
 

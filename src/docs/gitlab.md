@@ -1,5 +1,4 @@
-# [Intro](README.md)
-## Gitlab CI/CD:
+# Gitlab CI/CD
 
 First define the following action for your Gitlab CI/CD process, to evaluate your code:
 
@@ -18,6 +17,7 @@ SatoriCI:
 ```
 
 Define the `$SATORI_TOKEN` value in **Settings -> CI/CD -> Variables -> Expand -> Add variable**:
+
 - **Key**: `SATORI_TOKEN`
 - **Value**: `<token>`
 

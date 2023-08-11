@@ -1,6 +1,5 @@
-# [Intro](README.md)
-## [Language](language.md)
-### Inputs
+# Language Inputs
+## Inputs
 
 Inputs can be grouped under any non reserved word (settings, assert*)
 
@@ -25,12 +24,13 @@ echo:
   - [ echo $(input) World ]
 ```
 
-#### Dictionaries
+### Dictionaries
 
 Dictionary files can be splitted by certain characters (normally newlines) to be used as inputs for the tests.
 
 - Example:
-```
+
+```yaml
 install:
     - [ wget -O https://raw.githubusercontent.com/danielmiessler/SecLists/master/Fuzzing/big-list-of-naughty-strings.txt ]
 dict-input:
@@ -42,11 +42,11 @@ echo:
     - [ echo $(dict-input) ]
 ```
 
-#### Mutations
+### Mutations
 
 Input can be mutated. Mutations are always different than the original string. They are specified as follow:
 
-```yml
+```yaml
 input:
     - "Hello World"
       mutate_qty: 10

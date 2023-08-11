@@ -1,5 +1,4 @@
-# [Intro](README.md)
-## Reports
+# Reports
 
 Satori is a automated testing platform that runs playbooks to assert conditions. Once the execution of a playbook is completed, we deliver a report with either a *Pass* or *Fail* state. In case there were errors on the execution, the result will be flagged as *Unknown*.
 
@@ -11,7 +10,7 @@ You can take different actions on your reports with the satori-cli command and w
 - `satori-cli report id stop`: stops the execution of the report id
 - `satori-cli report id delete`: deletes the execution of the report id
 
-### List
+## List
 
 The following command will list your reports on the command line:
 
@@ -23,9 +22,9 @@ They are listed on the website as well:
 
 In both cases you can get the report ids of them if you would like to see the results
 
-### List Options
+###List Options
 
-#### Filter
+### Filter
 
 The filter parameter allows you to specify:
 
@@ -50,11 +49,11 @@ Then this parameters can be used to check specific reports that you are looking 
 
   `satori-cli report --filter="playbook=satori://code/trufflehog"`
 
-#### Page
+### Page
 
 If more than 10 results are found, then the first page will be shown. To show subsequent pages, please use the `-n X` command, where X represents the page that you would like to access. 
 
-### Report
+## Report
 
 They are available on command line:
 
@@ -66,19 +65,19 @@ They are also available on our website:
 
 - https://www.satori-ci.com/report_details/?n=ID
 
-### Output
+## Output
 
 When developing playbooks, it is important to be able to access the raw contents of an execution. This action will expose the output, errors, return codes and other information available for the execution:
 
 `satori-cli report id output`
 
-### Delta
+## Delta
 
 Between consecutive reports you can measure on the time that it took to execute and the test results to understand if bugs were fixed or introduced.
 
 TBC
 
-### Files
+## Files
 
 TBC
 

@@ -1,5 +1,4 @@
-# [Intro](README.md)
-## Run
+# Run
 
 Satori is an automatic testing platform that can run tests on demand with the `run` command. By default, it works asynchronous by launching the process in background and providing a report ID that can be followed up to get the results of the test. If synchronous execution is required, either because the execution may block future actions or because you want to get the report or the output that will be generated, that can 
 
@@ -8,9 +7,10 @@ Satori is an automatic testing platform that can run tests on demand with the `r
 --output: TBC
 
 There are some general guidances on Run:
+
 - Executions run asynchronous by default or synchronous with the parameter `--report` and `--output`
 
-### Non-Repo
+## Non-Repo
 **Local Playbook**
 Run allows you to run Satori Playbooks on demand. Whenever your playbook by itself is enough, you can simply run it with:
 
@@ -19,6 +19,7 @@ satori-cli run playbook.yml
 ```
 
 You would run it like this when:
+
 - you are developing a playbook and you are debugging its [report and output](report.md)
 - it is a playbook that needs to be run ocasionally. For example, you want to test something with `curl` that showed up as part of a pentest and you want to verify that is fixed on a certain system automatically.
 - that will become a [monitor](monitor.md) once the `cron` or `rate` is introduced in `settings`. 
@@ -31,6 +32,7 @@ satori-cli run ./
 ```
 
 You would run it like this when:
+
 - your code lives locally, before it is being pushed to a [repo](repo.md)
 - your code lives remotely, and you are executing it within a [GitHub Action or as part of a Jenkins process](action.md)
 
@@ -38,9 +40,9 @@ You would run it like this when:
 You can run on demand public playbooks. You can see a list of the publicly available playbooks with: `satori-cli playbook --public`
 
 And then you can execute them like this:
+
 ```sh
 satori-cli run --playbook satori://some/playbook.yml
 ```
 
 You would run it like this when there is a public playbook that already addresses your problem. 
-

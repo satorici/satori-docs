@@ -1,6 +1,6 @@
-# [Intro](README.md)
-## [Language](language.md)
-### Execution
+# Language executions
+
+## Execution
 
 The execution happens whenever your test contains an array. For example:
 

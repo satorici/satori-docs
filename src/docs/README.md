@@ -2,10 +2,10 @@
 
 Satori is an automated testing platform designed to assert the behavior of command executions. You can test software and systems using simple one-liners from our Playbook marketplace.
 
-
 ## [Install](install.md)
 
 Satori can execute tests [synchronously or asynchronously](asynchronous_and_synchronous_executions.md) in various ways:
+
 - With our [Github Application](https://github.com/apps/satorici) to analyze your [repositories](repo.md).
 - With our [CLI tool](https://github.com/satorici/satori-cli), which can be installed with `pip install satori-ci`.
 - Through our [Website](https://www.satori-ci.com).
@@ -29,6 +29,7 @@ It's worth noting that you can define a `cron` or `rate` for your playbooks. The
 ## [Notifications](notifications.md)
 
 We will notify you when and how you prefer. We support a variety of communication methods:
+
 - Slack
 - Discord
 - Email

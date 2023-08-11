@@ -1,6 +1,6 @@
-# [Intro](README.md)
-## [Language](language.md)
-### Asserts
+# Language Asserts
+
+## Asserts
 
 You can assert what will be the behavior of [executions](language_execution.md):
 

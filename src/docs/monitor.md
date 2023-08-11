@@ -1,9 +1,8 @@
-# [Intro](README.md)
-## Monitor
+# Monitor
 
 Monitors are playbooks that contain either a `cron` or a `rate` setting in the `settings` section. They are specially useful to assert that the behavior of live systems is working as expected with a certain frequency.
 
-### Rate
+## Rate
 
 This is the easiest way of speaking of frequency:
 
@@ -34,7 +33,7 @@ To install this playbook, you just need to run it:
 $ satori-cli run monitor.yml 
 ```
 
-### Cron
+## Cron
 
 As a more advanced example, consider the following example playbook that runs nmap every 10 minutes to identify any services that may have changed their port status. We check the SHA256 hash of what is the expected output of the port status:
 
@@ -64,7 +63,7 @@ To install this playbook, you just need to run it:
 $ satori-cli run nmap-cron.yml 
 ```
 
-### List your monitors
+## List your monitors
 
 Once you have added a monitor, you can list them with the `monitor` command like this:
 
@@ -90,6 +89,7 @@ $ satori-cli monitor ID run
 **Delete Monitor**
 
 Delete a monitor id that is on a stopped state:
+
 ```sh
 $ satori-cli monitor id delete
 ```

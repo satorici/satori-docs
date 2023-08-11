@@ -1,0 +1,14 @@
+settings:
+  logOnFail: slack
+
+install:
+- [ pip install ruff bandit pymarkdownlnt ]
+
+tests:
+  assertReturnCode: 0
+  ruff:
+  - [ ruff check src/satori_help ]
+  bandit:
+  - [ bandit -r src/satori_help ]
+  mdl:
+  - [ pymarkdown scan src/docs/ ]
