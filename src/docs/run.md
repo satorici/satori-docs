@@ -42,7 +42,7 @@ You can run on demand public playbooks. You can see a list of the publicly avail
 And then you can execute them like this:
 
 ```sh
-satori-cli run --playbook satori://some/playbook.yml
+satori-cli run satori://some/playbook.yml
 ```
 
 You would run it like this when there is a public playbook that already addresses your problem. 
