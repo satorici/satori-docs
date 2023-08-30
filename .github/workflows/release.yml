@@ -20,5 +20,7 @@ jobs:
         env:
           PDMUSER: ${{ secrets.PDMUSER }}
           PDMPASS: ${{ secrets.PDMPASS }}
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
-          pdm publish --username $PDMUSER --password $PDMPASS
+          #pdm publish --username $PDMUSER --password $PDMPASS
+          pdm publish --username __token__ --password $PYPI_TOKEN
