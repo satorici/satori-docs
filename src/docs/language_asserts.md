@@ -23,6 +23,7 @@ You can assert what will be the behavior of [executions](language_execution.md):
 | assertStderrRegex       | Regex          | Does the error matches your regexp?
 | assertStderrNotRegex    | Regex          | Does the error not match your regexp?
 | assertReturnCode        | Integer        | Is the return code equal to the Integer?
+| assertReturnCodeNot     | Integer        | Is the return code not equal to the Integer?
 | assertSoftwareExists    | Boolean        | Does the software being executed exists? True by default
 | assertDifferent         | Boolean        | Does the execution behaves differently when using different inputs?
 | assertKilled            | Boolean        | Did the software timed out?
@@ -344,6 +345,19 @@ test:
     assertReturnCode: 0
     run:
     - [ echo This program is executed correctly ]
+```
+---
+
+#### assertReturnCodeNot
+| Input   | Description                              |
+|---------|-------------------------------------------
+| Integer | Is the return code not equal to the Integer? |
+- <span style="color:green">Example Negative Pass Test</span>: the programs should not return the code 0, and it doesn't:
+```yml
+test:
+    assertReturnCodeNot: 0
+    run:
+    - [ return 2 ]
 ```
 ---
 
