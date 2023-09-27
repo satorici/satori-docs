@@ -1,10 +1,8 @@
-# Language Settings
-
-## Settings
+# Settings
 
 There are several settings that can be applied to your Satori CI playbooks to better define the information and conditions that need to be met by your test. They can only be defined for the root playbook, not within imported playbooks.
 
-### Name, Description, Mitigation
+## Name, Description and Mitigation Settings
 
 You can define your playbook name to easily identify it, along with a description and a mitigation for deeper follow ups:
 
@@ -25,7 +23,7 @@ semgrep:
 
 Having this information associated to the playbook's execution is valuable for context and follow up on the understanding of the situation and the potential following actions required in case it fails and a mitigation is required.
 
-### Cron
+## Cron Settings
 
 If you define a cron schedule for a playbook, it will execute with the defined frequency:
 
@@ -49,10 +47,10 @@ install:
     ips:
     - [ "echo -e \"host1\nhost2\" > domains"]
 nmap:
-    assertReturnCode:0 
+    assertReturnCode:0
     run:
     - [ "nmap -n -iL domains -Pn -p21,22,80,443,3000,3306,5432 -sT -oG nmap" ]
-    services: 
+    services:
         # The SHA256 hash "e3b0c4..." of the `running` execution represents the expected working state of the `ips`'s ports. In case it changes, it means that there are more open or closed ports than expected. This value needs to be verified first for the output before putting this on a production environment.
         assertStdoutSHA256:
         - "e3b0c44298fc1c149afbf4c7996fb92427ae41e4649b934ca495991b7852b855"
@@ -60,13 +58,13 @@ nmap:
         - [ "grep Ports nmap | sort -u" ]
 ```
 
-For more details on the `assertReturnCode` and `assertStdoutSHA256` please check the [asserts](language_asserts.md) section and for more details on the `nmap`, `ips` and `running` [executions](language_execution.md) please check the corresponding section.
+For more details on the `assertReturnCode` and `assertStdoutSHA256` please check the [asserts](asserts.md) section and for more details on the `nmap`, `ips` and `running` [executions](execution.md) please check the corresponding section.
 
-For more details on the logOnFail, please check the [notifications](notifications.md) section.
+For more details on the logOnFail, please check the [notifications](../notifications.md) section.
 
-### Rate
+## Rate Settings
 
-Another terminology that may be easier than `cron` is the `rate` setting. You can define a time lapse such as `30 minutes` or 
+Another terminology that may be easier than `cron` is the `rate` setting. You can define a time lapse such as `30 minutes` or
 
 **Rate expression examples**:
 
@@ -83,7 +81,7 @@ settings:
     rate: 10 minutes
 ```
 
-### Log
+## log, logOnFail, logOnPass Settings
 
 You can choose between the three different results and how you would like to be notified once the execution is complete. These are your options:
 
@@ -110,7 +108,7 @@ settings:
     #logOnPass: email-auditor
 ```
 
-### Timeout
+## Timeout Settings
 
 You can define a maximum amount of time in seconds that the execution should run for:
 
@@ -121,15 +119,15 @@ settings:
 
 In case it reaches the timeout without completing, the instance will be shutdown killing current executions.
 
-### Count
+## Count Settings
 
 Multiple instances can be launched independently by the Satori Cloud infrastructure in parallel using the same playbook with the count parameters and the number of instances with each execution having its own report. Consider the following case of a playbook that performs a DDoS test:
 
 ```yml
 settings:
   name: "Siege - Load testing web servers"
-  description: "Knowing how much traffic your web server can handle when under stress is essential for planning 
-                future grow of your website or application. By using tool called siege, you can run a load test 
+  description: "Knowing how much traffic your web server can handle when under stress is essential for planning
+                future grow of your website or application. By using tool called siege, you can run a load test
                 on your server and see how your system performs under different circumstances."
   mitigation: "Use an anti DDoS service such as CloudFlare to prevent network attacks"
   count: 100 # maximum amount of concurrent instances for a playbook
@@ -149,13 +147,26 @@ host:
   - [ curl -s $(URL) -m 3 ]
 ```
 
-### Report
+## Report Settings
 
-Do you want to save yourself a click? Send a PDF version of our report with this setting:
+You can define what will happen with your report
+
+### Report PDF
+
+Do you want to save yourself a click? Send a PDF version of our report with this setting when receiving the notification:
 
 ```yaml
 settings:
     report: pdf
+```
+
+### Report False
+
+If you don't want to store a copy of your report or output, define the report as False. You will still get the overall status of your report and test.
+
+```yml
+settings:
+  report: False
 ```
 
 If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)

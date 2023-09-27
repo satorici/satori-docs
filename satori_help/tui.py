@@ -64,5 +64,5 @@ class HelpApp(App):
             webbrowser.open(message.href)
             return
 
-        readme = (DOCS_FOLDER / message.href).read_text()
+        readme = (DOCS_FOLDER / message.href.removeprefix("/")).read_text()
         self.query_one("#content", Markdown).update(readme)

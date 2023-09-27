@@ -1,10 +1,12 @@
 # Intro
 
-Satori is an automated testing platform designed to assert the behavior of command executions. You can test software and systems using simple one-liners from our Playbook marketplace.
+Satori CI is an Automated Cloud Testing platform that asserts the behavior of command executions. Start testing software and systems using our simple one-liners from our Playbook marketplace.
 
-## [Install](install.md)
+Head to https://www.satori-ci.com, setup your account using GitHub and start testing with Satori.
 
-Satori can execute tests [synchronously or asynchronously](asynchronous_and_synchronous_executions.md) in various ways:
+## [Install](getting-started/install.md)
+
+Satori can execute tests synchronously or asynchronously in various ways:
 
 - With our [Github Application](https://github.com/apps/satorici) to analyze your [repositories](repo.md).
 - With our [CLI tool](https://github.com/satorici/satori-cli), which can be installed with `pip install satori-ci`.
@@ -12,19 +14,19 @@ Satori can execute tests [synchronously or asynchronously](asynchronous_and_sync
 - Within a [GitHub action](action.md) using the Satori CLI.
 - On-demand using [Satori CLI Run](run.md).
 
-## [Language](language.md)
+## [Language](playbooks/language.md)
 
-Our YAML-based [language](language.md) allows you to define [executions](language_execution.md), specify their [inputs](language_inputs.md), and [assert](language_asserts.md) whether their behavior aligns with your expectations. Tests are encapsulated within files called [playbooks](language_playbooks.md), with different [settings](language_settings.md) depending on the [execution mode](mode.md): [Run](run.md), [Github CI](github_ci.md), and/or [Monitor](monitor.md).
+Our YAML-based [language](playbooks/language.md) allows you to define [executions](playbooks/execution.md), specify their [inputs](playbooks/inputs.md), and [assert](playbooks/asserts.md) whether their behavior aligns with your expectations. Tests are encapsulated within files called playbooks, with different [settings](playbooks/settings.md) depending on the [execution mode](modes/modes.md): Run, CI, Scan, and/or Monitor.
 
 All our tests are stored in what we call playbooks. You can check our online playbooks in our [Github repository](https://github.com/satorici/playbooks/) for our public marketplace.
 
 ## [Repo](repo.md)
 
-We provide a comprehensive approach to testing code repositories on Github. Whether your repositories are attached to our CI process or not, you can perform tests on one or all of your repositories to assert their correctness (e.g., ensuring no passwords are stored, that software is being built and executed correctly, and that secure coding standards are followed). You can visualize the results using our [Web interface](https://www.satori-ci.com) or with our CLI (`satori-cli repo`).
+We provide a comprehensive approach to testing code repositories on Github. Whether your repositories are attached to our CI process or not, you can perform tests on one or all of your repositories to assert their correctness (e.g., ensuring no passwords are stored, that software is being built and executed correctly, and that secure coding standards are followed). You can visualize the results using our [Web interface](https://www.satori-ci.com) or with our CLI (`satori repo`).
 
-## [Monitor](monitor.md)
+## [Monitor](modes/monitor.md)
 
-It's worth noting that you can define a `cron` or `rate` for your playbooks. The frequency may be significant for different types of tests, especially when you want to monitor their status. You can later review the results using our [Web interface](https://www.satori-ci.com), the CLI (`satori-cli monitor`), or [Grafana](TBC).
+It's worth noting that you can define a `cron` or `rate` for your playbooks. The frequency may be significant for different types of tests, especially when you want to monitor their status. You can later review the results using our [Web interface](https://www.satori-ci.com), the CLI (`satori monitor`), or [Grafana](TBC).
 
 ## [Notifications](notifications.md)
 
@@ -40,7 +42,7 @@ You can define these notifications within your [Team settings](https://www.sator
 
 ## [Reports](reports.md)
 
-We process the [output](output.md) to produce [reports](reports.md) based on the [files](files.md) that were generated. We can also let you know about the difference between consecutive reports to identify whenever you are fixing -or introducing new- bugs. You can access your reports using on the [reports section of the Web](https://www.satori-ci.com/reports/) or with the CLI: `satori-cli report`.
+We process the *output* to produce *reports* based on the *files* that were generated. We can also let you know about the difference between consecutive reports to identify whenever you are fixing -or introducing new- bugs. You can access your reports using on the [reports section of the Web](https://www.satori-ci.com/reports/) or with the CLI: `satori report`.
 
 ## Support
 

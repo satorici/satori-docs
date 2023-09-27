@@ -1,20 +1,18 @@
-# Reports
+# Playbook results
 
 Satori is a automated testing platform that runs playbooks to assert conditions. Once the execution of a playbook is completed, we deliver a report with either a *Pass* or *Fail* state. In case there were errors on the execution, the result will be flagged as *Unknown*.
 
-You can take different actions on your reports with the satori-cli command and with the web interface. Here is a list of commands that can be run with the CLI tool:
+You can take different actions on your reports with the satori-cli command and with the web interface.
 
-- `satori-cli report [--filter] [-n]`: list all your reports
-- `satori-cli report id`: shows the report id
-- `satori-cli report id output`: shows the output associated to the report
-- `satori-cli report id stop`: stops the execution of the report id
-- `satori-cli report id delete`: deletes the execution of the report id
+## Reports
 
 ## List
 
 The following command will list your reports on the command line:
 
-`satori-cli report`
+```
+satori-cli report
+```
 
 They are listed on the website as well:
 
@@ -22,9 +20,9 @@ They are listed on the website as well:
 
 In both cases you can get the report ids of them if you would like to see the results
 
-###List Options
+### List Options
 
-### Filter
+#### Filter
 
 The filter parameter allows you to specify:
 
@@ -49,40 +47,31 @@ Then this parameters can be used to check specific reports that you are looking 
 
   `satori-cli report --filter="playbook=satori://code/trufflehog"`
 
-### Page
+#### Page
 
-If more than 10 results are found, then the first page will be shown. To show subsequent pages, please use the `-n X` command, where X represents the page that you would like to access. 
+If more than 10 results are found, then the first page will be shown. To show subsequent pages, please use the `-n X` command, where X represents the page that you would like to access.
+A summary of the execution data and the command output with the assertions applied. You can see it using the report ID in the CLI:
 
-## Report
+### Single report
 
-They are available on command line:
+To view a specific report you need to specify the report ID this way:
 
-```sh
-$ satori-cli report ID
+```
+satori report REPORT_ID
 ```
 
-They are also available on our website:
+## Command output
 
-- https://www.satori-ci.com/report_details/?n=ID
+The raw output of each command executed (stdout, stderr, testcase, errors).
 
-## Output
-
-When developing playbooks, it is important to be able to access the raw contents of an execution. This action will expose the output, errors, return codes and other information available for the execution:
-
-`satori-cli report id output`
-
-## Delta
-
-Between consecutive reports you can measure on the time that it took to execute and the test results to understand if bugs were fixed or introduced.
-
-TBC
+```
+satori report REPORT_ID output
+```
 
 ## Files
 
-TBC
+Optionally if your execution generates some files you can download them this way using the CLI.
 
-They can be seen with the following action:
-
-```sh
-$ satori-cli report ID files
+```
+satori report REPORT_ID files
 ```

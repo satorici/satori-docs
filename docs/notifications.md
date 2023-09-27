@@ -60,14 +60,12 @@ Once you've enabled Developer Mode, you can get your Channel ID as follows:
 
 If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)
 
-## Report
+## Notifications with PDF Report
 
-If you need to receive your report along with your notification, you can do so indicating it as part of your playbook settings:
+If you want to receive a copy of your report in PDF along with your notification, you can do so indicating it as part of your playbook settings:
 
 ```yml
 settings:
   onLogFail: slack
   report: pdf
 ```
-
-That will include the PDF version along with the Slack notification of what was the status of your report.

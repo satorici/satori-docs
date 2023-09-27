@@ -2,13 +2,17 @@
 
 Monitors are playbooks that contain either a `cron` or a `rate` setting in the `settings` section. They are specially useful to assert that the behavior of live systems is working as expected with a certain frequency.
 
-## Rate
+## Cron or Rate Settings
+
+Your playbooks can run with a predefined frequency
+
+### Rate Setting
 
 This is the easiest way of speaking of frequency:
 
 **Rate expression examples**:
 
-|Frequency             | Expression       |
+| Frequency        | Expression       |
 |------------------|------------------|
 | Every 10 minutes | rate: 10 minutes |
 | Every hour       | rate: 1 hour     |
@@ -30,10 +34,10 @@ test:
 To install this playbook, you just need to run it:
 
 ```sh
-$ satori-cli run monitor.yml 
+$ satori run monitor.yml
 ```
 
-## Cron
+### Cron Setting
 
 As a more advanced example, consider the following example playbook that runs nmap every 10 minutes to identify any services that may have changed their port status. We check the SHA256 hash of what is the expected output of the port status:
 
@@ -60,7 +64,7 @@ services:
 To install this playbook, you just need to run it:
 
 ```sh
-$ satori-cli run nmap-cron.yml 
+$ satori run nmap-cron.yml
 ```
 
 ## List your monitors
@@ -68,30 +72,47 @@ $ satori-cli run nmap-cron.yml
 Once you have added a monitor, you can list them with the `monitor` command like this:
 
 ```sh
-$ satori-cli monitor
+$ satori monitor
 ```
 
-**Stop Monitor**
-Now, besides listing your monitors, you may want to stop them. - 
+If you want to list which monitors demand your attention due to errors or fails:
 
 ```sh
-$ satori-cli monitor ID stop`: disable the monitor id
+satori monitor --pending
 ```
 
-**Start Monitor**
+### Stop Monitor
+Now, besides listing your monitors, you may want to stop them.
+
+```sh
+$ satori monitor MONITOR_ID stop
+```
+
+### Start Monitor
 
 You can start again your monitors when they are stopped by doing:
 
 ```sh
-$ satori-cli monitor ID run
+$ satori monitor MONITOR_ID run
 ```
 
-**Delete Monitor**
+### Delete a Monitor
 
 Delete a monitor id that is on a stopped state:
 
 ```sh
-$ satori-cli monitor id delete
+$ satori monitor MONITOR_ID delete
 ```
+
+### Delete your Monitor's reports
+
+Delete all the reports launched by a monitor:
+
+```sh
+$ satori monitor MONITOR_ID clean
+```
+
+
+---
 
 If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)

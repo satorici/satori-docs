@@ -1,8 +1,6 @@
-# Language Asserts
+# Asserts
 
-## Asserts
-
-You can assert what will be the behavior of [executions](language_execution.md):
+You can assert what will be the behavior of [executions](execution.md):
 
 | Assert                  | Value          | Description                                                            |
 |-------------------------|----------------|------------------------------------------------------------------------|
@@ -35,7 +33,7 @@ You can assert what will be the behavior of [executions](language_execution.md):
 Whenever you need to define addicional settings for an assert, you start by defining its value. For example, lets start by asserting that the output will be "Hello World"
 
 ```yml
-HelloWorld: 
+HelloWorld:
   assertStdoutContains: "Hello World"
   echo:
   - [ echo Hello World ]
@@ -44,8 +42,8 @@ HelloWorld:
 You would define its value first:
 
 ```yml
-HelloWorld: 
-  assertStdoutContains: 
+HelloWorld:
+  assertStdoutContains:
   - value: "Hello World"
   echo:
   - [ echo Hello World ]
@@ -56,8 +54,8 @@ HelloWorld:
 Now lets define its severity
 
 ```yml
-HelloWorld: 
-  assertStdoutContains: 
+HelloWorld:
+  assertStdoutContains:
   - value: "Hello World"
   - severity: 1
   echo:
@@ -70,10 +68,10 @@ Now you may need to add the weight of how many occurrence are affecting your ass
 
 ```yml
 Blocker:
-  assertStdoutContains: 
+  assertStdoutContains:
     - value: whatever
     - severity: 1
-    - count: 
+    - count:
        [ wc - l whatever ]
    run:
     - [ “echo Whatever\nwhatever >> whatever” ]
@@ -83,7 +81,7 @@ This technique is used for [testing AWS environments with ScoutSuite using the p
 
 ---
 
-#### assertStdout
+## assertStdout
 | Input   | Description                            |
 |---------|-----------------------------------------
 | Boolean | Asserts if an output has been produced |
@@ -106,8 +104,8 @@ test:
 ```
 
 ---
-  
-#### assertStdoutEquals
+
+## assertStdoutEquals
 | Input  | Description                                    |
 |--------|-------------------------------------------------
 | String | Asserts that the output is equal to the String |
@@ -130,7 +128,7 @@ test:
 
 ---
 
-#### assertStdoutNotEquals
+## assertStdoutNotEquals
 
 | Input | Description                          |
 |-------|---------------------------------------
@@ -146,10 +144,10 @@ test:
     run:
     - [ echo $(input) ]
 ```
-  
+
 ---
 
-#### assertStdoutContains
+## assertStdoutContains
 | Input | Description |
 |-------|--------------
 | String         | Does the output contains the String?
@@ -164,7 +162,7 @@ test:
 
 ---
 
-#### assertStdoutNotContains
+## assertStdoutNotContains
 | Input  | Description                             |
 |--------|------------------------------------------
 | String | Does the output not contain the String? |
@@ -178,16 +176,16 @@ test:
 
 ---
 
-#### assertStdoutSHA256
+## assertStdoutSHA256
 | Input          | Description                              |
 |----------------|-------------------------------------------
 | SHA256Checksum | Is the output equal to this SHA256 hash? |
 - <span style="color:green">Example Pass Test</span>: Network ports of , and it does:
 ```yml
-settings: 
+settings:
     name: "Nmap: did any service changed?"
 install:
-    assertReturnCode: 0 
+    assertReturnCode: 0
     nmap:
     - [ apt install -y nmap ]
 nmap:
@@ -203,7 +201,7 @@ nmap:
 
 ---
 
-#### assertStdoutRegex
+## assertStdoutRegex
 | Input | Description                          |
 |-------|---------------------------------------
 | Regex | Does the output matches your regexp? |
@@ -235,10 +233,10 @@ test:
 
 ---
 
-#### assertStderr
+## assertStderr
 | Input   | Description           |
 |---------|-----------------------|
-| Boolean | Are errors produced?  | 
+| Boolean | Are errors produced?  |
 - <span style="color:green">Example Pass Test</span>: the program output should not output errors, and it does not:
 ```yml
 test:
@@ -248,21 +246,21 @@ test:
 ```
 ---
 
-#### assertStderrEquals
+## assertStderrEquals
 | Input    | Description                       |
 |----------|------------------------------------
 | String\* | Is the error equal to the String? |
 
 ---
 
-#### assertStderrNotEquals
+## assertStderrNotEquals
 | Input  | Description                         |
 |--------|--------------------------------------
 | String | Is the error different than String? |
 
 ---
 
-#### assertStderrContains
+## assertStderrContains
 | Input  | Description                         |
 |--------|--------------------------------------
 | String | Does the error contains the String? |
@@ -277,7 +275,7 @@ test:
 ```
 ---
 
-#### assertStderrNotContains
+## assertStderrNotContains
 | Input  | Description                            |
 |--------|-----------------------------------------
 | String | Does the error not contain the String? |
@@ -307,7 +305,7 @@ test:
 ```
 ---
 
-#### assertStderrRegex
+## assertStderrRegex
 | Input | Description                         |
 |-------|--------------------------------------
 | Regex | Does the error matches your regexp? |
@@ -320,7 +318,7 @@ RunPythonScriptTest:
 ```
 ---
 
-#### assertStderrNotRegex
+## assertStderrNotRegex
 | Input | Description                           |
 |-------|----------------------------------------
 | Regex | Does the error not match your regexp? |
@@ -335,7 +333,7 @@ test:
 ```
 ---
 
-#### assertReturnCode
+## assertReturnCode
 | Input   | Description                              |
 |---------|-------------------------------------------
 | Integer | Is the return code equal to the Integer? |
@@ -348,11 +346,11 @@ test:
 ```
 ---
 
-#### assertReturnCodeNot
+## assertReturnCodeNot
 | Input   | Description                              |
 |---------|-------------------------------------------
 | Integer | Is the return code not equal to the Integer? |
-- <span style="color:green">Example Negative Pass Test</span>: the programs should not return the code 0, and it doesn't:
+- <span style="color:green">Example Positive Pass Test</span>: the programs should not return the code 0, and it doesn't:
 ```yml
 test:
     assertReturnCodeNot: 0
@@ -361,7 +359,7 @@ test:
 ```
 ---
 
-#### assertSoftwareExists
+## assertSoftwareExists
 | Input | Description |
 |-------|--------------
 | Boolean        | Does the software being executed exists? True by default
@@ -374,7 +372,7 @@ test:
 ```
 ---
 
-#### assertDifferent
+## assertDifferent
 | Input   | Description                                                         |
 |---------|----------------------------------------------------------------------
 | Boolean | Does the execution behaves differently when using different inputs? |
@@ -390,7 +388,7 @@ test:
 ```
 ---
 
-#### assertKilled
+## assertKilled
 | Input   | Description                 |
 |---------|------------------------------
 | Boolean | Did the software timed out? |

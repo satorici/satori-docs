@@ -1,10 +1,11 @@
-# Execution Mode
+# Execution modes
 
 Satori is a testing platform that can:
 
 - Run on demand,
 - on CI/CD,
-- and scheduled, also known as monitoring
+- scheduled, also known as monitoring
+- and across the commits of a repository, scan
 
 ## [Run](run.md)
 
@@ -16,8 +17,8 @@ You can run your playbooks on demand with Satori CLI whenver you want to:
 ## CI
 
 Whenever you want to test your software automatically, you can use Satori as part of a CI/CD pipeline with:
-- [Satori GitHub CI](github_ci.md)
-- [Satori CLI running on Github Actions or Jenkins](github_action.md)
+- [Satori GitHub CI](ci/github.md)
+- [Satori CLI running on Github Actions or Jenkins](ci/gitlab.md)
 
 Tests can range from static to dynamic testing of your code.
 
@@ -27,5 +28,9 @@ Certain tests must be executed with a certain frequency. For example:
 
 - Every 5 minutes when you are testing if your live systems are working as expected
 - Daily when you are monitoring the security of an AWS environment
+
+## [Scan](scan.md)
+
+If you want to run a playbook against each of all or some commits of a repository, this is the mode you are looking for.
 
 If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)
