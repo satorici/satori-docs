@@ -1,13 +1,15 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Footer, Header, Markdown
-from textual.containers import Horizontal, VerticalScroll
+import webbrowser
 from pathlib import Path
 
+from textual import on
+from textual.app import App, ComposeResult
+from textual.containers import Horizontal, VerticalScroll
+from textual.widgets import Footer, Header, Markdown
 
-DOCS_FOLDER = str(Path(__file__).parent) + "/../docs/"
+DOCS_FOLDER = Path(__file__).parent.parent / "docs"
 
 
-class HelpGui(App):
+class HelpApp(App):
     BINDINGS = [
         # ("b", "back", "Back"),
         ("h", "home", "Home"),
@@ -32,22 +34,17 @@ class HelpGui(App):
         }
     """
 
-    def __init__(self, **kargs):
-        super().__init__(**kargs)
-
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""
         yield Header(show_clock=True)
         yield Footer()
         yield Horizontal(
-            VerticalScroll(CustomMarkdown("a", id="sidebar"), id="scroll-sidebar"),
-            VerticalScroll(CustomMarkdown(id="content"), id="scroll-content"),
+            VerticalScroll(Markdown(id="sidebar"), id="scroll-sidebar"),
+            VerticalScroll(Markdown(id="content"), id="scroll-content"),
         )
 
     def on_mount(self) -> None:
-        path = DOCS_FOLDER + "_sidebar.md"
-        with open(path) as f:
-            readme = f.read()
+        readme = (DOCS_FOLDER / "_sidebar.md").read_text()
         toc = self.query_one("#sidebar", Markdown)
         toc.update(readme)
         self.action_home()
@@ -57,15 +54,15 @@ class HelpGui(App):
         self.dark = not self.dark
 
     def action_home(self) -> None:
-        md = self.query_one("#content", CustomMarkdown)
-        with open(DOCS_FOLDER + "README.md") as f:
-            readme = f.read()
+        md = self.query_one("#content", Markdown)
+        readme = (DOCS_FOLDER / "README.md").read_text()
         md.update(readme)
 
+    @on(Markdown.LinkClicked)
+    def link_clicked(self, message: Markdown.LinkClicked):
+        if message.href.startswith("http"):
+            webbrowser.open(message.href)
+            return
 
-class CustomMarkdown(Markdown):
-    def _on_markdown_link_clicked(self, message: Markdown.LinkClicked) -> None:
-        path = DOCS_FOLDER + message.href
-        with open(path) as f:
-            readme = f.read()
-        self.app.query_one("#content", CustomMarkdown).update(readme)
+        readme = (DOCS_FOLDER / message.href).read_text()
+        self.query_one("#content", Markdown).update(readme)
