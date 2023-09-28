@@ -6,13 +6,10 @@ Head to https://www.satori-ci.com, setup your account using GitHub and start tes
 
 ## [Install](getting-started/install.md)
 
-Satori can execute tests synchronously or asynchronously in various ways:
+Satori can execute tests synchronously or asynchronously:
 
-- With our [Github Application](https://github.com/apps/satorici) to analyze your [repositories](repo.md).
-- With our [CLI tool](https://github.com/satorici/satori-cli), which can be installed with `pip install satori-ci`.
-- Through our [Website](https://www.satori-ci.com).
-- Within a [GitHub action](action.md) using the Satori CLI.
-- On-demand using [Satori CLI Run](run.md).
+- Use our [CLI tool](https://github.com/satorici/satori-cli), which can be installed with `pip install satori-ci`.
+- Use our [Website](https://www.satori-ci.com).
 
 ## [Language](playbooks/language.md)
 
@@ -20,6 +17,13 @@ Our YAML-based [language](playbooks/language.md) allows you to define [execution
 
 All our tests are stored in what we call playbooks. You can check our online playbooks in our [Github repository](https://github.com/satorici/playbooks/) for our public marketplace.
 
+## CI
+You can use Satori with:
+- Our [Github Application](https://github.com/apps/satorici) to analyze your repositories
+- A [GitHub action](modes/ci/action.md) using the Satori CLI.
+- A [Gitlab](modes/ci/gitlab.md) using the Satori CLI.
+- A [Jenkins](modes/ci/jenkins.md) using the Satori CLI.
+  
 ## [Repo](repo.md)
 
 We provide a comprehensive approach to testing code repositories on Github. Whether your repositories are attached to our CI process or not, you can perform tests on one or all of your repositories to assert their correctness (e.g., ensuring no passwords are stored, that software is being built and executed correctly, and that secure coding standards are followed). You can visualize the results using our [Web interface](https://www.satori-ci.com) or with our CLI (`satori repo`).
