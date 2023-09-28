@@ -24,7 +24,7 @@ You can use Satori with:
 - A [Gitlab](modes/ci/gitlab.md) using the Satori CLI.
 - A [Jenkins](modes/ci/jenkins.md) using the Satori CLI.
   
-## [Repo](repo.md)
+## [Repositories](repo.md)
 
 We provide a comprehensive approach to testing code repositories on Github. Whether your repositories are attached to our CI process or not, you can perform tests on one or all of your repositories to assert their correctness (e.g., ensuring no passwords are stored, that software is being built and executed correctly, and that secure coding standards are followed). You can visualize the results using our [Web interface](https://www.satori-ci.com) or with our CLI (`satori repo`).
 
