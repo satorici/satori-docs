@@ -1,4 +1,4 @@
-# Repo
+# Repositories
 
 Satori provides automatic testing for repositories, in particular when they are connected to our [GitHub Application](https://github.com/apps/satorici). At the same time, we also have the possibility of testing repositories that are not connected to your CI, but that you have access to.
 
