@@ -82,6 +82,10 @@ The raw output of each command executed (stdout, stderr, testcase, errors).
 satori report REPORT_ID output
 ```
 
+Or on the web:
+
+![Web Report](img/execution-data_5.png)
+
 ## Files
 
 Optionally if your execution generates some files you can download them this way using the CLI.
