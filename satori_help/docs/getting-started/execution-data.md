@@ -20,7 +20,7 @@ They are listed on the website as well:
 
 - https://www.satori-ci.com/reports/
 
-![Web Reports](img/execution-data_1.png)
+![Web Reports](img/execution-data_2.png)
 
 In both cases you can get the report ids of them if you would like to see the results
 
@@ -45,13 +45,13 @@ Then this parameters can be used to check specific reports that you are looking 
 
 - Example: _"I want to see all failed reports for the repositories of the account satorici"_
 
-  ```
+```
 satori report --filter="repo=satorici/*,result=fail"
 ```
 
 - Example: _"I want to see a list of reports related to the playbook trufflehog"_
 
-  ```
+```
 satori report --filter="playbook=satori://code/trufflehog"
 ```
 
