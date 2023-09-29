@@ -34,7 +34,7 @@ settings:
   name: CI Tests for every push of my Repo
 
 import:
-- "satori://search/trufflehog.yml"
+- "satori://code/trufflehog.yml"
 
 tests:
   assertReturnCode: 0
