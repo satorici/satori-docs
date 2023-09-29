@@ -12,6 +12,8 @@ List all your repositories
 $ satori repo
 ```
 
+![satori repo](img/repo_1.png)
+
 ## Show
 
 Shows if the repository is connected to CI, if it has a valid playbook and the last results of its execution (including any potential errors that could have been found during the execution of the playbook)
