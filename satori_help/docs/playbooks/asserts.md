@@ -215,7 +215,7 @@ test:
 ```
 ---
 
-####  assertStdoutNotRegex
+##  assertStdoutNotRegex
 | Input | Description                            |
 |-------|-----------------------------------------
 | Regex | Does the output not match your regexp? |
@@ -290,7 +290,7 @@ test:
 ```
 ---
 
-####  assertStderrSHA256
+##  assertStderrSHA256
 | Input          | Description                             |
 |----------------|------------------------------------------
 | SHA256Checksum | Is the error equal to this SHA256 hash? |
