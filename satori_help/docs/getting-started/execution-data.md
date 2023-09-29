@@ -2,7 +2,7 @@
 
 Satori is a automated testing platform that runs playbooks to assert conditions. Once the execution of a playbook is completed, we deliver a report with either a *Pass* or *Fail* state. In case there were errors on the execution, the result will be flagged as *Unknown*.
 
-You can take different actions on your reports with the satori-cli command and with the web interface.
+You can take different actions on your reports with the `satori` command and with the web interface.
 
 ## Reports
 
@@ -11,12 +11,16 @@ You can take different actions on your reports with the satori-cli command and w
 The following command will list your reports on the command line:
 
 ```
-satori-cli report
+satori report
 ```
+
+![CLI Reports](img/execution-data_1.png)
 
 They are listed on the website as well:
 
 - https://www.satori-ci.com/reports/
+
+![Web Reports](img/execution-data_1.png)
 
 In both cases you can get the report ids of them if you would like to see the results
 
@@ -41,11 +45,15 @@ Then this parameters can be used to check specific reports that you are looking 
 
 - Example: _"I want to see all failed reports for the repositories of the account satorici"_
 
-  `satori-cli report --filter="repo=satorici/*,result=fail"`
+  ```
+satori report --filter="repo=satorici/*,result=fail"
+```
 
 - Example: _"I want to see a list of reports related to the playbook trufflehog"_
 
-  `satori-cli report --filter="playbook=satori://code/trufflehog"`
+  ```
+satori report --filter="playbook=satori://code/trufflehog"
+```
 
 #### Page
 
@@ -59,6 +67,12 @@ To view a specific report you need to specify the report ID this way:
 ```
 satori report REPORT_ID
 ```
+
+![CLI Report](img/execution-data_3.png)
+
+Or on the web:
+
+![Web Report](img/execution-data_4.png)
 
 ## Command output
 
