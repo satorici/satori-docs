@@ -1,5 +1,7 @@
 # Install
 
+We have a CLI tool that can be installed with `pip` and a [Github Application](../modes/ci/github.md) to connect with your CI process. Additionally, we can also be launched on [Gitlab](../modes/ci/gitlab.md), with [Jenkins](../modes/ci/jenkins.md) or [Github Actions](../modes/ci/action.md). Of course, our Web interface is also a key component at https://www.satori-ci.com to better visualize your results.
+
 ## Install Satori CLI
 
 Three steps:
