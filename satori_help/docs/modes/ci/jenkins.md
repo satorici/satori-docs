@@ -37,4 +37,4 @@ satori run ./ --sync
 
 5) Click on Build Now
 
-![Build Now](img/jenkins_4.png)
+![Build Now](img/jenkins_5.png)
