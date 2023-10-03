@@ -1,7 +1,6 @@
 * Getting started
   * [Installation](/getting-started/install.md)
   * [What are Satori Playbooks?](/getting-started/playbooks.md)
-  * [Making your playbooks work](/getting-started/running-playbooks.md)
   * [Examine the results](/getting-started/execution-data.md)
 * [Playbooks](/playbooks/language.md)
   * [Executions](/playbooks/execution.md)
