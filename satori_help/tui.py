@@ -6,7 +6,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal, VerticalScroll
 from textual.widgets import Footer, Header, Markdown
 
-DOCS_FOLDER = Path(__file__).parent.parent / "docs"
+DOCS_FOLDER = Path(__file__).parent / "docs"
 
 
 class HelpApp(App):
