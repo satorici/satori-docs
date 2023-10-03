@@ -7,8 +7,8 @@ install:
 tests:
   assertReturnCode: 0
   ruff:
-  - [ ruff check src/satori_help ]
+  - [ ruff check satori_help/ ]
   bandit:
-  - [ bandit -r src/satori_help ]
+  - [ bandit -r satori_help/ ]
   mdl:
-  - [ pymarkdown scan src/docs/ ]
+  - [ pymarkdown scan satori_help/docs/ ]
