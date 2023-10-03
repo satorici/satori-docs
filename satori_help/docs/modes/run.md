@@ -62,7 +62,7 @@ hello: main.c
 ```
 
 - **.satori.yml**:
-```
+```yml
 tests:
   assertReturnCode: 0
   install:
