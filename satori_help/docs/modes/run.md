@@ -109,6 +109,7 @@ test:
   - [ curl -si https://www.google.com --connect-timeout 2 ] 
 ```
 
+Example execution:
 ![Monitor Google](img/run_5.png)
 
 [Learn more about Monitors](monitor.md)
