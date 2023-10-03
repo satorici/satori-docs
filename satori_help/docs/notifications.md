@@ -61,7 +61,7 @@ If you need any help, please reach out to us on [Discord](https://discord.gg/F6U
 
 ## Datadog
 
-Satori CI supports Datadog Events as notification system. To use it you need an **API Key** and the host server id
+Satori CI supports Datadog Events as notification system. To use it you need an **API Key** and the **Site Region**
 
 To create an API Key for Satori you can go to **Organization Settings** -> **API Keys** -> **+New Key**
 
