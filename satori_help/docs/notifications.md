@@ -8,7 +8,7 @@ By default, you will get notified with emails unless you change your playbook se
 
 ```yml
 settings:
-  log|logOnFail|logOnPass: email|issue|slack|discord
+  log|logOnFail|logOnPass: email|issue|slack|discord|datadog
 
 [...]
 ```
@@ -57,8 +57,36 @@ Once you've enabled Developer Mode, you can get your Channel ID as follows:
 
  Remember, you can use this method to get IDs for text channels, voice channels, categories, and even individual messages.
 
-
 If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)
+
+## Datadog
+
+Satori CI supports Datadog Events as notification system. To use it you need an **API Key** and the host server id
+
+To create an API Key for Satori you can go to **Organization Settings** -> **API Keys** -> **+New Key**
+
+Configure the new key with satori-cli:
+
+```shell
+satori team {MyTeam} set_config datadog_api_key {MyApiKey}
+```
+
+Replace **{MyTeam}** with your team name and **{MyApiKey}** with your datadog api key
+
+By default the events are sent to the us1 site, you can configure another site to sent those notifications with:
+
+```shell
+satori team {MyTeam} set_config datadog_site {Region}
+```
+
+Replace **{Region}** with `us1`, `us3`, `us5`, `eu`, `ap1` or `us1-fed`
+
+Now you can enable datadog notifications with:
+
+```yml
+settings:
+  logOnFail: datadog
+```
 
 ## Notifications with PDF Report
 
