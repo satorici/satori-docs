@@ -61,27 +61,27 @@ If you need any help, please reach out to us on [Discord](https://discord.gg/F6U
 
 ## Datadog
 
-Satori CI supports Datadog Events as notification system. To use it you need an **API Key** and the **Site Region**
+Satori CI supports Datadog Events as notification system. To use it you need an **API Key** and the **Site Region** from Datadog.
 
-To create an API Key for Satori you can go to **Organization Settings** -> **API Keys** -> **+New Key**
+1. To create an API Key for Satori you can go to **Organization Settings** -> **API Keys** -> **+New Key**
 
-Configure the new key with satori-cli:
-
-```shell
-satori team {MyTeam} set_config datadog_api_key {MyApiKey}
-```
-
-Replace **{MyTeam}** with your team name and **{MyApiKey}** with your datadog api key
-
-By default the events are sent to the us1 site, you can configure another site to sent those notifications with:
+2. Configure the new key with Satori CLI:
 
 ```shell
-satori team {MyTeam} set_config datadog_site {Region}
+satori team {MySatoriTeam} set_config datadog_api_key {MyDatadogApiKey}
 ```
 
-Replace **{Region}** with `us1`, `us3`, `us5`, `eu`, `ap1` or `us1-fed`
+Replace **{MySatoriTeam}** with your Satori team name and **{MyDatadogApiKey}** with your Datadog API key
 
-Now you can enable datadog notifications with:
+3. Optional. By default the events are sent to the `us1` site region, you can configure another site region with:
+
+```shell
+satori team {MySatoriTeam} set_config datadog_site {MyDatadogRegion}
+```
+
+Replace **{MyDatadogRegion}** with `us1`, `us3`, `us5`, `eu`, `ap1` or `us1-fed`
+
+4. Now you can enable Satori Datadog notifications on your playbooks with:
 
 ```yml
 settings:
