@@ -10,6 +10,9 @@ If you target a repo, the optional parameter `-c` is used to indicate the percen
 satori scan githubUsername/repository
 ```
 
+![Scan Repo](img/scan_1.png)
+
+
 If you however want to be sure that everything was tested, you can target full scan coverage on all the repository commits, you would:
 
 ```
@@ -26,18 +29,7 @@ Since normally repositories have a lot of commits, you may want to check what is
 satori scan githubUsername/repository status`
 ```
 
-The scan status output will look like this:
-
-```sh
-% satori scan satorici/satori-cli status
-Satori CI 1.2.25 - Automated Software Testing Platform
-▢ status: Stopped
-▢ commits: 281
-▢ commits scanned: 273
-▢ commits being scanned: 0
-▢ commits scheduled to be scanned: 0
-▢ progress: None
-```
+![Scan Repo](img/scan_2.png)
 
 It shows the current status, the amount of commits found, which ones were scanned, which ones are being scanned and which ones are scheduled to be scanned. Since no scan is being run at the time of executing this command, there is no progress but in other cases it would be a percentage.
 
@@ -49,6 +41,8 @@ If at any point you want to cancel the scan, you use the `stop` action:
 satori scan githubUsername/repository stop
 ```
 
+![Stop Scan Repo](img/scan_3.png)
+
 ## Clean
 
 Warning: this commmand will delete all the reports associated to a certain repository:
@@ -57,4 +51,4 @@ Warning: this commmand will delete all the reports associated to a certain repos
 satori scan githubUsername/repository clean
 ```
 
-You may want to do this when analyzing your repo with a different playbook.
+![Clean Scan Repo](img/scan_4.png)
