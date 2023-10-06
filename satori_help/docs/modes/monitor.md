@@ -28,90 +28,68 @@ settings:
 test:
     assertStdoutContains: "Satori CI"
     curl:
-    - [ curl -s http://www.satori-ci.com ]
+    - [ curl -s https://www.satori-ci.com ]
 ```
 
 To install this playbook, you just need to run it:
 
 ```sh
-$ satori run monitor.yml
+satori run monitor.yml
 ```
 
-### Cron Setting
+![Run Monitor](img/monitor_1.png)
 
-As a more advanced example, consider the following example playbook that runs nmap every 10 minutes to identify any services that may have changed their port status. We check the SHA256 hash of what is the expected output of the port status:
-
-```yml
-settings:
-    name: "Nmap: did any service changed?"
-    cron: "*/10 * * * *"
-    logOnFail: slack
-install:
-    assertReturnCode: 0
-    nmap:
-    - [ apt install -y nmap ]
-nmap:
-    assertReturnCode: 0
-    run:
-    - [ "nmap -n 1.1.1.1/24 -Pn -p 21,22,23,80,443 -sT -oG nmap" ]
-services:
-    assertStdoutSHA256:
-    - "d34db33f93ac1c149afbf4c8996fb924271e41e4649b933ca495991b7852b854"
-    running:
-    - [ "grep Ports nmap | sort -u" ]
-```
-
-To install this playbook, you just need to run it:
-
-```sh
-$ satori run nmap-cron.yml
-```
 
 ## List your monitors
 
 Once you have added a monitor, you can list them with the `monitor` command like this:
 
 ```sh
-$ satori monitor
+satori monitor
 ```
 
-If you want to list which monitors demand your attention due to errors or fails:
+![List Monitor](img/monitor_2.png)
+
+In case you want to list those monitors that are on a fail state and have pending actions, you would use `--pending` the parameter:
+
 
 ```sh
 satori monitor --pending
 ```
 
-### Stop Monitor
+![Pending Actions on Monitor](img/monitor_3.png)
+
+### Stop and Start Monitors
+
 Now, besides listing your monitors, you may want to stop them.
 
 ```sh
-$ satori monitor MONITOR_ID stop
+satori monitor MONITOR_ID stop
 ```
 
-### Start Monitor
-
-You can start again your monitors when they are stopped by doing:
+Or restart them:
 
 ```sh
-$ satori monitor MONITOR_ID run
+satori monitor MONITOR_ID start
 ```
 
-### Delete a Monitor
+![Start and Stop a Monitor](img/monitor_4.png)
 
-Delete a monitor id that is on a stopped state:
+### Clean reports and Delete Monitors
+
+Delete all the reports launched by your monitor with `clean`:
 
 ```sh
-$ satori monitor MONITOR_ID delete
+satori monitor MONITOR_ID clean
 ```
 
-### Delete your Monitor's reports
-
-Delete all the reports launched by a monitor:
+And delete your monitor (that should be already on a stopped state) with `delete`:
 
 ```sh
-$ satori monitor MONITOR_ID clean
+satori monitor MONITOR_ID delete
 ```
 
+![Clean and Delete a Monitor](img/monitor_5.png)
 
 ---
 
