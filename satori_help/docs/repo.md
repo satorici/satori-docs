@@ -22,6 +22,8 @@ Shows if the repository is connected to CI, if it has a valid playbook and the l
 $ satori repo githubUsername/repository
 ```
 
+![repo](img/repo_2.png)
+
 ## Run
 
 ### Playbook on a Repository
