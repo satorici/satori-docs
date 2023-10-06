@@ -9,7 +9,7 @@ Whenever you want to check the status of your repositories, the Satori CLI repo 
 List all your repositories
 
 ```sh
-$ satori repo
+satori repo
 ```
 
 ![satori repo](img/repo_1.png)
@@ -19,7 +19,7 @@ $ satori repo
 Shows if the repository is connected to CI, if it has a valid playbook and the last results of its execution (including any potential errors that could have been found during the execution of the playbook)
 
 ```sh
-$ satori repo githubUsername/repository
+satori repo githubUsername/repository
 ```
 
 ![repo](img/repo_2.png)
@@ -31,7 +31,7 @@ $ satori repo githubUsername/repository
 Run the .satori.yml playbook on the latest commit of the repository:
 
 ```sh
-$ satori repo githubUsername/repository run
+satori repo githubUsername/repository run
 ```
 
 ![repo run](img/repo_3.png)
@@ -41,7 +41,7 @@ $ satori repo githubUsername/repository run
 If you want to run another playbook rather than looking for the `.satori.yml`, specify it with the `--playbook` parameter:
 
 ```sh
-$ satori repo githubUsername/repository run --playbook playbook.yml
+satori repo githubUsername/repository run --playbook playbook.yml
 ```
 
 #### Public Playbook
@@ -49,7 +49,7 @@ $ satori repo githubUsername/repository run --playbook playbook.yml
 Public playbooks can be listed with the command:
 
 ```sh
-$ satori playbook --public
+satori playbook --public
 ```
 
 Public predefined tests by Satori are hosted on https://github.com/satorici/playbooks/, which is replaced by the short URI form `satori://`.
@@ -57,7 +57,7 @@ Public predefined tests by Satori are hosted on https://github.com/satorici/play
 For example, you can run the public playbook satori://some/playbook.yml (equivalent to <https://github.com/satorici/playbooks/some/playbook.yml>):
 
 ```sh
-$ satori repo githubUsername/repository run --playbook satori://some/playbook.yml
+satori repo githubUsername/repository run --playbook satori://some/playbook.yml
 ```
 
 ![repo run playbook](img/repo_6.png)
@@ -67,7 +67,7 @@ $ satori repo githubUsername/repository run --playbook satori://some/playbook.ym
 Trufflehog is a piece of software that finds secrets stored in code. You can run the Trufflehog playbook to test all the repositories of a certain given account. For example:
 
 ```sh
-$ satori repo "githubUsername/*" run --playbook satori://code/trufflehog.yml
+satori repo "githubUsername/*" run --playbook satori://code/trufflehog.yml
 ```
 
 ![repo run github account playbook](img/repo_7.png)
@@ -77,7 +77,7 @@ $ satori repo "githubUsername/*" run --playbook satori://code/trufflehog.yml
 Run the repository's playbook on a specific commit (in whatever branch you want):
 
 ```sh
-$ satori repo https://github.com/satorici/satori-cli/commit/96a654f9efb8962b20a514eccbe827518ca725b2 run
+satori repo https://github.com/satorici/satori-cli/commit/96a654f9efb8962b20a514eccbe827518ca725b2 run
 ```
 
 ![commit run playbook](img/repo_8.png)
