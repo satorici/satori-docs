@@ -44,8 +44,16 @@ If you want to run another playbook rather than looking for the `.satori.yml`, s
 satori repo githubUsername/repository run --playbook playbook.yml
 ```
 
-<img src="img/repo_4-1.png" alt="repo run playbook report" width="auto" height="auto">
-<br/><img src="img/repo_4-2.png" alt="repo run playbook output" width="auto" height="auto">
+| ![repo run playbook report](img/repo_4-1.png) |
+|:--:|
+| *Show the report of running the python lint analyzer ruff on the repo satorici/satori-cli* |
+
+| ![repo run playbook output](img/repo_4-2.png) |
+|:--:|
+| *Show the output of running the python lint analyzer ruff on the repo satorici/satori-cli* |
+
+![repo run playbook report](img/repo_4-1.png)
+![repo run playbook output](img/repo_4-2.png)
 
 #### Public Playbook
 
