@@ -2,68 +2,78 @@
 
 By default you are a member of your own Private team. Here is where your repositories and monitors will be by default. Teams allow you to group monitors, repositories and people with their own notifications channels.
 
-## Create a Team
-
-This is how you would create the TeamName team:
-
-```sh
-$ satori team TeamName create
-```
+![Teams](img/team_1.png)
 
 #### List Members
 
 You can list the members of your teams like this:
 
 ```sh
-$ satori team Private members
+satori team Private members
 ```
+
+![Team Members](img/team_2.png)
 
 #### Add Member
 
 If the user's email is part of Satori CI, it will be automatically added. Otherwise, they will receive an invitation to join your team.
 
 ```sh
-$ satori team Private add member="member_email@yourdomain.com"
+satori team Private add --member="member_email@yourdomain.com"
 ```
 
-#### List Repos
+TBC: ![Add Team Members](img/team_3.png)
+
+## Create a Team
+
+This is how you would create the "Backend" team:
+
+```sh
+satori team Backend create
+```
+
+#### Add or delete repositories of your Team
+
+Include within your Backend team a certain repo:
+
+```sh
+satori team Backend add --repo="GithubAccount/Repository"
+```
+
+TBC: ![Team Members](img/team_4.png)
+
+You can also include all the repositories of a certain account with:
+
+```sh
+satori team Private add --repo="GithubAccount/*"
+```
+
+If you want to remove them, you would use the `delete` subcommand.
+
+#### List your team repositories
 
 You can list the repositories of your team like this:
 
 ```sh
-$ satori team Private repos
+satori team Private repos
 ```
 
-#### Add Repo
+#### Add or delete monitors of your team
 
-Include within your team a certain repo:
+Once you launched a monitor, you can associate it with a team:
 
 ```sh
-$ satori team Private add repo="GithubAccount/Repository"
+satori team Private add monitor="ID"
 ```
 
-#### Add Account Repositories
-
-Include within your team all the repositories of a certain account:
-
-```sh
-$ satori team Private add repo="GithubAccount/*"
-```
+If you want to remove them, you would use the `delete` subcommand.
 
 #### List Monitors
 
 You can list the monitors of your team like this:
 
 ```sh
-$ satori team Private monitors
-```
-
-#### Add Monitor
-
-Include within your team the monitor ID mABC123:
-
-```sh
-$ satori team Private add monitor="mABC123"
+satori team Private monitors
 ```
 
 ## Delete a Team
@@ -71,10 +81,10 @@ $ satori team Private add monitor="mABC123"
 You can remove a team like this:
 
 ```sh
-$ satori team TeamName delete
+satori team TeamName delete
 ```
 
-## Notifications
+## Team Notifications
 
 You can get the following notification configurations:
 

@@ -44,6 +44,9 @@ If you want to run another playbook rather than looking for the `.satori.yml`, s
 satori repo githubUsername/repository run --playbook playbook.yml
 ```
 
+![repo run playbook report](img/repo_4-1.png)
+![repo run playbook output](img/repo_4-2.png)
+
 #### Public Playbook
 
 Public playbooks can be listed with the command:
