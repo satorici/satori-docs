@@ -12,7 +12,7 @@ test:
   assertReturnCode: 0
 
   execute:
-    - [ echo Hello world]
+    - echo Hello world
 ```
 
 Can be run:
