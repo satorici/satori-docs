@@ -29,9 +29,9 @@ If you define $(variables) within your playbook that are not satisfied, they wil
 
 ```yml
 input:
-- "Hello"
+- - Hello
 test:
-- [ echo $(input) $(name) ]
+- echo ${{input}} ${{name}}
 ```
 
 ![Run with params](img/run_2.png)
