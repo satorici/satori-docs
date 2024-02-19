@@ -1,6 +1,6 @@
 # Settings
 
-There are several settings that can be applied to your Satori CI playbooks to better define the information and conditions that need to be met by your test. They can only be defined for the root playbook, not within imported playbooks.
+Your playbook will have metadata associated, it may have specific cpu and memory requirement, it may need to run at a certain rate or schedule, it may require a general timeout, to run concurrently several times or destroy the output upon execution. Here is how you can define it.
 
 ## Name, Description and Mitigation Settings
 
@@ -23,16 +23,38 @@ semgrep:
 
 Having this information associated to the playbook's execution is valuable for context and follow up on the understanding of the situation and the potential following actions required in case it fails and a mitigation is required.
 
+
+## Change the amount of CPUs and Memory
+
+You can set the CPU and Memory required for playbooks like this:
+
+```
+settings:
+  cpu: 16384
+  memory: 122880
+```
+
+These are the possible combinations you can use:
+
+| CPU value      | Memory value                                                                                                                                                                                              | Operating systems supported |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| 256 (.25 vCPU) | 512<br>1024<br>2048                                                                                                                                                                                       | Linux                       |
+| 512 (.5 vCPU)  | 1024<br>2048<br>3072<br>4096                                                                                                                                                                              | Linux                       |
+| 1024 (1 vCPU)  | 2048<br>3072<br>4096<br>5120<br>6144<br>7168<br>8192                                                                                                                                                      | Linux, Windows              |
+| 2048 (2 vCPU)  | 4096<br>5120<br>6144<br>7168<br>8192<br>9216<br>10240<br>11264<br>12288<br>13312<br>14336<br>15360<br>16384                                                                                               | Linux, Windows              |
+| 4096 (4 vCPU)  | 8192<br>9216<br>10240<br>11264<br>12288<br>13312<br>14336<br>15360<br>16384<br>17408<br>18432<br>19456<br>20480<br>21504<br>22528<br>23552<br>24576<br>25600<br>26624<br>27648<br>28672<br>29696<br>30720 | Linux, Windows              |
+| 8192 (8 vCPU)  | 16384<br>20480<br>24576<br>28672<br>32768<br>36864<br>40960<br>45056<br>49152<br>53248<br>57344<br>61440                                                                                                  | Linux                       |
+| 16384 (16vCPU) | 32768<br>40960<br>49152<br>57344<br>65536<br>73728<br>81920<br>90112<br>98304<br>106496<br>114688<br>122880                                                                                               | Linux                       |
 ## Cron Settings
 
-If you define a cron schedule for a playbook, it will execute with the defined frequency:
+Execute your playbook at a certain with the cron setting:
 
 ```yaml
 settings:
     cron: 5 8 * * 0 # Run this playbook every Sunday at 8:05am
 ```
 
-As another example, this playbook runs an nmap every 10 minutes and notifies in case the expected result output changes:
+As a more complex example, run an nmap every 10 minutes and notify in case the expected result output changes from the expected hash:
 
 ```yaml
 settings:
@@ -64,7 +86,7 @@ For more details on the logOnFail, please check the [notifications](../notificat
 
 ## Rate Settings
 
-Another terminology that may be easier than `cron` is the `rate` setting. You can define a time lapse such as `30 minutes` or
+A more verbal approach to cron can be set with a rate
 
 **Rate expression examples**:
 
@@ -81,7 +103,7 @@ settings:
     rate: 10 minutes
 ```
 
-## log, logOnFail, logOnPass Settings
+## Alert your result every time a execution runs or when the expected result is different than the one expected
 
 You can choose between the three different results and how you would like to be notified once the execution is complete. These are your options:
 
@@ -149,11 +171,11 @@ host:
 
 ## Report Settings
 
-You can define what will happen with your report
+You may not want to store any data on Satori servers after the execution has been completed. You can set that by defining the report as False. On the other hand, if you want to receive a copy of your report, you can specifiy in what format you would like to receive it. If you don't define anything for your report, you will still be able it to see it online with the CLI or the Web. 
 
 ### Report PDF
 
-Do you want to save yourself a click? Send a PDF version of our report with this setting when receiving the notification:
+Send yourself a PDF version of our report with this setting when receiving along with the notification, we can save you a click:
 
 ```yaml
 settings:
@@ -162,7 +184,7 @@ settings:
 
 ### Report False
 
-If you don't want to store a copy of your report or output, define the report as False. You will still get the overall status of your report and test.
+If you don't want to store a copy of your report or output, define the report as False. You will still get the overall status of your report and test after completition but the outputs will not be stored.
 
 ```yml
 settings:
