@@ -26,7 +26,7 @@ You can see how the results of your playbook affect different commits and forks 
 Since normally repositories have a lot of commits, you may want to check what is the execution status with this command:
 
 ```
-satori scan githubUsername/repository status`
+satori scan githubUsername/repository status
 ```
 
 ![Scan Repo](img/scan_2.png)
