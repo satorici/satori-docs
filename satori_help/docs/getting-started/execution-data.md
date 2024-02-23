@@ -11,7 +11,7 @@ You can take different actions on your reports with the `satori` command and wit
 The following command will list your reports on the command line:
 
 ```
-satori report
+satori reports
 ```
 
 ![CLI Reports](img/execution-data_1.png)
