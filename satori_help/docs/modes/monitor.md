@@ -45,7 +45,7 @@ satori run monitor.yml
 Once you have added a monitor, you can list them with the `monitor` command like this:
 
 ```sh
-satori monitor
+satori monitors
 ```
 
 ![List Monitor](img/monitor_2.png)
