@@ -9,7 +9,7 @@ Whenever you want to check the status of your repositories, the Satori CLI repo 
 List all your repositories
 
 ```sh
-satori repo
+satori repos
 ```
 
 ![satori repo](img/repo_1.png)
