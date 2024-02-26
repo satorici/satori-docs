@@ -28,7 +28,7 @@ settings:
 test:
     assertStdoutContains: "Satori CI"
     curl:
-    - [ curl -s https://www.satori-ci.com ]
+    - curl -s https://www.satori-ci.com
 ```
 
 To install this playbook, you just need to run it:
@@ -52,9 +52,8 @@ satori monitors
 
 In case you want to list those monitors that are on a fail state and have pending actions, you would use `--pending` the parameter:
 
-
 ```sh
-satori monitor --pending
+satori monitors --pending
 ```
 
 ![Pending Actions on Monitor](img/monitor_3.png)
