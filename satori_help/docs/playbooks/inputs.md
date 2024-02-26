@@ -20,13 +20,14 @@ You can also define different nested values. The following example will show a P
 ```yml
 input:
   positive:
-  - "Hello"
+  - - "Hello"
   negative:
-  - "Bye"
+  - - "Bye"
+
 echo:
   assertStdoutEqual: "Hello World"
   input:
-    - [ echo $(input) World ]
+  - echo -n $(input) World
 ```
 
 ## Dictionaries
