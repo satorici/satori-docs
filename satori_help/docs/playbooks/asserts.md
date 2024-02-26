@@ -28,56 +28,26 @@ You can assert what will be the behavior of [executions](execution.md):
 
 ---
 
-### Parametrized Asserts
+### General usage
 
-Whenever you need to define addicional settings for an assert, you start by defining its value. For example, lets start by asserting that the output will be "Hello World"
+Asserts are defined within tests:
 
 ```yml
 HelloWorld:
   assertStdoutContains: "Hello World"
   echo:
-  - [ echo Hello World ]
+  - echo Hello World
 ```
 
-You would define its value first:
+And they can have a severity associated, specially useful when working with ticketing systems:
 
 ```yml
 HelloWorld:
-  assertStdoutContains:
-  - value: "Hello World"
+  assertStdoutContains: "Hello World"
+  setSeverity: 1
   echo:
-  - [ echo Hello World ]
+  - echo Hello World
 ```
-
-#### Severity
-
-Now lets define its severity
-
-```yml
-HelloWorld:
-  assertStdoutContains:
-  - value: "Hello World"
-  - severity: 1
-  echo:
-  - [ echo Hello World ]
-```
-
-#### Quantity
-
-Now you may need to add the weight of how many occurrence are affecting your assertion. The amount of blockers within a report should depic the priority of the test:
-
-```yml
-Blocker:
-  assertStdoutContains:
-    - value: whatever
-    - severity: 1
-    - count:
-       [ wc - l whatever ]
-   run:
-    - [ “echo Whatever\nwhatever >> whatever” ]
-```
-
-This technique is used for [testing AWS environments with ScoutSuite using the playbook satori://code/scoutsuite.yml](https://github.com/satorici/playbooks/blob/main/aws/scoutsuite.yml)
 
 ---
 
@@ -91,7 +61,7 @@ This technique is used for [testing AWS environments with ScoutSuite using the p
 test:
     assertStdout: True
     run:
-    - [ echo Hello World ]
+    - echo Hello World
 ```
 
 
@@ -100,7 +70,7 @@ test:
 test:
     assertStdout: True
     run:
-    - [ ./broken_executable ]
+    - ./broken_executable
 ```
 
 ---
@@ -115,7 +85,7 @@ test:
 test:
     assertStdoutEquals: "Hello World"
     run:
-    - [ echo Hello World ]
+    - echo Hello World
 ```
 
 - <span style="color:red">Example Fail Test</span>: the program should only output "Hello World", but it doesn't:
@@ -123,7 +93,7 @@ test:
 test:
     assertStdoutEquals: "Hello World"
     run:
-    - [ echo 'hello world' ]
+    - echo 'hello world'
 ```
 
 ---
@@ -139,10 +109,11 @@ test:
 test:
     assertStdoutNotEquals: "Hello World"
     input:
-      - "Hello World"
-      mutate_qty: 1
+    - - value: "Hello World"
+        mutate: radamsa
+        mutate_qty: 1
     run:
-    - [ echo $(input) ]
+    - echo ${{input}}
 ```
 
 ---
@@ -157,7 +128,7 @@ test:
 test:
     assertStdoutContains: "Hello World"
     run:
-    - [ echo Hello World 2023 ]
+    - echo Hello World 2023
 ```
 
 ---
@@ -171,7 +142,7 @@ test:
 test:
     assertStdoutNotContains: "Error"
     run:
-    - [ echo Hello World ]
+    - echo Hello World
 ```
 
 ---
@@ -184,19 +155,22 @@ test:
 ```yml
 settings:
     name: "Nmap: did any service changed?"
+
 install:
     assertReturnCode: 0
+    updates:
+    - apt update
     nmap:
-    - [ apt install -y nmap ]
+    - apt install -y nmap
 nmap:
     assertReturnCode: 0
     run:
-    - [ "nmap -n www.example.com -Pn -p21,22,80,443,3000,3306,5432 -sT -oG nmap" ]
+    - nmap -n www.example.com -Pn -p21,22,80,443,3000,3306,5432 -sT -oG nmap
     services:
       assertStdoutSHA256:
       - "e3b0c44298fc1c142afbf4c8996fb92427ac41e4649b934ca49599ab7852b855"
       running:
-      - [ "grep Ports nmap | sort -u" ]
+      - "grep Ports nmap | sort -u" # the assert will calculate the hash value of this output and compare if there are differences
 ```
 
 ---
@@ -211,7 +185,7 @@ nmap:
 test:
     assertStdoutRegex: "Hello .*"
     run:
-    - [ echo Hello World ]
+    - echo Hello World
 ```
 ---
 
@@ -225,10 +199,11 @@ test:
 test:
     assertStdoutNotRegex: "*Hello World*"
     input:
-    - "Hello World"
-      mutate_qty: 1
+    - - value: "Hello World"
+        mutate: radamsa
+        mutate_qty: 1
     run:
-    - [ echo Hello $(input) ]
+    - echo Hello ${{input}}
 ```
 
 ---
@@ -240,9 +215,9 @@ test:
 - <span style="color:green">Example Pass Test</span>: the program output should not output errors, and it does not:
 ```yml
 test:
-    assertStderr: True
+    assertStderr: False
     run:
-    - [ echo Hello World ]
+    - echo Hello World
 ```
 ---
 
@@ -250,14 +225,26 @@ test:
 | Input    | Description                       |
 |----------|------------------------------------
 | String\* | Is the error equal to the String? |
-
+- <span style="color:pass">Example Pass Test</span>: the programs should error requesting the value of the x parameter:
+```yml
+test:
+    assertStderr: "The value of the parameter -x is required for the program"
+    run:
+    - program -x
+```
 ---
 
 ## assertStderrNotEquals
 | Input  | Description                         |
 |--------|--------------------------------------
 | String | Is the error different than String? |
-
+- <span style="color:pass">Example Pass Test</span>: the programs should not error requesting the value of the x parameter when is defined:
+```yml
+test:
+    assertStderrNotEquals: "The value of the parameter -x is required for the program"
+    run:
+    - program -x whatever
+```
 ---
 
 ## assertStderrContains
@@ -267,11 +254,11 @@ test:
 - <span style="color:pass">Example Pass Test</span>: the programs errors should contain the string Traceback, and it does:
 ```yml
 install:
-   - [ "echo import nonexistent > test.py "]
+   - "echo import nonexistent > test.py"
 test:
     assertStderrContains: "Traceback"
     run:
-    - [ python3 test.py ]
+    - python3 test.py
 ```
 ---
 
@@ -282,11 +269,11 @@ test:
 - <span style="color:fail">Example Fail Test</span>: the programs errors should not contain the string Traceback, but it does:
 ```yml
 install:
-   - [ "echo import nonexistent > test.py "]
+   - "echo import nonexistent > test.py"
 test:
     assertStderrNotContains: "Traceback"
     run:
-    - [ python3 test.py ]
+    - python3 test.py
 ```
 ---
 
@@ -297,11 +284,11 @@ test:
 - <span style="color:fail">Example Fail Test</span>: the programs errors should not contain the string Traceback, but it does:
 ```yml
 install:
-   - [ "echo import nonexistent > test.py "]
+   - "echo import nonexistent > test.py "
 test:
     assertStderrSHA256: "69827a4c85154b891cae9c35d99887375d815ec676bb7ce86e1f7601f6fec3ad"
     run:
-    - [ python3 test.py ]
+    - python3 test.py
 ```
 ---
 
@@ -314,7 +301,7 @@ test:
 RunPythonScriptTest:
     assertStderrRegex: ".*KeyError: 'unexpected_key'.*"
     run:
-    - [ python3, my_script.py ]
+    - python3 my_script.py
 ```
 ---
 
@@ -325,11 +312,11 @@ RunPythonScriptTest:
 - <span style="color:green">Example Pass Test</span>: the programs errors should  not throw a Traceback, and it doesn't:
 ```yml
 install:
-   - [ "echo import os > test.py "]
+   - "echo import os > test.py"
 test:
     assertStderrNotRegex: "*Traceback*"
     run:
-    - [ python3 test.py ]
+    - python3 test.py
 ```
 ---
 
@@ -342,7 +329,7 @@ test:
 test:
     assertReturnCode: 0
     run:
-    - [ echo This program is executed correctly ]
+    - echo This program is executed correctly
 ```
 ---
 
@@ -355,7 +342,7 @@ test:
 test:
     assertReturnCodeNot: 0
     run:
-    - [ return 2 ]
+    - return 2
 ```
 ---
 
@@ -368,7 +355,7 @@ test:
 test:
     assertSoftwareExists: True # by default
     run:
-    - [ ./your_program ]
+    - ./your_program
 ```
 ---
 
@@ -379,12 +366,13 @@ test:
 - <span style="color:fail">Example Fail Test</span>: the production and staging environment should look the same, and it does not:
 ```yml
 API:
-    - [ "www.example.com" ]
-    - [ "staging.example.com" ]
+- - "www.example.com"
+  - "staging.example.com"
+
 test:
     assertDifferent: False
     run:
-    - [ curl $API ]
+    - curl $API
 ```
 ---
 
@@ -396,10 +384,11 @@ test:
 ```yml
 settings:
     software_timeout: 10
+
 test:
     assertKilled: False
     run:
-    - [ sleep 20 ]
+    - sleep 20
 ```
 ---
 
