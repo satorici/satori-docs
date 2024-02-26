@@ -30,20 +30,23 @@ echo:
   - echo -n $(input) World
 ```
 
+For example:
+
+![use positive and negative values](img/inputs_2.png)
+
 ## Dictionaries
 
 Dictionary files can be splitted by certain characters (normally newlines) to be used as inputs for the tests. For example:
 
 ```yml
-install:
-    - [ wget -O https://raw.githubusercontent.com/danielmiessler/SecLists/master/Fuzzing/big-list-of-naughty-strings.txt ]
 dict-input:
-    - file: big-list-of-naughty-strings.txt
-      split: \n
+- - file: dict.txt
+    split: \n
+
 echo:
   assertReturnCode: 0
   run:
-  - [ echo $(dict-input) ]
+  - echo ${{dict-input}}
 ```
 
 ## Mutations
@@ -52,14 +55,24 @@ Input can be mutated. Mutations are always different than the original string. T
 
 ```yml
 input:
-  - "Hello World"
-    mutate_qty: 10
+- - value: "Hello World"
+    mutate: radamsa
+    mutate_qty: 5
+
+  - value: "Hello World"
+    mutate: zzuf
+    mutate_qty: 5
+
 echo:
   assertStdoutNotEqual: "Hello World"
   input:
-  - [ echo $(input) ]
+  - echo -n ${{input}}
 ```
 
-The previous playbook will generate 10 different mutations of the string "Hello World" that will be echoed to the standard output.
+For example:
+
+![mutate your inputs](img/inputs_4.png)
+
+The previous playbook will generate 10 different mutations of the string "Hello World" using different fuzzers that will be echoed to the standard output and validated that they are not equal to "Hello World".
 
 If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)
