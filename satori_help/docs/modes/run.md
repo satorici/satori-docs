@@ -66,13 +66,13 @@ hello: main.c
 tests:
   assertReturnCode: 0
   install:
-  - [ apt install -qq -y make gcc ]
+  - apt install -qq -y make gcc
   build:
-  - [ make ]
+  - make
   run:
     assertStdoutContains: "Hello World"
     hello:
-    - [ ./hello ]
+    - ./hello
 ```
 
 ![Run with the files in the Local Directory](img/run_3.png)
@@ -103,10 +103,10 @@ settings:
 
 test:
   assertStdoutContains:
-  - HTTP/2 200
-  - <title>Google</title>
+  - - HTTP/2 200
+    - <title>Google</title>
   google:
-  - [ curl -si https://www.google.com --connect-timeout 2 ] 
+  - curl -si https://www.google.com --connect-timeout 2
 ```
 
 Example execution:
