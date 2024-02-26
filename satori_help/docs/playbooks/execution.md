@@ -28,6 +28,8 @@ echo_salute:
   - echo '${{salute}} World'
 ```
 
+For example:
+
 ![inputs on executions](img/execution_1.png)
 
 The previous example will assert that the output will be Hello World, and it will show one Pass and one Fail due to the possible combinations. For more information on the assert please visit the [asserts](asserts.md) section. 
