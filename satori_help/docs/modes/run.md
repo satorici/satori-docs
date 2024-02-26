@@ -100,11 +100,12 @@ When adding the rate or schedule setting, you will be running a playbook with a 
 settings:
   name: Google web server is working OK and shows its title within 2 seconds
   rate: 5 minutes
+  image: dwdraju/alpine-curl-jq
 
 test:
   assertStdoutContains:
-  - - HTTP/2 200
-    - <title>Google</title>
+  - "HTTP/2 200"
+  - "<title>Google</title>"
   google:
   - curl -si https://www.google.com --connect-timeout 2
 ```
