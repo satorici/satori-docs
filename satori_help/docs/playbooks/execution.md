@@ -1,17 +1,17 @@
 # Executions
 
-The execution happens whenever your test contains an array. For example:
+The execution happens whenever your test contains an element. For example:
 
 ```yml
 echo_stdout:
-  - [ echo 'Hello World' ]
+- echo 'Hello World'
 ```
 
-Whenever you need shell commands or you are concatenating multiple commands with the assistance of a shell, you must include them between quotes
+Whenever you want your commands to execute under a shell, we will either detect that automatically or you can enforce it by putting the commands between quotes:
 
 ```yml
 echo_file:
-  - [ "echo 'Hello World' > file" ]
+- "echo 'Hello World' > file"
 ```
 
 ## Inputs on executions
@@ -19,12 +19,16 @@ echo_file:
 It should be noted that [inputs](inputs.md) can be defined to be used as part of the executions:
 ```yml
 salute:
-  - "Hello"
+- - "Hello"
   - "Bye"
+
 echo_salute:
   assertStdoutEqual: "Hello World"
-  - [ echo '$(salute) World' ]
+  run:
+  - echo '${{salute}} World'
 ```
+
+![inputs on executions](img/execution_1.png)
 
 The previous example will assert that the output will be Hello World, and it will show one Pass and one Fail due to the possible combinations. For more information on the assert please visit the [asserts](asserts.md) section. 
 
