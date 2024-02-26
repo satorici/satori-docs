@@ -1,15 +1,24 @@
 # Language
 
-In Satori, the files where testing procedures are defined are known as Playbooks. These files use YAML syntax and have the ".yml" file extension.
-
-Playbooks may contain a variety of components such as settings, imports, tests, executions, and asserts. All of these elements follow a specific language specification[1].
+Playbooks store the settings, executions, inputs and assertions associated to the testing procedures. These files have a YAML syntax and use the ".yml" file extension.
 
 ## Reserved Words
 
 Certain words in the Satori playbook language are reserved for special operations:
 
-- **settings**: Used to define global options for the playbook.
+Within **settings**, all the words are reserved:
+- **name**: the playbook name
+- **description**: a description of the playbook
+- **mitigation**: how to mitigate the risk
+- **cron** or **rate**: at which frequency should monitor remotely
+- **timeout**: when to kill the playbook
+- **cpu**: how many CPU units should use remotely?
+- **memory**: how much RAM should use remotely?
+- **storage**: how much storage is required remotely?
+
+Within a test, you may define:
 - **assert\***: A group of keywords used for asserting conditions. Examples include assertStdoutEquals, assertStdoutNotEquals, etc.
+- **setSeverity**: defines the severity for the test
 
 ## [Execution](execution.md)
 
@@ -17,7 +26,7 @@ If you were to execute a program called "HelloWorld", this is how you would do i
 
 ```yml
 Hello_World_Test:
-- [ ./HelloWorld ]
+- HelloWorld.exe
 ```
 
 ## [Asserts](asserts.md)
@@ -28,7 +37,7 @@ Asserts are used to verify the output or behavior of the executed program. If yo
 Hello_World_Test:
   assertStdoutContains: "Hello World"
   run:
-  - [ ./HelloWorld ]
+  - HelloWorld.exe
 ```
 
 ## [Input](inputs.md)
@@ -39,10 +48,10 @@ You can use inputs to provide parameters to the executed programs. This allows y
 Hello_World_Test:
   assertStdoutContains: "Hello World"
   who:
-  - "Foo"
-  - "World"
+  - - "Foo"
+    - "World"
   run:
-  - [ ./HelloWorld $(who) ]
+  - HelloWorld.exe ${{who}}
 ```
 
 ## [Settings](settings.md)
@@ -51,16 +60,17 @@ Playbooks have specific settings for various aspects like providing names to tes
 
 ```yml
 settings:
-  name: "Tests Hello World with parameters"
+  name: "Tests hello world with parameters"
+  timeout: 60 # no more than 60 seconds should be required
   logOnFail: slack
 
 Hello_World_Test:
   assertStdoutContains: "Hello World"
   who:
-  - "Foo"
-  - "World"
+  - - "Foo"
+    - "World"
   run:
-  - [ ./HelloWorld $(who) ]
+  - HelloWorld.exe ${{who}}
 ```
 
 ## Imports
@@ -75,10 +85,10 @@ import:
 Hello_World_Test:
   assertStdoutContains: "Hello World"
   who:
-  - "Foo"
-  - "World"
+  - - "Foo"
+    - "World"
   run:
-  - [ ./HelloWorld $(who) ]
+  - HelloWorld.exe ${{who}}
 ```
 
 The name `import` is not mandatory and the node can be placed in any place (given that is valid YAML).
