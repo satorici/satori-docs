@@ -4,11 +4,16 @@ Inputs can be grouped under any non reserved word (settings, assert*)
 
 ```yml
 input:
-  - "One"
+- - "One"
   - "Two"
+
 echo:
-  - [ echo $(input) ]
+- echo ${{input}}
 ```
+
+For example:
+
+![use inputs](img/inputs_1.png)
 
 You can also define different nested values. The following example will show a Pass for the positive test, and a Fail for the negative test:
 
