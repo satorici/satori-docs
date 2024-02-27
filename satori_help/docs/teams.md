@@ -19,7 +19,7 @@ satori team Private members
 If the user's email is part of Satori CI, it will be automatically added. Otherwise, they will receive an invitation to join your team.
 
 ```sh
-satori team Private add --member="member_email@yourdomain.com"
+satori team TEAM-NAME add --email="member_email@yourdomain.com"
 ```
 
 TBC: ![Add Team Members](img/team_3.png)
