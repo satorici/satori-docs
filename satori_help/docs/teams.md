@@ -45,7 +45,7 @@ TBC: ![Team Members](img/team_4.png)
 You can also include all the repositories of a certain account with:
 
 ```sh
-satori team Private add --repo="GithubAccount/*"
+satori team Private add --repo="GithubAccount/repo-name"
 ```
 
 If you want to remove them, you would use the `delete` subcommand.
