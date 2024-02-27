@@ -16,7 +16,7 @@ pip3 install satori-ci
 
 2. With Satori CLI installed, now we need to get a Satori Token to use it:
 
-  * Log in the Satori website using Github credentials: https://www.satori-ci.com/login
+  * Log in the Satori website using Github credentials: https://satori.ci/login
   * On the Satori website go to Settings->Teams
   * Copy your API Token
 
