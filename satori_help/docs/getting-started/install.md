@@ -1,6 +1,6 @@
 # Install
 
-We have a CLI tool that can be installed with `pip` and a [Github Application](../modes/ci/github.md) to connect with your CI process. Additionally, we can also be launched on [Gitlab](../modes/ci/gitlab.md), with [Jenkins](../modes/ci/jenkins.md) or [Github Actions](../modes/ci/action.md). Of course, our Web interface is also a key component at https://www.satori-ci.com to better visualize your results.
+We have a CLI tool that can be installed with `pip` and a [Github Application](../modes/ci/github.md) to connect with your CI process. Additionally, we can also be launched on [Gitlab](../modes/ci/gitlab.md), with [Jenkins](../modes/ci/jenkins.md) or [Github Actions](../modes/ci/action.md). Of course, our Web interface is also a key component at https://satori.ci to better visualize your results.
 
 ## Install Satori CLI
 
@@ -69,11 +69,11 @@ import:
 tests:
   assertReturnCode: 0
   build:
-  - [ make ]
+  - make
   run:
     assertStdoutContains: "An expected output" # assert the output of    the main system execution of your project
     your_project:
-    - [ ./your_project ]
+    - ./your_project
 ```
 
 These are the steps to run it locally:
