@@ -7,7 +7,7 @@ Satori CI is an Automated Cloud Testing platform that asserts the behavior of co
 Satori can execute tests synchronously or asynchronously:
 
 - Use our [CLI tool](https://github.com/satorici/satori-cli), which can be installed with `pip install satori-ci`.
-- Use our [Website](https://www.satori-ci.com).
+- Use our [Website](https://www.satori.ci).
 
 ## CI
 You can use Satori with:
