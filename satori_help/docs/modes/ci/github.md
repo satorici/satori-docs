@@ -39,11 +39,11 @@ import:
 tests:
   assertReturnCode: 0
   build:
-  - [ make ]
+  - make
   run:
     assertStdoutContains: "An expected output" # assert the output of    the main system execution of your project
     your_project:
-    - [ ./your_project ]
+    - ./your_project
 ```
 
 These are the steps to run it locally:
