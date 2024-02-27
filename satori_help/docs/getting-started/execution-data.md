@@ -18,7 +18,7 @@ satori reports
 
 They are listed on the website as well:
 
-- https://www.satori-ci.com/reports/
+- https://satori.ci/reports/
 
 ![Web Reports](img/execution-data_2.png)
 
