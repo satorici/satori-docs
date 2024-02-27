@@ -1,3 +1,5 @@
+![Satori CI Logo](../../img/logo.png)
+
 # Intro
 
 Satori CI is an Automated Cloud Testing platform that asserts the behavior of command executions. Start testing software and systems using our Playbook marketplace or by building your own playbooks.
