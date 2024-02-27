@@ -1,4 +1,4 @@
-<p align="center"><img src="img/logo.png" alt="Satori CI Logo" style="width:200px;"/></p>
+<p align="center"><img src="../../img/logo.png" alt="Satori CI Logo" style="width:200px;"/></p>
 
 # Intro
 
