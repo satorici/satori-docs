@@ -48,6 +48,8 @@ You can also include all the repositories of a certain account with:
 satori team Private add --repo="GithubAccount/repo-name"
 ```
 
+![Team Members](img/team_5.png)
+
 If you want to remove them, you would use the `delete` subcommand.
 
 #### List your team repositories
