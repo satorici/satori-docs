@@ -22,7 +22,7 @@ If the user's email is part of Satori CI, it will be automatically added. Otherw
 satori team Private add --email="member_email@yourdomain.com"
 ```
 
-TBC: ![Add Team Members](img/team_3.png)
+![Add Team Members](img/team_3.png)
 
 ## Create a Team
 
@@ -40,7 +40,7 @@ Include within your Backend team a certain repo:
 satori team Backend add --repo="GithubAccount/Repository"
 ```
 
-TBC: ![Team Members](img/team_4.png)
+![Team Members](img/team_4.png)
 
 You can also include all the repositories of a certain account with:
 
