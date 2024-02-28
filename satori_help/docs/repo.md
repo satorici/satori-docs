@@ -60,7 +60,7 @@ satori repo githubUsername/repository run --playbook playbook.yml
 Public playbooks can be listed with the command:
 
 ```sh
-satori playbook --public
+satori playbooks --public
 ```
 
 Public predefined tests by Satori are hosted on https://github.com/satorici/playbooks/, which is replaced by the short URI form `satori://`.
