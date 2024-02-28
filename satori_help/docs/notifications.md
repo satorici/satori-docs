@@ -6,6 +6,7 @@ You can set the notifications via the web interface or using the CLI.
 ### CLI:
 
 View settings:
+
 You can view your current settings by executing the following command.
 ```sh
 satori team Private settings
