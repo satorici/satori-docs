@@ -19,7 +19,7 @@ satori team Private set_config notification_email your@email.com
 
 Slack:
 
-tbc link
+![Follow this guide to get the workspace and channel ID](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/notifications.md#slack)
 ```sh
 satori team Private set_config slack_workspace TXXXXXXXXXX
 ```
