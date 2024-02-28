@@ -7,7 +7,7 @@ You can set the notifications via the web interface or using the CLI.
 
 You can view your current settings by executing the following command:
 ```sh
-satori team teamName settings
+satori team Private settings
 ```
 ![View settings:](img/notif_1.png)
 
