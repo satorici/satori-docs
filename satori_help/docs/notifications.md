@@ -24,7 +24,9 @@ settings:
 
 ## Slack and Discord
 
-Now, we already know your email and where to write issues for your repositories, but we will need some help with your Slack and/or Discord server on your [user settings](https://www.satori-ci.com/user-settings/)
+Now, we already know your email and where to write issues for your repositories, but we will need some help with your Slack and/or Discord server on your [dashboard settings](https://www.satori.ci/dashboard/)
+
+![Settings:](img/dashboard_1.png)
 
 ### Slack
 
