@@ -57,7 +57,7 @@ You can also set the notifications via the web interface by completing the follo
 
 ![Settings:](img/dashboard_1.png)
 
-[tbc con que son las guias para llenar los campos del formulario](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/notifications.md#Guides)
+[Read the following guides to complete these fields.](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/notifications.md#Guides)
 
 
 ## Playbook Settings
