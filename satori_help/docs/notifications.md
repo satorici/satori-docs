@@ -94,7 +94,7 @@ settings:
   report: pdf
 ```
 
-tbc false
+If `report: false` is set in the playbook, all generated outputs are deleted.
 
 ```yml
 settings:
