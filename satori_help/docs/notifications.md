@@ -53,7 +53,7 @@ satori team Private set_config datadog_site us3|eu|etc
 
 ### WEB:
 
-You can also set the notifications via the web interface by completing the following fields on the Satori's web [dashboard](https://www.satori.ci/dashboard/)
+You can also set the notifications via the web interface by completing the following fields on the Satori web [dashboard.](https://www.satori.ci/dashboard/)
 
 ![Settings:](img/dashboard_1.png)
 
