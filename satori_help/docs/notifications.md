@@ -31,10 +31,11 @@ satori team Private set_config slack_channel CXXXXXXXXXX
 ![Channel ID:](img/notif_4.png)
 
 Discord:
+[Follow this guide to get the channel ID](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/notifications.md#discord)
 ```sh
 satori team Private set_config discord_channel CHANNEL_ID
 ```
-![Email setting:](img/notif_5.png)
+![Discord setting:](img/notif_5.png)
 
 The definition of where you will be notified starts on your playbook settings. In there, depending if you want to be notified every time (`log`), on every fail (`logOnFail`) or every time it passes (`logOnPass`) you will define if you want to be notified via email, via a Github Issue on your repo, via slack or via discord.
 
