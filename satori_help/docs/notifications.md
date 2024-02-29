@@ -57,7 +57,7 @@ You can also set the notifications via the web interface by completing the follo
 
 ![Settings:](img/dashboard_1.png)
 
-[tbc](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/notifications.md#Guides)
+[tbc con que son las guias para llenar los campos del formulario](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/notifications.md#Guides)
 
 
 The definition of where you will be notified starts on your playbook settings. In there, depending if you want to be notified every time (`log`), on every fail (`logOnFail`) or every time it passes (`logOnPass`) you will define if you want to be notified via email, via a Github Issue on your repo, via slack or via discord.
