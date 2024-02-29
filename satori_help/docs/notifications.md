@@ -51,6 +51,12 @@ satori team Private set_config datadog_site us3|eu|etc
 ```
 ![Site Region:](img/notif_7.png)
 
+### WEB:
+
+You can also set the notifications via the web interface by completing the following fields on the Satori's web dashboard [dashboard settings](https://www.satori.ci/dashboard/)
+
+![Settings:](img/dashboard_1.png)
+
 
 The definition of where you will be notified starts on your playbook settings. In there, depending if you want to be notified every time (`log`), on every fail (`logOnFail`) or every time it passes (`logOnPass`) you will define if you want to be notified via email, via a Github Issue on your repo, via slack or via discord.
 
@@ -74,11 +80,9 @@ settings:
 [...]
 ```
 
-## Slack and Discord
+## Guides
 
-Now, we already know your email and where to write issues for your repositories, but we will need some help with your Slack and/or Discord server on your [dashboard settings](https://www.satori.ci/dashboard/)
-
-![Settings:](img/dashboard_1.png)
+tbc
 
 ### Slack
 
