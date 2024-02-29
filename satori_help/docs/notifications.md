@@ -26,7 +26,7 @@ satori team Private set_config slack_workspace TXXXXXXXXXX
 ![Workspace ID:](img/notif_3.png)
 
 ```sh
-satori team Private set_config slack_channel #channel_name
+satori team Private set_config slack_channel CXXXXXXXXXX
 ```
 ![Channel ID:](img/notif_4.png)
 
