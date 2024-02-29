@@ -94,9 +94,8 @@ settings:
   report: pdf
 ```
 
-## Guides
+## Appendix: Slack, Discord and Datadog Guides
 
-tbc
 
 ### Slack
 
@@ -131,7 +130,7 @@ Once you've enabled Developer Mode, you can get your Channel ID as follows:
 
 If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)
 
-## Datadog
+### Datadog
 
 Satori CI supports Datadog Events as notification system. To use it you need an **API Key** and the **Site Region** from Datadog.
 
