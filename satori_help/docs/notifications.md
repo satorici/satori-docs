@@ -82,6 +82,18 @@ settings:
 [...]
 ```
 
+### Report
+
+Notifications with PDF Report
+
+If you want to receive a copy of your report in PDF along with your notification, you can do so indicating it as part of your playbook settings:
+
+```yml
+settings:
+  onLogFail: slack
+  report: pdf
+```
+
 ## Guides
 
 tbc
@@ -148,12 +160,3 @@ settings:
   logOnFail: datadog
 ```
 
-## Notifications with PDF Report
-
-If you want to receive a copy of your report in PDF along with your notification, you can do so indicating it as part of your playbook settings:
-
-```yml
-settings:
-  onLogFail: slack
-  report: pdf
-```
