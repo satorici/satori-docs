@@ -38,6 +38,20 @@ satori team Private set_config discord_channel CHANNEL_ID
 ```
 ![Discord setting:](img/notif_5.png)
 
+DataDog:
+
+[Follow this guide to get the API Key and Site Region](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/notifications.md#Datadog)
+```sh
+satori team Private set_config datadog_api_key a123
+```
+![API Key:](img/notif_6.png)
+
+```sh
+satori team Private set_config datadog_site us3|eu|etc
+```
+![Site Region:](img/notif_7.png)
+
+
 The definition of where you will be notified starts on your playbook settings. In there, depending if you want to be notified every time (`log`), on every fail (`logOnFail`) or every time it passes (`logOnPass`) you will define if you want to be notified via email, via a Github Issue on your repo, via slack or via discord.
 
 By default, you will get notified with emails unless you change your playbook settings.
