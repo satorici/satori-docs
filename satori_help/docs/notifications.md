@@ -68,7 +68,7 @@ By default, you will get notified with emails unless you change your playbook se
 
 ```yml
 settings:
-  log|logOnFail|logOnPass: email|issue|slack|discord|datadog
+  log|logOnFail|logOnPass: email|slack|discord|datadog
 
 [...]
 ```
