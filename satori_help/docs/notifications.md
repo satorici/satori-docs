@@ -38,7 +38,7 @@ satori team Private set_config discord_channel CHANNEL_ID
 ```
 ![Discord setting:](img/notif_5.png)
 
-DataDog:
+Datadog:
 
 [Follow this guide to get the API Key and Site Region](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/notifications.md#Datadog)
 ```sh
