@@ -97,9 +97,9 @@ settings:
 tbc false
 
 ```yml
-tbc:
-  tbc: 
-  tbc: 
+settings:
+  onLogFail: slack 
+  report: false 
 ```
 ## Appendix: Slack, Discord and Datadog Guides
 
