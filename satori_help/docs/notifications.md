@@ -31,6 +31,7 @@ satori team Private set_config slack_channel CXXXXXXXXXX
 ![Channel ID:](img/notif_4.png)
 
 Discord:
+
 [Follow this guide to get the channel ID](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/notifications.md#discord)
 ```sh
 satori team Private set_config discord_channel CHANNEL_ID
