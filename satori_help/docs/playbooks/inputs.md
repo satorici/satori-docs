@@ -36,7 +36,7 @@ For example:
 
 ## Dictionaries
 
-Dictionary files can be splitted by certain characters (normally newlines) to be used as inputs for the tests. For example:
+Dictionary files can be split by certain characters (normally newlines) to be used as inputs for the tests. For example:
 
 ```yml
 dict-input:

@@ -4,7 +4,7 @@ Whenever you want to run an execution on each of the individual commits of a rep
 
 ## Multiple Commits
 
-If you target a repo, the optional parameter `-c` is used to indicate the percentage of repository commits to include in the scan. For example, if you only want to just take a sample, when not using the `-c` parameter, is the equivalent to `-c 1` "scan 1% of the repository commits". This is useful for sampling large repositories:
+If you target a repo, the optional parameter `-c` is used to indicate the percentage of repository commits to include in the scan. For example `-c 1` will scan 1% of the repository commits if you only want to take a sample. This is useful for sampling large repositories:
 
 ```
 satori scan githubUsername/repository
@@ -23,7 +23,7 @@ You can see how the results of your playbook affect different commits and forks 
 
 ## Status
 
-Since normally repositories have a lot of commits, you may want to check what is the execution status with this command:
+Since normally repositories have a lot of commits, you may want to check what the execution status is with this command:
 
 ```
 satori scan githubUsername/repository status
@@ -45,7 +45,7 @@ satori scan githubUsername/repository stop
 
 ## Clean
 
-Warning: this commmand will delete all the reports associated to a certain repository:
+Warning: this command will delete all the reports associated to a certain repository:
 
 ```
 satori scan githubUsername/repository clean

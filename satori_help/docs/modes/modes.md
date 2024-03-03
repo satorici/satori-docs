@@ -1,11 +1,11 @@
 # Execution modes
 
-Satori is an automated testing platform where you can:
+Satori is an automated testing platform where you can run tests:
 
-- Run tests on demand,
-- As part of a CI/CD process,
-- Scheduled (also known as monitoring) and
-- On your repositories
+- On demand
+- As part of a CI/CD process
+- Scheduled (also known as monitoring)
+- And on your repositories
 
 ## [Run](run.md)
 
@@ -23,7 +23,7 @@ Whenever you want to test your software automatically, you can use Satori as par
 - A [Gitlab](ci/gitlab.md) using the Satori CLI.
 - A [Jenkins](ci/jenkins.md) using the Satori CLI.
 
-The automated testing can range from static analysis to dynamicly testing live applications.
+The automated testing can range from static analysis to dynamically testing live applications.
 
 ## [Monitor](monitor.md)
 

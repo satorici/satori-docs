@@ -1,6 +1,7 @@
+
 # Teams
 
-By default you are a member of your own Private team. Here is where your repositories and monitors will be by default. Teams allow you to group monitors, repositories and people with their own notifications channels.
+By default, you are a member of your own private team. Here is where your repositories and monitors will be by default. Teams allow you to group monitors, repositories, and people with their own notifications channels.
 
 ![Teams](img/team_1.png)
 
@@ -50,7 +51,7 @@ satori team Private add --repo="GithubAccount/repo-name"
 
 ![Team Members](img/team_5.png)
 
-If you want to remove them, you would use the `delete` subcommand.
+If you want to remove them, you can use the `delete` subcommand.
 
 #### List your team repositories
 
@@ -68,7 +69,7 @@ Once you launched a monitor, you can associate it with a team:
 satori team Private add monitor="ID"
 ```
 
-If you want to remove them, you would use the `delete` subcommand.
+If you want to remove them, you can use the `delete` subcommand.
 
 #### List Monitors
 

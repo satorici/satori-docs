@@ -17,15 +17,15 @@ test:
 
 Can be run:
 - With no parameters: asynchronously
-- With `--sync`: synchronously and it shows the status when is complete
-- With `--report`: synchronously and it shows the report when is complete
-- With `--output`: synchronously and it shows the output when is complete
+- With `--sync`: synchronously and it shows the status when it is complete
+- With `--report`: synchronously and it shows the report when it is complete
+- With `--output`: synchronously and it shows the output when it is complete
 
 ![Run aync and async](img/run_1.png)
 
 ## Run a Playbook with Parameters
 
-If you define $(variables) within your playbook that are not satisfied, they will be considered parameters expected when being called. Consider this playbook named `params.yml` that will echo "Hello" along with the name provided as a parameter:
+If you define $(variables) within your playbook that are not satisfied, they will be considered expected parameters when being called. Consider this playbook named `params.yml` that will echo "Hello" along with the name provided as a parameter:
 
 ```yml
 input:
@@ -80,9 +80,9 @@ tests:
 You would use it like this when developing locally before pushing, or when being used as part of Github Actions or Jenkins. 
 
 ### Run a Public Playbook
-You can run on demand public playbooks. You can see a list of the publicly available playbooks with: `satori playbook --public`
+You can run on-demand public playbooks. You can see a list of the publicly available playbooks with: `satori playbook --public`
 
-And then you can execute them passing parameters if required with --data:
+Then you can execute them passing parameters if required with --data:
 
 ```sh
 satori run satori://some/playbook.yml
@@ -114,4 +114,3 @@ Example execution:
 ![Monitor Google](img/run_5.png)
 
 [Learn more about Monitors](monitor.md)
-

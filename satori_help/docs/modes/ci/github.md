@@ -2,7 +2,7 @@
 
 Each time you push code to your Github repository, there's a risk that it could affect the security of your project. Furthermore, should your data ever be compromised, it's crucial to minimize the exposure of sensitive information. Two primary areas of concern are:
 
-- Secrets on your code
+- Secrets in your code
 - Vulnerable code from yourself or third parties
 
 Automatically test your GitHub repositories by installing our App:
@@ -17,7 +17,7 @@ Be mindful that you need to be authenticated to configure it.
 
 ![Install Satori CI on your account](img/github_2.png)
 
-Select on which accounts you will be setting it up.
+Select which accounts you will be setting it up for.
 
 **3) Select the repositories where you will be installing it or select all repositories**
 

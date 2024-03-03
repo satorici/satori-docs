@@ -6,25 +6,25 @@ You can assert what will be the behavior of [executions](execution.md):
 |-------------------------|----------------|------------------------------------------------------------------------|
 | assertStdout            | Boolean        | Is output produced?
 | assertStdoutEquals      | String\*       | Is the output equal to the String?
-| assertStdoutNotEquals   | String         | Is the output different than String?
-| assertStdoutContains    | String         | Does the output contains the String?
+| assertStdoutNotEquals   | String         | Is the output different than the String?
+| assertStdoutContains    | String         | Does the output contain the String?
 | assertStdoutNotContains | String         | Does the output not contain the String?
 | assertStdoutSHA256      | SHA256Checksum | Is the output equal to this SHA256 hash?
-| assertStdoutRegex       | Regex          | Does the output matches your regexp?
-| assertStdoutNotRegex    | Regex          | Does the output not match your regexp?
+| assertStdoutRegex       | Regex          | Does the output match your regular expression?
+| assertStdoutNotRegex    | Regex          | Does the output not match your regular expression?
 | assertStderr            | Boolean        | Are errors produced?
 | assertStderrEquals      | String\*       | Is the error equal to the String?
-| assertStderrNotEquals   | String         | Is the error different than String?
-| assertStderrContains    | String         | Does the error contains the String?
+| assertStderrNotEquals   | String         | Is the error different than the String?
+| assertStderrContains    | String         | Does the error contain the String?
 | assertStderrNotContains | String         | Does the error not contain the String?
 | assertStderrSHA256      | SHA256Checksum | Is the error equal to this SHA256 hash?
-| assertStderrRegex       | Regex          | Does the error matches your regexp?
-| assertStderrNotRegex    | Regex          | Does the error not match your regexp?
+| assertStderrRegex       | Regex          | Does the error match your regular expression?
+| assertStderrNotRegex    | Regex          | Does the error not match your regular expression?
 | assertReturnCode        | Integer        | Is the return code equal to the Integer?
 | assertReturnCodeNot     | Integer        | Is the return code not equal to the Integer?
-| assertSoftwareExists    | Boolean        | Does the software being executed exists? True by default
-| assertDifferent         | Boolean        | Does the execution behaves differently when using different inputs?
-| assertKilled            | Boolean        | Did the software timed out?
+| assertSoftwareExists    | Boolean        | Does the software being executed exist? True by default
+| assertDifferent         | Boolean        | Does the execution behave differently when using different inputs?
+| assertKilled            | Boolean        | Did the software time out?
 
 ---
 
@@ -39,7 +39,7 @@ HelloWorld:
   - echo Hello World
 ```
 
-And they can have a severity associated, specially useful when working with ticketing systems:
+And they can have a severity associated, especially useful when working with ticketing systems:
 
 ```yml
 HelloWorld:
@@ -121,7 +121,7 @@ test:
 ## assertStdoutContains
 | Input | Description |
 |-------|--------------
-| String         | Does the output contains the String?
+| String         | Does the output contain the String?
 
 - <span style="color:green">Example Pass Test</span>: the program output should contain the string "Hello World", and it does:
 ```yml
@@ -178,7 +178,7 @@ nmap:
 ## assertStdoutRegex
 | Input | Description                          |
 |-------|---------------------------------------
-| Regex | Does the output matches your regexp? |
+| Regex | Does the output match your regular expression? |
 
 - <span style="color:green">Example Pass Test</span>: the program output should contain the string "Hello " and additional characters, and it does:
 ```yml
@@ -192,7 +192,7 @@ test:
 ##  assertStdoutNotRegex
 | Input | Description                            |
 |-------|-----------------------------------------
-| Regex | Does the output not match your regexp? |
+| Regex | Does the output not match your regular expression? |
 
 - <span style="color:gray">Example Unknown Test</span>: the program output should not contain the string "Hello World" anywhere on the output, but the input could be mutated to "somethingHello World" and the result depends on the mutation:
 ```yml
@@ -237,7 +237,7 @@ test:
 ## assertStderrNotEquals
 | Input  | Description                         |
 |--------|--------------------------------------
-| String | Is the error different than String? |
+| String | Is the error different than the String? |
 - <span style="color:pass">Example Pass Test</span>: the programs should not error requesting the value of the x parameter when is defined:
 ```yml
 test:
@@ -251,7 +251,7 @@ test:
 | Input  | Description                         |
 |--------|--------------------------------------
 | String | Does the error contains the String? |
-- <span style="color:pass">Example Pass Test</span>: the programs errors should contain the string Traceback, and it does:
+- <span style="color:pass">Example Pass Test</span>: the program's errors should contain the string Traceback, and it does:
 ```yml
 install:
    - "echo import nonexistent > test.py"
@@ -266,7 +266,7 @@ test:
 | Input  | Description                            |
 |--------|-----------------------------------------
 | String | Does the error not contain the String? |
-- <span style="color:fail">Example Fail Test</span>: the programs errors should not contain the string Traceback, but it does:
+- <span style="color:fail">Example Fail Test</span>: the program's errors should not contain the string Traceback, but it does:
 ```yml
 install:
    - "echo import nonexistent > test.py"
@@ -281,7 +281,7 @@ test:
 | Input          | Description                             |
 |----------------|------------------------------------------
 | SHA256Checksum | Is the error equal to this SHA256 hash? |
-- <span style="color:fail">Example Fail Test</span>: the programs errors should not contain the string Traceback, but it does:
+- <span style="color:fail">Example Fail Test</span>: the program's errors should not contain the string Traceback, but it does:
 ```yml
 install:
    - "echo import nonexistent > test.py "
@@ -295,7 +295,7 @@ test:
 ## assertStderrRegex
 | Input | Description                         |
 |-------|--------------------------------------
-| Regex | Does the error matches your regexp? |
+| Regex | Does the error match your regular expression? |
 - <span style="color:gray">Example Unknown Test</span>: the Python script my_script.py might throw a KeyError exception with 'unexpected_key' if a certain condition in the script isn't met:
 ```yml
 RunPythonScriptTest:
@@ -308,8 +308,8 @@ RunPythonScriptTest:
 ## assertStderrNotRegex
 | Input | Description                           |
 |-------|----------------------------------------
-| Regex | Does the error not match your regexp? |
-- <span style="color:green">Example Pass Test</span>: the programs errors should  not throw a Traceback, and it doesn't:
+| Regex | Does the error not match your regular expression? |
+- <span style="color:green">Example Pass Test</span>: the program's errors should  not throw a Traceback, and it doesn't:
 ```yml
 install:
    - "echo import os > test.py"
@@ -324,7 +324,7 @@ test:
 | Input   | Description                              |
 |---------|-------------------------------------------
 | Integer | Is the return code equal to the Integer? |
-- <span style="color:green">Example Pass Test</span>: the programs should return the code 0, and it does:
+- <span style="color:green">Example Pass Test</span>: the program should return the code 0, and it does:
 ```yml
 test:
     assertReturnCode: 0
@@ -337,7 +337,7 @@ test:
 | Input   | Description                              |
 |---------|-------------------------------------------
 | Integer | Is the return code not equal to the Integer? |
-- <span style="color:green">Example Positive Pass Test</span>: the programs should not return the code 0, and it doesn't:
+- <span style="color:green">Example Positive Pass Test</span>: the program should not return the code 0, and it doesn't:
 ```yml
 test:
     assertReturnCodeNot: 0
@@ -350,7 +350,7 @@ test:
 | Input | Description |
 |-------|--------------
 | Boolean        | Does the software being executed exists? True by default
-- <span style="color:fail">Example Fail Test</span>: the programs should exist, and it does not:
+- <span style="color:fail">Example Fail Test</span>: the program should exist, and it does not:
 ```yml
 test:
     assertSoftwareExists: True # by default
@@ -362,7 +362,7 @@ test:
 ## assertDifferent
 | Input   | Description                                                         |
 |---------|----------------------------------------------------------------------
-| Boolean | Does the execution behaves differently when using different inputs? |
+| Boolean | Does the execution behave differently when using different inputs? |
 - <span style="color:fail">Example Fail Test</span>: the production and staging environment should look the same, and it does not:
 ```yml
 API:
@@ -379,8 +379,8 @@ test:
 ## assertKilled
 | Input   | Description                 |
 |---------|------------------------------
-| Boolean | Did the software timed out? |
-- <span style="color:fail">Example Fail Test</span>: the software should finished execution within 10 seconds, and it does not:
+| Boolean | Did the software time out? |
+- <span style="color:fail">Example Fail Test</span>: the software should finish execution within 10 seconds, and it does not:
 ```yml
 settings:
     software_timeout: 10
