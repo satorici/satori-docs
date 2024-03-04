@@ -2,14 +2,16 @@
 
 # Satori CI Documentation
 
-Satori documentation is installed automatically when you install our CLI tool with `pip install satori-ci`. If you want to individually install our documentation, you would run `pip install satori-docs`.
+Introduction: Satori CI is a robust Continuous Integration (CI) tool designed to streamline your development workflows. It provides seamless integration with your projects, offering automated build, test, and deployment capabilities.
 
-Once the documentation is installed, you can view it on your console by executing `satori-docs`:
+The Satori CI documentation automatically installs with the CLI tool when you run `pip install satori-ci`. To install the documentation separately, run `pip install satori-docs`.
 
-![Docs CLI](img/docs_1.png)
+After installation, view the documentation in your console by running `satori-docs`:
+
+![Screenshot of CLI Documentation](img/docs_1.png)
 
 Or in the web:
-- Locally on a web browser by executing `satori-docs --web` and then going to `http://localhost:9090`
-- Remotely on our documentation website at [https://docs.satori.ci/](https://docs.satori.ci/)
+- For local web access, execute `satori-docs --web` and visit `http://localhost:9090` in your browser.
+- For remote access, visit our documentation website at [https://docs.satori.ci/](https://docs.satori.ci/).
 
-![Docs Web](img/docs_2.png)
+![Screenshot of Web Documentation](img/docs_2.png)

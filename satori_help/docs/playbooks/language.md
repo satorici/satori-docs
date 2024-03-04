@@ -1,19 +1,19 @@
 # Language
 
-Playbooks store the settings, executions, inputs and assertions associated to the testing procedures. These files have a YAML syntax and use the ".yml" file extension.
+Playbooks store the settings, executions, inputs and assertions associated with the testing procedures. These files have a YAML syntax and use the ".yml" file extension.
 
 ## Reserved Words
 
 Certain words in the Satori playbook language are reserved for special operations:
 
-Within **settings**, all the words are reserved:
+Within **settings**, all these words are reserved:
 - **name**: the playbook name
 - **description**: a description of the playbook
 - **mitigation**: how to mitigate the risk
-- **cron** or **rate**: at which frequency should monitor remotely
+- **cron** or **rate**: the frequency at which it should be monitored remotely
 - **timeout**: when to kill the playbook
-- **cpu**: how many CPU units should use remotely?
-- **memory**: how much RAM should use remotely?
+- **cpu**: how many CPU units should be used remotely?
+- **memory**: how much RAM should be used remotely?
 - **storage**: how much storage is required remotely?
 
 Within a test, you may define:

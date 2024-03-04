@@ -1,6 +1,6 @@
 # Monitor
 
-Monitors are playbooks that contain either a `cron` or a `rate` setting in the `settings` section. They are specially useful to assert that the behavior of live systems is working as expected with a certain frequency.
+Monitors are playbooks that contain either a `cron` or a `rate` setting in the `settings` section. They are especially useful to assert that the behavior of live systems is working as expected with a certain frequency.
 
 ## Cron or Rate Settings
 
@@ -18,7 +18,7 @@ This is the easiest way of speaking of frequency:
 | Every hour       | rate: 1 hour     |
 | Every seven days | rate: 7 days     |
 
-For example, the following file `monitor.yml` checks that the Satori's website is live and showing its name every 10 minutes:
+For example, the following file `monitor.yml` checks that the Satori website is live and showing its name every 10 minutes:
 
 ```yml
 settings:
@@ -50,7 +50,7 @@ satori monitors
 
 ![List Monitor](img/monitor_2.png)
 
-In case you want to list those monitors that are on a fail state and have pending actions, you would use `--pending` the parameter:
+In case you want to list those monitors that are in a failed state and have pending actions, you would use `--pending` the parameter:
 
 ```sh
 satori monitors --pending

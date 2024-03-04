@@ -6,7 +6,7 @@ We have a CLI tool that can be installed with `pip` and a [Github Application](.
 
 Three steps:
 
-1. Execute on your command line terminal:
+1. Execute in your command line terminal:
 
 ```console
 pip3 install satori-ci

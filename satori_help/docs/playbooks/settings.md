@@ -1,6 +1,6 @@
 # Settings
 
-Your playbook will have metadata associated, it may have specific cpu and memory requirement, it may need to run at a certain rate or schedule, it may require a general timeout, to run concurrently several times or destroy the output upon execution. Here is how you can define it.
+Your playbook will have metadata associated with it, including specific CPU and memory requirements.  It may need to run at a certain rate or schedule.  It may require a general timeout to run concurrently several times or destroy the output upon execution. Here is how you can define it.
 
 ## Name, Description and Mitigation Settings
 
@@ -47,7 +47,7 @@ These are the possible combinations you can use:
 | 16384 (16vCPU) | 32768<br>40960<br>49152<br>57344<br>65536<br>73728<br>81920<br>90112<br>98304<br>106496<br>114688<br>122880                                                                                               | Linux                       |
 ## Cron Settings
 
-Execute your playbook at a certain with the cron setting:
+Execute your playbook at a certain time with the cron setting:
 
 ```yaml
 settings:
@@ -121,7 +121,7 @@ Which can be used with the following parameters:
 
 The previous aliases can be defined on your [Team Settings](https://www.satori-ci.com/team-settings/) when adding a notification
 
-Different log types can be specified simultaneously to notify people on different ways:
+Different log types can be specified simultaneously to notify people in different ways:
 
 ```yaml
 settings:
@@ -171,7 +171,7 @@ host:
 
 ## Report Settings
 
-You may not want to store any data on Satori servers after the execution has been completed. You can set that by defining the report as False. On the other hand, if you want to receive a copy of your report, you can specifiy in what format you would like to receive it. If you don't define anything for your report, you will still be able it to see it online with the CLI or the Web. 
+You may not want to store any data on Satori servers after the execution has been completed. You can set that by defining the report as False. On the other hand, if you want to receive a copy of your report, you can specify in what format you would like to receive it. If you don't define anything for your report, you will still be able it to see it online with the CLI or the Web. 
 
 ### Report PDF
 
@@ -184,7 +184,7 @@ settings:
 
 ### Report False
 
-If you don't want to store a copy of your report or output, define the report as False. You will still get the overall status of your report and test after completition but the outputs will not be stored.
+If you don't want to store a copy of your report or output, define the report as False. You will still get the overall status of your report and test after completion but the outputs will not be stored.
 
 ```yml
 settings:

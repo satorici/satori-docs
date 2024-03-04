@@ -36,7 +36,7 @@ You can view your monitors using the [Web interface](https://www.satori.ci/monit
 
 ## [Notifications](notifications.md)
 
-We will notify you when and how you prefer. We support a variety of communication methods:
+We will notify you according to your preferences. We support a variety of communication methods:
 
 - Slack
 - Discord

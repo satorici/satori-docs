@@ -6,7 +6,7 @@ Playbooks may contain a variety of components such as settings, imports, tests, 
 
 ## Writing your first playbook
 
-In order to test something we first need to get the information. The way to do this is executing commands to get the outputs: stdout, stderr, return code, time taked, etc.
+In order to test something we first need to get the information. The way to do this is executing commands to get the outputs: stdout, stderr, return code, time spent, etc.
 
 How can you express this? Simple:
 
@@ -59,7 +59,7 @@ You can read more about the [language](../playbooks/language.md) features and th
 
 # Running playbooks
 
-Now you have your shinny new playbook but how to make it do something? We present you two ways to do it.
+Now you have your shiny new playbook but how to make it do something? We present you two ways to do it.
 
 ## CLI
 
@@ -69,7 +69,7 @@ satori run hello.yml
 
 ![Hello World Report](img/playbooks_1.png)
 
-You can explore more functions in the CLI reference but here are some highlights. By running the previous command your playbook will be submitted and runned asynchroically, but if you use `--sync`, `--report`, `--output` or `--files` it'll run in sync mode, the last three will also show additional data accordingly.
+You can explore more functions in the CLI reference but here are some highlights. By running the previous command your playbook will be submitted and run asynchronously, but if you use `--sync`, `--report`, `--output` or `--files` it'll run in sync mode, the last three will also show additional data accordingly.
 
 For example `--output` will display each command output: stdout, stderr, return code, etc.
 
@@ -77,7 +77,7 @@ For example `--output` will display each command output: stdout, stderr, return 
 
 ## CI
 
-You can have a playbook named `.satori.yml` in the root of your GitHub repository. If you have the GitHub App installed, in each push the playbook will be run against the repository contents.
+You can have a playbook named `.satori.yml` in the root of your GitHub repository. If you have the GitHub App installed, with each push the playbook will be run against the repository contents.
 
 See more about that in [GitHub CI](../modes/ci/github.md)
 
