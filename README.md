@@ -2,7 +2,7 @@
 
 # Satori CI Documentation
 
-Introduction: Satori CI is a robust Continuous Integration (CI) tool designed to streamline your development workflows. It provides seamless integration with your projects, offering automated build, test, and deployment capabilities.
+Introduction: Satori CI is a Continuous Integration (CI) tool designed to streamline your development workflows. It provides seamless integration with your projects, offering automated build, test, and deployment capabilities.
 
 The Satori CI documentation automatically installs with the CLI tool when you run `pip install satori-ci`. To install the documentation separately, run `pip install satori-docs`.
 
