@@ -1,15 +1,15 @@
 import datetime
 import os
 
-url = "https://docs.satori.ci/#"
-file_path = "./sitemap.xml"
-exclude_files = ["coverpage", "navbar", "README", "_sidebar"]
-
+URL = "https://docs.satori.ci/#"
+EXCLUDE_FILES = ["coverpage", "navbar", "README", "_sidebar"]
+OUTPUT_FOLDER = "./satori_help/docs"
+FILE_PATH = OUTPUT_FOLDER + "/sitemap.xml"
 
 def create_sitemap() -> None:
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    for path, dirs, files in os.walk("./satori_help/docs"):
+    for path, dirs, files in os.walk(OUTPUT_FOLDER):
         for file in files:
             if not file.endswith(".md"):
                 continue
@@ -18,11 +18,11 @@ def create_sitemap() -> None:
                     path += "/"
                 new_path = (path.replace("\\", "/") + file)[2:-3]
                 new_path = new_path.replace("satori_help/docs/", "")
-                if new_path in exclude_files:
+                if new_path in EXCLUDE_FILES:
                     continue
                 print(new_path)
                 xml += "  <url>\n"
-                xml += f"    <loc>{url}/{new_path}</loc>\n"
+                xml += f"    <loc>{URL}/{new_path}</loc>\n"
                 lastmod = datetime.datetime.utcfromtimestamp(
                     os.path.getmtime(path + file)
                 ).strftime("%Y-%m-%d")
@@ -35,7 +35,7 @@ def create_sitemap() -> None:
                 break
     xml += "</urlset>\n"
 
-    with open(file_path, "w", encoding="utf-8") as sitemap:
+    with open(FILE_PATH, "w", encoding="utf-8") as sitemap:
         sitemap.write(xml)
 
 
