@@ -1,14 +1,15 @@
 settings:
+  image: public.ecr.aws/docker/library/python:alpine
   logOnFail: slack
 
 install:
-- [ pip install ruff bandit pymarkdownlnt ]
+  - pip install ruff bandit pymarkdownlnt
 
 tests:
   assertReturnCode: 0
   ruff:
-  - [ ruff check satori_help/ ]
+    - ruff check satori_help/
   bandit:
-  - [ bandit -r satori_help/ ]
+    - bandit -r satori_help/
   mdl:
-  - [ pymarkdown scan satori_help/docs/ ]
+    - pymarkdown scan satori_help/docs/
