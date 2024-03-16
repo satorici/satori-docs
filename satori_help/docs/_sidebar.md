@@ -1,3 +1,7 @@
+---
+id: _sidebar
+---
+
 * Getting started
   * [Installation](/getting-started/install.md)
   * [What are Satori Playbooks?](/getting-started/playbooks.md)

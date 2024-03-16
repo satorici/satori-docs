@@ -164,3 +164,4 @@ cython_debug/
 # Custom
 .DS_Store
 sitemap.xml
+_site/

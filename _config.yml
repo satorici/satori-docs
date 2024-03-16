@@ -1,0 +1,15 @@
+url: "https://docs.satori.ci" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "" # the subpath of your site, e.g. /blog
+title: "Satori CI" # the name of your site, e.g. ACME Corp.
+source: "satori_help/docs"
+sidebar:
+  - label: Section One
+    children:
+      - index
+defaults:
+  - scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: "default"
+plugins:
+  - jekyll-optional-front-matter
