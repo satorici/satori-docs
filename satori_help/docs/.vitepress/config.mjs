@@ -7,8 +7,8 @@ export default defineConfig({
     "Satori CI is an Automated Testing platform that asserts the behavior of command executions. Testing software and systems using our Playbook marketplace or by defining your own playbooks",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    search: { provider: "local" },
     nav: [],
-
     sidebar: [
       { text: "Intro", link: "/README.md" },
       { text: "Getting Started", link: "/getting-started/install.md" },
