@@ -46,7 +46,7 @@ We will notify you according to your preferences. We support a variety of commun
 
 You can define these notifications within your [Team settings](https://www.satori-ci.com/team-settings/)
 
-## [Reports](reports.md)
+## Reports
 
 We process the *output* to produce *reports* based on the *files* that were generated. We can also let you know about the difference between consecutive reports to identify whenever you are fixing -or introducing new- bugs. You can access your reports using on the [reports section of the Web](https://www.satori-ci.com/reports/) or with the CLI: `satori reports`.
 
