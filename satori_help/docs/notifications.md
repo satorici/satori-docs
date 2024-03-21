@@ -101,8 +101,8 @@ settings:
   onLogFail: slack 
   report: false 
 ```
-## Appendix: Slack, Discord and Datadog Guides
 
+## Appendix: Slack, Discord and Datadog Guides
 
 ### Slack
 
@@ -111,7 +111,7 @@ To obtain the workspace ID and channel ID for a Slack Channel, follow these step
 **Channel and Workspace ID**:
 
 1. Go to the web version of Slack and to the channel that you're interested in.
-2. In your web browser's URL bar, you will see a URL that looks like this: https://app.slack.com/client/T00000000/C00000000. The part after '/client/' is split into two segments by a slash. 
+2. In your web browser's URL bar, you will see a URL that looks like this: <https://app.slack.com/client/T00000000/C00000000>. The part after '/client/' is split into two segments by a slash.
 3. Put the first segment (e.g., 'T00000000') as the workspace ID, and 
 4. The second segment (e.g., 'C00000000') as the channel ID.
 5. Invite the bot to a channel with /invite @SatoriCIBot
@@ -165,4 +165,3 @@ Replace **{MyDatadogRegion}** with `us1`, `us3`, `us5`, `eu`, `ap1` or `us1-fed`
 settings:
   logOnFail: datadog
 ```
-

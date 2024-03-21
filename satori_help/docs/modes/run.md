@@ -16,6 +16,7 @@ test:
 ```
 
 Can be run:
+
 - With no parameters: asynchronously
 - With `--sync`: synchronously and it shows the status when it is complete
 - With `--report`: synchronously and it shows the report when it is complete
@@ -37,6 +38,7 @@ test:
 ![Run with params](img/run_2.png)
 
 ### Run with the files in the Local Directory
+
 In case you are working locally on a directory with source code, you save your playbook as `.satori.yml` within the directory, just as you would for your repo when testing your code through CI. 
 
 Consider the following example main.c file, that is referenced by a Makefile, and a playbook that verifies that everything returns the code 0 and when running the code it outputs "Hello World":
@@ -58,10 +60,11 @@ int main() {
 all: hello
 
 hello: main.c
-	gcc -o hello main.c
+  gcc -o hello main.c
 ```
 
 - **.satori.yml**:
+
 ```yml
 tests:
   assertReturnCode: 0
@@ -77,9 +80,10 @@ tests:
 
 ![Run with the files in the Local Directory](img/run_3.png)
 
-You would use it like this when developing locally before pushing, or when being used as part of Github Actions or Jenkins. 
+You would use it like this when developing locally before pushing, or when being used as part of Github Actions or Jenkins.
 
 ### Run a Public Playbook
+
 You can run on-demand public playbooks. You can see a list of the publicly available playbooks with: `satori playbook --public`
 
 Then you can execute them passing parameters if required with --data:
@@ -96,7 +100,7 @@ You would run it like this when there is a public playbook that already addresse
 
 When adding the rate or schedule setting, you will be running a playbook with a certain frequency. This playbook named `monitor_google.yml` will check that Google is working as expected once per day:
 
-```
+```yml
 settings:
   name: Google web server is working OK and shows its title within 2 seconds
   rate: 5 minutes

@@ -1,6 +1,6 @@
 # Install
 
-We have a CLI tool that can be installed with `pip` and a [Github Application](../modes/ci/github.md) to connect with your CI process. Additionally, we can also be launched on [Gitlab](../modes/ci/gitlab.md), with [Jenkins](../modes/ci/jenkins.md) or [Github Actions](../modes/ci/action.md). Of course, our Web interface is also a key component at https://satori.ci to better visualize your results.
+We have a CLI tool that can be installed with `pip` and a [Github Application](../modes/ci/github.md) to connect with your CI process. Additionally, we can also be launched on [Gitlab](../modes/ci/gitlab.md), with [Jenkins](../modes/ci/jenkins.md) or [Github Actions](../modes/ci/action.md). Of course, our Web interface is also a key component at <https://satori.ci> to better visualize your results.
 
 ## Install Satori CLI
 
@@ -32,8 +32,8 @@ satori config token YOUR_TOKEN
 
 Each time you push code to your Github repository, there's a risk that it could affect the security of your project. Furthermore, should your data ever be compromised, it's crucial to minimize the exposure of sensitive information. Two primary areas of concern are:
 
-- Secrets on your code
-- Vulnerable code from yourself or third parties
+* Secrets on your code
+* Vulnerable code from yourself or third parties
 
 Automatically test your GitHub repositories by installing our App:
 
@@ -86,4 +86,3 @@ satori run ./ --output
 ---
 
 If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)
-

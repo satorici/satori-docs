@@ -18,6 +18,7 @@ You can run your playbooks on demand with Satori CLI whenever you:
 ## CI
 
 Whenever you want to test your software automatically, you can use Satori as part of a CI/CD pipeline with:
+
 - Our [Github Application](https://github.com/apps/satorici) to analyze your repositories
 - A [GitHub action](ci/action.md) using the Satori CLI.
 - A [Gitlab](ci/gitlab.md) using the Satori CLI.
@@ -33,6 +34,7 @@ Certain tests have to be executed with a certain frequency. For example:
 - Daily when you are monitoring the security of an AWS environment
 
 Since your remote playbooks are run on live containers, you can define specific assertions about your services, such as:
+
 - Is your domain name responding with the right IP address?
 - Is your login page working with testing credentials?
 - Is your mail server delivering mail?

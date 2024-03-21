@@ -10,7 +10,7 @@ You can take different actions on your reports with the `satori` command and wit
 
 The following command will list your reports on the command line:
 
-```
+```sh
 satori reports
 ```
 
@@ -18,7 +18,7 @@ satori reports
 
 They are listed on the website as well:
 
-- https://satori.ci/reports/
+- <https://satori.ci/reports/>
 
 ![Web Reports](img/execution-data_2.png)
 
@@ -45,13 +45,13 @@ Then this parameters can be used to check specific reports that you are looking 
 
 - Example: _"I want to see all failed reports for the repositories of the account satorici"_
 
-```
+```sh
 satori report --filter="repo=satorici/*,result=fail"
 ```
 
-- Example: _"I want to see a list of reports related to the playbook trufflehog"_
+- Example: *"I want to see a list of reports related to the playbook trufflehog"*
 
-```
+```sh
 satori report --filter="playbook=satori://code/trufflehog"
 ```
 
@@ -64,7 +64,7 @@ A summary of the execution data and the command output with the assertions appli
 
 To view a specific report you need to specify the report ID this way:
 
-```
+```yml
 satori report REPORT_ID
 ```
 
@@ -78,7 +78,7 @@ Or on the web:
 
 The raw output of each command executed (stdout, stderr, testcase, errors).
 
-```
+```yml
 satori report REPORT_ID output
 ```
 
@@ -90,6 +90,6 @@ Or on the web:
 
 Optionally if your execution generates some files you can download them this way using the CLI.
 
-```
+```yml
 satori report REPORT_ID files
 ```

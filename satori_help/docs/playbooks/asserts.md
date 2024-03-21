@@ -64,8 +64,8 @@ test:
     - echo Hello World
 ```
 
-
 - <span style="color:red">Example Fail Test</span>: the program should deliver output, but no output is produced:
+
 ```yml
 test:
     assertStdout: True
@@ -76,11 +76,13 @@ test:
 ---
 
 ## assertStdoutEquals
+
 | Input  | Description                                    |
 |--------|-------------------------------------------------
 | String | Asserts that the output is equal to the String |
 
 - <span style="color:green">Example Pass Test</span>: the program should only output "Hello World", and it does:
+
 ```yml
 test:
     assertStdoutEquals: "Hello World"
@@ -89,6 +91,7 @@ test:
 ```
 
 - <span style="color:red">Example Fail Test</span>: the program should only output "Hello World", but it doesn't:
+
 ```yml
 test:
     assertStdoutEquals: "Hello World"
@@ -105,6 +108,7 @@ test:
 |String | Is the output different than String? |
 
 - <span style="color:green">Example Pass Test</span>: the program output should not be equal to "Hello World", and is not:
+
 ```yml
 test:
     assertStdoutNotEquals: "Hello World"
@@ -119,11 +123,13 @@ test:
 ---
 
 ## assertStdoutContains
+
 | Input | Description |
 |-------|--------------
 | String         | Does the output contain the String?
 
 - <span style="color:green">Example Pass Test</span>: the program output should contain the string "Hello World", and it does:
+
 ```yml
 test:
     assertStdoutContains: "Hello World"
@@ -134,6 +140,7 @@ test:
 ---
 
 ## assertStdoutNotContains
+
 | Input  | Description                             |
 |--------|------------------------------------------
 | String | Does the output not contain the String? |
@@ -152,6 +159,7 @@ test:
 |----------------|-------------------------------------------
 | SHA256Checksum | Is the output equal to this SHA256 hash? |
 - <span style="color:green">Example Pass Test</span>: Network ports of , and it does:
+
 ```yml
 settings:
     name: "Nmap: did any service changed?"
@@ -195,6 +203,7 @@ test:
 | Regex | Does the output not match your regular expression? |
 
 - <span style="color:gray">Example Unknown Test</span>: the program output should not contain the string "Hello World" anywhere on the output, but the input could be mutated to "somethingHello World" and the result depends on the mutation:
+
 ```yml
 test:
     assertStdoutNotRegex: "*Hello World*"
@@ -310,6 +319,7 @@ RunPythonScriptTest:
 |-------|----------------------------------------
 | Regex | Does the error not match your regular expression? |
 - <span style="color:green">Example Pass Test</span>: the program's errors should  not throw a Traceback, and it doesn't:
+
 ```yml
 install:
    - "echo import os > test.py"
@@ -338,6 +348,7 @@ test:
 |---------|-------------------------------------------
 | Integer | Is the return code not equal to the Integer? |
 - <span style="color:green">Example Positive Pass Test</span>: the program should not return the code 0, and it doesn't:
+
 ```yml
 test:
     assertReturnCodeNot: 0
@@ -347,16 +358,19 @@ test:
 ---
 
 ## assertSoftwareExists
+
 | Input | Description |
 |-------|--------------
 | Boolean        | Does the software being executed exists? True by default
 - <span style="color:fail">Example Fail Test</span>: the program should exist, and it does not:
+
 ```yml
 test:
     assertSoftwareExists: True # by default
     run:
     - ./your_program
 ```
+
 ---
 
 ## assertDifferent
@@ -364,6 +378,7 @@ test:
 |---------|----------------------------------------------------------------------
 | Boolean | Does the execution behave differently when using different inputs? |
 - <span style="color:fail">Example Fail Test</span>: the production and staging environment should look the same, and it does not:
+
 ```yml
 API:
 - - "www.example.com"
@@ -374,6 +389,7 @@ test:
     run:
     - curl $API
 ```
+
 ---
 
 ## assertKilled
@@ -390,6 +406,7 @@ test:
     run:
     - sleep 20
 ```
+
 ---
 
 If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)
