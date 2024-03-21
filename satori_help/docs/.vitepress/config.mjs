@@ -5,6 +5,7 @@ export default defineConfig({
   title: "Satori CI Documentation",
   description:
     "Satori CI is an Automated Testing platform that asserts the behavior of command executions. Testing software and systems using our Playbook marketplace or by defining your own playbooks",
+  sitemap: { hostname: "https://docs.satori.ci" },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     search: { provider: "local" },
