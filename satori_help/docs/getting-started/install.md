@@ -63,26 +63,21 @@ Within the repositories that you will connect, you want to create a file named `
 settings:
   name: CI Tests for every push of my Repo
 
+# run `satori playbooks --public` to get a list of public playbooks to import and use on your project
 import:
 - "satori://code/trufflehog.yml"
 
-tests:
-  assertReturnCode: 0
-  build:
-  - make
-  run:
-    assertStdoutContains: "An expected output" # assert the output of    the main system execution of your project
-    your_project:
-    - ./your_project
+# include below additional tests as required for your project
 ```
 
-These are the steps to run it locally:
+Here is an example of a project that imports a playbook, compiles the project and runs it to confirm an expected output:
 
 ```sh
 git clone git@github.com:satoridev01/Hello_C_World.git
 cd Hello_C_World
+cat .satori.yml
 satori run ./ --output
 ```
 ---
 
-If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)
+If you need any help, please reach out to us on [Discord](https://discord.gg/S4VC5Pkhsk) or via [Email](mailto:support@satori-ci.com)
