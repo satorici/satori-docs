@@ -112,9 +112,11 @@ To obtain the workspace ID and channel ID for a Slack Channel, follow these step
 
 1. Go to the web version of Slack and to the channel that you're interested in.
 2. In your web browser's URL bar, you will see a URL that looks like this: <https://app.slack.com/client/T00000000/C00000000>. The part after '/client/' is split into two segments by a slash.
-3. Put the first segment (e.g., 'T00000000') as the workspace ID, and 
-4. The second segment (e.g., 'C00000000') as the channel ID.
-5. Invite the bot to a channel with /invite @SatoriCIBot
+3. In team settings, in your Satori CI dashboard, select your **Team**>**Settings**
+4. Put the first segment (e.g., 'T00000000') of the url in **the Worskspace ID**
+5. Insert your default channel to get notifications in the **Default Channel** field (use this channel for the step 6 & 7)
+6. Select **Add satori to workspace** and follow the intructions on the slack website to add it
+7. Invite the bot to a channel with /invite @SatoriCIBot in the channel on your Slack Workspace
 
 ### Discord
 
