@@ -90,3 +90,58 @@ satori repo https://github.com/satorici/satori-cli/commit/96a654f9efb8962b20a514
 ```
 
 ![Running playbook on a commit](img/repo_8.png)
+
+```
+
+# Managing Parameters for a Repo
+
+If your playbook requires secret parameters that are not meant to be hardcoded (ie, tokens), you can define them through the `params` subcommand.
+
+## Adding a Parameter
+
+To add a new parameter, use the `params add` command with the format:
+
+```
+satori repo <repository> params add '<PARAM_NAME>=<VALUE>'
+```
+
+**Example:**
+
+```
+satori repo satorici/satori-cli params add 'TOKEN=Test123'
+```
+
+This will add a new parameter called `TOKEN` with the value `Test123`.
+
+## Listing Parameters
+
+To list all parameters associated with a repository, use the `params` command:
+
+```
+satori repo <repository> params
+```
+
+**Example:**
+
+```
+satori repo satorici/satori-cli params
+```
+
+This command displays all stored parameters along with their creation details.
+
+## Deleting a Parameter
+
+If you need to delete an existing parameter, use the `params del` command:
+
+```
+satori repo <repository> params del <PARAM_NAME>
+```
+
+**Example:**
+
+```
+satori repo satorici/satori-cli params del TOKEN
+```
+
+This removes the parameter `TOKEN` from the list.
+
