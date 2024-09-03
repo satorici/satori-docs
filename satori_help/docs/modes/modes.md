@@ -42,4 +42,5 @@ Since your remote playbooks are run on live containers, you can define specific 
 ## [Scan](scan.md)
 
 You can run a playbook against all the repositories of a certain account. Scanning either the latests commits of all your repos, or deep scanning all the commits of your repositories to expose the commits that are not following the expected assertions.
-If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)
+
+If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
