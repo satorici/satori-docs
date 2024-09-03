@@ -34,4 +34,4 @@ Example:
 ![inputs on executions](img/execution_1.png)
 This example asserts the output 'Hello World,' leading to one pass and one fail due to the possible combinations. For more information on the assert mechanism, please visit the [asserts](asserts.md) section.
 
-If you need any assistance, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com).
+If you need any assistance, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com).
