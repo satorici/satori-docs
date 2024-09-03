@@ -49,7 +49,7 @@ tests:
 These are the steps to run it locally:
 
 ```sh
-git clone git@github.com:satoridev01/Hello_C_World.git
+git clone https://github.com/satoridev01/Hello_C_World.git
 cd Hello_C_World
 satori run ./ --output
 ```
