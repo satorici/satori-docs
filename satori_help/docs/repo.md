@@ -111,6 +111,8 @@ satori repo <repository> params add '<PARAM_NAME>=<VALUE>'
 satori repo satorici/satori-cli params add 'TOKEN=Test123'
 ```
 
+![Add a parameter to a repo](img/repo_params_0.png)
+
 This will add a new parameter called `TOKEN` with the value `Test123`.
 
 ## Listing Parameters
@@ -144,6 +146,8 @@ satori repo <repository> params del <PARAM_NAME>
 ```
 satori repo satorici/satori-cli params del TOKEN
 ```
+
+![Delete a parameter to a repo](img/repo_params_2.png)
 
 This removes the parameter `TOKEN` from the list.
 
