@@ -56,4 +56,4 @@ Reports, repositories and monitors may have a lot of results that may not fit wi
 
 ## Support
 
-If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)
+If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
