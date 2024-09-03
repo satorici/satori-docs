@@ -97,4 +97,4 @@ The name `import` is not mandatory and the node can be placed in any place (give
 
 Satori validates the schema of your playbook as soon as it is received to ensure the syntax and grammar are correct. If any errors are detected (either from user input or from the system), we will promptly inform you. The error will be shown when viewing your report with `satori report REPORTID` command or from the **Reports** section of the Satori Web.
 
-If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)
+If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
