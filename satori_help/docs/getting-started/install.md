@@ -80,4 +80,4 @@ satori run ./ --output
 ```
 ---
 
-If you need any help, please reach out to us on [Discord](https://discord.gg/S4VC5Pkhsk) or via [Email](mailto:support@satori-ci.com)
+If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
