@@ -73,7 +73,7 @@ import:
 Here is an example of a project that imports a playbook, compiles the project and runs it to confirm an expected output:
 
 ```sh
-git clone git@github.com:satoridev01/Hello_C_World.git
+git clone https://github.com/satoridev01/Hello_C_World.git
 cd Hello_C_World
 cat .satori.yml
 satori run ./ --output
