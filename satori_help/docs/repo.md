@@ -127,6 +127,8 @@ satori repo <repository> params
 satori repo satorici/satori-cli params
 ```
 
+![List parameters associated to a repo](img/repo_params_1.png)
+
 This command displays all stored parameters along with their creation details.
 
 ## Deleting a Parameter
