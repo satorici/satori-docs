@@ -91,7 +91,7 @@ satori repo https://github.com/satorici/satori-cli/commit/96a654f9efb8962b20a514
 
 ![Running playbook on a commit](img/repo_8.png)
 
-```
+---
 
 # Managing Parameters for a Repo
 
