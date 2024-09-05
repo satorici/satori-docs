@@ -2,7 +2,7 @@
 
 # Intro
 
-Satori CI is an Automated Testing platform that asserts the behavior of command executions. Test software, binaries and live systems using our [playbooks](https://github.com/satorici/playbooks/) or by building your own playbooks.
+Satori CI is an automated testing platform designed to validate the behavior of command executions through assertions. It allows to perform testing on software applications, binaries, and live systems using pre-built [playbooks](https://github.com/satorici/playbooks/) or creating own custom playbooks. Satori CI is a versatile tool for in-depth project testing.
 
 ## [Install](getting-started/install.md)
 
