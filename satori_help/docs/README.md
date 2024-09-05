@@ -6,10 +6,9 @@ Satori CI is an automated testing platform designed to validate the behavior of 
 
 ## [Install](getting-started/install.md)
 
-
 Satori offers flexible execution options for your tests, allowing them to run either synchronously or asynchronously.
--Use our [CLI tool]](https://github.com/satorici/satori-cli), which will allow you to execute tests directly from your terminal installed with `pip install satori-ci`.
--Using the [Web]](https://satori.ci) Interface, you can use our web interface to manage and execute your tests without any installation required.
+- Use our [CLI tool](https://github.com/satorici/satori-cli), which will allow you to execute tests directly from your terminal installed with `pip install satori-ci`.
+- Using the [Web](https://satori.ci) Interface, you can use our web interface to manage and execute your tests without any installation required.
 
 ## CI
 
