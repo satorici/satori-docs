@@ -25,3 +25,4 @@ Since the playbook is present in the playbook, we can ask satori to run on this 
 
 `satori repo satoridev01/test.blackbird71SR.Hello-World run --report --output`
 
+[Run Satori on the repo showing the report and the output of 4 Hello World programming languages](img/hello_01.png)
