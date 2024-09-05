@@ -16,14 +16,20 @@ export default defineConfig({
                 text: "Getting Started",
                 link: "/getting-started/install",
                 items: [
-                    { text: "Installation", link: "/getting-started/install" },
-                    { text: "Hello World Test", link: "/getting-started/hello_world" },
+                    { 
+                        text: "Installation", 
+                        link: "/getting-started/install" 
+                    },
+                    { 
+                        text: "Hello World Test", 
+                        link: "/getting-started/hello_world" 
+                    },
                     {
-                        text: "What are Satori Playbooks?",
+                        text: Satori Playbooks",
                         link: "/getting-started/playbooks",
                     },
                     {
-                        text: "Examine the results",
+                        text: "Results",
                         link: "/getting-started/execution-data",
                     },
                 ],
