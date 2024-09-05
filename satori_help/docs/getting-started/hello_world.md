@@ -32,6 +32,8 @@ This is how the output and the report will look like on the console:
 
 ![Run Satori on the repo showing the report and the output of multiple Hello World programming languages](img/hello_01.png)
 
+You can also 
+
 Since we have made the report public with `satori report rLmtEtgJ3EhDFj2A public`, you can also check it out [online](https://satori.ci/report_details/?n=rLmtEtgJ3EhDFj2A):
 
 ![Web report of multiple Hello World programming languages](img/hello_02.png)
