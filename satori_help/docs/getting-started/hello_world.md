@@ -25,7 +25,7 @@ tests:
 
 The previous playbook uses an image that has preinstalled node and python. Bash and Perl come by default, so no need to install them separatedly.
 
-#Running tests without cloning the repository
+**Running tests without cloning the repository**
 
 Since the .satori.yml playbook is present in the repository, running Satori on this repository will automatically use the defined configuration file to execute the tests showing the output and report.
 To run the tests on this repository, use the following command:
@@ -40,21 +40,18 @@ You can also view the report online since we have made it public using the comma
 
 ![Web report of multiple Hello World programming languages](img/hello_02.png)
 
-#Running tests locally
+**Running tests locally**
 
 If you'd like to run a test with code stored on your local machine, you can simulate it by cloning the repository and running the tests:
 
 ```sh
 ~ $ git clone --quiet https://github.com/satoridev01/test.blackbird71SR.Hello-World.git 
 ~ $ cd test.blackbird71SR.Hello-World/
-test.blackbird71SR.Hello-World $ satori run ./ --output --report
 ```
 
 This is how it looks:
 
 ![Run Satori remotely uploading from your code from localhost](img/hello_03.png)
-
-#Executing locally
 
 If you want to run the commands locally and then upload the results to Satori for analysis, use the following command:
 
