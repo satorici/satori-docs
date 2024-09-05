@@ -47,13 +47,14 @@ If you'd like to run a test with code stored on your local machine, you can simu
 ```sh
 ~ $ git clone --quiet https://github.com/satoridev01/test.blackbird71SR.Hello-World.git 
 ~ $ cd test.blackbird71SR.Hello-World/
+test.blackbird71SR.Hello-World $ satori run ./ --output --report
 ```
 
 This is how it looks:
 
 ![Run Satori remotely uploading from your code from localhost](img/hello_03.png)
 
-If you want to run the commands locally and then upload the results to Satori for analysis, use the following command:
+To run the commands locally on your project and then upload the results to Satori for analysis, use the following command:
 
 `satori local ./ --output --report`
 
