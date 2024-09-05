@@ -6,6 +6,7 @@ We have made a fork of that repository and created our own .satori.yml file with
 
 ```yml
 settings:
+  name: Polyglot Hello World Test
   image: nikolaik/python-nodejs
   
 tests:
@@ -21,8 +22,9 @@ tests:
     - python3 HelloWorld.py
 ```
 
-Since the playbook is present in the playbook, we can ask satori to run on this repo showing the report and the output:
+
+Since the playbook is present in the fork that we created, we can run satori on this repo and it will automatically use the .satori.yml defined, showing the report and the output:
 
 `satori repo satoridev01/test.blackbird71SR.Hello-World run --report --output`
 
-[Run Satori on the repo showing the report and the output of 4 Hello World programming languages](img/hello_01.png)
+![Run Satori on the repo showing the report and the output of 4 Hello World programming languages](img/hello_01.png)
