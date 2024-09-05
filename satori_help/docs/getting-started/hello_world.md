@@ -22,9 +22,16 @@ tests:
     - python3 HelloWorld.py
 ```
 
+The previous playbook uses an image that has preinstalled node and python. Bash and Perl come by default, so no need to install them separatedly.
 
-Since the playbook is present in the fork that we created, we can run satori on this repo and it will automatically use the .satori.yml defined, showing the report and the output:
+Since the playbook is present in the repository, we can run satori on this repo and it will automatically use the .satori.yml defined, showing the report and the output:
 
-`satori repo satoridev01/test.blackbird71SR.Hello-World run --report --output`
+`satori repo satoridev01/test.blackbird71SR.Hello-World run --output --report `
 
-![Run Satori on the repo showing the report and the output of 4 Hello World programming languages](img/hello_01.png)
+This is how the output and the report will look like on the console:
+
+![Run Satori on the repo showing the report and the output of multiple Hello World programming languages](img/hello_01.png)
+
+Since we have made the report public with `satori report rLmtEtgJ3EhDFj2A public`, you can also check it out [online](https://satori.ci/report_details/?n=rLmtEtgJ3EhDFj2A):
+
+![Web report of multiple Hello World programming languages](img/hello_02.png)
