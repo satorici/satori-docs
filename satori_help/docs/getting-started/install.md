@@ -55,29 +55,8 @@ Select on which accounts you will be setting it up.
 
 Once you are done, click on **Save**. We care about your security, so we will only store your email, your repositories names, and the reports. Your code only lives within the virtual machines that are present during the execution.
 
-**4) Create your first .satori.yml file**
-
-Within the repositories that you will connect, you want to create a file named `.satori.yml`. This file will contain the tests that you will executing on every push. Let's keep it simple, and start checking for secrets with Trufflehog:
-
-```yml
-settings:
-  name: CI Tests for every push of my Repo
-
-# run `satori playbooks --public` to get a list of public playbooks to import and use on your project
-import:
-- "satori://code/trufflehog.yml"
-
-# include below additional tests as required for your project
-```
-
-Here is an example of a project that imports a playbook, compiles the project and runs it to confirm an expected output:
-
-```sh
-git clone https://github.com/satoridev01/Hello_C_World.git
-cd Hello_C_World
-cat .satori.yml
-satori run ./ --output
-```
 ---
+
+Now it would be a good time to follow up on how to test a [Hello World](hello_world.md) to break the ice and get you on practical examples right away.
 
 If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
