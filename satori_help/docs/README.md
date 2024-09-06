@@ -12,7 +12,7 @@ Satori offers flexible execution options for your tests, allowing them to run ei
 
 ## CI
 
-You can integrate Satori with various CI/D tools:
+You can integrate Satori with various CI/CD tools:
 - Our [Github Application](https://github.com/apps/satorici) to analyze your repositories
 - A [GitHub action](modes/ci/action.md) using the Satori CLI.
 - A [Gitlab](modes/ci/gitlab.md) using the Satori CLI.
