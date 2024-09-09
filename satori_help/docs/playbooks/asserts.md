@@ -5,7 +5,7 @@ You can assert what will be the behavior of [executions](execution.md):
 | Assert                  | Value          | Description                                                            |
 |-------------------------|----------------|------------------------------------------------------------------------|
 | assertStdout            | Boolean        | Is output produced?
-| assertStdoutEquals      | String\*       | Is the output equal to the String?
+| assertStdoutEquals      | String         | Is the output equal to the String?
 | assertStdoutNotEquals   | String         | Is the output different than the String?
 | assertStdoutContains    | String         | Does the output contain the String?
 | assertStdoutNotContains | String         | Does the output not contain the String?
@@ -13,7 +13,7 @@ You can assert what will be the behavior of [executions](execution.md):
 | assertStdoutRegex       | Regex          | Does the output match your regular expression?
 | assertStdoutNotRegex    | Regex          | Does the output not match your regular expression?
 | assertStderr            | Boolean        | Are errors produced?
-| assertStderrEquals      | String\*       | Is the error equal to the String?
+| assertStderrEquals      | String         | Is the error equal to the String?
 | assertStderrNotEquals   | String         | Is the error different than the String?
 | assertStderrContains    | String         | Does the error contain the String?
 | assertStderrNotContains | String         | Does the error not contain the String?
@@ -47,6 +47,22 @@ HelloWorld:
   setSeverity: 1
   echo:
   - echo Hello World
+```
+
+You can also define multiple strings that should much, such as the following case:
+```yml
+install:
+  - apt update
+  - apt install -qy curl
+
+test:
+  assertStdoutContains: 
+  - HTTP/2 200
+  - Satori CI
+  - info@satori-ci.com
+  - nonexistentstring
+  satori:
+    - curl -si https://satori.ci
 ```
 
 ---
