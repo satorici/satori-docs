@@ -1,6 +1,6 @@
 * Getting started
   * [Installation](/getting-started/install.md)
-  * [Hello World Test](/getting-started/hello_world.md)
+  * [Polyglot Hello World Test](/getting-started/hello_world.md)
   * [Satori Playbooks](/getting-started/playbooks.md)
   * [Results](/getting-started/execution-data.md)
 * [Playbooks](/playbooks/language.md)
