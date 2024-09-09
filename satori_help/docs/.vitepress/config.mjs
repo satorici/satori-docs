@@ -25,7 +25,7 @@ export default defineConfig({
                         link: "/getting-started/hello_world" 
                     },
                     {
-                        text: Satori Playbooks",
+                        text: "Satori Playbooks",
                         link: "/getting-started/playbooks",
                     },
                     {
