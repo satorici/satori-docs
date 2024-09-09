@@ -49,9 +49,8 @@ To ensure the security of your project and minimize the risk of exposing sensiti
    
    ![Install Satori CI on your account](../modes/ci/img/github_2.png)
 
-**Step 2: Configure the App**
-1. Choose the GitHub accounts where you want to set up the Satori CI App.
-2. Select the repositories where you want to install the app. You can choose specific repositories or select **All repositories**.
+3. Choose the GitHub accounts where you want to set up the Satori CI App.
+4. Select the repositories where you want to install the app. You can choose specific repositories or select **All repositories**.
    
   ![Select your Github repositories where you will use Satori](../modes/ci/img/github_3.png)
 
