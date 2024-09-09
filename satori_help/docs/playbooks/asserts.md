@@ -158,27 +158,27 @@ test:
 | Input          | Description                              |
 |----------------|-------------------------------------------
 | SHA256Checksum | Is the output equal to this SHA256 hash? |
-- <span style="color:green">Example Pass Test</span>: Network ports of , and it does:
+- <span style="color:green">Example Pass Test</span>: Google's root webpage hash has not changed:
 
-```yml
-settings:
-    name: "Nmap: did any service changed?"
+If an output should be equal to a certain hash, to confirm that its original value has not changed, you can verify that with an assert. Consider for example how Google shows consistently the same hash,that at the time of writing this is `b52854d1f79de5ebeebf0160447a09c7a8c2cde4`:
 
-install:
-    assertReturnCode: 0
-    updates:
-    - apt update
-    nmap:
-    - apt install -y nmap
-nmap:
-    assertReturnCode: 0
-    run:
-    - nmap -n www.example.com -Pn -p21,22,80,443,3000,3306,5432 -sT -oG nmap
-    services:
-      assertStdoutSHA256:
-      - "e3b0c44298fc1c142afbf4c8996fb92427ac41e4649b934ca49599ab7852b855"
-      running:
-      - "grep Ports nmap | sort -u" # the assert will calculate the hash value of this output and compare if there are differences
+```sh
+$ date; curl -s https://google.com | shasum
+Mon Sep  9 08:42:00 -03 2024
+b52854d1f79de5ebeebf0160447a09c7a8c2cde4  -
+$ date; curl -s https://google.com | shasum
+Mon Sep  9 08:42:01 -03 2024
+b52854d1f79de5ebeebf0160447a09c7a8c2cde4  -
+```
+
+You could assert that the output is consistent with that hash:
+```sh
+$ cat google_sha256.yml 
+test:
+  assertStdoutSHA256: b52854d1f79de5ebeebf0160447a09c7a8c2cde4
+  google:
+    - curl -s https://google.com | shasum
+$ satori local google_sha256.yml --output --report
 ```
 
 ---
