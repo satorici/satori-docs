@@ -1,4 +1,4 @@
-# Hello World Test
+# Polyglot Hello World Test
 
 The "Hello World" program is the most basic example in any programming language. 
 In this guide, we’ll use this concept to create a test that can be executed across multiple languages using Satori. This will help verify that a basic program can correctly output "Hello World" to the console.
