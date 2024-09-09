@@ -42,13 +42,17 @@ To ensure the security of your project and minimize the risk of exposing sensiti
 **Step 1: Install the Satori CI GitHub App**
 
 1. Go to the [Satori CI GitHub App page](https://github.com/apps/satorici). Make sure you are authenticated with GitHub to proceed with the installation.
+   
    ![Satori CI Github Install](../modes/ci/img/github_1.png)
-3. Click on **Configure**.
+   
+2. Click on **Configure**.
+   
    ![Install Satori CI on your account](../modes/ci/img/github_2.png)
 
 **Step 2: Configure the App**
 1. Choose the GitHub accounts where you want to set up the Satori CI App.
 2. Select the repositories where you want to install the app. You can choose specific repositories or select **All repositories**.
+   
   ![Select your Github repositories where you will use Satori](../modes/ci/img/github_3.png)
 
 Once you are done, click on **Save**. We care about your security, so we will only store your email, your repositories names, and the reports. Your code only lives within the virtual machines that are present during the execution.
