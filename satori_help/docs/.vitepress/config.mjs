@@ -21,7 +21,7 @@ export default defineConfig({
                         link: "/getting-started/install" 
                     },
                     { 
-                        text: "Hello World Test", 
+                        text: "Polyglot Hello World Test", 
                         link: "/getting-started/hello_world" 
                     },
                     {
