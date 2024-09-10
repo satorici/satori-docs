@@ -17,5 +17,6 @@
   * [Run](/modes/run.md)
   * [Monitor](/modes/monitor.md)
   * [Scan](/modes/scan.md)
+* [Notifications](/notifications.md)
 * [Repositories](/repo.md)
 * [Teams](/teams.md)
