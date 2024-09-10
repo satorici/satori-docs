@@ -2,7 +2,7 @@
 
 Satori CLI runs playbooks on demand. Here are some use cases:
 
-### Run a Local Playbook
+### Run a Playbook remotely
 
 This playbook named `hello.yml`:
 
@@ -24,7 +24,7 @@ Can be run:
 
 ![Run aync and async](img/run_1.png)
 
-## Run a Playbook with Parameters
+## Run a Playbook remotely with Parameters
 
 If you include a ${{variable}} within your playbook that is not defined within your playbook, they will be parameters required when being called. Consider the playbook named `satori://test.yml` that will echo the ${{WHAT}} parameter:
 
@@ -37,7 +37,7 @@ test:
   - echo ${{WHAT}}
 ```
 
-You will execute it like this to run it locally for example
+You will execute it like this
 
 ![Run with params](img/run_2.png)
 
