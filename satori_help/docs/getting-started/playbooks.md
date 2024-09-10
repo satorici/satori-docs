@@ -1,21 +1,20 @@
 # Playbooks overview
 
-In Satori, the files where testing procedures are defined are known as Playbooks. These files use YAML syntax and have the ".yml" file extension.
+In Satori, testing procedures are defined in files known as Playbooks. These Playbooks utilize YAML syntax and are saved with the ".yml" file extension.
 
-Playbooks may contain a variety of components such as settings, imports, tests, executions, and asserts. All of these elements follow a specific language specification[1].
+A Playbook may include several key components such as settings, imports, tests, executions, and asserts. Each component follows a specific language specification to ensure consistency and functionality across different Playbooks.
 
 ## Writing your first playbook
 
-In order to test something we first need to get the information. The way to do this is executing commands to get the outputs: stdout, stderr, return code, time spent, etc.
-
-How can you express this? Simple:
+To begin testing with Satori, you first need to gather information by executing commands. These commands can produce various outputs such as stdout, stderr, return codes, and time spent.
+Here’s a basic example of how to execute a command:
 
 ```yml
 execute:
   - [echo Hello world!]
 ```
 
-This execution may or may not be correct. We want to know if the return code is zero and if the output contains a certain string:
+In this example, the command `echo Hello world!` is executed. However, to validate whether the command works as expected, you need to add assertions. For instance, you can check if the return code is zero and if the output contains a specific string:
 
 ```yml
 test:
@@ -26,7 +25,7 @@ test:
     - [echo Hello world!]
 ```
 
-Now we have an actual test: an execution with an assertion. We can have many tests in a single playbook, and also nested tests. Here's something interesting, the `cmd` execution inherits all the 2 assertions and `execute` only gets the return code check:
+In this setup, you have a test that includes both execution and assertions. You can define multiple tests within a single Playbook, and tests can also be nested. For example:
 
 ```yml
 test:
@@ -41,7 +40,9 @@ test:
     - [echo Hello world!]
 ```
 
-But what if you want to tests many cases? You can reference inputs this way:
+In this case, the `nested-test` will check if the output contains the string "Bye" while inheriting the assertion of a zero return code from the parent `test`.
+
+If you need to test multiple cases, you can use input references:
 
 ```yml
 test:
@@ -54,14 +55,15 @@ test:
   execute:
     - [echo $(input)]
 ```
-
-You can read more about the [language](../playbooks/language.md) features and the possible [asserts](../playbooks/asserts.md).
+In this example, the `input` list provides different values to the command `echo`, allowing you to test multiple scenarios.
+For more details about the [language](../playbooks/language.md) features and available [asserts](../playbooks/asserts.md).
 
 # Running playbooks
 
-Now you have your shiny new playbook but how to make it do something? We present you two ways to do it.
+Once you’ve created your Playbook, you need to know how to execute it. There are two primary methods for running Playbooks in Satori:
 
-## CLI
+## 1. Command Line Interface (CLI)
+To run a Playbook from the command line, use the following command:
 
 ```bash
 satori run hello.yml
@@ -69,7 +71,8 @@ satori run hello.yml
 
 ![Hello World Report](img/playbooks_1.png)
 
-You can explore more functions in the CLI reference but here are some highlights. By running the previous command your playbook will be submitted and run asynchronously, but if you use `--sync`, `--report`, `--output` or `--files` it'll run in sync mode, the last three will also show additional data accordingly.
+This command submits your Playbook and runs it asynchronously by default. You can use additional flags like `--sync`, `--report`, `--output` or `--files` to customize the execution
+For more details on CLI options and functions, refer to the [CLI Reference](#).
 
 For example `--output` will display each command output: stdout, stderr, return code, etc.
 
@@ -77,8 +80,13 @@ For example `--output` will display each command output: stdout, stderr, return 
 
 ## CI
 
-You can have a playbook named `.satori.yml` in the root of your GitHub repository. If you have the GitHub App installed, with each push the playbook will be run against the repository contents.
+## 2. Continuous Integration (CI)
+
+You can also run your Playbook automatically using GitHub. To do this:
+1. Create a Playbook named `.satori.yml` in the root directory of your GitHub repository.
+2. Ensure the Satori GitHub App is installed and configured for your repository.
+   
+With this setup, the Playbook will be executed with each push to the repository.
 
 See more about that in [GitHub CI](../modes/ci/github.md)
-
 For more ways to run your playbooks visit the [execution modes](../modes/modes.md) section.
