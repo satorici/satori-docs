@@ -2,10 +2,6 @@
 
 Satori CLI runs playbooks on demand. Here are some use cases:
 
-### Run a Playbook locally
-
-TBC
-
 ### Run a Playbook remotely
 
 This playbook named `hello.yml`:
@@ -94,7 +90,7 @@ tests:
 
 You would use it like this when developing locally before pushing, or when being used as part of Github Actions or Jenkins.
 
-### Run a Public Playbook
+### Run a public Playbook
 
 You can run on-demand public playbooks. You can see a list of the publicly available playbooks with: `satori playbook --public`
 
@@ -107,6 +103,10 @@ satori run satori://some/playbook.yml
 ![Run a public playbook with a parameter](img/run_4.png)
 
 You would run it like this when there is a public playbook that already addresses your problem.
+
+### Run a Playbook locally
+
+TBC
 
 ### Run a Monitor
 
