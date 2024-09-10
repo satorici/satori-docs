@@ -26,14 +26,18 @@ Can be run:
 
 ## Run a Playbook with Parameters
 
-If you define $(variables) within your playbook that are not satisfied, they will be considered expected parameters when being called. Consider this playbook named `params.yml` that will echo "Hello" along with the name provided as a parameter:
+If you include a ${{variable}} within your playbook that is not defined within your playbook, they will be parameters required when being called. Consider the playbook named `satori://test.yml` that will echo the ${{WHAT}} parameter:
 
 ```yml
-input:
-- - Hello
-test:
-- echo ${{input}} ${{name}}
+test:                                                                                                                                                                             
+  assertStdoutContains: Hello World                                                                                                                                               
+  hello:                                                                                                                                                                          
+  - echo Hello World                                                                                                                                                              
+  whatever:                                                                                                                                                                       
+  - echo ${{WHAT}}
 ```
+
+You will execute it like this to run it locally for example
 
 ![Run with params](img/run_2.png)
 
