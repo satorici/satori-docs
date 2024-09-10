@@ -68,22 +68,26 @@ int main() {
 all: hello
 
 hello: main.c
-  gcc -o hello main.c
+	gcc -o hello main.c
 ```
 
 - **.satori.yml**:
 
 ```yml
+install:
+  updates:
+    - apt update >> /dev/null
+  dependencies:
+    - apt install -qy make gcc >> /dev/null
+
 tests:
   assertReturnCode: 0
-  install:
-  - apt install -qq -y make gcc
   build:
-  - make
+    - make
   run:
     assertStdoutContains: "Hello World"
     hello:
-    - ./hello
+      - ./hello
 ```
 
 ![Run with the files in the Local Directory](img/run_3.png)
