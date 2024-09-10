@@ -20,6 +20,7 @@ pip3 install satori-ci
 ![PiPY install](img/install_1.png)
 
 **Step 2: Obtain Your Satori Token**
+
 To use Satori-CI, you need to get your API Token. Follow these steps:
 
 1. Log in to the Satori website using your GitHub credentials at [https://satori.ci/login](https://satori.ci/login).
@@ -27,6 +28,7 @@ To use Satori-CI, you need to get your API Token. Follow these steps:
 3. Copy your API Token.
 
 **Step 3: Configure Satori-CI**
+
 Replace the placeholder `YOUR_TOKEN` on the next command with the API Token you copied in the previous step :
 
 ```console
