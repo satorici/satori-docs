@@ -6,13 +6,12 @@ next:
 
 # Install
 
-We have a CLI tool that can be installed with `pip` and a [Github Application](../modes/ci/github.md) to connect with your CI process. Additionally, we can also be launched on [Gitlab](../modes/ci/gitlab.md), with [Jenkins](../modes/ci/jenkins.md) or [Github Actions](../modes/ci/action.md). Of course, our Web interface is also a key component at <https://satori.ci> to better visualize your results.
+We offer various installation options and integrations to fit your development workflow. You can connect Satori via CLI, which can be installed using pip, or integrate it with your [Github Application](../modes/ci/github.md). Additionally,we support integration with other CI/CD platforms such as  [Gitlab](../modes/ci/gitlab.md), [Jenkins](../modes/ci/jenkins.md), and [Github Actions](../modes/ci/action.md). To enhance your experience and better visualize of your test results, we provide ca user-friendly web interface <https://satori.ci>, to better visualize your test results.
 
 ## Install Satori CLI
+**Step 1: Install the Satori-CI CLI**
 
-Three steps:
-
-1. Execute in your command line terminal:
+Open your command line terminal and execute the following command to install the Satori CLI:
 
 ```console
 pip3 install satori-ci
@@ -20,13 +19,15 @@ pip3 install satori-ci
 
 ![PiPY install](img/install_1.png)
 
-2. With Satori CLI installed, now we need to get a Satori Token to use it:
+**Step 2: Obtain Your Satori Token**
+To use Satori-CI, you need to get your API Token. Follow these steps:
 
-  * Log in the Satori website using Github credentials: https://satori.ci/login
-  * On the Satori website go to Settings->Teams
-  * Copy your API Token
+1. Log in to the Satori website using your GitHub credentials at [https://satori.ci/login](https://satori.ci/login).
+2. Navigate to `Settings` -> `Teams`.
+3. Copy your API Token.
 
-3. Replace the string YOUR_TOKEN with your clipboard on the next command:
+**Step 3: Configure Satori-CI**
+Replace the placeholder `YOUR_TOKEN` on the next command with the API Token you copied in the previous step :
 
 ```console
 satori config token YOUR_TOKEN
@@ -36,33 +37,30 @@ satori config token YOUR_TOKEN
 
 ## Install Satori CI Github App
 
-Each time you push code to your Github repository, there's a risk that it could affect the security of your project. Furthermore, should your data ever be compromised, it's crucial to minimize the exposure of sensitive information. Two primary areas of concern are:
+To ensure the security of your project and minimize the risk of exposing sensitive information, you can automatically test your GitHub repositories by installing the Satori CI GitHub App. Follow these steps:
 
-* Secrets on your code
-* Vulnerable code from yourself or third parties
+**Step 1: Install the Satori CI GitHub App**
 
-Automatically test your GitHub repositories by installing our App:
-
-**1) Satori CI for Github** <https://github.com/apps/satorici>
-
+1. Go to the [Satori CI GitHub App page](https://github.com/apps/satorici). Make sure you are authenticated with GitHub to proceed with the installation.
+   
 ![Satori CI Github Install](../modes/ci/img/github_1.png)
-
-Be mindful that you need to be authenticated to configure it.
-
-**2) Click on Configure**
-
+   
+2. Click on **Configure**.
+   
 ![Install Satori CI on your account](../modes/ci/img/github_2.png)
 
-Select on which accounts you will be setting it up.
-
-**3) Select the repositories where you will be installing it or select all repositories**
-
+3. Choose the GitHub accounts where you want to set up the Satori CI App.
+4. Select the repositories where you want to install the app. You can choose specific repositories or select **All repositories**.
+   
 ![Select your Github repositories where you will use Satori](../modes/ci/img/github_3.png)
 
 Once you are done, click on **Save**. We care about your security, so we will only store your email, your repositories names, and the reports. Your code only lives within the virtual machines that are present during the execution.
 
 ---
+### Next Steps
 
-Now it would be a good time to follow up on how to test a [Hello World](hello_world.md) to break the ice and get you on practical examples right away.
+Now that the Satori CI GitHub App is installed and configured, you can proceed to learn how to test a "Hello World" example to get started with practical testing
+
+---
 
 If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
