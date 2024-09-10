@@ -2,6 +2,10 @@
 
 Satori CLI runs playbooks on demand. Here are some use cases:
 
+### Run a Playbook locally
+
+TBC
+
 ### Run a Playbook remotely
 
 This playbook named `hello.yml`:
