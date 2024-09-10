@@ -61,7 +61,7 @@ Once you are done, click on **Save**. We care about your security, so we will on
 ---
 ### Next Steps
 
-Now that the Satori CI GitHub App is installed and configured, you can proceed to learn how to test a "Hello World" example to get started with practical testing
+Now that the Satori CI GitHub App is installed and configured, you can proceed to learn how to test a "[Hello World](..getting-started/hello_world.md)" example to get started with practical testing
 
 ---
 
