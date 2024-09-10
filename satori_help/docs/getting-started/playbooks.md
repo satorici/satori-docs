@@ -62,7 +62,7 @@ For more details about the [language](../playbooks/language.md) features and ava
 
 Once you’ve created your Playbook, you need to know how to execute it. There are two primary methods for running Playbooks in Satori:
 
-## 1. Command Line Interface (CLI)
+#### 1. Command Line Interface (CLI)
 To run a Playbook from the command line, use the following command:
 
 ```bash
@@ -78,9 +78,7 @@ For example `--output` will display each command output: stdout, stderr, return 
 
 ![Hello World Output](img/playbooks_2.png)
 
-## CI
-
-## 2. Continuous Integration (CI)
+##### 2. Continuous Integration (CI)
 
 You can also run your Playbook automatically using GitHub. To do this:
 1. Create a Playbook named `.satori.yml` in the root directory of your GitHub repository.
