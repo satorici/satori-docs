@@ -63,6 +63,7 @@ export default defineConfig({
                 ],
             },
             { text: "Repositories", link: "/repo" },
+            { text: "Notifications", link: "/notifications" },
             { text: "Teams", link: "/teams" },
         ],
 
