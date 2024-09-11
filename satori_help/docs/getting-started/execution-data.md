@@ -42,13 +42,13 @@ This parameters can be used to check and filter specific reports that you are lo
 - Example: _"I want to see all failed reports for the repositories of the account satorici"_
 
 ```sh
-satori report --filter="repo=satorici/*,result=fail"
+satori reports --filter="repo=satorici/*,result=fail"
 ```
 
 - Example: *"I want to see a list of reports related to the playbook trufflehog"*
 
 ```sh
-satori report --filter="playbook=satori://code/trufflehog"
+satori reports --filter="playbook=satori://code/trufflehog"
 ```
 
 #### Pagination
