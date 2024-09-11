@@ -11,7 +11,7 @@ Here’s a basic example of how to execute a command:
 
 ```yml
 execute:
-  - [echo Hello world!]
+  - echo Hello world!
 ```
 
 In this example, the command `echo Hello world!` is executed. However, to validate whether the command works as expected, you need to add assertions. For instance, you can check if the return code is zero and if the output contains a specific string:
@@ -22,7 +22,7 @@ test:
   assertReturnCode: 0
 
   execute:
-    - [echo Hello world!]
+    - echo Hello world!
 ```
 
 In this setup, you have a test that includes both execution and assertions. You can define multiple tests within a single Playbook, and tests can also be nested. For example:
@@ -34,10 +34,10 @@ test:
   nested-test:
     assertStdoutContains: Bye
     cmd:
-      - [echo Bye, see you later!]
+      - echo Bye, see you later!
 
   execute:
-    - [echo Hello world!]
+    - echo Hello world!
 ```
 
 In this case, the `nested-test` will check if the output contains the string "Bye" while inheriting the assertion of a zero return code from the parent `test`.
@@ -53,7 +53,7 @@ test:
     - See you later!
 
   execute:
-    - [echo $(input)]
+    - echo ${{input}}
 ```
 In this example, the `input` list provides different values to the command `echo`, allowing you to test multiple scenarios.
 For more details about the [language](../playbooks/language.md) features and available [asserts](../playbooks/asserts.md).
@@ -72,7 +72,7 @@ satori run hello.yml
 ![Hello World Report](img/playbooks_1.png)
 
 This command submits your Playbook and runs it asynchronously by default. You can use additional flags like `--sync`, `--report`, `--output` or `--files` to customize the execution
-For more details on CLI options and functions, refer to the [CLI Reference](#).
+For more details on CLI options and functions, refer to the [CLI Reference](../modes/run.md).
 
 For example `--output` will display each command output: stdout, stderr, return code, etc.
 
