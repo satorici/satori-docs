@@ -51,10 +51,6 @@ You can define these notifications within your [Team settings](https://www.sator
 
 We process the *output* to produce *reports* based on the *files* that were generated. We can also let you know about the difference between consecutive reports to identify whenever you are fixing -or introducing new- bugs. You can access your reports using on the [reports section of the Web](https://www.satori-ci.com/reports/) or with the CLI: `satori reports`.
 
-## Pagination
-
-Reports, repositories and monitors may have a lot of results that may not fit within a page. You will find a pagination system for the web and you can use the `-p #` parameter in the command line to see the additional pages for the previous results.
-
 ## Support
 
 If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
