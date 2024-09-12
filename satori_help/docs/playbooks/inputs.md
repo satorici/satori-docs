@@ -1,5 +1,26 @@
 # Inputs
 
+Software may require inputs that can be either defined within the playbook or to be left undefined so its is parametrized at the moment of being executed.
+
+## Parametrized
+
+Consider the following playbook `satori://test.yml` that has a variable defined as `${{WHAT}}` that is not defined within the playbook:
+
+```yml
+test:
+  assertStdoutContains: Hello World
+  hello:
+    - echo Hello World
+  whatever:
+    - echo ${{WHAT}}
+```
+
+Whenever referencing that playbook, you will define the value of `${{WHAT}}`
+
+![Parametrized inputs](img/inputs_0.png)
+
+## Defined within the playbook
+
 Inputs can be grouped under any non reserved word (settings, assert*)
 
 ```yml
@@ -51,7 +72,7 @@ echo:
 
 ## Mutations
 
-Input can be mutated. Mutations are always different than the original string. They are specified as follow:
+Inputs can be mutated to test how software behaves with unexpected values. Mutations can be based on the original string, but they always different. They are specified as follow:
 
 ```yml
 input:
