@@ -1,6 +1,8 @@
 # Inputs
 
-Software may use inputs that can be either defined within the playbook or to be left undefined within the playbook so it is defined at the moment of execution.
+When testing a system the behaviors are analyzed depending on the inputs used to understand what outputs are produced from a [black box perspective](https://en.wikipedia.org/wiki/Black_box). 
+ 
+Software may use inputs that can be either defined within the playbook or to be left undefined within the playbook so it is defined at the moment of execution. Inputs may be valid or invalid to test the behavior of a piece of software from a black-box perspective.
 
 ## Parametrized
 
