@@ -22,13 +22,17 @@ For example, the following file `monitor.yml` checks that the Satori website is 
 
 ```yml
 settings:
-    name: "Verify Satori's website"
+    name: "Test Satori CI's Website"
     rate: 10 minutes
+    image: curlimages/curl:7.83.1
 
 test:
-    assertStdoutContains: "Satori CI"
+    assertStdoutContains:
+      - HTTP/2 200
+      - Satori CI
+
     curl:
-    - curl -s https://www.satori-ci.com
+      - curl -is https://satori.ci
 ```
 
 To install this playbook, you just need to run it:
