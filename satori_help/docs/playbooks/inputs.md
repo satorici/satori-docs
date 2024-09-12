@@ -1,6 +1,6 @@
 # Inputs
 
-Software may require inputs that can be either defined within the playbook or to be left undefined within the playbook so it is defined at the moment of execution.
+Software may use inputs that can be either defined within the playbook or to be left undefined within the playbook so it is defined at the moment of execution.
 
 ## Parametrized
 
@@ -15,13 +15,13 @@ test:
     - echo ${{WHAT}}
 ```
 
-Whenever referencing that playbook, you will define the value of `${{WHAT}}`
+Whenever referencing that playbook, you will pass the value of `${{WHAT}}`
 
 ![Parametrized inputs](img/inputs_0.png)
 
 ## Defined within the playbook
 
-Inputs may be defined as testcases for the software to be executed. On the following example, the `echo` test will iterate throughout the different values defined in `input`:
+Inputs may be defined within the playbook under any name for the software to be executed. On the following example, the `echo` test will iterate throughout the different values defined for `input`:
 
 ```yml
 input:
