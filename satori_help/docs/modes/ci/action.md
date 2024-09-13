@@ -46,7 +46,7 @@ Click on **Commit Changes**
 
 ![](img/github_action_5.png)
 
-**6) Enter SATORITOKEN as the `Name` of your secret and paste on the `Secret` your `Team API Token` (https://www.satori-ci.com/team-settings/)**
+**6) Enter SATORITOKEN as the `Name` of your secret and paste on the `Secret` your `Team API Token`. You can find it going to you [Dashboard](https://satori.ci/dashboard), select your team, click on `Settings` and copy your `Team API token`**
 
 ![](img/github_action_6.png)
 
