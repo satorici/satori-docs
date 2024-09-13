@@ -30,8 +30,8 @@ jobs:
           SATORITOKEN: ${{ secrets.TOKEN }}
         run: |
           pip3 install satori-ci
-          satori-cli config token $SATORITOKEN
-          satori-cli run ./ -s
+          satori config token $SATORITOKEN
+          satori run ./ -s
 ```
 
 Click on **Commit Changes**
