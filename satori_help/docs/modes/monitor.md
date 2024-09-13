@@ -22,7 +22,7 @@ For example, the following file `monitor.yml` checks that the Satori website is 
 
 ```yml
 settings:
-    name: "Test Satori CI's Website"
+    name: "Verify Satori's Login"
     rate: 10 minutes
     image: curlimages/curl:7.83.1
 
@@ -54,14 +54,6 @@ satori monitors
 
 ![List Monitor](img/monitor_2.png)
 
-In case you want to list those monitors that are in a failed state and have pending actions, you would use `--pending` the parameter:
-
-```sh
-satori monitors --pending
-```
-
-![Pending Actions on Monitor](img/monitor_3.png)
-
 ### Stop and Start Monitors
 
 Now, besides listing your monitors, you may want to stop them.
@@ -77,6 +69,18 @@ satori monitor MONITOR_ID start
 ```
 
 ![Start and Stop a Monitor](img/monitor_4.png)
+
+### Monitor's Reports
+
+You can list the reports associated to a monitor by using the command:
+
+```sh
+satori monitor ID
+```
+
+Consider the following example:
+
+![Monitor's reports](img/monitor_41.png)
 
 ### Clean reports and Delete Monitors
 
