@@ -108,6 +108,6 @@ You would run it like this when there is a public playbook that already addresse
 
 The playbook named `hello.yml` that we ran before remotely can also be executed locally and the assertion results will be confirmed by Satori:
 
-![Run locally aync and async](img/run_5.png)
+![Run locally aync and async](img/run_local.png)
 
 [Learn more about Monitors](monitor.md)
