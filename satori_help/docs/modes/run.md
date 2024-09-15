@@ -1,8 +1,8 @@
 # Run
 
-Satori CLI runs playbooks on demand. Here are some use cases:
+Satori runs remotely in our platform or locally where it is being executed. 
 
-### Run a Playbook remotely
+## Run Remotely
 
 This playbook named `hello.yml`:
 
@@ -22,9 +22,9 @@ Can be run:
 - With `--report`: synchronously and it shows the report when it is complete
 - With `--output`: synchronously and it shows the output when it is complete
 
-![Run aync and async](img/run_1.png)
+![Run remotely aync and async](img/run_1.png)
 
-## Run a Playbook remotely with Parameters
+## Run Remotely with Parameters
 
 If you include a ${{variable}} within your playbook that is not defined within your playbook, they will be parameters required when being called. Consider the playbook named `satori://test.yml` that will echo the ${{WHAT}} parameter:
 
@@ -104,29 +104,10 @@ satori run satori://some/playbook.yml
 
 You would run it like this when there is a public playbook that already addresses your problem.
 
-### Run a Playbook locally
+### Run Locally
 
-TBC
+The playbook named `hello.yml` that we ran before remotely can also be executed locally and the assertion results will be confirmed by Satori:
 
-### Run a Monitor
-
-When adding the rate or schedule setting, you will be running a playbook with a certain frequency. This playbook named `monitor_google.yml` will check that Google is working as expected once per day:
-
-```yml
-settings:
-  name: Google web server is working OK and shows its title within 2 seconds
-  rate: 5 minutes
-  image: dwdraju/alpine-curl-jq
-
-test:
-  assertStdoutContains:
-  - "HTTP/2 200"
-  - "<title>Google</title>"
-  google:
-  - curl -si https://www.google.com --connect-timeout 2
-```
-
-Example execution:
-![Monitor Google](img/run_5.png)
+![Run locally aync and async](img/run_5.png)
 
 [Learn more about Monitors](monitor.md)
