@@ -1,23 +1,23 @@
 
 # Executions
 
-The execution occurs whenever your test includes a specific element. For clarity, an "element" refers to any test component that triggers an action. For example:
+In Satori, an execution happens when your test includes a specific element that triggers an action. Here, an "element" refers to any component of the test that initiates a command or process. For example:
 
 ```yml
 echo_stdout:
 - echo 'Hello World'
 ```
 
-Commands will automatically execute under a shell, or you can ensure execution by enclosing commands in quotes:
+Commands defined in your Playbook will be executed automatically within a shell environment. For clarity and to ensure proper execution, you can enclose commands in quotes.
 
 ```yml
 echo_file:
 - "echo 'Hello World' > file"
 ```
 
-## Inputs on Executions
+## Inputs in Executions
 
-It should be noted that [inputs](inputs.md) can be defined to be used as part of the executions. For instance:
+[Inputs](inputs.md) allow you to define parameters that can be used dynamically during the execution of your tests. 
 
 ```yml
 salute:
@@ -31,7 +31,10 @@ echo_salute:
 ```
 
 Example:
-![inputs on executions](img/execution_1.png)
-This example asserts the output 'Hello World,' leading to one pass and one fail due to the possible combinations. For more information on the assert mechanism, please visit the [asserts](asserts.md) section.
 
-If you need any assistance, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com).
+![inputs on executions](img/execution_1.png)
+
+In this example:
+- The output "Hello World" is expected for the input "Hello" and will result in a pass.
+- Other combinations of inputs, such as "Bye World", will not match "Hello World", leading to a fail.
+For more details on how assertions work, please refer to the [asserts](asserts.md) section.
