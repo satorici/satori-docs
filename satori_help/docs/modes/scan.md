@@ -70,6 +70,18 @@ Example:
 
 ![Stop Scan Repo](img/scan_3.png)
 
+### Scan Reports
+
+You can list the reports associated to a scan by running the command:
+
+```sh
+satori scan ID reports
+```
+
+Example:
+
+![Scan Reports](img/scan_reports.png)
+
 ### Scan Clean
 
 > [!WARNING]
