@@ -37,7 +37,7 @@ jobs:
 
 ![Satori CI workflow](img/github_action_3.png)
 
-**4) Set Up Secrets: Go to your repository `Settings`, then click on `Secrets and variables`, followed by `Actions`.
+**4) Set Up Secrets: Go to your repository `Settings`, then click on `Secrets and variables`, followed by `Actions`.**
 
 ![](img/github_action_4.png)
 
