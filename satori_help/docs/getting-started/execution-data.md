@@ -1,14 +1,12 @@
 # Playbook results
 
-Satori is a automated testing platform that runs playbooks to assert conditions. Once the execution of a playbook is completed, we deliver a report with either a *Pass* or *Fail* state. In case there were errors on the execution, the result will be flagged as *Unknown*.
+Satori-CI is an automated testing platform that executes Playbooks to validate conditions. After a Playbook is run, the platform generates a report indicating the result of the test, we deliver a report either a *Pass* or *Fail*.
 
-You can take different actions on your reports with the `satori` command and with the web interface.
+You can view and manage your test reports using either the command line interface or on the web.
 
-## Reports
+## Listing Reports
 
-## List
-
-The following command will list your reports on the command line:
+To list all your reports from the command line, use the following command:
 
 ```sh
 satori reports
@@ -16,53 +14,54 @@ satori reports
 
 ![CLI Reports](img/execution-data_1.png)
 
-They are listed on the website as well:
+You can also view your reports on the Satori-CI website at:
 
-- <https://satori.ci/reports/>
+[https://satori.ci/reports/](https://satori.ci/reports/)
 
 ![Web Reports](img/execution-data_2.png)
 
-In both cases you can get the report ids of them if you would like to see the results
+Both methods allow you to obtain the report IDs, which you can use to view single report.
 
-### List Options
+### Filtering Reports
 
-#### Filter
+You can filter your reports using various parameters to narrow down the results:
 
-The filter parameter allows you to specify:
+- **`repo`**: filter by repository (e.g., satorici/satori-cli).
+- **`playbook`**: filter by Playbook URL (e.g., satori://code/semgrep.yml).
+- **`status`**: filter by report status (Pending, Running, Completed, or Undefined).
+- **`result`**: filter by report result (Pass or Fail).
+- **`from`**: limit to commits from a specific date (format: year-month-day, e.g., 2020-12-30).
+- **`to`**: limit to commits until a specific date (format: year-month-day, e.g., 2023-01-10).
+- **`satori_error`**: filter by whether an error occurred during report generation (True or False).
+- **`email`**: filter by pusher email.
+- **`user`**: filter by Satori-CI user name.
+- **`type`**: filter by report execution type (monitor, github, or playbook_bundle).
 
-- **repo**: which repo is associated (ie, satorici/satori-cli)
-- **playbook**: the playbook URLs (ie, satori*//code/semgrep.yml)
-- **status**: what is the status (Pending, Running, Completed or Undefined)
-- **result**: was the report a pass or a fail? (Pass or Fail)
-- **from**: limit to commits from this specific date (format: year-month-day, ie: 2020-12-30)
-- **to**: limit to commits until this specific date (format: year-month-day, ie: 2023-01-10)
-- **satori_error**: an error occurred during report generation? (True or False)
-- **email**: filter by pusher email
-- **user**: filter by satori user name
-- **type**: the report execution type (monitor, github or playbook_bundle)
-
-Then this parameters can be used to check specific reports that you are looking for:
+This parameters can be used to check and filter specific reports that you are looking for.
 
 - Example: _"I want to see all failed reports for the repositories of the account satorici"_
 
 ```sh
-satori report --filter="repo=satorici/*,result=fail"
+satori reports --filter="repo=satorici/*,result=fail"
 ```
 
 - Example: *"I want to see a list of reports related to the playbook trufflehog"*
 
 ```sh
-satori report --filter="playbook=satori://code/trufflehog"
+satori reports --filter="playbook=satori://code/trufflehog"
 ```
 
-#### Page
+#### Pagination
 
-If more than 10 results are found, then the first page will be shown. To show subsequent pages, please use the `-n X` command, where X represents the page that you would like to access.
-A summary of the execution data and the command output with the assertions applied. You can see it using the report ID in the CLI:
+When dealing with a large number of results, such as reports, repositories, or monitors, we provide a pagination system to help you navigate through the data more efficiently. To access additional pages, use the `-p X` option, where `X` represents the page number you want to view.
 
-### Single report
+```sh
+satori reports -p 2
+```
 
-To view a specific report you need to specify the report ID this way:
+### Viewing a Single Report
+
+To view a specific report, specify the report ID as follows:
 
 ```yml
 satori report REPORT_ID
@@ -76,7 +75,7 @@ Or on the web:
 
 ## Command output
 
-The raw output of each command executed (stdout, stderr, testcase, errors).
+This displays a summary of the execution data along with the command output and assertions applied.
 
 ```yml
 satori report REPORT_ID output
@@ -86,9 +85,9 @@ Or on the web:
 
 ![Web Report](img/execution-data_5.png)
 
-## Files
+## Downloading Files
 
-Optionally if your execution generates some files you can download them this way using the CLI.
+If your execution generates files, you can download them using the CLI:
 
 ```yml
 satori report REPORT_ID files
