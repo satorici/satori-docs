@@ -94,7 +94,7 @@ You would use it like this when developing locally before pushing, or when being
 
 You can run on-demand public playbooks. You can see a list of the publicly available playbooks with: `satori playbook --public`
 
-Then you can execute them passing parameters if required with --data:
+Then you can execute them passing parameters if required with -d:
 
 ```sh
 satori run satori://some/playbook.yml
