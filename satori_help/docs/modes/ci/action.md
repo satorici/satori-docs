@@ -2,7 +2,7 @@
 
 If you're looking to test specific parts of your CI/CD workflow using Satori, follow these steps to integrate the Satori CLI with GitHub Actions. This integration will allow you to leverage Satori's deep testing capabilities within your automated workflows.
 
-If you want to test part of your workflow with Satori:
+If you want to test part of your workflow with Satori follow these steps:
 
 **1) Navigate to Actions: open your GitHub repository and click on the `Actions` tab.**
 
