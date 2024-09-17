@@ -31,13 +31,13 @@ We provide a comprehensive approach to testing code repositories on Github. Whet
 
 ## [Monitor](modes/monitor.md)
 
-Your playbooks can run at a certain rate. The frequency is defined within the settings with a certain rate (ie, '5 minutes') or using the cron format (ie, '*/5 * * * *'). 
-
-You can view your monitors using the [Web interface](https://www.satori.ci/monitors/), the CLI (`satori monitors`), or [Grafana](https://github.com/satorici/satori-plugin-grafana).
+Monitors allow you to automate scheduled checks on systems, ensuring they function correctly over time. 
+You can set your playbooks to run at regular intervals, defined by a time rate (e.g., '5 minutes')
+Monitors can be viewed via the [Web interface](https://www.satori.ci/monitors/), the CLI (`satori monitors`), or [Grafana](https://github.com/satorici/satori-plugin-grafana).
 
 ## [Notifications](notifications.md)
 
-We will notify you according to your preferences. We support a variety of communication methods:
+We offer a flexible notification system to keep your team updated about the satatus of your projects. We support a variety of communication methods:
 
 - Slack
 - Discord
@@ -45,11 +45,12 @@ We will notify you according to your preferences. We support a variety of commun
 - Telegram
 - Github Issues
 
-You can define these notifications within your [Team settings](https://www.satori-ci.com/team-settings/)
+You can define these notifications within your [dashboard settings](https://satori.ci/dashboard/) and set notification preferences in your project’s satori.yml file. Specify the conditions under which you want to be notified, whether on a failure or a success.
 
-## Reports
+## [Reports](execution-data.md) 
 
-We process the *output* to produce *reports* based on the *files* that were generated. We can also let you know about the difference between consecutive reports to identify whenever you are fixing -or introducing new- bugs. You can access your reports using on the [reports section of the Web](https://www.satori-ci.com/reports/) or with the CLI: `satori reports`.
+We process the *output* to generate *reports* based on the *files* that were produced. To help you track changes over time, we can highlight differences between consecutive reports. This feature is useful for identifying whether you are fixing existing bugs or introducing new ones.
+You can access your reports using on the [reports section of the Web](https://www.satori-ci/reports/) or with the CLI: `satori reports`.
 
 ## Support
 
