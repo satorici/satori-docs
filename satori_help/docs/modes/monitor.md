@@ -1,16 +1,13 @@
 # Monitor
 
-Monitors are an additional configuration option that can be added to playbooks. They provide a way to schedule and automate checks on live systems, ensuring they are functioning as expected over time. Monitors include a **cron** expression or a **rate** setting defined in the `settings` section, which specifies how frequently these checks should be performed.
+Monitors are an additional configuration option that can be added to playbooks. They provide a way to schedule and automate checks on live systems, ensuring they are functioning as expected over time. Monitors includes a **rate** setting, which specifies how frequently these checks should be performed.
 By incorporating monitors into your playbooks, you can regularly validate that your system's behavior aligns with expected outcomes.
 
-## Cron or Rate Settings
+## Rate Setting
 
-**Cron** and **rate settings** allow you to schedule the execution of your playbooks with a predefined frequency. These settings help automate repetitive testing tasks and monitor systems regularly, ensuring they behave as expected over time.
-Cron is a time-based job scheduler in Unix-like operating systems. It allows users to schedule commands or scripts to run automatically at specified times and dates.
+The **rate** setting allow you to schedule the execution of your playbooks with a predefined frequency. These settings help automate repetitive testing tasks and monitor systems regularly, ensuring they behave as expected over time.
 
-### Rate Setting
-
-The **rate setting** is the simplest way to define how often a playbook should run. You specify the frequency using a natural language expression.
+The **rate** setting is the simplest way to define how often a playbook should run. You specify the frequency using a natural language expression.
 
 **Rate expression examples**:
 
