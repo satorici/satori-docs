@@ -171,7 +171,7 @@ host:
 
 ## Report Settings
 
-You may not want to store any data on Satori servers after the execution has been completed. You can set that by defining the report as False. On the other hand, if you want to receive a copy of your report, you can specify in what format you would like to receive it. If you don't define anything for your report, you will still be able it to see it online with the CLI or the Web. 
+You may not want to store any data on Satori servers after the execution has been completed. You can set that by defining the report as False. On the other hand, if you want to receive a copy of your report, you can specify in what format you would like to receive it. If you don't define anything for your report, you will still be able it to see it online with the CLI or the Web.
 
 ### Report PDF
 
@@ -189,6 +189,37 @@ If you don't want to store a copy of your report or output, define the report as
 ```yml
 settings:
   report: False
+```
+
+## Image and OS Settings
+
+Satori can run your playbook in many environments by setting the `os` and `image` settings.
+
+By default, they are set to `linux` and `ubuntu:jammy`, respectively. The available options for `os` are `linux` and `windows`.
+
+Our runner can execute your playbook on top of any publicly available Docker image, provided the os is compatible and the following requirements are met:
+
+For `os: linux`:
+
+- GLIBC >= 2.27
+- MUSL >= 1.2.3
+
+For `os: windows`:
+
+- Images based on `ltsc2022`
+
+For example, you may want to use the latest `curl` version:
+
+```yaml
+settings:
+    image: curlimages/curl
+```
+
+By default, Satori fetches the `latest` tag from the [DockerHub](https://hub.docker.com), but you can specify an alternative registry/tag like you would in the docker CLI:
+
+```yaml
+settings:
+    image: quay.io/curl/curl:8.10.0
 ```
 
 If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
