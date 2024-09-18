@@ -5,23 +5,23 @@ You can assert what will be the behavior of [executions](execution.md):
 | Assert                  | Value          | Description                                                            |
 |-------------------------|----------------|------------------------------------------------------------------------|
 | assertStdout            | Boolean        | Is output produced?
-| assertStdoutEquals      | String         | Is the output equal to the String?
-| assertStdoutNotEquals   | String         | Is the output different than the String?
+| assertStdoutEqual       | String         | Is the output equal to the String?
+| assertStdoutNotEqual    | String         | Is the output different than the String?
 | assertStdoutContains    | String         | Does the output contain the String?
 | assertStdoutNotContains | String         | Does the output not contain the String?
 | assertStdoutSHA256      | SHA256Checksum | Is the output equal to this SHA256 hash?
 | assertStdoutRegex       | Regex          | Does the output match your regular expression?
 | assertStdoutNotRegex    | Regex          | Does the output not match your regular expression?
 | assertStderr            | Boolean        | Are errors produced?
-| assertStderrEquals      | String         | Is the error equal to the String?
-| assertStderrNotEquals   | String         | Is the error different than the String?
+| assertStderrEqual       | String         | Is the error equal to the String?
+| assertStderrNotEqual    | String         | Is the error different than the String?
 | assertStderrContains    | String         | Does the error contain the String?
 | assertStderrNotContains | String         | Does the error not contain the String?
 | assertStderrSHA256      | SHA256Checksum | Is the error equal to this SHA256 hash?
 | assertStderrRegex       | Regex          | Does the error match your regular expression?
 | assertStderrNotRegex    | Regex          | Does the error not match your regular expression?
-| assertReturnCode        | Integer        | Is the return code equal to the Integer?
-| assertReturnCodeNot     | Integer        | Is the return code not equal to the Integer?
+| assertReturnCode        | Integer        | Is the return code equal to a certain value?
+| assertReturnCodeNot     | Integer        | Is the return code not equal to a certain value?
 | assertSoftwareExists    | Boolean        | Does the software being executed exist? True by default
 | assertDifferent         | Boolean        | Does the execution behave differently when using different inputs?
 | assertKilled            | Boolean        | Did the software time out?
@@ -91,33 +91,33 @@ test:
 
 ---
 
-## assertStdoutEquals
+## assertStdoutEqual
 
 | Input  | Description                                    |
 |--------|-------------------------------------------------
 | String | Asserts that the output is equal to the String |
 
-- <span style="color:green">Example Pass Test</span>: the program should only output "Hello World", and it does:
+- <span style="color:green">Example Pass Test</span>: the program should output "Hello World" and a newline, and it does:
 
 ```yml
 test:
-    assertStdoutEquals: "Hello World"
+    assertStdoutEqual: "Hello World\n"
     run:
     - echo Hello World
 ```
 
-- <span style="color:red">Example Fail Test</span>: the program should only output "Hello World", but it doesn't:
+- <span style="color:red">Example Fail Test</span>: the program should output "Hello World" and a newline, but it doesn't:
 
 ```yml
 test:
-    assertStdoutEquals: "Hello World"
+    assertStdoutEqual: "Hello World\n"
     run:
-    - echo 'hello world'
+    - echo hello world
 ```
 
 ---
 
-## assertStdoutNotEquals
+## assertStdoutNotEqual
 
 | Input | Description                          |
 |-------|---------------------------------------
@@ -127,7 +127,7 @@ test:
 
 ```yml
 test:
-    assertStdoutNotEquals: "Hello World"
+    assertStdoutNotEqual: "Hello World\n"
     input:
     - - value: "Hello World"
         mutate: radamsa
@@ -246,30 +246,36 @@ test:
 ```
 ---
 
-## assertStderrEquals
+## assertStderrEqual
 | Input    | Description                       |
 |----------|------------------------------------
 | String\* | Is the error equal to the String? |
-- <span style="color:pass">Example Pass Test</span>: the programs should error requesting the value of the x parameter:
+- <span style="color:pass">Example Pass Test</span>: the programs should verify that the error is a certain string:
 ```yml
 test:
-    assertStderr: "The value of the parameter -x is required for the program"
-    run:
-    - program -x
+  assertStderrEqual: Verify this error
+  error:
+  - python3 -c "import sys; sys.stderr.write('Verify this error')"
 ```
+
+![assertStderrEqual](img/assertstderrequal.png)
+
 ---
 
-## assertStderrNotEquals
+## assertStderrNotEqual
 | Input  | Description                         |
 |--------|--------------------------------------
 | String | Is the error different than the String? |
-- <span style="color:pass">Example Pass Test</span>: the programs should not error requesting the value of the x parameter when is defined:
+- <span style="color:pass">Example Fail Test</span>: the programs should verify that the error is not a certain string:
 ```yml
 test:
-    assertStderrNotEquals: "The value of the parameter -x is required for the program"
-    run:
-    - program -x whatever
+  assertStderrNotEqual: Verify this error
+  error:
+  - python3 -c "import sys; sys.stderr.write('Verify this error')"
 ```
+
+![assertStderrEqual](img/assertstderrnotequal.png)
+
 ---
 
 ## assertStderrContains
