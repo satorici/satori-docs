@@ -28,7 +28,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: run
         env:
-          SATORITOKEN: ${{ secrets.TOKEN }}
+          SATORITOKEN: ${{ secrets.SATORITOKEN }}
         run: |
           pip3 install satori-ci
           satori config token $SATORITOKEN
