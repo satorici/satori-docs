@@ -86,6 +86,7 @@ Some public playbooks are designed for Static Application Security Testing (SAST
 
 ##### Example:
 ![Code example](img/code_example.png)
+
 ![SAST Output](img/sast.png)
 
 
