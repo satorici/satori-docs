@@ -84,7 +84,7 @@ Satori offers a variety of public playbooks that can be used for different secur
 ### Static Playbooks
 Some public playbooks are designed for Static Application Security Testing (SAST). These playbooks are used to analyze source code or integrated into CI processes for automated security checks. You can run these Playbooks by using `satori run ./`:
 
-#### Example:
+##### Example:
 ![Code example](img/code_example.png)
 ![SAST Output](img/sast.png)
 
