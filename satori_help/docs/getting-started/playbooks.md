@@ -78,6 +78,16 @@ For example `--output` will display each command output: stdout, stderr, return 
 
 ![Hello World Output](img/playbooks_2.png)
 
+#### Public Playbooks
+Satori offers a variety of public playbooks that can be used for different security and analysis purposes. These playbooks are primarily divided into two categories: static (SAST) and dynamic (DAST).
+
+##### Static Playbooks
+Some public playbooks are designed for Static Application Security Testing (SAST). These playbooks are used to analyze source code or integrated into CI processes for automated security checks. You can run these Playbooks by using `satori run ./`:
+
+(img/code_example.png)
+(img/sast.png)
+
+
 ##### 2. Continuous Integration (CI)
 
 You can also run your Playbook automatically using GitHub. To do this:
