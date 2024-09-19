@@ -78,7 +78,7 @@ For example `--output` will display each command output: stdout, stderr, return 
 
 ![Hello World Output](img/playbooks_2.png)
 
-#### Public Playbooks
+## Public Playbooks
 Satori offers a variety of public playbooks that can be used for different security and analysis purposes. These playbooks are primarily divided into two categories: static (SAST) and dynamic (DAST).
 
 ##### Static Playbooks
