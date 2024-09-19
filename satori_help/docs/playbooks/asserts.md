@@ -136,6 +136,11 @@ test:
     - echo ${{input}}
 ```
 
+Mutations output different inputs than the one originally provided. Read more about it on the [Inputs](inputs.md) section for Playbooks.
+
+![assertStdoutNotEqual](img/assertstdoutnotequal.png)
+
+
 ---
 
 ## assertStdoutContains
