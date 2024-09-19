@@ -5,26 +5,26 @@ You can assert what will be the behavior of [executions](execution.md):
 | Assert                                              | Value          | Description                                                            |
 |-----------------------------------------------------|----------------|------------------------------------------------------------------------|
 | [assertStdout](#assertstdout)                       | Boolean        | Is output produced?
-| [assertStdoutEqual](#assertStdoutEqual)             | String         | Is the output equal to the String?
-| [assertStdoutNotEqual](#assertStdoutNotEqual)       | String         | Is the output different than the String?
-| [assertStdoutContains](#assertStdoutContains)       | String         | Does the output contain the String?
-| [assertStdoutNotContains](#assertStdoutNotContains) | String         | Does the output not contain the String?
-| [assertStdoutSHA256](#assertStdoutSHA256)           | SHA256Checksum | Is the output equal to this SHA256 hash?
-| [assertStdoutRegex](#assertStdoutRegex)             | Regex          | Does the output match your regular expression?
-| [assertStdoutNotRegex](#assertStdoutNotRegex)       | Regex          | Does the output not match your regular expression?
-| [assertStderr](#assertStderr)                       | Boolean        | Are errors produced?
-| [assertStderrEqual](#assertStderrEqual)             | String         | Is the error equal to the String?
-| [assertStderrNotEqual](#assertStderrNotEqual)       | String         | Is the error different than the String?
-| [assertStderrContains](#assertStderrContains)       | String         | Does the error contain the String?
-| [assertStderrNotContains](#assertStderrNotContains) | String         | Does the error not contain the String?
-| [assertStderrSHA256](#assertStderrSHA256)           | SHA256Checksum | Is the error equal to this SHA256 hash?
-| [assertStderrRegex](#assertStderrRegex)             | Regex          | Does the error match your regular expression?
-| [assertStderrNotRegex](#assertStderrNotRegex)       | Regex          | Does the error not match your regular expression?
-| [assertReturnCode](#assertReturnCode)               | Integer        | Is the return code equal to a certain value?
-| [assertReturnCodeNot](#assertReturnCodeNot)         | Integer        | Is the return code not equal to a certain value?
-| [assertSoftwareExists](#assertSoftwareExists)       | Boolean        | Does the software being executed exist? True by default
-| [assertDifferent](#assertDifferent)                 | Boolean        | Does the execution behave differently when using different inputs?
-| [assertKilled](#assertKilled)                       | Boolean        | Did the software time out?
+| [assertStdoutEqual](#assertstdoutequal)             | String         | Is the output equal to the String?
+| [assertStdoutNotEqual](#assertstdoutnotequal)       | String         | Is the output different than the String?
+| [assertStdoutContains](#assertstdoutcontains)       | String         | Does the output contain the String?
+| [assertStdoutNotContains](#assertstdoutnotcontains) | String         | Does the output not contain the String?
+| [assertStdoutSHA256](#assertstdoutsha256)           | SHA256Checksum | Is the output equal to this SHA256 hash?
+| [assertStdoutRegex](#assertstdoutregex)             | Regex          | Does the output match your regular expression?
+| [assertStdoutNotRegex](#assertstdoutnotregex)       | Regex          | Does the output not match your regular expression?
+| [assertStderr](#assertstderr)                       | Boolean        | Are errors produced?
+| [assertStderrEqual](#assertstderrequal)             | String         | Is the error equal to the String?
+| [assertStderrNotEqual](#assertstderrnotequal)       | String         | Is the error different than the String?
+| [assertStderrContains](#assertstderrcontains)       | String         | Does the error contain the String?
+| [assertStderrNotContains](#assertstderrnotcontains) | String         | Does the error not contain the String?
+| [assertStderrSHA256](#assertstderrsha256)           | SHA256Checksum | Is the error equal to this SHA256 hash?
+| [assertStderrRegex](#assertstderrregex)             | Regex          | Does the error match your regular expression?
+| [assertStderrNotRegex](#assertstderrnotregex)       | Regex          | Does the error not match your regular expression?
+| [assertReturnCode](#assertreturncode)               | Integer        | Is the return code equal to a certain value?
+| [assertReturnCodeNot](#assertreturncodenot)         | Integer        | Is the return code not equal to a certain value?
+| [assertSoftwareExists](#assertsoftwareexists)       | Boolean        | Does the software being executed exist? True by default
+| [assertDifferent](#assertdifferent)                 | Boolean        | Does the execution behave differently when using different inputs?
+| [assertKilled](#assertjilled)                       | Boolean        | Did the software time out?
 
 ---
 
