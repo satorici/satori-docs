@@ -89,6 +89,12 @@ Some public playbooks are designed for Static Application Security Testing (SAST
 
 ![SAST Output](img/sast.png)
 
+### Dynamic Playbooks
+Dynamic Analysis Playbooks are intended for testing running systems by providing specific parameters, such as the host or service that will be analyzed. These Playbooks are crucial for identifying vulnerabilities in a system’s runtime behavior. A typical DAST Playbook execution will include a parameter:
+
+`satori run satori://playbook -d HOST="host"`
+
+![Dast Output](img/dast_output.png)
 
 ##### 2. Continuous Integration (CI)
 
