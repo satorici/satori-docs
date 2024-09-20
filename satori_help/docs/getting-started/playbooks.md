@@ -94,6 +94,7 @@ Dynamic Analysis Playbooks are intended for testing running systems by providing
 
 `satori run satori://playbook -d HOST="host"`
 
+##### Example:
 
 ![Dast Output](img/dast_output.png)
 
