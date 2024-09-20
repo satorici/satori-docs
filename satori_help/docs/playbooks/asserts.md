@@ -181,26 +181,27 @@ test:
 | SHA256Checksum | Is the output equal to this SHA256 hash? |
 - <span style="color:green">Example Pass Test</span>: Google's root webpage hash has not changed:
 
-If an output should be equal to a certain hash, to confirm that its original value has not changed, you can verify that with an assert. Consider for example how Google shows consistently the same hash,that at the time of writing this is `b52854d1f79de5ebeebf0160447a09c7a8c2cde4`:
+If an output should be equal to a certain hash, to confirm that its original value has not changed, you can verify that with an assert. Consider for example how Google shows consistently the same SHA 256 hash:
 
 ```sh
-$ date; curl -s https://google.com | shasum
-Mon Sep  9 08:42:00 -03 2024
-b52854d1f79de5ebeebf0160447a09c7a8c2cde4  -
-$ date; curl -s https://google.com | shasum
-Mon Sep  9 08:42:01 -03 2024
-b52854d1f79de5ebeebf0160447a09c7a8c2cde4  -
+$ curl -s https://google.com | shasum -a 256
+5b61b0c2032b4aa9519d65cc98c6416c12415e02c7fbbaa1be5121dc75162edb  -
 ```
+
+At the time of writing this, the hash `5b61b0c2032b4aa9519d65cc98c6416c12415e02c7fbbaa1be5121dc75162edb` can be asserted programmatically:
 
 You could assert that the output is consistent with that hash:
-```sh
-$ cat google_sha256.yml 
+```yml
+settings:
+  image: curlimages/curl:7.83.1
+
 test:
-  assertStdoutSHA256: b52854d1f79de5ebeebf0160447a09c7a8c2cde4
+  assertStdoutSHA256: 5b61b0c2032b4aa9519d65cc98c6416c12415e02c7fbbaa1be5121dc75162edb
   google:
-    - curl -s https://google.com | shasum
-$ satori local google_sha256.yml --output --report
+    - curl -s https://google.com
 ```
+
+![assertStdoutSHA256](img/assertStdoutSHA256.png)
 
 ---
 
