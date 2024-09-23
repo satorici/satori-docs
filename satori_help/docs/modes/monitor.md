@@ -3,6 +3,73 @@
 Monitors are an additional configuration option that can be added to playbooks. They provide a way to schedule and automate checks on live systems, ensuring they are functioning as expected over time. Monitors includes a **rate** setting, which specifies how frequently these checks should be performed.
 By incorporating monitors into your playbooks, you can regularly validate that your system's behavior aligns with expected outcomes.
 
+## CRON Scheduling
+
+In addition to the simple rate setting, Satori supports AWS-style CRON expressions for more flexible and powerful scheduling options. This CRON format allows you to define complex scheduling patterns, including specific minutes, hours, days of the month, months, days of the week, and even years.
+
+### Expression Format
+
+CRON expressions in Satori follow the AWS CRON format with 6 fields:
+
+```
+┌───────────── minute (0 - 59)
+│ ┌───────────── hour (0 - 23)
+│ │ ┌───────────── day of the month (1 - 31)
+│ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+│ │ │ │ ┌───────────── day of the week (1 - 7 or SUN-SAT)
+│ │ │ │ │ ┌───────────── year (1970 - 2199)
+│ │ │ │ │ │
+│ │ │ │ │ │
+* * * * * *
+```
+
+### CRON Expression Examples
+
+Here are some examples of CRON expressions and their meanings:
+
+| CRON Expression | Meaning                                         |
+|-----------------|-------------------------------------------------|
+| `0 * * * ? *`   | Run at the start of every hour                  |
+| `*/15 * * * ? *`| Run every 15 minutes                            |
+| `0 0 * * ? *`   | Run daily at midnight                           |
+| `0 0 ? * MON *` | Run every Monday at midnight                    |
+| `0 0 1 * ? *`   | Run at midnight on the first day of every month |
+| `0 0 1 JAN ? *` | Run at midnight on January 1st every year       |
+
+### Special Characters in CRON Expressions
+
+- `*`: Matches any value in the field
+- `,`: Used to specify multiple values (e.g., `MON,WED,FRI`)
+- `-`: Defines a range of values (e.g., `MON-FRI`)
+- `/`: Specifies increments (e.g., `*/15` for every 15 units)
+- `?`: Used instead of `*` for day-of-month and day-of-week to avoid conflict
+- `L`: "Last" day of the month or week
+- `W`: Nearest weekday to the given day of the month
+- `#`: Nth day of the month (e.g., `6#3` for the third Friday of the month)
+
+### Using CRON in Satori Monitors
+
+To use a CRON expression in your Satori monitor, include it in your `monitor.yml` file like this:
+
+```yml
+settings:
+    name: "Weekday Morning Website Check"
+    cron: "0 8 ? * MON-FRI *"
+    image: curlimages/curl:7.83.1
+
+test:
+    assertStdoutContains:
+      - HTTP/2 200
+      - Satori CI
+
+    curl:
+      - curl -is https://satori.ci
+```
+
+This configuration will run the check at 8:00 AM every weekday (Monday to Friday).
+
+CRON expressions provide more flexibility than the simple rate setting, allowing for precise control over when your monitors run. This can be particularly useful for scheduling checks during specific time windows, on particular days of the week, or even for complex yearly schedules.
+
 ## Rate Setting
 
 The **rate** setting allow you to schedule the execution of your playbooks with a predefined frequency. These settings help automate repetitive testing tasks and monitor systems regularly, ensuring they behave as expected over time.
