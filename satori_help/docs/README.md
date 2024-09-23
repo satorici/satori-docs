@@ -47,7 +47,7 @@ We offer a flexible notification system to keep your team updated about the sata
 
 You can define these notifications within your [dashboard settings](https://satori.ci/dashboard/) and set notification preferences in your project’s satori.yml file. Specify the conditions under which you want to be notified, whether on a failure or a success.
 
-## [Reports](execution-data.md) 
+## [Reports](getting-started/execution-data.md)
 
 We process the *output* to generate *reports* based on the *files* that were produced. To help you track changes over time, we can highlight differences between consecutive reports. This feature is useful for identifying whether you are fixing existing bugs or introducing new ones.
 You can access your reports using on the [reports section of the Web](https://www.satori-ci/reports/) or with the CLI: `satori reports`.
