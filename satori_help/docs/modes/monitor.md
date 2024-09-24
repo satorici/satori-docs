@@ -53,8 +53,8 @@ To use a CRON expression in your Satori monitor, include it in your `monitor.yml
 
 ```yml
 settings:
-    name: "Weekday Morning Website Check"
-    cron: "0 8 ? * MON-FRI *"
+    name: "Website Check"
+    cron: "*/5 * * * ? *"
     image: curlimages/curl:7.83.1
 
 test:
@@ -66,9 +66,13 @@ test:
       - curl -is https://satori.ci
 ```
 
-This configuration will run the check at 8:00 AM every weekday (Monday to Friday).
+This configuration will run the check every 5 minutes.
 
-CRON expressions provide more flexibility than the simple rate setting, allowing for precise control over when your monitors run. This can be particularly useful for scheduling checks during specific time windows, on particular days of the week, or even for complex yearly schedules.
+![Cron Monitor Execution](img/cronMonitorRun.png)
+
+CRON expressions provide more flexibility than the simple rate setting, allowing for precise control over when your monitors run. This can be particularly useful for scheduling checks during specific time windows, on particular days of the week, or even for complex yearly schedules. You can see monitor reports on the Satori [web interface](https://satori.ci/monitors/), including details about the executions and their results.
+
+![Web Interface Monitor Reports](img/webInterfaceMonitor.png)
 
 ## Rate Setting
 
