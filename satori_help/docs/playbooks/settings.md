@@ -47,61 +47,11 @@ These are the possible combinations you can use:
 | 16384 (16vCPU) | 32768<br>40960<br>49152<br>57344<br>65536<br>73728<br>81920<br>90112<br>98304<br>106496<br>114688<br>122880                                                                                               | Linux                       |
 ## Cron Settings
 
-Execute your playbook at a certain time with the cron setting:
-
-```yaml
-settings:
-    cron: 5 8 * * 0 # Run this playbook every Sunday at 8:05am
-```
-
-As a more complex example, run an nmap every 10 minutes and notify in case the expected result output changes from the expected hash:
-
-```yaml
-settings:
-    name: "Nmap: did any service changed?"
-    cron: "*/10 * * * *"
-    logOnFail: telegram-ciso
-    mitigation: Verify the latest Pass execution to confirm what services changed their status
-install:
-    assertReturnCode:0
-    nmap:
-    - [ apt install -y nmap]
-    ips:
-    - [ "echo -e \"host1\nhost2\" > domains"]
-nmap:
-    assertReturnCode:0
-    run:
-    - [ "nmap -n -iL domains -Pn -p21,22,80,443,3000,3306,5432 -sT -oG nmap" ]
-    services:
-        # The SHA256 hash "e3b0c4..." of the `running` execution represents the expected working state of the `ips`'s ports. In case it changes, it means that there are more open or closed ports than expected. This value needs to be verified first for the output before putting this on a production environment.
-        assertStdoutSHA256:
-        - "e3b0c44298fc1c149afbf4c7996fb92427ae41e4649b934ca495991b7852b855"
-        running:
-        - [ "grep Ports nmap | sort -u" ]
-```
-
-For more details on the `assertReturnCode` and `assertStdoutSHA256` please check the [asserts](asserts.md) section and for more details on the `nmap`, `ips` and `running` [executions](execution.md) please check the corresponding section.
-
-For more details on the logOnFail, please check the [notifications](../notifications.md) section.
+For detailed information on how to use Cron settings in your playbooks, please refer to the CRON Scheduling section in the [Monitor](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/modes/monitor.md#cron-scheduling) documentation.
 
 ## Rate Settings
 
-A more verbal approach to cron can be set with a rate
-
-**Rate expression examples**:
-
-|Frequency         | Expression       |
-|------------------|------------------|
-| Every 10 minutes | rate: 10 minutes |
-| Every hour       | rate: 1 hour     |
-| Every seven days | rate: 7 days     |
-
-For example:
-
-```yaml
-settings:
-    rate: 10 minutes
-```
+For information on how to use Rate settings in your playbooks, please see the Rate Setting section in the [Monitor](https://github.com/satorici/satori-docs/blob/a0c651f49e967399ef231846701602d9422f5f7e/satori_help/docs/modes/monitor.md#rate-setting) documentation.
 
 ## Alert your result every time a execution runs or when the expected result is different than the one expected
 
