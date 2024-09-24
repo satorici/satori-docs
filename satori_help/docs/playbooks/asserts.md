@@ -244,6 +244,8 @@ test:
     - echo Hello ${{input}}
 ```
 
+![assertStdoutNotRegex](img/assertStdoutNotRegex.png)
+
 ---
 
 ## assertStderr
