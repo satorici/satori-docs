@@ -47,11 +47,11 @@ These are the possible combinations you can use:
 | 16384 (16vCPU) | 32768<br>40960<br>49152<br>57344<br>65536<br>73728<br>81920<br>90112<br>98304<br>106496<br>114688<br>122880                                                                                               | Linux                       |
 ## Cron Settings
 
-For detailed information on how to use Cron settings in your playbooks, please refer to the CRON Scheduling section in the [Monitor](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/modes/monitor.md#cron-scheduling) documentation.
+For detailed information on how to use Cron settings in your playbooks, please refer to the CRON Scheduling section in the [Monitor](../modes/monitor.md#cron-scheduling) documentation.
 
 ## Rate Settings
 
-For information on how to use Rate settings in your playbooks, please see the Rate Setting section in the [Monitor](https://github.com/satorici/satori-docs/blob/a0c651f49e967399ef231846701602d9422f5f7e/satori_help/docs/modes/monitor.md#rate-setting) documentation.
+For information on how to use Rate settings in your playbooks, please see the Rate Setting section in the [Monitor](../modes/monitor.md#rate-setting) documentation.
 
 ## Alert your result every time a execution runs or when the expected result is different than the one expected
 
