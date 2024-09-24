@@ -158,6 +158,8 @@ test:
     - echo Hello World 2023
 ```
 
+![assertStdoutContains](img/assertStdoutContains.png)
+
 ---
 
 ## assertStdoutNotContains
@@ -172,6 +174,8 @@ test:
     run:
     - echo Hello World
 ```
+
+![assertStdoutContains](img/assertStdoutNotContains.png)
 
 ---
 
