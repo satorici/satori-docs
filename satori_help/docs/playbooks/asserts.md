@@ -221,6 +221,9 @@ test:
     run:
     - echo Hello World
 ```
+
+![assertStdoutContains](img/assertStdoutRegex.png)
+
 ---
 
 ##  assertStdoutNotRegex
