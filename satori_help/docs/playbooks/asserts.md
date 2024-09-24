@@ -235,7 +235,7 @@ test:
 
 ```yml
 test:
-    assertStdoutNotRegex: "*Hello World*"
+    assertStdoutNotRegex: ".*Hello World.*"
     input:
     - - value: "Hello World"
         mutate: radamsa
