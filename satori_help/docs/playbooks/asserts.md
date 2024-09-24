@@ -292,7 +292,7 @@ test:
   - python3 -c "import sys; sys.stderr.write('Verify this error')"
 ```
 
-![assertStderrEqual](img/assertstderrnotequal.png)
+![assertStderrEqual](img/assertStderrNotEqual.png)
 
 ---
 
