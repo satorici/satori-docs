@@ -267,6 +267,9 @@ test:
 | String\* | Is the error equal to the String? |
 - <span style="color:pass">Example Pass Test</span>: the programs should verify that the error is a certain string:
 ```yml
+settings:
+  image: python3
+
 test:
   assertStderrEqual: Verify this error
   error:
