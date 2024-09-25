@@ -111,3 +111,29 @@ The playbook named `hello.yml` that we ran before remotely can also be executed 
 ![Run locally aync and async](img/run_local.png)
 
 [Learn more about Monitors](monitor.md)
+
+### Run a process in Background
+
+If you are running a service that needs to listen on background, processes will remain in foreground if you use shell scripting techniques. The recommended approach is to install screen and send the process to the background. An additional tip is to include a timeout in settings to set a limit for the container. For example:
+
+```yml
+settings:
+  name: Background process
+  timeout: 60
+
+install:
+- apt update >> /dev/null
+- apt install -qy screen >> /dev/null
+
+background:
+  - screen -dm sleep 10
+
+check:
+  assertStdoutContains: "10"
+  ps:
+    - ps wuax | grep sleep
+```
+
+![Background](img/run_background.png)
+
+The `screen -dm` command is used to start a new detached `screen` session in the background. This is useful for running commands or scripts in the background and continue executing additional commands to test the background service.
