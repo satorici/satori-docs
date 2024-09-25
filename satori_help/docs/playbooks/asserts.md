@@ -260,7 +260,7 @@ test:
     - echo Hello World
 ```
 
-![assertStderr](imag/assertStderr.png)
+![assertStderr](img/assertStderr.png)
 
 ---
 
@@ -279,7 +279,7 @@ test:
   - python3 -c "import sys; sys.stderr.write('Verify this error')"
 ```
 
-![assertStderrEqual](img/assertstderrequal.png)
+![assertStderrEqual](img/assertStderrEqual.png)
 
 ---
 
@@ -295,7 +295,7 @@ test:
   - python3 -c "import sys; sys.stderr.write('Verify this error')"
 ```
 
-![assertStderrEqual](img/assertStderrNotEqual.png)
+![assertStderrEqual](img/assertstderrnotequal.png)
 
 ---
 
