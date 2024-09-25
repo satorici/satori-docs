@@ -259,6 +259,9 @@ test:
     run:
     - echo Hello World
 ```
+
+![assertStderr](imag/assertStderr.png)
+
 ---
 
 ## assertStderrEqual
@@ -309,6 +312,10 @@ test:
     run:
     - python3 test.py
 ```
+
+![assertStderrContains](imag/assertStderrContains.png)
+
+
 ---
 
 ## assertStderrNotContains
