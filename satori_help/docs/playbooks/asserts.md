@@ -313,7 +313,7 @@ test:
     - python3 test.py
 ```
 
-![assertStderrContains](imag/assertStderrContains.png)
+![assertStderrContains](img/assertStderrContains.png)
 
 
 ---
