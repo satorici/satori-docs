@@ -10,29 +10,29 @@ The two primary areas of concern are:
 To automatically safeguard your GitHub repositories and ensure continuous testing, install our Satori-CI App:
 
 ---
-**1. Install the Satori CI GitHub App** 
+**1. Install the Satori CI GitHub App:** 
 
 Go to the [Satori GitHub App page](https://github.com/apps/satorici). Make sure you are authenticated with GitHub to proceed with the installation. You need to be authenticated to configure it.
 
 ![Satori CI Github Install](img/github_1.png)
 
-**2. Click on Configure**
+**2. Click on Configure:**
   
 Select which accounts you will be setting it up for.
 
 ![Install Satori CI on your account](img/github_2.png)
 
-**3. Choose the GitHub accounts where you want to set up the Satori CI App.**
+**3. Choose the GitHub accounts where you want to set up the Satori CI App:**
 
 Select the repositories where you want to install the app. You can choose specific repositories or select All repositories.
 
 ![Select your Github repositories where you will use Satori](img/github_3.png)
 
-**4. Save**
+**4. Save:**
   
   Once you are done, click on Save. We care about your security, so we will only store your email, your repositories names, and the reports. Your code only lives within the virtual machines that are present during the execution.
 
-**5. Create your first .satori.yml file**
+**5. Create your first .satori.yml file:**
 
 To begin automating tests in your connected repositories, you need to create a file named `.satori.yml`. This file will define the tests that will automatically run every time you push new code to your repository.
 Let's start by keeping it simple and checking for secrets using Trufflehog, a tool that scans for sensitive information such as API keys or credentials that may be unintentionally exposed in your code.
