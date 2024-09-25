@@ -1,18 +1,24 @@
-# Integrating Satori CLI with GitHub Actions
+# Integrating Satori with GitHub Actions
 
-If you're looking to test specific parts of your CI/CD workflow using Satori, follow these steps to integrate the Satori CLI with GitHub Actions. This integration will allow you to leverage Satori's deep testing capabilities within your automated workflows.
+If you're looking to test specific parts of your CI/CD workflow using Satori, follow these steps to integrate Satori with GitHub Actions. This integration will allow you to leverage Satori's deep testing capabilities within your automated workflows.
 
 If you want to test part of your workflow with Satori follow these steps:
 
-**1) Navigate to Actions: open your GitHub repository and click on the `Actions` tab.**
+**1. Navigate to Actions:** 
+
+  Open your GitHub repository and click on the `Actions` tab.
 
 ![New Workflow Action](img/github_action_1.png)
 
-**2) Create a new workflow: select `New workflow`, then click set up a workflow yourself to manually configure your workflow file.**
+**2. Create a new workflow:**  
+
+  Select `New workflow`, then click set up a workflow yourself to manually configure your workflow file.
 
 ![Set up a workflow](img/github_action_2.png)
 
-**3) Add the Satori job: in your workflow file, include the Satori job configuration as part of your process. Once added, click `Commit changes` to save your workflow.**
+**3. Add the Satori job:** 
+
+  In your workflow file, include the Satori job configuration as part of your process. Once added, click `Commit changes` to save your workflow.
 
 ```yml
 name: Satori CI Analysis
@@ -32,21 +38,27 @@ jobs:
         run: |
           pip3 install satori-ci
           satori config token $SATORITOKEN
-          satori run ./ -s
+          satori run ./ --sync
 ```
 
 ![Satori CI workflow](img/github_action_3.png)
 
-**4) Set Up Secrets: Go to your repository `Settings`, then click on `Secrets and variables`, followed by `Actions`.**
+**4. Set Up Secrets:**
+
+  Go to your repository `Settings`, then click on `Secrets and variables`, followed by `Actions`.
 
 ![](img/github_action_4.png)
 
-**5) Add a New Secret: click `New repository secret`.**
+**5. Add a New Secret:**
+
+  Click `New repository secret`.
 
 ![](img/github_action_5.png)
 
-**6) Configure SATORITOKEN: In the `Name` field, enter SATORITOKEN. For the secret value, paste your Team API Token, which you can find it going to you [Dashboard](https://satori.ci/dashboard), select your team, click on `Settings` and copy your `Team API token`.
-Click `Add Secret` to finalize.**
+**6. Configure SATORITOKEN:**
+
+  In the `Name` field, enter SATORITOKEN. For the secret value, paste your Team API Token, which you can find it going to you [Dashboard](https://satori.ci/dashboard), select your team, click on `Settings` and copy your `Team API token`.
+Click `Add Secret` to finalize.
 
 ![](img/github_action_6.png)
 

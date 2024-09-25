@@ -49,7 +49,7 @@ Here are some examples of CRON expressions and their meanings:
 
 ### Using CRON in Satori Monitors
 
-To use a CRON expression in your Satori monitor, include it in your `monitor.yml` file like this:
+To use a CRON expression in your Satori monitor, include it in your playbook `.yml` file like this:
 
 ```yml
 settings:
@@ -70,15 +70,13 @@ This configuration will run the check every 5 minutes.
 
 ![Cron Monitor Execution](img/cronMonitorRun.png)
 
-CRON expressions provide more flexibility than the simple rate setting, allowing for precise control over when your monitors run. This can be particularly useful for scheduling checks during specific time windows, on particular days of the week, or even for complex yearly schedules. You can see monitor reports on the Satori [web interface](https://satori.ci/monitors/), including details about the executions and their results.
-
-![Web Interface Monitor Reports](img/webInterfaceMonitor.png)
+CRON expressions provide more flexibility than the simple rate setting, allowing for precise control over when your monitors run. This can be particularly useful for scheduling checks during specific time windows, on particular days of the week, or even for complex yearly schedules. 
 
 ## Rate Setting
 
 The **rate** setting allow you to schedule the execution of your playbooks with a predefined frequency. These settings help automate repetitive testing tasks and monitor systems regularly, ensuring they behave as expected over time.
 
-The **rate** setting is the simplest way to define how often a playbook should run. You specify the frequency using a natural language expression.
+This is the simplest way to define how often a playbook should run. You specify the frequency using a natural language expression.
 
 **Rate expression examples**:
 
@@ -88,7 +86,7 @@ The **rate** setting is the simplest way to define how often a playbook should r
 | Every hour       | rate: 1 hour     |
 | Every seven days | rate: 7 days     |
 
-For example, the following configuration in `monitor.yml` checks every 10 minutes to verify that the Satori website is live and contains the text "Satori CI."
+For example, the following configuration in your playbook `.yml` checks every 10 minutes to verify that the Satori website is live and contains the text "Satori CI."
 
 ```yml
 settings:
@@ -112,7 +110,6 @@ satori run monitor.yml
 ```
 
 ![Run Monitor](img/monitor_1.png)
-
 
 ## Managing Monitors
 
@@ -181,3 +178,11 @@ satori monitor MONITOR_ID delete
 ![Clean and Delete a Monitor](img/monitor_5.png)
 
 ---
+
+## Monitor web overview
+
+The monitor section provides an overview of all monitors created within your projects. You can see detailed monitor reports on the Satori [web interface](https://satori.ci/monitors/).
+This interface provides detailed reports on monitor executions and their results. You can easily navigate through all existing monitors, filter reports by specific monitors, and access comprehensive information about each execution, including the ability to expand and review detailed execution reports.
+
+![Web Interface Monitor Reports](img/webInterfaceMonitor.png)
+

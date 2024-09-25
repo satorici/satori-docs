@@ -1,33 +1,41 @@
-# Github CI App
+# Integrating Satori with Github Github CI App
 
-Each time you push code to your Github repository, there's a risk that it could affect the security of your project. Furthermore, should your data ever be compromised, it's crucial to minimize the exposure of sensitive information. Two primary areas of concern are:
+Each time you push code to your GitHub repository, there is a potential risk that security vulnerabilities may be introduced. To safeguard your project and its sensitive data, it's crucial to minimize the exposure of sensitive information. 
+The two primary areas of concern are:
 
-- Secrets in your code
-- Vulnerable code from yourself or third parties
+**-Secrets in your code:** Hard-coded credentials, API keys, and sensitive data can be unintentionally pushed, compromising the security of your systems.
 
-Automatically test your GitHub repositories by installing our App:
+**-Vulnerable code (internal or third-party):** Code may contain weaknesses that malicious actors can exploit.
 
-**1) Satori CI for Github** <https://github.com/apps/satorici>
+To automatically safeguard your GitHub repositories and ensure continuous testing, install our Satori-CI App:
+
+---
+**1. Install the Satori CI GitHub App:** 
+
+Go to the [Satori GitHub App page](https://github.com/apps/satorici). Make sure you are authenticated with GitHub to proceed with the installation. You need to be authenticated to configure it.
 
 ![Satori CI Github Install](img/github_1.png)
 
-Be mindful that you need to be authenticated to configure it.
-
-**2) Click on Configure**
+**2. Click on Configure:**
+  
+Select which accounts you will be setting it up for.
 
 ![Install Satori CI on your account](img/github_2.png)
 
-Select which accounts you will be setting it up for.
+**3. Choose the GitHub accounts where you want to set up the Satori CI App:**
 
-**3) Select the repositories where you will be installing it or select all repositories**
+Select the repositories where you want to install the app. You can choose specific repositories or select All repositories.
 
 ![Select your Github repositories where you will use Satori](img/github_3.png)
 
-Once you are done, click on **Save**. We care about your security, so we will only store your email, your repositories names, and the reports. Your code only lives within the virtual machines that are present during the execution.
+**4. Save:**
+  
+  Once you are done, click on Save. We care about your security, so we will only store your email, your repositories names, and the reports. Your code only lives within the virtual machines that are present during the execution.
 
-**4) Create your first .satori.yml file**
+**5. Create your first .satori.yml file:**
 
-Within the repositories that you will connect, you want to create a file named `.satori.yml`. This file will contain the tests that you will executing on every push. Let's keep it simple, and start checking for secrets with Trufflehog:
+To begin automating tests in your connected repositories, you need to create a file named `.satori.yml`. This file will define the tests that will automatically run every time you push new code to your repository.
+Let's start by keeping it simple and checking for secrets using Trufflehog, a tool that scans for sensitive information such as API keys or credentials that may be unintentionally exposed in your code.
 
 ```yml
 settings:
@@ -45,14 +53,7 @@ tests:
     your_project:
     - ./your_project
 ```
-
-These are the steps to run it locally:
-
-```sh
-git clone https://github.com/satoridev01/Hello_C_World.git
-cd Hello_C_World
-satori run ./ --output
-```
 ---
 
-If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
+With this configuration and the .satori.yml file within your project, automated tests defined in your playbook will be triggered each time you push code to your GitHub repository. These tests will run on every pipeline execution, ensuring continuous validation of your code.
+
