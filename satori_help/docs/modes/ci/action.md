@@ -4,19 +4,19 @@ If you're looking to test specific parts of your CI/CD workflow using Satori, fo
 
 If you want to test part of your workflow with Satori follow these steps:
 
-**1) Navigate to Actions:** 
+**1. Navigate to Actions:** 
 
   Open your GitHub repository and click on the `Actions` tab.
 
 ![New Workflow Action](img/github_action_1.png)
 
-**2) Create a new workflow:**  
-  
+**2. Create a new workflow:**  
+
   Select `New workflow`, then click set up a workflow yourself to manually configure your workflow file.
 
 ![Set up a workflow](img/github_action_2.png)
 
-**3) Add the Satori job:** 
+**3. Add the Satori job:** 
 
   In your workflow file, include the Satori job configuration as part of your process. Once added, click `Commit changes` to save your workflow.
 
@@ -43,19 +43,19 @@ jobs:
 
 ![Satori CI workflow](img/github_action_3.png)
 
-**4) Set Up Secrets:**
+**4. Set Up Secrets:**
 
   Go to your repository `Settings`, then click on `Secrets and variables`, followed by `Actions`.
 
 ![](img/github_action_4.png)
 
-**5) Add a New Secret:**
+**5. Add a New Secret:**
 
   Click `New repository secret`.
 
 ![](img/github_action_5.png)
 
-**6) Configure SATORITOKEN:**
+**6. Configure SATORITOKEN:**
 
   In the `Name` field, enter SATORITOKEN. For the secret value, paste your Team API Token, which you can find it going to you [Dashboard](https://satori.ci/dashboard), select your team, click on `Settings` and copy your `Team API token`.
 Click `Add Secret` to finalize.
