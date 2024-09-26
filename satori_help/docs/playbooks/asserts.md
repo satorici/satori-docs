@@ -80,6 +80,8 @@ test:
     - echo Hello World
 ```
 
+![assertStdout](img/assertStdout.png)
+
 - <span style="color:red">Example Fail Test</span>: the program should deliver output, but no output is produced:
 
 ```yml
@@ -88,6 +90,9 @@ test:
     run:
     - ./broken_executable
 ```
+
+![assertStdoutFail](img/assertStdoutFail.png)
+
 
 ---
 
