@@ -271,7 +271,7 @@ test:
 - <span style="color:pass">Example Pass Test</span>: the programs should verify that the error is a certain string:
 ```yml
 settings:
-  image: python3
+  image: python
 
 test:
   assertStderrEqual: Verify this error
@@ -289,6 +289,9 @@ test:
 | String | Is the error different than the String? |
 - <span style="color:pass">Example Fail Test</span>: the programs should verify that the error is not a certain string:
 ```yml
+settings:
+  image: python
+
 test:
   assertStderrNotEqual: Verify this error
   error:
@@ -305,6 +308,9 @@ test:
 | String | Does the error contains the String? |
 - <span style="color:pass">Example Pass Test</span>: the program's errors should contain the string Traceback, and it does:
 ```yml
+settings:
+  image: python
+
 install:
    - "echo import nonexistent > test.py"
 test:
@@ -324,6 +330,9 @@ test:
 | String | Does the error not contain the String? |
 - <span style="color:fail">Example Fail Test</span>: the program's errors should not contain the string Traceback, but it does:
 ```yml
+settings:
+  image: python
+
 install:
    - "echo import nonexistent > test.py"
 test:
@@ -339,6 +348,9 @@ test:
 | SHA256Checksum | Is the error equal to this SHA256 hash? |
 - <span style="color:fail">Example Fail Test</span>: the program's errors should not contain the string Traceback, but it does:
 ```yml
+settings:
+  image: python
+
 install:
    - "echo import nonexistent > test.py "
 test:
@@ -354,6 +366,9 @@ test:
 | Regex | Does the error match your regular expression? |
 - <span style="color:gray">Example Unknown Test</span>: the Python script my_script.py might throw a KeyError exception with 'unexpected_key' if a certain condition in the script isn't met:
 ```yml
+settings:
+  image: python
+
 RunPythonScriptTest:
     assertStderrRegex: ".*KeyError: 'unexpected_key'.*"
     run:
@@ -368,6 +383,9 @@ RunPythonScriptTest:
 - <span style="color:green">Example Pass Test</span>: the program's errors should  not throw a Traceback, and it doesn't:
 
 ```yml
+settings:
+  image: python
+
 install:
    - "echo import os > test.py"
 test:
