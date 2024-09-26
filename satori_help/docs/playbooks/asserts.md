@@ -350,6 +350,9 @@ test:
     run:
     - python3 test.py
 ```
+
+![assertStderrNotContains](img/assertStderrNotContains.png)
+
 ---
 
 ##  assertStderrSHA256
@@ -368,6 +371,9 @@ test:
     run:
     - python3 test.py
 ```
+
+![assertStderrSHA256](img/assertStderrSHA256.png)
+
 ---
 
 ## assertStderrRegex
