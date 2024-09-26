@@ -111,6 +111,9 @@ test:
     - echo Hello World
 ```
 
+![assertStdoutEqual](img/assertStdoutEqual.png)
+
+
 - <span style="color:red">Example Fail Test</span>: the program should output "Hello World" and a newline, but it doesn't:
 
 ```yml
@@ -119,6 +122,8 @@ test:
     run:
     - echo hello world
 ```
+
+![assertStdoutEqualFail](img/assertStdoutEqualFail.png)
 
 ---
 
