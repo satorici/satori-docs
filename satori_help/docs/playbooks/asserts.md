@@ -364,16 +364,19 @@ test:
 | Input | Description                         |
 |-------|--------------------------------------
 | Regex | Does the error match your regular expression? |
-- <span style="color:gray">Example Unknown Test</span>: the Python script my_script.py might throw a KeyError exception with 'unexpected_key' if a certain condition in the script isn't met:
+- <span style="color:green">Example Pass Test</span>: the Python script referencing a non-existent object will throw a `NameError`:
 ```yml
 settings:
   image: python
 
-RunPythonScriptTest:
-    assertStderrRegex: ".*KeyError: 'unexpected_key'.*"
-    run:
-    - python3 my_script.py
+test:
+  assertStderrRegex: "(?i)error|warning|traceback|exception"
+  python:
+  - python3 -c "non-existent"
 ```
+
+![assertStderrRegex](img/assertStderrRegex.png)
+
 ---
 
 ## assertStderrNotRegex
