@@ -408,10 +408,13 @@ settings:
 install:
    - "echo import os > test.py"
 test:
-    assertStderrNotRegex: "*Traceback*"
+    assertStderrNotRegex: ".*Traceback.*"
     run:
     - python3 test.py
 ```
+
+![assertStderrNotRegex](img/assertStderrNotRegex.yml)
+
 ---
 
 ## assertReturnCode
