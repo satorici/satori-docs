@@ -412,7 +412,7 @@ test:
     - python3 test.py
 ```
 
-![assertStderrNotRegex](img/assertStderrNotRegex.yml)
+![assertStderrNotRegex](img/assertStderrNotRegex.png)
 
 ---
 
