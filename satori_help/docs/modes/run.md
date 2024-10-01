@@ -1,10 +1,14 @@
 # Run
 
-Satori runs remotely in our platform or locally where it is being executed. 
+Satori can be executed in two environments:
+
+**- Remotely:** run Satori on our cloud platform, which allows for scalable and centralized testing without the need for local resources.
+
+**- Locally:** execute Satori on your local machine, providing flexibility for development and testing in a controlled environment.
 
 ## Run Remotely
 
-This playbook named `hello.yml`:
+This playbook named `hello.yml` remotely using Satori. This playbook is defined as follows:
 
 ```yml
 test:
@@ -14,19 +18,23 @@ test:
   execute:
     - echo Hello world
 ```
+When executing this playbook, you have several options:
 
-Can be run:
+**- Asynchronously (no parameters):** run the playbook without any additional parameters.
 
-- With no parameters: asynchronously
-- With `--sync`: synchronously and it shows the status when it is complete
-- With `--report`: synchronously and it shows the report when it is complete
-- With `--output`: synchronously and it shows the output when it is complete
+**- Synchronously with `--sync`:** execute the playbook synchronously, displaying the status upon completion.
+
+**- Synchronously with `--report`:** run the playbook synchronously and generate a report that summarizes the results when it finishes.
+
+**- Synchronously with `--output`:** execute the playbook synchronously, showing the output in real-time as it completes.
 
 ![Run remotely aync and async](img/run_1.png)
 
 ## Run Remotely with Parameters
 
-If you include a ${{variable}} within your playbook that is not defined within your playbook, they will be parameters required when being called. Consider the playbook named `satori://test.yml` that will echo the ${{WHAT}} parameter:
+When creating playbooks in Satori, you can include parameters that need to be defined at runtime. If you use a $ symbol in your playbook for a parameter that is not explicitly defined within the playbook, it will be treated as a required parameter when the playbook is executed.
+
+For example, consider the following playbook named `satori://test.yml`, which echoes the parameter ${{WHAT}}:
 
 ```yml
 test:                                                                                                                                                                             
@@ -36,16 +44,19 @@ test:
   whatever:                                                                                                                                                                       
   - echo ${{WHAT}}
 ```
+To execute this playbook and provide the required parameter, you would run the command:
 
-You will execute it like this
+```bash
+satori run params.yml -d WHAT="Hello World" --output
+```
 
 ![Run with params](img/run_2.png)
 
-### Run with the files in the Local Directory
+## Local testing with Satori Playbooks
 
-In case you are working locally on a directory with source code, you save your playbook as `.satori.yml` within the directory, just as you would for your repo when testing your code through CI. 
+When working locally on a directory containing source code, you can save your playbook as `.satori.yml` within the directory. This approach is similar to how you would structure your repository when testing code through a CI pipeline.
 
-Consider the following example main.c file, that is referenced by a Makefile, and a playbook that verifies that everything returns the code 0 and when running the code it outputs "Hello World":
+Consider the following example files: `main.c`, a corresponding `Makefile`, and a playbook that verifies the expected behavior of your code.
 
 - **main.c**:
 
@@ -88,13 +99,16 @@ tests:
 
 ![Run with the files in the Local Directory](img/run_3.png)
 
-You would use it like this when developing locally before pushing, or when being used as part of Github Actions or Jenkins.
+This same playbook can also be employed in CI/CD environments. 
 
-### Run a public Playbook
+## Run a public Playbook
 
-You can run on-demand public playbooks. You can see a list of the publicly available playbooks with: `satori playbook --public`
+You can execute on-demand public playbooks available in the Satori platform. You can see a list of the publicly available playbooks with: 
 
-Then you can execute them passing parameters if required with `-d`:
+```sh
+satori playbook --public
+```
+To run a public playbook, you can execute them passing parameters if required with `-d`:
 
 ```sh
 satori run satori://some/playbook.yml
@@ -102,19 +116,20 @@ satori run satori://some/playbook.yml
 
 ![Run a public playbook with a parameter](img/run_4.png)
 
-You would run it like this when there is a public playbook that already addresses your problem.
+This allows you to leverage existing public playbooks that may already address your specific testing needs effectively.
 
-### Run Locally
+## Run Locally
 
-The playbook named `hello.yml` that we ran before remotely can also be executed locally and the assertion results will be confirmed by Satori:
+You can execute the playbook named `hello.yml` locally, just as you would run it remotely. This allows you to verify that your playbook functions correctly in your local environment, and Satori will confirm the assertion results. Here’s how you can run it locally:
 
+```sh
+satori local hello.yml --sync
+```
 ![Run locally aync and async](img/run_local.png)
 
-[Learn more about Monitors](monitor.md)
+## Run a process in Background
 
-### Run a process in Background
-
-If you are running a service that needs to listen on background, processes will remain in foreground if you use shell scripting techniques. The recommended approach is to install screen and send the process to the background. An additional tip is to include a timeout in settings to set a limit for the container. For example:
+When running a service that needs to listen in the background, it's important to ensure that processes do not remain in the foreground, especially when using shell scripting techniques. The recommended approach is to utilize screen, which allows you to run processes in a detached session. Additionally, setting a timeout for the container helps manage its lifecycle effectively. For example:
 
 ```yml
 settings:
@@ -136,4 +151,4 @@ check:
 
 ![Background](img/run_background.png)
 
-The `screen -dm` command is used to start a new detached `screen` session in the background. This is useful for running commands or scripts in the background and continue executing additional commands to test the background service.
+The command `screen -dm` is used to start a new detached `screen` session in the background. This is useful for running commands or scripts in the background and continue executing additional commands to test the background service.
