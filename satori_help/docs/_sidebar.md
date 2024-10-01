@@ -20,3 +20,4 @@
 * [Notifications](/notifications.md)
 * [Repositories](/repo.md)
 * [Teams](/teams.md)
+* [Cheatsheets](cheatsheet.html)
