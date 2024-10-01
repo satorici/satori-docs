@@ -322,7 +322,7 @@ settings:
   image: python
 
 install:
-   - "echo import nonexistent > test.py"
+   - echo import nonexistent > test.py
 test:
     assertStderrContains: "Traceback"
     run:
@@ -344,7 +344,7 @@ settings:
   image: python
 
 install:
-   - "echo import nonexistent > test.py"
+   - echo import nonexistent > test.py
 test:
     assertStderrNotContains: "Traceback"
     run:
@@ -365,7 +365,7 @@ settings:
   image: python
 
 install:
-   - "echo import nonexistent > test.py "
+   - echo import nonexistent > test.py
 test:
     assertStderrSHA256: "69827a4c85154b891cae9c35d99887375d815ec676bb7ce86e1f7601f6fec3ad"
     run:
@@ -406,7 +406,7 @@ settings:
   image: python
 
 install:
-   - "echo import os > test.py"
+   - echo import os > test.py
 test:
     assertStderrNotRegex: ".*Traceback.*"
     run:
