@@ -442,21 +442,18 @@ test:
     run:
     - return 2
 ```
----
 
-## assertSoftwareExists
+Captura TBC
 
-| Input | Description |
-|-------|--------------
-| Boolean        | Does the software being executed exists? True by default
-- <span style="color:fail">Example Fail Test</span>: the program should exist, and it does not:
-
-```yml
-test:
-    assertSoftwareExists: True # by default
-    run:
-    - ./your_program
+- <span style="color:red">Example Negative Fail Test</span>: the program should return a code because it can be executed:
 ```
+test:
+  assertReturnCodeNot: null
+  run:
+  - non_existing_software
+```
+
+Captura TBC
 
 ---
 
