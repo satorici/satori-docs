@@ -148,7 +148,7 @@ test:
 
 Mutations output different inputs than the one originally provided. Read more about it on the [Inputs](inputs.md#mutations) section for Playbooks.
 
-![assertStdoutNotEqual](img/assertstdoutnotequal.png)
+![assertStdoutNotEqual](img/assertStdoutNotEqual.png)
 
 
 ---
@@ -308,7 +308,7 @@ test:
   - python3 -c "import sys; sys.stderr.write('Verify this error')"
 ```
 
-![assertStderrEqual](img/assertstderrnotequal.png)
+![assertStderrEqual](img/assertStderrNotEqual.png)
 
 ---
 
