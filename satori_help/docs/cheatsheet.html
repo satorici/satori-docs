@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Satori CLI Cheatsheet</title>
+<style>
+body{font-family:Arial,sans-serif;background-color:#000;color:#fff;margin:10px;padding:0;}
+header{text-align:center;margin-bottom:10px;display:flex;align-items:center;justify-content:center;}
+header img{height:50px;margin-right:10px;}
+header h1{margin:0;font-size:2em;line-height:1;}
+.container{width:100%;max-width:800px;margin:0 auto;}
+.section{margin-bottom:20px;}
+.section h2{text-align:center;background-color:#222;color:#06AEEF;padding:5px;margin:0;font-size:1em;border-radius:3px 3px 0 0;}
+.card{border:1px solid #444;border-top:none;}
+.command-table{width:100%;border-collapse:collapse;table-layout:fixed;}
+.command-table th,.command-table td{border:1px solid #444;padding:5px;font-size:0.7em;}
+.command-table th{background-color:#333;color:#05A551;}
+.command{font-family:monospace;color:#fff;white-space:nowrap;}
+.description{color:#fff;}
+@media (max-width:768px){.command-table th,.command-table td{font-size:0.6em;}header h1{font-size:1.5em;}header img{height:40px;}}
+</style>
+</head>
+<body>
+
+<header>
+    <img src="https://satori.ci/wp-content/themes/satorici/assets/images/logo.svg" alt="Satori CI Logo">
+    <h1>Satori CI</h1>
+</header>
+
+<div class="container">
+
+    <div class="section">
+        <h2>Install, Update and Configure</h2>
+        <div class="card">
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Command</th><th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="command">pip3 install satori-ci</td>
+                        <td class="description">Install the latest version</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori update</td>
+                        <td class="description">Update to the latest version</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori config token "USERTOKEN"</td>
+                        <td class="description">Configure your user token as your default profile</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori config token "TEAMTOKEN" --profile TEAM</td>
+                        <td class="description">Configure your team token on your team profile</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Run asynchronously</h2>
+        <div class="card">
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Command</th><th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="command">satori run ./</td>
+                        <td class="description">Upload the current dir and run the playbook .satori.yml</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori run playbook.yml</td>
+                        <td class="description">Upload the playbook and run it</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori run ./ --playbook="satori://..."</td>
+                        <td class="description">Upload the current dir and run the specified playbook</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Run synchronously using these parameters</h2>
+        <div class="card">
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th><th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="command">--sync</td>
+                        <td class="description">Show the result</td>
+                    </tr>
+                    <tr>
+                        <td class="command">--report</td>
+                        <td class="description">Show the report</td>
+                    </tr>
+                    <tr>
+                        <td class="command">--output</td>
+                        <td class="description">Show the output</td>
+                    </tr>
+                    <tr>
+                        <td class="command">--files</td>
+                        <td class="description">Download the files created if the setting files was set to True</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Run playbooks with variables</h2>
+        <div class="card">
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Command</th><th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="command">--data VAR="This is the value of VAR"</td>
+                        <td class="description">Provide values for the undefined playbook variables</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Playbooks</h2>
+        <div class="card">
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Command</th><th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="command">satori playbooks</td>
+                        <td class="description">List your private playbooks</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori playbooks --public</td>
+                        <td class="description">List the public playbooks</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori playbook ID</td>
+                        <td class="description">Show a certain playbook</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori playbook ID public</td>
+                        <td class="description">Toggles the playbook's visibility</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori playbook ID delete</td>
+                        <td class="description">Delete the playbook</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Dashboards</h2>
+        <div class="card">
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Command</th><th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="command">satori</td>
+                        <td class="description">Show your general dashboard</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM</td>
+                        <td class="description">Show your TEAM dashboard</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Reports</h2>
+        <div class="card">
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Command</th><th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="command">satori reports</td>
+                        <td class="description">List reports</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori report ID</td>
+                        <td class="description">Show the report ID</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori report ID --json</td>
+                        <td class="description">Show the JSON of the report ID</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori report ID output</td>
+                        <td class="description">Show the output of the report ID</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori report ID output --json</td>
+                        <td class="description">Show the JSON's output of the report ID</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori report ID files</td>
+                        <td class="description">Download the files created (if Files was set to True in settings)</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori report ID public</td>
+                        <td class="description">Toggles the report's visibility</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori report ID stop</td>
+                        <td class="description">Stop the current report execution</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori report ID delete</td>
+                        <td class="description">Delete the report ID</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Repos</h2>
+        <div class="card">
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Command</th><th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="command">satori repos</td>
+                        <td class="description">List the repositories connected to CI or tested</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori repo GithubUser/Repo</td>
+                        <td class="description">Shows the repository Visibility, CI, Playbook, Status, Result and its team.</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori repo GithubUser/Repo run</td>
+                        <td class="description">Run using the latest commit</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori repo GithubUser/Repo commits</td>
+                        <td class="description">Show the list of commits and the reports associated</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Monitors</h2>
+        <div class="card">
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Command</th><th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="command">satori monitors</td>
+                        <td class="description">List monitors</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori monitor ID</td>
+                        <td class="description">List the reports associated to a monitor ID</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori monitor ID stop</td>
+                        <td class="description">Stop a monitor ID</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori monitor ID start</td>
+                        <td class="description">Start a monitor ID</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori monitor ID clean</td>
+                        <td class="description">Delete the reports associated to the monitor ID</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori monitor ID delete</td>
+                        <td class="description">Delete the monitor ID</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori monitor ID public</td>
+                        <td class="description">Toggles the monitor's visibility</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Scans</h2>
+        <div class="card">
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Command</th><th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="command">satori scans</td>
+                        <td class="description">List scans</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori scan GithubUser/Repo -c N</td>
+                        <td class="description">Scan the Github repository with a coverage of 1 (default) to 100</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori scan GithubUser/Repo check-commits</td>
+                        <td class="description">Get the repository commits before scanning</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori scan GithubUser/Repo check-forks</td>
+                        <td class="description">Get the repository forks before scanning</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori scan GithubUser/Repo status</td>
+                        <td class="description">Show the status of the scan on the repo</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori scan GithubUser/Repo stop</td>
+                        <td class="description">Stop the scan on the repo</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori scan GithubUser/Repo start</td>
+                        <td class="description">Start a previously stopped scan on the repo</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori scan GithubUser/Repo clean</td>
+                        <td class="description">Delete the reports associated to the repo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Teams</h2>
+        <div class="card">
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Command</th><th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="command">satori teams</td>
+                        <td class="description">List your teams</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM</td>
+                        <td class="description">Show the TEAM dashboard</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM create</td>
+                        <td class="description">Create a new team named TEAM</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM members</td>
+                        <td class="description">List your TEAM members</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM monitors</td>
+                        <td class="description">List your TEAM monitors</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM repos</td>
+                        <td class="description">List your TEAM repositories</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM reports</td>
+                        <td class="description">List your TEAM reports</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM settings</td>
+                        <td class="description">List your TEAM settings</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM get_config NAME</td>
+                        <td class="description">Show your TEAM's config setting</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM set_config NAME VALUE</td>
+                        <td class="description">Set your TEAM CONFIG setting</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM add --github="GithubUser"</td>
+                        <td class="description">Owners and admins can add users via Github to the TEAM</td>
+                    </tr>
+                    <tr>
+                        <td class="command">--role="READ"</td>
+                        <td class="description">Use the role READ (default) or ADMIN</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM add --email="usr@example.com"</td>
+                        <td class="description">Owners and admins can add users via Email to the TEAM</td>
+                    </tr>
+                    <tr>
+                        <td class="command">--role="READ"</td>
+                        <td class="description">Use the role READ (default) or ADMIN</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM add --monitor="MONITORID"</td>
+                        <td class="description">Add the monitor ID to your TEAM</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM add --repo="GithubUser/repo"</td>
+                        <td class="description">Add the repo to your TEAM</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM del --github="GithubUser"</td>
+                        <td class="description">Delete the GithubUser from your TEAM</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM del --email="usr@example.com"</td>
+                        <td class="description">Delete the email from the TEAM</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM del --repo="GithubUser/repo"</td>
+                        <td class="description">Delete the repo from the TEAM</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM del --monitor="MONITORID"</td>
+                        <td class="description">Delete the monitor from the TEAM</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori team TEAM delete</td>
+                        <td class="description">Delete the TEAM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
