@@ -22,7 +22,6 @@ You can assert what will be the behavior of [executions](execution.md):
 | [assertStderrNotRegex](#assertstderrnotregex)       | Regex          | Does the error not match your regular expression?
 | [assertReturnCode](#assertreturncode)               | Integer        | Is the return code equal to a certain value?
 | [assertReturnCodeNot](#assertreturncodenot)         | Integer        | Is the return code not equal to a certain value?
-| [assertSoftwareExists](#assertsoftwareexists)       | Boolean        | Does the software being executed exist? True by default
 | [assertDifferent](#assertdifferent)                 | Boolean        | Does the execution behave differently when using different inputs?
 | [assertKilled](#assertjilled)                       | Boolean        | Did the software time out?
 
