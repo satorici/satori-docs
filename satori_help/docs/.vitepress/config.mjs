@@ -16,13 +16,13 @@ export default defineConfig({
                 text: "Getting Started",
                 link: "/getting-started/install",
                 items: [
-                    { 
-                        text: "Installation", 
-                        link: "/getting-started/install" 
+                    {
+                        text: "Installation",
+                        link: "/getting-started/install",
                     },
-                    { 
-                        text: "Polyglot Hello World Test", 
-                        link: "/getting-started/hello_world" 
+                    {
+                        text: "Polyglot Hello World Test",
+                        link: "/getting-started/hello_world",
                     },
                     {
                         text: "Satori Playbooks",
@@ -65,7 +65,7 @@ export default defineConfig({
             { text: "Repositories", link: "/repo" },
             { text: "Notifications", link: "/notifications" },
             { text: "Teams", link: "/teams" },
-            { text: "Cheatsheet", link: "cheatsheet.html" },
+            { text: "Cheatsheet", link: "cheatsheet.html", target: "_blank" },
         ],
 
         socialLinks: [

@@ -20,4 +20,4 @@
 * [Notifications](/notifications.md)
 * [Repositories](/repo.md)
 * [Teams](/teams.md)
-* [Cheatsheet](/cheatsheet.html)
+* [Cheatsheet](https://docs.satori.ci/cheatsheet.html)
