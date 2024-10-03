@@ -1,28 +1,95 @@
 # Notifications
 
-## Settings:
-You can set the notifications via the web interface or using the CLI.
+Our flexible notification system ensures that your team stays informed about the status of your projects in real-time. We offer integration with multiple communication platforms, including:
 
-### CLI:
+- Slack
+- Discord
+- Email
+- Telegram
+- GitHub Issues
 
-You can view your current settings by executing the following command:
+You can define the specific conditions under which you wish to receive updates—whether on test failures, successes, or both. 
+
+## Notification settings
+
+You can configure notifications using either the web interface or the CLI.
+
+### Via CLI
+
+To view your current notification settings, run the following command:
+
 ```sh
 satori team Private settings
 ```
+
 ![View settings:](img/notif_1.png)
 
-Email:
+### Via Web 
+
+You can also set up notifications using the web interface by completing the necessary fields in the Notifications section of the Satori web [dashboard.](https://www.satori.ci/dashboard/)
+
+1. Log in to the Satori web dashboard.
+2. Navigate to the Team > Settings section.
+3. Fill in the required fields for your notification preferences (e.g., email, Slack, Discord, etc.).
+4. Save your settings to activate notifications for your project.
+
+![Settings:](img/dashboard_1.png)
+
+## Playbook Settings
+
+To configure your notification preferences, start by defining your **Playbook Settings**. In this section, you can choose how you want to be notified about your tests—whether for every event (`log`), only on failures (`logOnFail`), or only on successes (`logOnPass`). You can specify your preferred notification channels, including email, Slack, Datadog, or Discord.
+
+### Example Configuration
+
+You can set your notification preferences in YAML format as follows:
+
+```yml
+settings:
+  log|logOnFail|logOnPass: email|slack|discord|datadog
+
+[...]
+```
+For example, to receive notifications on Slack only when a test fails, you would configure your settings like this:
+
+```yml
+settings:
+  logOnFail: slack
+
+[...]
+```
+
+## Configuring Notifications
+
+### Email Notifications
+
+To set up email notifications, use this command:
+
 ```sh
 satori team Private set_config notification_email your@email.com
 ```
+
 ![Email setting:](img/notif_2.png)
 
-Slack:
+### Slack Notifications
 
-[Follow this guide to get the workspace and channel ID](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/notifications.md#slack)
+To set up Slack notifications in Satori, follow these steps to retrieve your workspace and channel IDs:
+
+Steps to Retrieve Workspace and Channel ID:
+
+1. Open the web version of Slack and navigate to the channel you're interested in.
+2. In your browser’s URL bar, you’ll see a URL like this: https://app.slack.com/client/T00000000/C00000000. The part after '/client/' is split into two segments.
+3. In the Satori CI dashboard, go to Team > Settings.
+4. Enter the first segment of the URL (e.g., T00000000) in the Workspace ID field.
+5. Insert the Channel ID (e.g., C00000000) in the Default Channel field to receive notifications.
+6. Select Add Satori to Workspace and follow the instructions on the Slack website to add the bot.
+7. In Slack, invite the bot to the channel by typing /invite @SatoriCIBot.
+
+Or via the CLI command: 
+
 ```sh
 satori team Private set_config slack_workspace TXXXXXXXXXX
 ```
+
 ![Workspace ID:](img/notif_3.png)
 
 ```sh
@@ -30,17 +97,67 @@ satori team Private set_config slack_channel CXXXXXXXXXX
 ```
 ![Channel ID:](img/notif_4.png)
 
-Discord:
+### Discord integration
 
-[Follow this guide to get the channel ID](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/notifications.md#discord)
+To set up Discord notifications in Satori-CI, you first need to obtain the Channel ID. Follow these steps:
+
+**Enabling Developer Mode:**
+1. Open your Discord settings by clicking the gear icon in the bottom left corner, next to your username and avatar.
+2. In the settings menu, select Appearance under the App Settings category.
+3. Scroll down to the Advanced section and toggle on Developer Mode.
+
+**Obtaining the Channel ID:**
+1. Right-click the desired channel name in Discord.
+2. Select Copy ID from the dropdown menu. The Channel ID is now copied to your clipboard.
+*Note: This method can be used to obtain IDs for text channels, voice channels, categories, and individual messages.*
+
+Once you have the Channel ID, you can configure it in Satori Web or with the following command:
+
 ```sh
 satori team Private set_config discord_channel CHANNEL_ID
 ```
 ![Discord setting:](img/notif_5.png)
 
-Datadog:
+### Telegram integration
 
-[Follow this guide to get the API Key and Site Region](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/notifications.md#Datadog)
+To set up Telegram notifications with Satori, follow these steps:
+
+1. Create a Telegram Channel: ensure you have a Telegram channel and invite the @satori_ci_bot to your team.
+2. Obtain the Channel ID: access your channel via the web at Telegram Web. The Channel ID is the number that appears after the # in the URL (e.g., -15050500050).
+Once you have the Channel ID, you can configure it in Satori-CI to start receiving notifications.
+
+```sh
+satori team Private set_config telegram_channel CHANNEL_ID
+```
+
+### Datadog integration
+
+Satori-CI integrates with Datadog Events for notification management. To set this up, you'll need to create an **API Key** and specify the **Site Region** from Datadog.
+
+#### Step 1: Create an API Key
+1. Navigate to **Organization Settings** in your Datadog account.
+2. Go to **API Keys**.
+3. Click on **+ New Key** to create a new API key for Satori.
+
+#### Step 2: Configure the API Key in Satori-CI
+Use the Satori CLI to configure your newly created API key with the following command:
+
+```shell
+satori team {MySatoriTeam} set_config datadog_api_key {MyDatadogApiKey}
+```
+
+- Replace `{MySatoriTeam}` with your Satori team name.
+- Replace `{MyDatadogApiKey}` with your Datadog API key.
+
+#### Step 3: (Optional) Configure Site Region
+By default, events are sent to the **us1** site region. To configure a different site region, use the following command:
+
+```shell
+satori team {MySatoriTeam} set_config datadog_site {MyDatadogRegion}
+```
+- Replace `{MyDatadogRegion}` with one of the following options: `us1`, `us3`, `us5`, `eu`, `ap1`, or `us1-fed`.
+
+Via CLI with the following command: 
 ```sh
 satori team Private set_config datadog_api_key a123
 ```
@@ -51,42 +168,9 @@ satori team Private set_config datadog_site us3|eu|etc
 ```
 ![Site Region:](img/notif_7.png)
 
-### WEB:
+## Report notifications
 
-You can also set the notifications via the web interface by completing the following fields on the Satori web [dashboard.](https://www.satori.ci/dashboard/)
-
-![Settings:](img/dashboard_1.png)
-
-[Read the following guides to complete these fields.](https://github.com/satorici/satori-docs/blob/main/satori_help/docs/notifications.md#Guides)
-
-
-## Playbook Settings
-
-The definition of where you will be notified starts on your playbook settings. In there, depending if you want to be notified every time (`log`), on every fail (`logOnFail`) or every time it passes (`logOnPass`) you will define if you want to be notified via email, via Slack, via Datadog or via Discord.
-
-By default, you will get notified with emails unless you change your playbook settings.
-
-```yml
-settings:
-  log|logOnFail|logOnPass: email|slack|discord|datadog
-
-[...]
-```
-
-So, a common thing is to get notified on slack when something fails, and you would do it like this:
-
-```yml
-settings:
-  logOnFail: slack
-
-[...]
-```
-
-### Report
-
-Notifications with PDF Report.
-
-If you want to receive a copy of your report in PDF along with your notification, you can do so indicating it as part of your playbook settings:
+To receive a copy of your test report in PDF format along with your notifications, you can specify this in your **Playbook Settings**.
 
 ```yml
 settings:
@@ -94,76 +178,10 @@ settings:
   report: pdf
 ```
 
-If `report: false` is set in the playbook, all generated outputs are deleted.
+If you wish to prevent the generation of any reports, you can set the report option to false. This will ensure that all generated outputs are deleted:
 
 ```yml
 settings:
   onLogFail: slack 
   report: false 
-```
-
-## Appendix: Slack, Discord and Datadog Guides
-
-### Slack
-
-To obtain the workspace ID and channel ID for a Slack Channel, follow these steps:
-
-**Channel and Workspace ID**:
-
-1. Go to the web version of Slack and to the channel that you're interested in.
-2. In your web browser's URL bar, you will see a URL that looks like this: <https://app.slack.com/client/T00000000/C00000000>. The part after '/client/' is split into two segments by a slash.
-3. In team settings, in your Satori CI dashboard, select your **Team**>**Settings**
-4. Put the first segment (e.g., 'T00000000') of the url in **the Worskspace ID**
-5. Insert your default channel to get notifications in the **Default Channel** field (use this channel for the step 6 & 7)
-6. Select **Add satori to workspace** and follow the intructions on the slack website to add it
-7. Invite the bot to a channel with /invite @SatoriCIBot in the channel on your Slack Workspace
-
-### Discord
-
-To get the Channel ID in Discord, you first need to enable Developer Mode. Here's how you can do it:
-
-**Enabling Developer Mode**:
-
-1. Open your Discord settings. You can do this by clicking the gear icon located in the bottom left, next to your username and avatar.
-2. In the settings menu, select 'Appearance' under the 'App Settings' category.
-3. Scroll down until you find the 'Advanced' section, and there you'll find a switch labeled 'Developer Mode'. Make sure it's toggled on.
-
-Once you've enabled Developer Mode, you can get your Channel ID as follows:
-
-**Channel ID**:
-
-1. Right-click the channel name.
-2. Select 'Copy ID' from the dropdown menu. The channel ID is now copied to your clipboard.
-
- Remember, you can use this method to get IDs for text channels, voice channels, categories, and even individual messages.
-
-If you need any help, please reach out to us on [Discord](https://discord.gg/F6Uzz7fc2s) or via [Email](mailto:support@satori-ci.com)
-
-### Datadog
-
-Satori CI supports Datadog Events as notification system. To use it you need an **API Key** and the **Site Region** from Datadog.
-
-1. To create an API Key for Satori you can go to **Organization Settings** -> **API Keys** -> **+New Key**
-
-2. Configure the new key with Satori CLI:
-
-```shell
-satori team {MySatoriTeam} set_config datadog_api_key {MyDatadogApiKey}
-```
-
-Replace **{MySatoriTeam}** with your Satori team name and **{MyDatadogApiKey}** with your Datadog API key
-
-3. Optional. By default the events are sent to the `us1` site region, you can configure another site region with:
-
-```shell
-satori team {MySatoriTeam} set_config datadog_site {MyDatadogRegion}
-```
-
-Replace **{MyDatadogRegion}** with `us1`, `us3`, `us5`, `eu`, `ap1` or `us1-fed`
-
-4. Now you can enable Satori Datadog notifications on your playbooks with:
-
-```yml
-settings:
-  logOnFail: datadog
 ```
