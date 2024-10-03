@@ -104,13 +104,23 @@ satori team TeamName delete
 
 ## Team Notifications
 
-You can configure notifications for your team using the following channels:
+You can visualize the notification settings of a team. This is how you would do it for your Private team:
+
+```sh
+satori team Private settings
+```
+
+![Team Settings](img/team_settings.png)
+
+These are the possible communication channels:
 
 - slack_workspace
 - slack_channel
 - discord_channel
 - notification_email
 - telegram_channel
+
+You can view with `get_config` the specific setting for your team or set it with `set_config` command.
 
 #### Viewing notification configuration
 
