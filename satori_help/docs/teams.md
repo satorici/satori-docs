@@ -1,23 +1,28 @@
 
 # Teams
 
-By default, you are a member of your own **Private** team. Here is where your repositories and monitors will be by default. Teams allow you to group monitors, repositories, and people with their own notifications channels.
+By default, you are part of your own **Private** team. This is the space where your repositories and monitors are created and managed unless specified otherwise. Teams help you organize monitors, repositories, and collaborators, and they also provide custom notification channels for efficient communication.
+
+```sh
+satori teams
+```
 
 ![Teams](img/team_1.png)
 
-#### List Members
+## Create a Team
 
-You can list the members of your teams like this:
+To create a new team, use the following command:
 
 ```sh
-satori team Private members
+satori team Backend create
 ```
 
-![Team Members](img/team_2.png)
+This example creates a team named Backend. You can replace "Backend" with any other team name to suit your project needs.
 
-#### Add Member
+## Add Member
 
-If the user's email is part of Satori CI, it will be automatically added. Otherwise, they will receive an invitation to join your team.
+If the specified email is already associated with a Satori CI account, the user will be automatically added to your team. If not, they will receive an email invitation to join. 
+To add a new member to your team, use the following command:
 
 ```sh
 satori team Private add --email="member_email@yourdomain.com"
@@ -25,17 +30,19 @@ satori team Private add --email="member_email@yourdomain.com"
 
 ![Add Team Members](img/team_3.png)
 
-## Create a Team
+## Listing team members
 
-This is how you would create the "Backend" team:
+To view the members of your teams, use the following command:
 
 ```sh
-satori team Backend create
+satori team Private members
 ```
 
-#### Add or delete repositories of your Team
+![Team Members](img/team_2.png)
 
-Include within your Backend team a certain repo:
+## Managing repositories in your team
+
+To add a specific repository to your team, use the following command:
 
 ```sh
 satori team Backend add --repo="GithubAccount/Repository"
@@ -43,37 +50,45 @@ satori team Backend add --repo="GithubAccount/Repository"
 
 ![Team Members](img/team_4.png)
 
-You can also include all the repositories of a certain account with:
+You can also add all repositories from a specific GitHub account to your team with:
 
 ```sh
-satori team Private add --repo="GithubAccount/repo-name"
+satori team Backend add --github="agusdinax"
 ```
 
 ![Team Members](img/team_5.png)
 
-If you want to remove them, you can use the `delete` subcommand.
+If you need to remove a repository from the team, use the following command with the delete subcommand:
 
-#### List your team repositories
+```sh
+satori team Backend del --repo="GithubAccount/Repository"
+```
 
-You can list the repositories of your team like this:
+## Listing your team repositories
+
+To view all the repositories associated with your team, use the following command:
 
 ```sh
 satori team Private repos
 ```
 
-#### Add or delete monitors of your team
+## Adding or deleting monitors from your team
 
-Once you launched a monitor, you can associate it with a team:
+Once a monitor is created, you can associate it with your team using this command:
 
 ```sh
-satori team Private add monitor="ID"
+satori team TEAM add --monitor="MONITORID"
 ```
 
-If you want to remove them, you can use the `delete` subcommand.
+To remove a monitor from the team, use the delete subcommand:
 
-#### List Monitors
+```sh
+satori team TEAM del --monitor="MONITORID"
+```
 
-You can list the monitors of your team like this:
+## Listing team monitors
+
+To list all the monitors associated with your team, use the following command:
 
 ```sh
 satori team Private monitors
@@ -81,7 +96,7 @@ satori team Private monitors
 
 ## Delete a Team
 
-You can remove a team like this:
+To remove an existing team, use the following command:
 
 ```sh
 satori team TeamName delete
@@ -89,22 +104,27 @@ satori team TeamName delete
 
 ## Team Notifications
 
-You can get the following notification configurations:
+You can configure notifications for your team using the following channels:
 
 - slack_workspace
 - slack_channel
 - discord_channel
 - notification_email
+- telegram_channel
 
-And it would be used like this:
+#### Viewing notification configuration
+
+To check the current notification configuration for a specific channel, use the following command:
 
 ```sh
-$ satori team SatoriCI get_config discord_channel
+$ satori team Private get_config discord_channel
 Satori CI 1.2.51 - Automated Software Testing Platform - Started on 2023-07-03 16:50:40
 discord_channel: 87654
 ```
 
-The previous value, was defined like this:
+#### Setting notification configuration
+
+To update or set the configuration for a notification channel:
 
 ```sh
 $ satori team Private set_config discord_channel 87654
