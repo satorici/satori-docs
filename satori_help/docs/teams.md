@@ -53,7 +53,7 @@ satori team Backend add --repo="GithubAccount/Repository"
 You can also add all repositories from a specific GitHub account to your team with:
 
 ```sh
-satori team Backend add --github="agusdinax"
+satori team Backend add --github="GithubAccount"
 ```
 
 ![Team Members](img/team_5.png)
