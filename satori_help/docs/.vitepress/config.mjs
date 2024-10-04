@@ -52,7 +52,7 @@ export default defineConfig({
                     {
                         text: "CI",
                         items: [
-                            { text: "GitHub", link: "/modes/ci/github" },
+                            { text: "GitHub Application", link: "/modes/ci/github" },
                             { text: "GitHub Action", link: "/modes/ci/action" },
                             { text: "GitLab", link: "/modes/ci/gitlab" },
                             { text: "Jenkins", link: "/modes/ci/jenkins" },
@@ -63,7 +63,17 @@ export default defineConfig({
                 ],
             },
             { text: "Repositories", link: "/repo" },
-            { text: "Notifications", link: "/notifications" },
+            { 
+                text: "Notifications", 
+                link: "/notifications" 
+                items: [
+                    { text: "Slack", link: "/notifications#slack" },
+                    { text: "Discord", link: "/notifications#discord" },
+                    { text: "Email", link: "/notifications#email" },
+                    { text: "Telegram", link: "/notifications#telegram" },
+                    { text: "Datadog", link: "/notifications#datadog" },
+                ],
+            },
             { text: "Teams", link: "/teams" },
             { text: "Cheatsheet", link: "cheatsheet.html", target: "_blank" },
         ],
