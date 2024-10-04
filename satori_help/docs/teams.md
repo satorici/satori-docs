@@ -40,7 +40,7 @@ satori team Private members
 
 ![Team Members](img/team_2.png)
 
-## Managing repositories in your team
+## Managing team repositories
 
 To add a specific repository to your team, use the following command:
 
@@ -72,7 +72,7 @@ To view all the repositories associated with your team, use the following comman
 satori team Private repos
 ```
 
-## Adding or deleting monitors from your team
+## Adding or deleting team monitors 
 
 Once a monitor is created, you can associate it with your team using this command:
 
