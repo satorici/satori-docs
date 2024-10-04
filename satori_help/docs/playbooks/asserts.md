@@ -427,6 +427,9 @@ test:
     run:
     - echo This program is executed correctly
 ```
+
+![assertReturnCode](img/assertReturnCode)
+
 ---
 
 ## assertReturnCodeNot
@@ -442,7 +445,7 @@ test:
     - return 2
 ```
 
-Captura TBC
+![assertReturnCodeNot](img/assertReturnCodeNot)
 
 - <span style="color:red">Example Negative Fail Test</span>: the program should return a code because it can be executed:
 ```
@@ -452,7 +455,8 @@ test:
   - non_existing_software
 ```
 
-Captura TBC
+![assertReturnCodeNotNull](img/assertReturnCodeNotNull)
+
 
 ---
 
@@ -473,6 +477,8 @@ test:
     - curl $API
 ```
 
+![assertDifferent](img/assertDifferent)
+
 ---
 
 ## assertKilled
@@ -489,6 +495,8 @@ test:
     run:
     - sleep 20
 ```
+
+![assertKilled](img/assertKilled)
 
 ---
 
