@@ -2,10 +2,11 @@
 
 Our flexible notification system ensures that your team stays informed about the status of your projects in real-time. We offer integration with multiple communication platforms, including:
 
-- Slack
-- Discord
-- Email
-- Telegram
+- [Slack](#slack)
+- [Discord](#discord)
+- [Email](#email)
+- [Telegram](#telegram)
+- [Datadog](#datadog)
 - GitHub Issues
 
 You can define the specific conditions under which you wish to receive updates—whether on test failures, successes, or both. 
@@ -60,7 +61,7 @@ settings:
 
 ## Configuring Notifications
 
-### Email Notifications
+### Email
 
 To set up email notifications, use this command:
 
@@ -70,7 +71,7 @@ satori team Private set_config notification_email your@email.com
 
 ![Email setting:](img/notif_2.png)
 
-### Slack Notifications
+### Slack
 
 To set up Slack notifications in Satori, follow these steps to retrieve your workspace and channel IDs:
 
@@ -97,7 +98,7 @@ satori team Private set_config slack_channel CXXXXXXXXXX
 ```
 ![Channel ID:](img/notif_4.png)
 
-### Discord integration
+### Discord
 
 To set up Discord notifications in Satori-CI, you first need to obtain the Channel ID. Follow these steps:
 
@@ -118,7 +119,7 @@ satori team Private set_config discord_channel CHANNEL_ID
 ```
 ![Discord setting:](img/notif_5.png)
 
-### Telegram integration
+### Telegram
 
 To set up Telegram notifications with Satori, follow these steps:
 
@@ -133,7 +134,7 @@ Once you have the Channel ID, you can configure it in Satori-CI to start receivi
 satori team Private set_config telegram_channel CHANNEL_ID
 ```
 
-### Datadog integration
+### Datadog
 
 Satori-CI integrates with Datadog Events for notification management. To set this up, you'll need to create an **API Key** and specify the **Site Region** from Datadog.
 
