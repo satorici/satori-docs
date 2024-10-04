@@ -428,7 +428,7 @@ test:
     - echo This program is executed correctly
 ```
 
-![assertReturnCode](img/assertReturnCode)
+![assertReturnCode](img/assertReturnCode.png)
 
 ---
 
@@ -445,7 +445,7 @@ test:
     - return 2
 ```
 
-![assertReturnCodeNot](img/assertReturnCodeNot)
+![assertReturnCodeNot](img/assertReturnCodeNot.png)
 
 - <span style="color:red">Example Negative Fail Test</span>: the program should return a code because it can be executed:
 ```
@@ -455,7 +455,7 @@ test:
   - non_existing_software
 ```
 
-![assertReturnCodeNotNull](img/assertReturnCodeNotNull)
+![assertReturnCodeNotNull](img/assertReturnCodeNotNull.png)
 
 
 ---
@@ -477,7 +477,7 @@ test:
     - curl $API
 ```
 
-![assertDifferent](img/assertDifferent)
+![assertDifferent](img/assertDifferent.png)
 
 ---
 
@@ -496,7 +496,7 @@ test:
     - sleep 20
 ```
 
-![assertKilled](img/assertKilled)
+![assertKilled](img/assertKilled.png)
 
 ---
 
