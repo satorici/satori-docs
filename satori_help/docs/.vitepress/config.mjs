@@ -65,7 +65,7 @@ export default defineConfig({
             { text: "Repositories", link: "/repo" },
             { 
                 text: "Notifications", 
-                link: "/notifications" 
+                link: "/notifications",
                 items: [
                     { text: "Slack", link: "/notifications#slack" },
                     { text: "Discord", link: "/notifications#discord" },
