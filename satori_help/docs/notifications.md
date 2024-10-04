@@ -81,10 +81,10 @@ Steps to Retrieve Workspace and Channel ID:
 1. Open the web version of Slack and navigate to the channel you're interested in.
 2. In your browser’s URL bar, you’ll see a URL like this: https://app.slack.com/client/T00000000/C00000000. The part after '/client/' is split into two segments.
 3. In the Satori CI dashboard, go to Team > Settings.
-4. Enter the first segment of the URL (e.g., T00000000) in the Workspace ID field.
-5. Insert the Channel ID (e.g., C00000000) in the Default Channel field to receive notifications.
+4. Enter the first segment of the URL (e.g., T00000000) in the workspace ID field.
+5. Insert the Channel ID (e.g., C00000000) in the default channel field to receive notifications.
 6. Select Add Satori to Workspace and follow the instructions on the Slack website to add the bot.
-7. In Slack, invite the bot to the channel by typing /invite @SatoriCIBot.
+7. In Slack, invite the bot to the channel by typing `/invite @SatoriCIBot.`
 
 Or via the CLI command: 
 
@@ -101,7 +101,7 @@ satori team Private set_config slack_channel CXXXXXXXXXX
 
 ### Discord
 
-To set up Discord notifications in Satori-CI, you first need to obtain the Channel ID. Follow these steps:
+To set up Discord notifications in Satori, you first need to obtain the Channel ID. Follow these steps:
 
 **Enabling Developer Mode:**
 1. Open your Discord settings by clicking the gear icon in the bottom left corner, next to your username and avatar.
@@ -124,7 +124,7 @@ satori team Private set_config discord_channel CHANNEL_ID
 
 To set up Telegram notifications with Satori, follow these steps:
 
-1. Create a Telegram Channel: ensure you have a Telegram channel and invite the @satori_ci_bot to your team.
+1. Create a Telegram Channel: ensure you have a Telegram channel and invite the `@satori_ci_bot` to your team.
 ![Telegram Bot](img/notif_telegram_1.png)
 
 2. Obtain the Channel ID: access your channel via the web at Telegram Web. The Channel ID is the number that appears after the # in the URL (e.g., -15050500050).
@@ -148,17 +148,16 @@ Satori-CI integrates with Datadog Events for notification management. To set thi
 Use the Satori CLI to configure your newly created API key with the following command:
 
 ```shell
-satori team {MySatoriTeam} set_config datadog_api_key {MyDatadogApiKey}
+satori team Private set_config datadog_api_key {MyDatadogApiKey}
 ```
 
-- Replace `{MySatoriTeam}` with your Satori team name.
 - Replace `{MyDatadogApiKey}` with your Datadog API key.
 
 #### Step 3: (Optional) Configure Site Region
 By default, events are sent to the **us1** site region. To configure a different site region, use the following command:
 
 ```shell
-satori team {MySatoriTeam} set_config datadog_site {MyDatadogRegion}
+satori team Private set_config datadog_site {MyDatadogRegion}
 ```
 - Replace `{MyDatadogRegion}` with one of the following options: `us1`, `us3`, `us5`, `eu`, `ap1`, or `us1-fed`.
 
