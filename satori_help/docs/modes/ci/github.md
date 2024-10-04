@@ -1,11 +1,12 @@
-# Integrating Satori with Github Github CI App
+# Integrate Satori CI with your commits using our Github App
 
-Each time you push code to your GitHub repository, there is a potential risk that security vulnerabilities may be introduced. To safeguard your project and its sensitive data, it's crucial to minimize the exposure of sensitive information. 
-The two primary areas of concern are:
+Each time you push code to your GitHub repository, there is a potential risk that may be introduced. To safeguard your project and its sensitive data, it's crucial to minimize the malfunctions or vulnerabilities. The three primary areas of concern are:
+
+**- Code malfunction:** If you cannot assert how your software behaves, deployment should be considered or stopped.
 
 **-Secrets in your code:** Hard-coded credentials, API keys, and sensitive data can be unintentionally pushed, compromising the security of your systems.
 
-**-Vulnerable code (internal or third-party):** Code may contain weaknesses that malicious actors can exploit.
+**-Vulnerable code (internal or third-party):** Code may contain security weaknesses that malicious actors can exploit.
 
 To automatically safeguard your GitHub repositories and ensure continuous testing, install our Satori-CI App:
 
