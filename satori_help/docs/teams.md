@@ -127,9 +127,7 @@ You can view with `get_config` the specific setting for your team or set it with
 To check the current notification configuration for a specific channel, use the following command:
 
 ```sh
-$ satori team Private get_config discord_channel
-Satori CI 1.2.51 - Automated Software Testing Platform - Started on 2023-07-03 16:50:40
-discord_channel: 87654
+satori team Private get_config discord_channel
 ```
 
 #### Setting notification configuration
@@ -137,6 +135,5 @@ discord_channel: 87654
 To update or set the configuration for a notification channel:
 
 ```sh
-$ satori team Private set_config discord_channel 87654
-True
+satori team Private set_config discord_channel 87654
 ```
