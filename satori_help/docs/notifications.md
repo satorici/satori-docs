@@ -123,8 +123,11 @@ satori team Private set_config discord_channel CHANNEL_ID
 To set up Telegram notifications with Satori, follow these steps:
 
 1. Create a Telegram Channel: ensure you have a Telegram channel and invite the @satori_ci_bot to your team.
+![Telegram Bot](img/notif_telegram_1.png)
+
 2. Obtain the Channel ID: access your channel via the web at Telegram Web. The Channel ID is the number that appears after the # in the URL (e.g., -15050500050).
 Once you have the Channel ID, you can configure it in Satori-CI to start receiving notifications.
+![Telegram Channel ID](img/notif_telegram_2.png)
 
 ```sh
 satori team Private set_config telegram_channel CHANNEL_ID
