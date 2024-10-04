@@ -266,7 +266,11 @@ header h1{margin:0;font-size:2em;line-height:1;}
                     </tr>
                     <tr>
                         <td class="command">satori repo GithubUser/Repo run</td>
-                        <td class="description">Run using the latest commit</td>
+                        <td class="description">Run the repository's playbook on the latest commit</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori repo GithubUser/Repo run  --playbook="satori://..."</td>
+                        <td class="description">Run another playbook on the latest commit</td>
                     </tr>
                     <tr>
                         <td class="command">satori repo GithubUser/Repo commits</td>
@@ -335,8 +339,12 @@ header h1{margin:0;font-size:2em;line-height:1;}
                         <td class="description">List scans</td>
                     </tr>
                     <tr>
-                        <td class="command">satori scan GithubUser/Repo -c N</td>
-                        <td class="description">Scan the Github repository with a coverage of 1 (default) to 100</td>
+                        <td class="command">satori scan GithubUser/Repo [-c N]</td>
+                        <td class="description">Scan the Github repository with the repository's playbook a coverage of 1 (default) to 100</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori scan GithubUser/Repo [--playbook="satori://..."]</td>
+                        <td class="description">Scan the Github repository with a different playbook</td>
                     </tr>
                     <tr>
                         <td class="command">satori scan GithubUser/Repo check-commits</td>
@@ -347,20 +355,28 @@ header h1{margin:0;font-size:2em;line-height:1;}
                         <td class="description">Get the repository forks before scanning</td>
                     </tr>
                     <tr>
-                        <td class="command">satori scan GithubUser/Repo status</td>
-                        <td class="description">Show the status of the scan on the repo</td>
+                        <td class="command">satori scan ID status</td>
+                        <td class="description">Show the status of a scan</td>
                     </tr>
                     <tr>
-                        <td class="command">satori scan GithubUser/Repo stop</td>
-                        <td class="description">Stop the scan on the repo</td>
+                        <td class="command">satori scan ID stop</td>
+                        <td class="description">Stop the scan</td>
                     </tr>
                     <tr>
-                        <td class="command">satori scan GithubUser/Repo start</td>
+                        <td class="command">satori scan ID start</td>
                         <td class="description">Start a previously stopped scan on the repo</td>
                     </tr>
                     <tr>
-                        <td class="command">satori scan GithubUser/Repo clean</td>
+                        <td class="command">satori scan ID clean</td>
                         <td class="description">Delete the reports associated to the repo</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori scan ID delete</td>
+                        <td class="description">Delete the monitor</td>
+                    </tr>
+                    <tr>
+                        <td class="command">satori scan ID public</td>
+                        <td class="description">Toggle the monitor's visibility</td>
                     </tr>
                 </tbody>
             </table>
