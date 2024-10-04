@@ -488,7 +488,7 @@ test:
 - <span style="color:fail">Example Fail Test</span>: the software should finish execution within 10 seconds, and it does not:
 ```yml
 settings:
-  software_timeout: 10
+  timeout: 10
 
 test:
   assertKilled: False
