@@ -277,7 +277,7 @@ test:
 | Input    | Description                       |
 |----------|------------------------------------
 | String\* | Is the error equal to the String? |
-- <span style="color:pass">Example Pass Test</span>: the programs should verify that the error is a certain string:
+- <span style="color:green">Example Pass Test</span>: the programs should verify that the error is a certain string:
 ```yml
 settings:
   image: python
@@ -296,7 +296,7 @@ test:
 | Input  | Description                         |
 |--------|--------------------------------------
 | String | Is the error different than the String? |
-- <span style="color:pass">Example Fail Test</span>: the programs should verify that the error is not a certain string:
+- <span style="color:green">Example Fail Test</span>: the programs should verify that the error is not a certain string:
 ```yml
 settings:
   image: python
@@ -315,7 +315,7 @@ test:
 | Input  | Description                         |
 |--------|--------------------------------------
 | String | Does the error contains the String? |
-- <span style="color:pass">Example Pass Test</span>: the program's errors should contain the string Traceback, and it does:
+- <span style="color:green">Example Pass Test</span>: the program's errors should contain the string Traceback, and it does:
 ```yml
 settings:
   image: python
@@ -337,7 +337,7 @@ test:
 | Input  | Description                            |
 |--------|-----------------------------------------
 | String | Does the error not contain the String? |
-- <span style="color:fail">Example Fail Test</span>: the program's errors should not contain the string Traceback, but it does:
+- <span style="color:red">Example Fail Test</span>: the program's errors should not contain the string Traceback, but it does:
 ```yml
 settings:
   image: python
@@ -358,7 +358,7 @@ test:
 | Input          | Description                             |
 |----------------|------------------------------------------
 | SHA256Checksum | Is the error equal to this SHA256 hash? |
-- <span style="color:fail">Example Fail Test</span>: the program's errors should not contain the string Traceback, but it does:
+- <span style="color:red">Example Fail Test</span>: the program's errors should not contain the string Traceback, but it does:
 ```yml
 settings:
   image: python
@@ -464,7 +464,7 @@ test:
 | Input   | Description                                                         |
 |---------|----------------------------------------------------------------------
 | Boolean | Does the execution behave differently when using different inputs? |
-- <span style="color:fail">Example Fail Test</span>: the production and staging environment should look the same, and it does not:
+- <span style="color:red">Example Fail Test</span>: the production and staging environment should look the same, and it does not:
 
 ```yml
 API:
@@ -485,7 +485,7 @@ test:
 | Input   | Description                 |
 |---------|------------------------------
 | Boolean | Did the software time out? |
-- <span style="color:fail">Example Fail Test</span>: the software should finish execution within 10 seconds, and it does not:
+- <span style="color:red">Example Fail Test</span>: the software should finish execution within 10 seconds, and it does not:
 ```yml
 settings:
   timeout: 10
