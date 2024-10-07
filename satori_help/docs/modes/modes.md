@@ -13,7 +13,7 @@ You can execute your playbooks on demand using the Satori CLI in several scenari
 
   **- Creating a new playbook:** run the command `satori run playbook.yml` to test the playbook during its creation.
   
-  **- Running locally:** use `satori local -p playbook.yml` to execute your playbook on your local machine.
+  **- Running locally:** use `satori local playbook.yml` to execute your playbook on your local machine.
   
   **- Verifying production issues:** check if issues found in your testing environment persist in production.
   

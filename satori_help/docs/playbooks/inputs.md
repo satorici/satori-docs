@@ -1,12 +1,12 @@
 # Inputs
 
-When testing a system the behaviors are analyzed depending on the inputs used to understand what outputs are produced from a [black box perspective](https://en.wikipedia.org/wiki/Black_box). 
- 
-Software may use inputs that can be either defined within the playbook or to be left undefined within the playbook so it is defined at the moment of execution. Inputs may be valid or invalid to test the behavior of a piece of software from a black-box perspective.
+When testing a system, the behaviors are analyzed based on the inputs used, examining the outputs produced from a [black box perspective](https://en.wikipedia.org/wiki/Black_box) where the internal logic of the system is not directly observed.
+
+Inputs in Satori can either be predefined within the playbook or left undefined, allowing them to be specified at execution. Inputs may be valid and invalid inputs to test the software behavior, making it possible to assess the system's response to expected and unexpected data.
 
 ## Parametrized
 
-Consider the following playbook `satori://test.yml` that has a variable defined as `${{WHAT}}` that is not defined within the playbook:
+Consider the following playbook,  `satori://test.yml `, which includes a variable  `${{WHAT}} ` that is not defined within the playbook:
 
 ```yml
 test:
@@ -17,13 +17,18 @@ test:
     - echo ${{WHAT}}
 ```
 
-Whenever referencing that playbook, you will pass the value of `${{WHAT}}`
+When running this playbook, you will need to pass a value for `${{WHAT}}` at execution, as it is not predefined in the playbook, with the next command `-d`:
+
+```sh
+satori run .satori.yml  -d WHAT="Bye World" --report --output
+```
 
 ![Parametrized inputs](img/inputs_0.png)
 
 ## Defined within the playbook
 
-Inputs may be defined within the playbook under any name for the software to be executed. On the following example, the `echo` test will iterate throughout the different values defined for `input`:
+Inputs can be specified directly in the playbook and named accordingly for the software being tested. In the example below, the `echo` command will iterate through each value defined under `input`:
+
 
 ```yml
 input:
@@ -34,11 +39,11 @@ echo:
 - echo ${{input}}
 ```
 
-This is how the output will look like:
+This will produce the following output:
 
 ![use inputs](img/inputs_1.png)
 
-You can also define different nested values. The following example will show a Pass for the positive test, and a Fail for the negative test:
+You can also organize inputs with nested values. The following example demonstrates how a positive test will pass, while a negative test will fail:
 
 ```yml
 input:
@@ -50,16 +55,16 @@ input:
 echo:
   assertStdoutEqual: "Hello World"
   input:
-  - echo -n $(input) World
+  - echo -n ${{input)}} World
 ```
 
 For example:
 
 ![use positive and negative values](img/inputs_2.png)
 
-## Dictionaries
+## Dictionaries as Input
 
-Dictionary files can be split by certain characters (normally newlines) to be used as inputs for the tests. For example:
+Dictionary files can serve as input sources by splitting the file content by newlines. In the example below, `dict-input` is defined to read from `dict.txt` and splits each entry by newline `\n` for use in the tests:
 
 ```yml
 dict-input:
@@ -72,9 +77,10 @@ echo:
   - echo ${{dict-input}}
 ```
 
-## Mutations
+## Mutating inputs for testing
 
-Inputs can be mutated to test how software behaves with unexpected values. Mutations can be based on the original string, but they always different. They are specified as follow:
+Mutations allow you to test software resilience by altering inputs unexpectedly. By modifying input strings with mutations, you can observe how software responds to diverse, potentially malformed data. The following example demonstrates setting up mutations for the input `"Hello World"` using two different mutation types, `radamsa` and `zzuf`:
+
 
 ```yml
 input:
@@ -91,11 +97,8 @@ echo:
   input:
   - echo -n ${{input}}
 ```
+In this playbook, each mutation tool (e.g., `radamsa` and `zzuf`) will generate 5 variations of the input, totaling 10 distinct mutations. The mutations are then echoed, with the `assertStdoutNotEqual` check verifying that none of the mutated outputs match the original string `"Hello World"`.
 
 For example:
 
 ![mutate your inputs](img/inputs_4.png)
-
-The previous playbook will generate 10 different mutations of the string "Hello World" using different fuzzers that will be echoed to the standard output and validated that they are not equal to "Hello World".
-
-If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
