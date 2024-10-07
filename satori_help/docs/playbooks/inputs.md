@@ -77,7 +77,7 @@ echo:
   - echo ${{dict-input}}
 ```
 
-## Mutations
+## Mutating inputs for testing
 
 Mutations allow you to test software resilience by altering inputs unexpectedly. By modifying input strings with mutations, you can observe how software responds to diverse, potentially malformed data. The following example demonstrates setting up mutations for the input `"Hello World"` using two different mutation types, `radamsa` and `zzuf`:
 
