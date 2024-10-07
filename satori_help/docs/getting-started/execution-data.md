@@ -63,7 +63,7 @@ satori reports -p 2
 
 To view a specific report, specify the report ID as follows:
 
-```yml
+```sh
 satori report REPORT_ID
 ```
 
@@ -77,7 +77,7 @@ Or on the web:
 
 This displays a summary of the execution data along with the command output and assertions applied.
 
-```yml
+```sh
 satori report REPORT_ID output
 ```
 
@@ -89,6 +89,6 @@ Or on the web:
 
 If your execution generates files, you can download them using the CLI:
 
-```yml
+```sh
 satori report REPORT_ID files
 ```
