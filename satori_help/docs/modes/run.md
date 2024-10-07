@@ -106,7 +106,7 @@ This same playbook can also be employed in CI/CD environments.
 You can execute on-demand public playbooks available in the Satori platform. You can see a list of the publicly available playbooks with: 
 
 ```sh
-satori playbook --public
+satori playbooks --public
 ```
 To run a public playbook, you can execute them passing parameters if required with `-d`:
 
