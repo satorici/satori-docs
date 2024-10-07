@@ -455,8 +455,7 @@ test:
   - non_existing_software
 ```
 
-![assertReturnCodeNotNull](img/assertReturnCodeNotNull.png)
-
+TBC
 
 ---
 
