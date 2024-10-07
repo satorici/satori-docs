@@ -495,7 +495,7 @@ test:
     - sleep 20
 ```
 
-![assertKilled](img/assertKilled.png)
+TBC
 
 ---
 
