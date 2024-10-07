@@ -75,7 +75,7 @@ export default defineConfig({
                 ],
             },
             { text: "Teams", link: "/teams" },
-            { text: "Cheatsheet", link: "cheatsheet.html", target: "_blank" },
+            { text: "Cheatsheet", link: "/cheatsheet.html", target: "_blank" },
         ],
 
         socialLinks: [
