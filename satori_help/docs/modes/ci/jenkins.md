@@ -37,7 +37,6 @@ Click on Build Now in your Jenkins dashboard to run the build and trigger the Sa
 
 ![Build Now](img/jenkins_5.png)
 
--
 ### Configuring the Satori Path in Jenkins
 
 **Note**: Jenkins may require the absolute path to the `satori` command. If it doesn’t automatically recognize `satori`, follow these steps to set the correct path.
