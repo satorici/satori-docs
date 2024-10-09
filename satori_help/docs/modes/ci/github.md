@@ -6,9 +6,9 @@ Each time you push code to your GitHub repository, there is a potential risk tha
 
 **- Secrets in your code:** Hard-coded credentials, API keys, and sensitive data can be unintentionally pushed, compromising the security of your systems.
 
-**-Vulnerable code (internal or third-party):** Code may contain security weaknesses that malicious actors can exploit.
+**- Vulnerable code (internal or third-party):** Code may contain security weaknesses that malicious actors can exploit.
 
-To automatically safeguard your GitHub repositories and ensure continuous testing, install our Satori-CI App:
+To automatically safeguard your GitHub repositories and ensure continuous testing, install our Satori App:
 
 ---
 **1. Install the Satori CI GitHub App:** 
