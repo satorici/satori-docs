@@ -1,4 +1,4 @@
-# Integrate Satori CI with your commits using our Github App
+# Integrate Satori with your commits using our Github App
 
 Each time you push code to your GitHub repository, there is a potential risk that may be introduced. To safeguard your project and its sensitive data, it's crucial to minimize the malfunctions or vulnerabilities. The three primary areas of concern are:
 
