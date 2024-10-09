@@ -4,7 +4,7 @@ Each time you push code to your GitHub repository, there is a potential risk tha
 
 **- Code malfunction:** If you cannot assert how your software behaves, deployment should be considered or stopped.
 
-**-Secrets in your code:** Hard-coded credentials, API keys, and sensitive data can be unintentionally pushed, compromising the security of your systems.
+**- Secrets in your code:** Hard-coded credentials, API keys, and sensitive data can be unintentionally pushed, compromising the security of your systems.
 
 **-Vulnerable code (internal or third-party):** Code may contain security weaknesses that malicious actors can exploit.
 
