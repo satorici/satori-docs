@@ -41,7 +41,7 @@ Associating this metadata with each playbook run provides valuable context and s
 
 ## Configuring CPU and Memory for Playbooks
 
-Define the required CPU and memory for each playbook to ensure optimal performance. Use the `settings` block to specify these parameters:
+Define the required CPU and memory for each playbook to ensure optimal performance. Use the `settings` to specify these parameters:
 
 ```yml
 settings:
