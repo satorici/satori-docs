@@ -1,10 +1,26 @@
 # Settings
 
-Your playbook will have metadata associated with it, including specific CPU and memory requirements.  It may need to run at a certain rate or schedule.  It may require a general timeout to run concurrently several times or destroy the output upon execution. Here is how you can define it.
+In your playbook, you can set specific settings to define its execution requirements. These settings allow you to:
+
+- Specify CPU and memory requirements.
+
+- Set execution rate or schedule.
+
+- Define a general timeout and concurrency.
+
+- Manage output handling.
+
+These settings help customize the playbook performance to your project’s needs, making testing processes more efficient and scalable.
 
 ## Name, Description and Mitigation Settings
 
-You can define your playbook name to easily identify it, along with a description and a mitigation for deeper follow ups:
+In your playbook, you can define a name, description, and mitigation strategy to enhance playbook identification. Here’s how each component contributes to a clear and actionable setup:
+
+**- Name:** assign a descriptive name to identify the playbook quickly.
+
+**- Description:** provide details about the playbook's purpose, such as supported languages and tool functionalities. 
+
+**- Mitigation:** specify a remediation step if the playbook fails, it provides clear guidance for necessary actions upon failure.
 
 ```yaml
 settings:
@@ -21,20 +37,18 @@ semgrep:
     - [ semgrep --config "p/secrets" -q ]
 ```
 
-Having this information associated to the playbook's execution is valuable for context and follow up on the understanding of the situation and the potential following actions required in case it fails and a mitigation is required.
+Associating this metadata with each playbook run provides valuable context and supports informed follow-up actions, especially if mitigation measures are necessary.
 
+## Configuring CPU and Memory for Playbooks
 
-## Change the amount of CPUs and Memory
+Define the required CPU and memory for each playbook to ensure optimal performance. Use the `settings` block to specify these parameters:
 
-You can set the CPU and Memory required for playbooks like this:
-
-```
+```yml
 settings:
   cpu: 16384
   memory: 122880
 ```
-
-These are the possible combinations you can use:
+These are the possible combinations of CPU and memory configurations and the compatible operating systems. Select the values that best suit your playbook's requirements.
 
 | CPU value      | Memory value                                                                                                                                                                                              | Operating systems supported |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
@@ -45,55 +59,53 @@ These are the possible combinations you can use:
 | 4096 (4 vCPU)  | 8192<br>9216<br>10240<br>11264<br>12288<br>13312<br>14336<br>15360<br>16384<br>17408<br>18432<br>19456<br>20480<br>21504<br>22528<br>23552<br>24576<br>25600<br>26624<br>27648<br>28672<br>29696<br>30720 | Linux, Windows              |
 | 8192 (8 vCPU)  | 16384<br>20480<br>24576<br>28672<br>32768<br>36864<br>40960<br>45056<br>49152<br>53248<br>57344<br>61440                                                                                                  | Linux                       |
 | 16384 (16vCPU) | 32768<br>40960<br>49152<br>57344<br>65536<br>73728<br>81920<br>90112<br>98304<br>106496<br>114688<br>122880                                                                                               | Linux                       |
-## Cron Settings
 
-For detailed information on how to use Cron settings in your playbooks, please refer to the CRON Scheduling section in the [Monitor](../modes/monitor.md#cron-scheduling) documentation.
+## Scheduling Playbooks with Cron and Rate settings
 
-## Rate Settings
+To schedule playbook execution based on specific times or intervals, configure Cron or Rate settings. Each offers a different approach to scheduling:
 
-For information on how to use Rate settings in your playbooks, please see the Rate Setting section in the [Monitor](../modes/monitor.md#rate-setting) documentation.
+**- Cron Settings:** use cron settings to schedule playbooks at precise times or recurring intervals, such as daily or weekly runs. For more detailed instructions, refer to the Cron Scheduling section in the [Monitor](../modes/monitor.md#cron-scheduling) documentation.
 
-## Alert your result every time a execution runs or when the expected result is different than the one expected
+**- Rate Settings:** configure rate settings for simple, fixed-interval scheduling, such as every 5 minutes or hourly. See the rate setting section in the [Monitor](../modes/monitor.md#rate-setting) documentation for guidance.
 
-You can choose between the three different results and how you would like to be notified once the execution is complete. These are your options:
+These settings help automate playbook runs, ensuring timely and consistent execution based on your testing needs.
 
-- **log**: Always be notified
-- **logOnFail**: Be notified in case the result is Fail
-- **logOnPass**: Be notified in case the result is Pass
+## Notification settings for execution results
 
-Which can be used with the following parameters:
+You can customize how you receive notifications based on the execution results of your playbook. Choose from three notification settings:
 
-- **slack-** followed by the alias that you defined for the channel
-- **email-** followed by the alias that you defined for the channel
-- **telegram-** followed by the alias that you defined for the channel
-- **discord-name** followed by the alias that you defined for the channel
-- **issue** to create a github issue on the project, which does not require a suffix to be added since it will be created on the project repository (only valid for CI)
+- **log**: receive notifications for every execution, regardless of the outcome.
+- **logOnFail**: get notified only when the result is a failure.
+- **logOnPass**: receive notifications only when the result is a success.
 
-The previous aliases can be defined on your [Team Settings](https://www.satori-ci.com/team-settings/) when adding a notification
+Notifications can be sent through various channels. Use the following formats to define your notification preferences:
 
-Different log types can be specified simultaneously to notify people in different ways:
+- **slack** followed by the alias you defined for the Slack channel.
+- **email** followed by the email you defined for email notifications.
+- **telegram** followed by the alias you defined for the Telegram channel.
+- **discord** followed by the alias you defined for the Discord channel.
+
+You can define these aliases in your [Settings](https://satori.ci/dashboard/) when adding a notification.
+
+You can specify different log types simultaneously to notify users through multiple channels:
 
 ```yaml
 settings:
-    #log: slack-logs
-    logOnFail: slack-fails
-    #logOnPass: email-auditor
+    logOnFail: slack, email, telegram, discord
 ```
-
 ## Timeout Settings
 
-You can define a maximum amount of time in seconds that the execution should run for:
+Set a maximum runtime for playbook executions to control resource usage. Specify the timeout duration in seconds:
 
 ```yaml
 settings:
     timeout: 60 # the default value is 3600 seconds
 ```
-
-In case it reaches the timeout without completing, the instance will be shutdown killing current executions.
+If the playbook reaches the defined timeout without completing, the instance will automatically shut down, terminating any ongoing processes. This setting helps prevent excessive resource use and ensures timely task completion.
 
 ## Count Settings
 
-Multiple instances can be launched independently by the Satori Cloud infrastructure in parallel using the same playbook with the count parameters and the number of instances with each execution having its own report. Consider the following case of a playbook that performs a DDoS test:
+The `count` parameter allows you to launch multiple instances of the same playbook concurrently through the Satori Cloud infrastructure. Each instance runs independently and generates its own report, which is especially useful for tests requiring high concurrency, such as load or DDoS testing. Here’s an example configuration for a DDoS test playbook:
 
 ```yml
 settings:
@@ -110,35 +122,37 @@ install:
 host:
   assertReturnCode: 0
   before_siege:
-  - [ curl -s $(URL) -m 3 ]
+  - [ curl -s ${(URL}} -m 3 ]
   siege:
   - [ siege -c 100 -t 30s $(URL) ]
   results:
   - [ "set +f; cat siege.*" ]
   after_siege:
-  - [ curl -s $(URL) -m 3 ]
+  - [ curl -s ${{URL}} -m 3 ]
 ```
 
 ## Report Settings
 
-You may not want to store any data on Satori servers after the execution has been completed. You can set that by defining the report as False. On the other hand, if you want to receive a copy of your report, you can specify in what format you would like to receive it. If you don't define anything for your report, you will still be able it to see it online with the CLI or the Web. 
+Control whether and how reports are saved after playbook execution. You can prevent data storage on Satori servers or specify a format to receive a downloadable copy.
 
-### Report PDF
+**- Disable report storage:** set `report` to `false` to avoid storing any report data on Satori servers, while still receiving an execution summary upon completion.
 
-Send yourself a PDF version of our report with this setting when receiving along with the notification, we can save you a click:
+**- Receive a report copy in PDF:** set `report` to `pdf` to receive a PDF copy of the report.
 
-```yaml
-settings:
-    report: pdf
-```
+If no report format is specified, you can still access the report online using the CLI or Web interface.
 
-### Report False
+### Example Configurations
 
-If you don't want to store a copy of your report or output, define the report as False. You will still get the overall status of your report and test after completion but the outputs will not be stored.
+- **PDF report**: sends a downloadable PDF version of your report.
+    ```yaml
+    settings:
+        report: pdf
+    ```
 
-```yml
-settings:
-  report: False
-```
+- **No report storage**: ensures no report data is saved on Satori servers after execution. You will still get the overall status of your report and test after completion but the outputs will not be stored.
+    ```yaml
+    settings:
+        report: False
+    ```
 
 If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
