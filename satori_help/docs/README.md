@@ -43,7 +43,6 @@ We offer a flexible notification system to keep your team updated about the sata
 - Discord
 - Email
 - Telegram
-- Github Issues
 
 You can define these notifications within your [dashboard settings](https://satori.ci/dashboard/) and set notification preferences in your project’s satori.yml file. Specify the conditions under which you want to be notified, whether on a failure or a success.
 
