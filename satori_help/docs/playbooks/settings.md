@@ -153,29 +153,27 @@ host:
 
 Control whether and how reports are saved after playbook execution. You can prevent data storage on Satori servers or specify a format to receive a downloadable copy.
 
-**- Disable report storage:** set `report` to `false` to avoid storing any report data on Satori servers, while still receiving an execution summary upon completion.
+**- Receive a report copy in PDF:** set `report` to `pdf` to send a PDF copy of the report. For example:
 
-**- Receive a report copy in PDF:** set `report` to `pdf` to receive a PDF copy of the report.
+```yaml
+settings:
+    report: pdf
+```
+
+**- Disable report storage:** set `saveReport` to `false` to avoid storing the report data on Satori servers, while still receiving an execution summary upon completion.
+
+```yaml
+settings:
+    saveReport: False
+```
+
+**- Disable report storage:** set `saveReport` to `false` to avoid storing the report data on Satori servers, while still receiving an execution summary upon completion.
+
+```yaml
+settings:
+    saveOutput: False
+```
 
 If no report format is specified, you can still access the report online using the CLI or Web interface.
-
-### Example Configurations
-
-- **PDF report**: sends a downloadable PDF version of your report.
-    ```yaml
-    settings:
-        report: pdf
-    ```
-
-- **No report storage**: ensures no report data is saved on Satori servers after execution. You will still get the overall status of your report and test after completion but the report will not be stored.
-    ```yaml
-    settings:
-        saveReport: False
-    ```
-- **No output storage**: ensures no output data is saved on Satori servers after execution. You will still get the overall status of your report and test after completion but the output will not be stored.
-    ```yaml
-    settings:
-        saveOutput: False
-    ```
     
 If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
