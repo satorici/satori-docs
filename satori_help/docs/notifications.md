@@ -7,8 +7,6 @@ Our flexible notification system ensures that your team stays informed about the
 - [Email](#email)
 - [Telegram](#telegram)
 - [Datadog](#datadog)
-- Jira
-- GitHub Issues
 
 You can define the specific conditions under which you wish to receive updates—whether on test failures, successes, or both. 
 
