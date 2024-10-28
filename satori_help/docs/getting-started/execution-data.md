@@ -22,7 +22,7 @@ You can also view your reports on the Satori-CI website at:
 
 Both methods allow you to obtain the report IDs, which you can use to view single report.
 
-### Filtering Reports
+## Filtering Reports
 
 You can filter your reports using various parameters to narrow down the results:
 
@@ -51,7 +51,7 @@ satori reports --filter="repo=satorici/*,result=fail"
 satori reports --filter="playbook=satori://code/trufflehog"
 ```
 
-#### Pagination
+## Pagination
 
 When dealing with a large number of results, such as reports, repositories, or monitors, we provide a pagination system to help you navigate through the data more efficiently. To access additional pages, use the `-p X` option, where `X` represents the page number you want to view.
 
@@ -59,7 +59,7 @@ When dealing with a large number of results, such as reports, repositories, or m
 satori reports -p 2
 ```
 
-### Viewing a Single Report
+## Viewing a Single Report
 
 To view a specific report, specify the report ID as follows:
 
@@ -84,6 +84,21 @@ satori report REPORT_ID output
 Or on the web:
 
 ![Web Report](img/execution-data_5.png)
+
+## Configuring Report Visibility
+
+You can configure the visibility of your results report with three distinct settings to manage who can view it:
+
+- **`private`**: accessible only to the owner or specifically permitted users.
+- **`unlisted`**: accessible only to individuals with a direct link to the report. This visibility is useful for sharing specific results without making them publicly.
+- **`public`**: open access, visible to all users without restrictions.
+
+To set the visibility of a report, use the following command and specify the visibility level:
+
+```sh
+satori report REPORT_ID visibility [private|unlisted|public]
+```
+These configurations provide flexible control over report access, allowing you to choose the visibility level that best suits your sharing needs.
 
 ## Downloading Files
 
