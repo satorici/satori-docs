@@ -24,17 +24,24 @@ In your playbook, you can define a name, description, and mitigation strategy to
 
 ```yaml
 settings:
-    name: Find Secrets using Semgrep
-    description: A free open-source static code analysis tool with stable support for C#, Go, Java, JavaScript, JSON, Python, PHP, Ruby, and Scala. It has experimental support for nineteen other languages, as well as a language agnostic mode.
-    mitigation: Remove secrets from your code if the playbook fails
+  name: Find secrets using Semgrep
+  description: Semgrep is a static code analysis tool with stable support for C#, Go, Java, JavaScript, JSON, Python, PHP, Ruby, and Scala. It has experimental support for nineteen other languages, as well as a language agnostic mode.
+  mitigation: Do not store your secrets along with your code.
+  image: python
+  author:
+  - https://github.com/satorici
+  gallery:
+  - https://files.catbox.moe/zz0pll.png
+  example: satori run ./ --playbook="satori://secrets/semgrep.yml" --report --output
+    
 install:
-    assertReturnCode: 0
-    semgrep:
-    - [ python3 -m pip install semgrep ]
+  semgrep:
+  - pip install semgrep >> /dev/null
+    
 semgrep:
-    assertStdout: False
-    secrets:
-    - [ semgrep --config "p/secrets" -q ]
+  assertStdout: False
+  secrets:
+  - semgrep --config 'p/secrets' -q --max-chars-per-line 1024  --exclude-rule generic.secrets.security.detected-twitter-oauth.detected-twitter-oauth --exclude-rule generic.secrets.security.detected-facebook-oauth.detected-facebook-oauth 
 ```
 
 Associating this metadata with each playbook run provides valuable context and supports informed follow-up actions, especially if mitigation measures are necessary.
@@ -80,12 +87,10 @@ You can customize how you receive notifications based on the execution results o
 
 Notifications can be sent through various channels. Use the following formats to define your notification preferences:
 
-- **slack** followed by the alias you defined for the Slack channel.
-- **email** followed by the email you defined for email notifications.
-- **telegram** followed by the alias you defined for the Telegram channel.
-- **discord** followed by the alias you defined for the Discord channel.
-
-You can define these aliases in your [Settings](https://satori.ci/dashboard/) when adding a notification.
+- **slack**
+- **email**
+- **telegram**
+- **discord**
 
 You can specify different log types simultaneously to notify users through multiple channels:
 
@@ -93,6 +98,9 @@ You can specify different log types simultaneously to notify users through multi
 settings:
     logOnFail: slack, email, telegram, discord
 ```
+
+You can [define these notifications](../notifications.md) with our CLI tool.
+
 ## Timeout Settings
 
 Set a maximum runtime for playbook executions to control resource usage. Specify the timeout duration in seconds:
@@ -110,25 +118,35 @@ The `count` parameter allows you to launch multiple instances of the same playbo
 ```yml
 settings:
   name: "Siege - Load testing web servers"
-  description: "Knowing how much traffic your web server can handle when under stress is essential for planning
-                future grow of your website or application. By using tool called siege, you can run a load test
-                on your server and see how your system performs under different circumstances."
+  description: "Knowing how much traffic your web server can handle when under stress is essential for planning 
+                future grow of your website or application. By using tool called siege, you can run a load test 
+                on your server and see how your system performs under different circumstances.
+                You can use siege to evaluate the amount of data transferred, response time, transaction rate, 
+                throughput, concurrency and how many times the server returned responses. 
+                The tool has three modes, in which it can operate – regression, internet simulation and brute force.
+                Siege must only be ran against servers you own or on such you have explicit permission to test. "
   mitigation: "Use an anti DDoS service such as CloudFlare to prevent network attacks"
-  count: 100 # maximum amount of concurrent instances for a playbook
+  count: 10
+  timeout: 300
+  example: satori run satori://dos/siege.yml -d URL="satori.ci" --output
+
 install:
-  assertReturnCode: 0
+  update:
+  - apt update
+  curl:
+  - apt install -qy curl
   siege:
-  - [ apt install -y siege ]
+  - apt install -qy siege
+
 host:
   assertReturnCode: 0
+  setSeverity: 4
   before_siege:
-  - [ curl -s ${(URL}} -m 3 ]
+  - curl -s ${{URL}} -m 3
   siege:
-  - [ siege -c 100 -t 30s $(URL) ]
-  results:
-  - [ "set +f; cat siege.*" ]
+  - siege -c 100 -t 30s ${{URL}}
   after_siege:
-  - [ curl -s ${{URL}} -m 3 ]
+  - curl -s ${{URL}} -m 3
 ```
 
 ## Report Settings
@@ -149,10 +167,15 @@ If no report format is specified, you can still access the report online using t
         report: pdf
     ```
 
-- **No report storage**: ensures no report data is saved on Satori servers after execution. You will still get the overall status of your report and test after completion but the outputs will not be stored.
+- **No report storage**: ensures no report data is saved on Satori servers after execution. You will still get the overall status of your report and test after completion but the report will not be stored.
     ```yaml
     settings:
-        report: False
+        saveReport: False
     ```
-
+- **No output storage**: ensures no output data is saved on Satori servers after execution. You will still get the overall status of your report and test after completion but the output will not be stored.
+    ```yaml
+    settings:
+        saveOutput: False
+    ```
+    
 If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
