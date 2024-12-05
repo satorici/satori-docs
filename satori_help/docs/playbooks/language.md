@@ -106,5 +106,16 @@ The `import` keyword is not mandatory. You can place the import section anywhere
 Satori performs schema validation on your Playbook as soon as it is received, ensuring that the syntax and grammar are correct. If any errors are detected, either from user input or system issues, you will be promptly informed.
 The error will be shown when viewing your report with `satori report REPORTID` command or from the **Reports** section of the Satori Web.
 
+## Submitting your playbooks
+
+You can contribute your own playbooks to our [playbook repository](https://github.com/satorici/playbooks). Satori CI shares part of the profits with the playbooks' creators and authors.
+
+1. Create a fork of our playbook repository by clicking [this link](https://github.com/satorici/playbooks/fork) or clicking the "Fork" button.
+2. [Create a new branch](https://docs.github.com/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository) in your forked repository.
+3. Create or modify your playbook, either by using the web interface or locally by pushing your changes to your repository.
+4. [Click here to open a pull request](https://github.com/satorici/playbooks/compare), make sure you click _compare across forks_. There will be four dropdowns, in the third one select your forked repository and in the last, the branch you created in the second step. Finally click the *Create pull request* button.
+
+We will review your submission as soon as possible.
+
 ---
 If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
