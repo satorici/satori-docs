@@ -57,7 +57,7 @@ jobs:
 
 **6. Configure SATORITOKEN:**
 
-  In the `Name` field, enter SATORITOKEN. For the secret value, paste your Team API Token, which you can find it going to you [Dashboard](https://satori.ci/dashboard), select your team, click on `Settings` and copy your `Team API token`.
+  In the `Name` field, enter SATORITOKEN. For the secret value, paste your API Token, which you can find it going to https://satori.ci/user-settings/ and copy your `API token`.
 Click `Add Secret` to finalize.
 
 ![](img/github_action_6.png)
