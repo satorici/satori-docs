@@ -8,6 +8,7 @@ export default defineConfig({
     sitemap: { hostname: "https://docs.satori.ci" },
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
+        logo: "https://satori.ci/img/logo.svg",
         search: { provider: "local" },
         nav: [],
         sidebar: [

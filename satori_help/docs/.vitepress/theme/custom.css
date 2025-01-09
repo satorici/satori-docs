@@ -11,3 +11,7 @@
   --vp-sidebar-bg-color: #182433;
   --vp-c-bg: #151f2c;
 }
+
+.title .logo {
+  margin-right: .2rem !important;
+}
