@@ -10,7 +10,11 @@ export default defineConfig({
         // https://vitepress.dev/reference/default-theme-config
         logo: "https://satori.ci/img/logo.svg",
         search: { provider: "local" },
-        nav: [],
+        nav: [
+            { text: 'Plans', link: 'https://satori.ci/#plans' },
+            { text: 'Public', link: 'https://satori.ci/public' },
+            { text: 'Playbooks', link: 'https://satori.ci/playbooks' }
+        ],
         sidebar: [
             { text: "Intro", link: "/README" },
             {
@@ -64,8 +68,8 @@ export default defineConfig({
                 ],
             },
             { text: "Repositories", link: "/repo" },
-            { 
-                text: "Notifications", 
+            {
+                text: "Notifications",
                 link: "/notifications",
                 items: [
                     { text: "Slack", link: "/notifications#slack" },
