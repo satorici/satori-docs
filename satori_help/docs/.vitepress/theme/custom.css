@@ -1,4 +1,13 @@
 :root {
+  --vp-c-brand-1: #0076bf;
+  --vp-c-brand-2: #2fb344;
+  --vp-sidebar-bg-color: #f6f8fb;
+  --vp-c-bg: #fff;
+}
+
+.dark:root {
   --vp-c-brand-1: #06adee;
   --vp-c-brand-2: #a6ce39;
+  --vp-sidebar-bg-color: #182433;
+  --vp-c-bg: #151f2c;
 }
