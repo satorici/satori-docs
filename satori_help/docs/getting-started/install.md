@@ -6,7 +6,7 @@ next:
 
 # Install
 
-We offer various installation options and integrations to fit your development workflow. You can connect Satori via CLI, which can be installed using pip, or integrate it with your [Github Application](../modes/ci/github.md). Additionally, we support integration with other CI/CD platforms such as  [Gitlab](../modes/ci/gitlab.md), [Jenkins](../modes/ci/jenkins.md), and [Github Actions](../modes/ci/action.md). To enhance your experience and better visualize of your test results, we provide ca user-friendly web interface <https://satori.ci>, to better visualize your test results.
+We offer various installation options and integrations to fit your development workflow. You can connect Satori via CLI, which can be installed using pip, or integrate it with your [Github Application](../modes/ci/github.md). Additionally, we support integration with other CI/CD platforms such as  [Gitlab](../modes/ci/gitlab.md), [Jenkins](../modes/ci/jenkins.md), and [Github Actions](../modes/ci/action.md). To enhance your experience and better visualize your test results, we provide ca user-friendly web interface <https://satori.ci>.
 
 ## Install Satori CI Github App
 
