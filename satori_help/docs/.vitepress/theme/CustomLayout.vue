@@ -6,7 +6,6 @@ import { provide } from 'vue'
 const { isDark } = useData()
 
 provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
-  console.log(isDark);
   isDark.value = !isDark.value;
   localStorage.setItem("theme", isDark.value ? "dark" : "light");
 })
@@ -14,7 +13,6 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
 // Share theme between landing/dashboard
 const savedTheme = localStorage.getItem('theme') ||
   (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-console.log(savedTheme);
 isDark.value = savedTheme === 'dark';
 </script>
 
