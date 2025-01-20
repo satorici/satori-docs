@@ -25,4 +25,4 @@
   * [Datadog](/notifications.md#datadog)
 * [Repositories](/repo.md)
 * [Teams](/teams.md)
-* [Cheatsheet](https://docs.satori.ci/cheatsheet.html)
+* [Cheatsheet](/cheatsheet.md)
