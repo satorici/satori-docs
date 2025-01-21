@@ -39,7 +39,7 @@
 | `satori playbooks` | List your private playbooks |
 | `satori playbooks --public` | List the public playbooks |
 | `satori playbook ID` | Show a certain playbook |
-| `satori playbook ID public` | Toggles the playbook's visibility |
+| `satori playbook ID visibility {public, private, unlisted}` | Toggles the playbook's visibility |
 | `satori playbook ID delete` | Delete the playbook |
 
 ## Dashboards
@@ -59,7 +59,7 @@
 | `satori report ID output` | Show the output of the report ID |
 | `satori report ID output --json` | Show the JSON's output of the report ID |
 | `satori report ID files` | Download the files created (if Files was set to True in settings) |
-| `satori report ID public` | Toggles the report's visibility |
+| `satori report ID visibility {public, private, unlisted}` | Toggles the report's visibility |
 | `satori report ID stop` | Stop the current report execution |
 | `satori report ID delete` | Delete the report ID |
 
@@ -72,6 +72,7 @@
 | `satori repo GithubUser/Repo run` | Run the repository's playbook on the latest commit |
 | `satori repo GithubUser/Repo run --playbook="satori://..."` | Run another playbook on the latest commit |
 | `satori repo GithubUser/Repo commits` | Show the list of commits and the reports associated |
+| `satori repo GithubUser/Repo visibility {public, private, unlisted}` | Toggles the repo's visibility |
 
 ## Monitors
 
@@ -83,7 +84,7 @@
 | `satori monitor ID start` | Start a monitor ID |
 | `satori monitor ID clean` | Delete the reports associated to the monitor ID |
 | `satori monitor ID delete` | Delete the monitor ID |
-| `satori monitor ID public` | Toggles the monitor's visibility |
+| `satori monitor ID visibility {public, private, unlisted}` | Toggles the monitor's visibility |
 
 ## Scans
 
@@ -99,7 +100,7 @@
 | `satori scan ID start` | Start a previously stopped scan on the repo |
 | `satori scan ID clean` | Delete the reports associated to the repo |
 | `satori scan ID delete` | Delete the monitor |
-| `satori scan ID public` | Toggle the monitor's visibility |
+| `satori scan ID visibility {public, private, unlisted}` | Toggle the monitor's visibility |
 
 ## Teams
 
