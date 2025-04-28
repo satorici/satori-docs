@@ -11,7 +11,6 @@
 * [Execution modes](/modes/modes.md)
   * CI
     * [GitHub Application](/modes/ci/github.md)
-    * [GitHub Action](/modes/ci/action.md)
     * [Gitlab](/modes/ci/gitlab.md)
     * [Jenkins](/modes/ci/jenkins.md)
   * [Run](/modes/run.md)
