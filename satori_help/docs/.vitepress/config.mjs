@@ -58,7 +58,6 @@ export default defineConfig({
                         text: "CI",
                         items: [
                             { text: "GitHub Application", link: "/modes/ci/github" },
-                            { text: "GitHub Action", link: "/modes/ci/action" },
                             { text: "GitLab", link: "/modes/ci/gitlab" },
                             { text: "Jenkins", link: "/modes/ci/jenkins" },
                         ],
