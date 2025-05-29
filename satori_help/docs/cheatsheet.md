@@ -127,3 +127,14 @@
 | `satori team TEAM del --repo="GithubUser/repo"` | Delete the repo from the TEAM |
 | `satori team TEAM del --monitor="MONITORID"` | Delete the monitor from the TEAM |
 | `satori team TEAM delete` | Delete the TEAM |
+
+## Shards
+
+| Command | Description |
+| --- | --- |
+| `satori shards --shard X/Y --input INPUT` | Divide massive datasets into smaller chunks for distributed processing |
+| `--shard X/Y` | Shard index X out of Y total shards (required) |
+| `--input INPUT` | Input file path or direct IP/CIDR/range/domain/URL (required) |
+| `--exclude PATH or ENTRY` | Exclusion file path or direct IP/CIDR/range/domain/URL to exclude |
+| `--seed N` | Seed for deterministic pseudorandom distribution (default: 1) |
+| `--results PATH` | Output file path (writes to stdout if omitted) |

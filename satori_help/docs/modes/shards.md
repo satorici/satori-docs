@@ -23,9 +23,6 @@ It supports IPv4 address ranges, domains, and HTTP/S URLs, and offers high-perfo
 - **--results PATH**  
   Output file path (writes to stdout if omitted).
 
-- **--processes N**  
-  Number of parallel worker processes (default: CPU count).
-
 
 ## Input Methods
 
