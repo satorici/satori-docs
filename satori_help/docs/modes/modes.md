@@ -25,8 +25,6 @@ To automate software testing as part of a CI/CD pipeline, Satori offers several 
 
   **- [Github Application](https://github.com/apps/satorici):** analyze your repositories automatically by using the Satori GitHub App.
   
-  **- [GitHub Action](ci/action.md):** implement automated tests in your GitHub workflows with the Satori CLI.
-  
   **- [Gitlab](ci/gitlab.md):** use the Satori CLI within your GitLab CI pipeline to automate testing.
   
   **- [Jenkins](ci/jenkins.md):** add the Satori CLI to your Jenkins pipeline for continuous automated testing.
