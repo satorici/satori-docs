@@ -64,6 +64,7 @@ export default defineConfig({
                     },
                     { text: "Monitor", link: "/modes/monitor" },
                     { text: "Scan", link: "/modes/scan" },
+                    { text: "Shards", link: "/modes/shards" },
                 ],
             },
             { text: "Repositories", link: "/repo" },

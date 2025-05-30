@@ -16,6 +16,7 @@
   * [Run](/modes/run.md)
   * [Monitor](/modes/monitor.md)
   * [Scan](/modes/scan.md)
+  * [Shards](/modes/shards.md)
 * [Notifications](/notifications.md)
   * [Slack](/notifications.md#slack)
   * [Discord](/notifications.md#discord)
