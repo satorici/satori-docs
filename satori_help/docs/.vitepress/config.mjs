@@ -11,6 +11,7 @@ export default defineConfig({
         logo: "https://satori.ci/img/logo.svg",
         search: { provider: "local" },
         nav: [
+            { text: 'Blog', link: 'https://blog.satori.ci' },
             { text: 'Plans', link: 'https://satori.ci/#plans' },
             { text: 'Public', link: 'https://satori.ci/public' },
             { text: 'Playbooks', link: 'https://satori.ci/playbooks' }
