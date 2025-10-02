@@ -24,31 +24,32 @@ Both methods allow you to obtain the report IDs, which you can use to view singl
 
 ## Filtering Reports
 
-You can filter your reports using various parameters to narrow down the results:
+You can filter your reports using various parameters to narrow down the results with `satori reports search`:
 
-- **`repo`**: filter by repository (e.g., satorici/satori-cli).
-- **`playbook`**: filter by Playbook URL (e.g., satori://code/semgrep.yml).
-- **`status`**: filter by report status (Pending, Running, Completed, or Undefined).
-- **`result`**: filter by report result (Pass or Fail).
-- **`from`**: limit to commits from a specific date (format: year-month-day, e.g., 2020-12-30).
-- **`to`**: limit to commits until a specific date (format: year-month-day, e.g., 2023-01-10).
-- **`satori_error`**: filter by whether an error occurred during report generation (True or False).
-- **`email`**: filter by pusher email.
-- **`user`**: filter by Satori-CI user name.
-- **`type`**: filter by report execution type (monitor, github, or playbook_bundle).
+- **`playbook-type`**: filter by playbook type {public,private}
+- **`visibility`**: filter by report visibility {public-global,public,unlisted,private}
+- **`result`**: filter by report result {pass,fail,unknown}
+- **`query`**: filter by output string (supports regex)      
+- **`monitor`**: filter by monitor ID
+- **`playbook`**: filter by playbook
+- **`status`**: filter by status {provisioning,pending,running,completed,stopped,timeout}
+- **`from`**: filter by from date
+- **`to`**: filter by to date
+- **`severity`**: filter by output severity
+- **`execution`**: filter by execution type {local,run,ci,scan,monitor}
 
-This parameters can be used to check and filter specific reports that you are looking for.
+These parameters can be used to check and filter specific reports that you are looking for.
 
 - Example: _"I want to see all failed reports for the repositories of the account satorici"_
 
 ```sh
-satori reports --filter="repo=satorici/*,result=fail"
+satori reports search --repo "satorici/*" --result fail
 ```
 
 - Example: *"I want to see a list of reports related to the playbook trufflehog"*
 
 ```sh
-satori reports --filter="playbook=satori://code/trufflehog"
+satori reports search --playbook satori://code/trufflehog
 ```
 
 ## Pagination
