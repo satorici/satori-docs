@@ -9,7 +9,7 @@
 | `satori config token "USERTOKEN"` | Configure your user token as your default profile |
 | `satori config token "TEAMTOKEN" --profile TEAM` | Configure your team token on your team profile |
 
-## Run asynchronously
+## Run in the cloud
 
 | Command | Description |
 | --- | --- |
@@ -17,16 +17,32 @@
 | `satori run playbook.yml` | Upload the playbook and run it |
 | `satori run ./ --playbook="satori://..."` | Upload the current dir and run the specified playbook |
 
-## Run synchronously using these parameters
+## Run locally
+
+| Command | Description |
+| --- | --- |
+| `satori local ./` | Execute the playbook .satori.yml locally |
+| `satori local playbook.yml` | Execute the playbook locally |
+| `satori local ./ --playbook="satori://..."` | Execute the specified playbook locally |
+
+## Run using these parameters
 
 | Parameter | Description |
 | --- | --- |
 | `--sync` | Show the result |
 | `--report` | Show the report |
 | `--output` | Show the output |
+| `--test` | Limit the output to a certain test|
 | `--files` | Download the files created if the setting files was set to True |
+| `--run` | Execute a specific test from the playbook |
+| `--visibility` | Set the visibility dynamically |
+| `--name` | Change the name of the playbook dynamically |
+| `--timeout` | Change the timeout dynamically |
+| `--cpu` | Change the cpu dynamically (run only) |
+| `--memory` | Change the memory dynamically (run only) |
+| `--storage` | Change the storage dynamically (run only) |
 
-## Run playbooks with variables
+## Run parametrized playbooks
 
 | Command | Description |
 | --- | --- |
