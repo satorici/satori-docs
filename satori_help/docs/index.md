@@ -10,9 +10,6 @@ hero:
     - theme: brand
       text: View satori-cli documentation
       link: /README.md
-    - theme: alt
-      text: API Schema
-      link: https://api.satori.ci/schema/elements
 
 features:
   - title: Automated Testing
