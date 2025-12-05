@@ -8,6 +8,8 @@
 | `satori update` | Update to the latest version |
 | `satori config token "USERTOKEN"` | Configure your user token as your default profile |
 | `satori config token "TEAMTOKEN" --profile TEAM` | Configure your team token on your team profile |
+| `satori whoami` | Display current user information |
+| `satori width` | Show console width configuration for current profile |
 
 ## Run in the cloud
 
@@ -89,6 +91,9 @@
 | `satori repo GithubUser/Repo run --playbook="satori://..."` | Run another playbook on the latest commit |
 | `satori repo GithubUser/Repo commits` | Show the list of commits and the reports associated |
 | `satori repo GithubUser/Repo visibility {public, private, unlisted}` | Toggles the repo's visibility |
+| `satori repo GithubUser/Repo params` | List parameters/secrets for the repository |
+| `satori repo GithubUser/Repo params add 'NAME=VALUE'` | Add a parameter/secret to the repository |
+| `satori repo GithubUser/Repo params del NAME` | Delete a parameter/secret from the repository |
 
 ## Monitors
 
@@ -111,12 +116,14 @@
 | `satori scan GithubUser/Repo [--playbook="satori://..."]` | Scan the Github repository with a different playbook |
 | `satori scan GithubUser/Repo check-commits` | Get the repository commits before scanning |
 | `satori scan GithubUser/Repo check-forks` | Get the repository forks before scanning |
+| `satori scan ID` | Show scan information |
 | `satori scan ID status` | Show the status of a scan |
+| `satori scan ID reports` | List the reports associated to a scan |
 | `satori scan ID stop` | Stop the scan |
 | `satori scan ID start` | Start a previously stopped scan on the repo |
 | `satori scan ID clean` | Delete the reports associated to the repo |
-| `satori scan ID delete` | Delete the monitor |
-| `satori scan ID visibility {public, private, unlisted}` | Toggle the monitor's visibility |
+| `satori scan ID delete` | Delete the scan |
+| `satori scan ID visibility {public, private, unlisted}` | Toggles the scan's visibility |
 
 ## Teams
 
@@ -154,3 +161,13 @@
 | `--exclude PATH or ENTRY` | Exclusion file path or direct IP/CIDR/range/domain/URL to exclude |
 | `--seed N` | Seed for deterministic pseudorandom distribution (default: 1) |
 | `--results PATH` | Output file path (writes to stdout if omitted) |
+
+## Notifications
+
+| Command | Description |
+| --- | --- |
+| `satori settings` | Interactive menu to configure notification settings (Slack, Discord, Email, Telegram, Datadog) |
+| `satori settings KEY` | View current value of a notification setting |
+| `satori settings KEY VALUE` | Set a notification setting directly |
+| `satori settings --team TEAM` | Configure notifications for a specific team |
+| `satori team TEAM settings` | Alias for configuring team notifications interactively |

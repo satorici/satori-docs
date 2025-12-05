@@ -104,36 +104,47 @@ satori team TeamName delete
 
 ## Team Notifications
 
-You can visualize the notification settings of a team. This is how you would do it for your Private team:
+You can configure and view notification settings for your team using the `satori settings` command or the `satori team` command alias.
+
+### Interactive Configuration
+
+Open an interactive menu to configure all notification settings for a team:
 
 ```sh
 satori team Private settings
 ```
 
-![Team Settings](img/team_settings.png)
+This is an alias for `satori settings --team Private` and provides a guided setup for all notification channels (Slack, Discord, Email, Telegram, Datadog).
 
-These are the possible communication channels:
+For complete documentation on the `satori settings` command including all modes of operation (interactive, view, and direct configuration), see the [Notifications](/notifications.md#interactive-configuration-with-satori-settings) section.
 
-- slack_workspace
-- slack_channel
-- discord_channel
-- notification_email
-- telegram_channel
+### View Notification Configuration
 
-You can view with `get_config` the specific setting for your team or set it with `set_config` command.
-
-#### Viewing notification configuration
-
-To check the current notification configuration for a specific channel, use the following command:
+To check the current notification configuration for a specific channel, use the `get_config` command:
 
 ```sh
 satori team Private get_config discord_channel
 ```
 
-#### Setting notification configuration
+Available configuration keys:
+- `slack_workspace`
+- `slack_channel`
+- `discord_channel`
+- `notification_email`
+- `telegram_channel`
+- `datadog_api_key`
+- `datadog_site`
 
-To update or set the configuration for a notification channel:
+### Set Notification Configuration
+
+To update or set the configuration for a notification channel, use the `set_config` command:
 
 ```sh
 satori team Private set_config discord_channel 87654
+```
+
+Alternatively, you can use the `satori settings` command for direct configuration:
+
+```sh
+satori settings discord 87654 --team Private
 ```

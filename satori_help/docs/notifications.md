@@ -35,6 +35,96 @@ You can also set up notifications using the web interface by completing the nece
 
 ![Settings:](img/dashboard_1.png)
 
+## Interactive Configuration with `satori settings`
+
+Satori CLI provides an interactive command to easily configure all notification settings. The command supports three modes of operation: interactive menu, viewing current configuration, and direct configuration.
+
+### Interactive Mode (Guided Setup)
+
+The interactive mode opens a menu with step-by-step instructions for each integration:
+
+```sh
+satori settings
+```
+
+![Interactive configuration:](img/interactive_settings.png)
+
+This command opens an interactive menu where you can:
+
+1. **Set default notification method** - Choose which channel (slack, discord, email, telegram, datadog) should be used by default, or disable default notifications
+2. **Configure Datadog** - Enter your Datadog API key and select your region (us1, us3, us5, eu1, ap1, ap2, us1-fed)
+3. **Configure Discord** - Add the Satori bot to your Discord server and enter the channel ID
+4. **Configure Email** - Set notification email addresses (comma-separated for multiple emails)
+5. **Configure Slack** - Authorize the Satori bot in your workspace and configure workspace/channel IDs
+6. **Configure Telegram** - Add the Satori bot to your Telegram channel and enter the channel ID
+
+The command provides step-by-step instructions for each integration, including links to authorization pages and detailed setup guides.
+
+### View Current Settings
+
+You can view the current value of any notification setting by providing the key name:
+
+```sh
+# View default notification method
+satori settings default
+
+# View the current value of any notification setting 
+satori settings KEY
+
+```
+
+**Available keys:** `default`, `datadog_api_key`, `datadog_site`, `discord`, `email`, `slack_workspace`, `slack_channel`, `telegram`
+
+### Set Values Directly
+
+You can configure notification settings directly from the command line without using the interactive menu:
+
+```sh
+# Set default notification method
+satori settings default slack
+
+# Configure email addresses
+satori settings email user@example.com
+
+# Configure Slack workspace
+satori settings slack_workspace T1234567
+
+# Configure Slack channel
+satori settings slack_channel C1234567
+
+# Configure Discord channel ID
+satori settings discord 1234567890
+
+# Configure Datadog API key
+satori settings datadog_api_key abc123def456
+
+# Configure Datadog site region
+satori settings datadog_site us3
+
+# Configure Telegram channel ID
+satori settings telegram -1234567890
+```
+
+### Team-Specific Configuration
+
+All modes support team-specific configuration using the `--team` flag:
+
+```sh
+# Interactive mode for a specific team
+satori settings --team MyTeam
+
+# View team settings
+satori settings default --team MyTeam
+
+# Configure team settings
+satori settings email team@example.com --team MyTeam
+
+# Alternative: using team command alias
+satori team MyTeam settings
+```
+
+After configuring settings, the changes are applied immediately to your team.
+
 ## Playbook Settings
 
 To configure your notification preferences, start by defining your **Playbook Settings**. In this section, you can choose how you want to be notified about your tests—whether for every event (`log`), only on failures (`logOnFail`), or only on successes (`logOnPass`). You can specify your preferred notification channels, including email, Slack, Datadog, or Discord.

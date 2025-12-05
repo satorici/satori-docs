@@ -18,6 +18,7 @@
   * [Scan](/modes/scan.md)
   * [Shards](/modes/shards.md)
 * [Notifications](/notifications.md)
+  * [Settings Command](/notifications.md#interactive-configuration-with-satori-settings)
   * [Slack](/notifications.md#slack)
   * [Discord](/notifications.md#discord)
   * [Email](/notifications.md#email)
