@@ -51,7 +51,7 @@ Example:
 Since normally repositories have a lot of commits, you may want to check what the execution status is with this command:
 
 ```sh
-satori scan githubUsername/repository status
+satori scan ScanID status
 ```
 
 ![Scan Repo](img/scan_2.png)
@@ -63,7 +63,7 @@ It shows the current status, the amount of commits found, which ones were scanne
 If at any point you want to cancel the scan, you use the `stop` action:
 
 ```sh
-satori scan githubUsername/repository stop
+satori scan ScanID stop
 ```
 
 Example:
