@@ -25,7 +25,7 @@ Within **settings**, all these words are reserved:
 - **`storage`**: defines the amount of storage required remotely.
 
 Within a **test**, you may define:
-- **`assert*`**: a category of keywords used for asserting conditions. Examples include `assertStdoutEquals`, `assertStdoutNotEquals`, etc.
+- **`assert*`**: a category of keywords used for asserting conditions. Examples include `assertStdoutEqual`, `assertStdoutNotEquals`, etc.
 - **`setSeverity`**: Defines the severity level of the test.
 
 ## [Execution](execution.md)
