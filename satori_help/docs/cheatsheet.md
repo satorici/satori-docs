@@ -58,7 +58,6 @@
 | `satori playbooks --public` | List the public playbooks |
 | `satori playbook ID` | Show a certain playbook |
 | `satori playbook ID visibility {public, private, unlisted}` | Toggles the playbook's visibility |
-| `satori playbook ID delete` | Delete the playbook |
 
 ## Dashboards
 
@@ -120,7 +119,6 @@
 | `satori scan ID status` | Show the status of a scan |
 | `satori scan ID reports` | List the reports associated to a scan |
 | `satori scan ID stop` | Stop the scan |
-| `satori scan ID start` | Start a previously stopped scan on the repo |
 | `satori scan ID clean` | Delete the reports associated to the repo |
 | `satori scan ID delete` | Delete the scan |
 | `satori scan ID visibility {public, private, unlisted}` | Toggles the scan's visibility |
