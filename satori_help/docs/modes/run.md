@@ -152,3 +152,77 @@ check:
 ![Background](img/run_background.png)
 
 The command `screen -dm` is used to start a new detached `screen` session in the background. This is useful for running commands or scripts in the background and continue executing additional commands to test the background service.
+
+## Advanced Run Command Options
+
+The `satori run` command provides extensive options for controlling execution behavior, environment configuration, and output handling.
+
+### File and Data Management
+
+| Flag | Description | Example |
+| --- | --- | --- |
+| `-i, --include FILE` | Include additional files in the execution context (repeatable) | `satori run ./ -i config.yaml -i data.json` |
+| `-df, --data-file KEY=PATH` | Load variable values from a file (repeatable) | `satori run ./ -df PAYLOAD=/path/to/data.txt` |
+| `--clone REPORT_ID` | Clone settings from an existing report | `satori run ./ --clone AOQxDWDkXpZp` |
+
+### Execution Environment
+
+| Flag | Description | Example |
+| --- | --- | --- |
+| `--cpu COUNT` | Set CPU cores (1, 2, 4, 8, 16) | `satori run ./ --cpu 4` |
+| `--memory MB` | Set memory allocation in MB (256, 512, 1024, 2048, 4096) | `satori run ./ --memory 2048` |
+| `--storage GB` | Set storage allocation in GB | `satori run ./ --storage 100` |
+| `--os {windows\|linux}` | Select operating system | `satori run ./ --os linux` |
+| `--image IMAGE_NAME` | Specify custom Docker image | `satori run ./ --image ubuntu:22.04` |
+
+### Scheduling and Monitoring
+
+| Flag | Description | Example |
+| --- | --- | --- |
+| `--rate EXPRESSION` | Create monitor with rate-based scheduling | `satori run ./ --rate "every 5 minutes"` |
+| `--cron EXPRESSION` | Create monitor with cron schedule | `satori run ./ --cron "0 * * * *"` |
+| `--count NUMBER` | Number of executions for monitor | `satori run ./ --rate "every 5 minutes" --count 10` |
+
+**Note:** `--rate` and `--cron` are mutually exclusive. Use one or the other to create scheduled monitors.
+
+### Repository Scanning
+
+| Flag | Description | Example |
+| --- | --- | --- |
+| `--repo URL` | Specify repository to scan | `satori run --repo github.com/user/repo -d PARAM=value` |
+
+### Output and Report Control
+
+| Flag | Description | Example |
+| --- | --- | --- |
+| `--format {plain\|md}` | Set output format (plain text or Markdown) | `satori run ./ --sync --output --format md` |
+| `--redacted PARAM` | Mark parameters as redacted in logs (repeatable) | `satori run ./ --redacted API_KEY --redacted PASSWORD` |
+| `--save-report {true\|false\|PATH}` | Save report to file or default location | `satori run ./ --save-report true` |
+| `--save-output {true\|false\|PATH}` | Save command output to file | `satori run ./ --save-output ./output.log` |
+
+### Complete Example with Multiple Options
+
+```sh
+satori run ./ \
+  -d API_KEY=secret \
+  -i config.yaml \
+  --cpu 4 \
+  --memory 2048 \
+  --timeout 600 \
+  --sync \
+  --report \
+  --output \
+  --format md \
+  --redacted API_KEY \
+  --save-report true
+```
+
+This command runs the current directory's playbook with:
+- Secret parameter `API_KEY`
+- Additional config file included
+- 4 CPU cores and 2GB memory
+- 10-minute timeout
+- Synchronous execution with report and output
+- Markdown-formatted output
+- API_KEY redacted in logs
+- Report saved to file

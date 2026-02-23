@@ -151,3 +151,77 @@ satori repo satorici/satori-cli params del TOKEN
 
 This removes the parameter `TOKEN` from the list.
 
+---
+
+## Advanced Repository Command Options
+
+The `satori repo` command provides extensive options for running playbooks and managing test results.
+
+### Running with Options
+
+| Flag | Description | Example |
+| --- | --- | --- |
+| `-b, --branch BRANCH` | Run on specific branch (default: main) | `satori repo user/repo run -b develop` |
+| `-d, --data JSON` | Provide secrets/parameters as JSON | `satori repo user/repo run -d '{"KEY":"value"}'` |
+| `--playbook URI` | Override repository's default playbook | `satori repo user/repo run --playbook satori://code/semgrep.yml` |
+| `-s, --sync` | Wait for run to complete | `satori repo user/repo run --sync` |
+| `-o, --output` | Display command output | `satori repo user/repo run --sync --output` |
+| `-r, --report` | Display test results | `satori repo user/repo run --sync --report` |
+| `--visibility {public\|private\|unlisted}` | Set run visibility | `satori repo user/repo run --visibility public` |
+
+### Test Results Management
+
+| Flag | Description | Example |
+| --- | --- | --- |
+| `-a, --all` | Show all test results | `satori repo user/repo tests --all` |
+| `-l, --limit NUMBER` | Limit number of results (default: 100) | `satori repo user/repo tests -l 50` |
+| `--fail` | Show only failed tests | `satori repo user/repo tests --fail` |
+
+### Repository Information
+
+| Flag | Description | Example |
+| --- | --- | --- |
+| `--pending` | Show pending actions in repository info | `satori repo user/repo --pending` |
+
+### Playbook Management
+
+| Command | Description | Example |
+| --- | --- | --- |
+| `playbook list` | List playbooks associated with repository | `satori repo user/repo playbook list` |
+| `playbook add URI` | Add playbook to repository | `satori repo user/repo playbook add satori://code/semgrep.yml` |
+| `playbook del URI` | Remove playbook from repository | `satori repo user/repo playbook del satori://code/semgrep.yml` |
+| `playbook clean --delete-commits` | Delete playbook data and commit records | `satori repo user/repo playbook clean --delete-commits` |
+
+### Complete Example
+
+Run a playbook on a specific branch with parameters and view the output:
+
+```sh
+satori repo satorici/satori-cli run \
+  -b develop \
+  -d '{"API_KEY":"secret","TIMEOUT":"300"}' \
+  --playbook satori://code/trufflehog.yml \
+  --sync \
+  --report \
+  --output \
+  --visibility private
+```
+
+This command:
+- Runs on the `develop` branch
+- Provides two secret parameters
+- Uses the Trufflehog playbook
+- Waits for completion
+- Displays both report and output
+- Sets visibility to private
+
+### Filter Failed Tests
+
+To quickly identify issues, filter for failed tests only:
+
+```sh
+satori repo user/repo tests --fail -l 20
+```
+
+This shows the 20 most recent failed tests for the repository.
+

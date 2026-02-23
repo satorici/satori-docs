@@ -108,3 +108,69 @@ If your execution generates files, you can download them using the CLI:
 ```sh
 satori report REPORT_ID files
 ```
+
+---
+
+## Advanced Report Command Options
+
+The `satori report` command provides several options for viewing and managing execution results.
+
+### Output Formatting
+
+| Flag | Description | Example |
+| --- | --- | --- |
+| `--format {plain\|md}` | Set output format (plain text or Markdown) | `satori report ID output --format md` |
+| `--test TEST_NAME` | Filter output for specific test (repeatable) | `satori report ID output --test my_test` |
+| `--unredacted` | Show unredacted parameters and secrets | `satori report ID --unredacted` |
+
+### GitHub Issue Creation
+
+Create GitHub issues directly from report results:
+
+| Flag | Description | Example |
+| --- | --- | --- |
+| `issue TEMPLATE_ID` | Create issue using template | `satori report ID issue template_123` |
+| `--query "SEARCH"` | Filter with search query | `satori report ID issue template_123 --query "critical"` |
+| `--title "TITLE"` | Override issue title | `satori report ID issue template_123 --title "Security Issue"` |
+
+### Report Management
+
+| Command | Description | Example |
+| --- | --- | --- |
+| `status` | Get report execution status | `satori report ID status` |
+| `stop` | Stop running report | `satori report ID stop` |
+| `delete` | Delete report | `satori report ID delete` |
+| `set-team TEAM` | Assign report to team | `satori report ID set-team my_team` |
+
+### Complete Examples
+
+**View report output in Markdown format:**
+
+```sh
+satori report AOQxDWDkXpZp output --format md
+```
+
+**View specific test output with unredacted secrets:**
+
+```sh
+satori report AOQxDWDkXpZp output --test integration_test --unredacted
+```
+
+**Create GitHub issue from report:**
+
+```sh
+satori report AOQxDWDkXpZp issue template_123 \
+  --query "severity:critical" \
+  --title "Critical Security Vulnerability Found"
+```
+
+**Filter multiple tests:**
+
+```sh
+satori report AOQxDWDkXpZp output \
+  --test unit_tests \
+  --test integration_tests \
+  --format md
+```
+
+These advanced options give you fine-grained control over how you view and share execution results.
