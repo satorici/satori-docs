@@ -142,7 +142,6 @@
 | `satori repo GithubUser/Repo playbook list` | List playbooks for repository |
 | `satori repo GithubUser/Repo playbook add URI` | Add playbook to repository |
 | `satori repo GithubUser/Repo playbook del URI` | Remove playbook from repository |
-| `satori repo GithubUser/Repo playbook clean --delete-commits` | Delete playbook data and commits |
 | `satori repo GithubUser/Repo visibility {public, private, unlisted}` | Toggles the repo's visibility |
 | `satori repo GithubUser/Repo params` | List parameters/secrets for the repository |
 | `satori repo GithubUser/Repo params add 'NAME=VALUE'` | Add a parameter/secret to the repository |
