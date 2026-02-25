@@ -175,5 +175,26 @@ settings:
 ```
 
 If no report format is specified, you can still access the report online using the CLI or Web interface.
-    
+
+## Redacted Parameters
+
+When your playbook requires sensitive values such as API keys, tokens, or credentials, use the `redacted` setting to prevent them from appearing in reports and output logs. List the parameter names that should be hidden:
+
+```yaml
+settings:
+  redacted:
+    - AWS_ACCESS_KEY
+    - AWS_SECRET_KEY
+```
+
+Any parameter listed under `redacted` will have its value masked in all report outputs. This is useful for playbooks that are shared publicly or run with `--visibility public`, ensuring that secrets passed via `-d` are never exposed.
+
+You can also redact parameters at runtime using the CLI flag `--redacted`:
+
+```sh
+satori run playbook.yml -d API_KEY=secret --redacted API_KEY --sync
+```
+
+The playbook-level setting and the CLI flag serve the same purpose. Use the playbook setting when the parameters are always sensitive, and the CLI flag when you want to redact on a case-by-case basis.
+
 If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
