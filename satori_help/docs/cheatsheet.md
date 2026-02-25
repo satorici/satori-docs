@@ -5,6 +5,7 @@
 | Command | Description |
 | --- | --- |
 | `pip3 install satori-ci` | Install the latest version |
+| `satori install` | Guided onboarding: opens browser, saves token, installs CLI v2 |
 | `satori update` | Update to the latest version |
 | `satori config token "USERTOKEN"` | Configure your user token as your default profile |
 | `satori config token "TEAMTOKEN" --profile TEAM` | Configure your team token on your team profile |
