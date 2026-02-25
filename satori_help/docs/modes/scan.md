@@ -117,7 +117,7 @@ The `satori scan` command provides extensive options for controlling scanning be
 
 | Flag | Description | Example |
 | --- | --- | --- |
-| `-d, --data JSON` | Provide secrets/parameters as JSON string | `satori scan user/repo -d '{"API_KEY":"secret"}'` |
+| `-d, --data KEY=VALUE` | Define parameters and their values | `satori scan user/repo -d API_KEY=secret` |
 | `--playbook URI` | Use specific playbook instead of repository's default | `satori scan user/repo --playbook satori://code/semgrep.yml` |
 
 ### Execution Control

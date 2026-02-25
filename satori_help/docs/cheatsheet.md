@@ -168,7 +168,7 @@
 | `satori scan GithubUser/Repo [-c N]` | Scan the Github repository with the repository's playbook a coverage of 1 (default) to 100 |
 | `satori scan GithubUser/Repo [--playbook="satori://..."]` | Scan the Github repository with a different playbook |
 | `satori scan GithubUser/Repo -b BRANCH` | Scan specific branch (default: main) |
-| `satori scan GithubUser/Repo -d '{"KEY":"value"}'` | Provide secrets/parameters as JSON |
+| `satori scan GithubUser/Repo -d KEY=value` | Provide parameters and values |
 | `satori scan GithubUser/Repo --from YYYY-MM-DD` | Start date for scanning |
 | `satori scan GithubUser/Repo --to YYYY-MM-DD` | End date for scanning |
 | `satori scan GithubUser/Repo --skip-check` | Skip repository existence check |

@@ -169,9 +169,9 @@ The `satori run` command provides extensive options for controlling execution be
 
 | Flag | Description | Example |
 | --- | --- | --- |
-| `--cpu COUNT` | Set CPU cores (1, 2, 4, 8, 16) | `satori run ./ --cpu 4` |
-| `--memory MB` | Set memory allocation in MB (256, 512, 1024, 2048, 4096) | `satori run ./ --memory 2048` |
-| `--storage GB` | Set storage allocation in GB | `satori run ./ --storage 100` |
+| `--cpu COUNT` | Set CPU cores (256, 512, 1024, 2048, 4096, 8192, 16384) | `satori run ./ --cpu 2048` |
+| `--memory MB` | Set memory allocation in MB (512, 1024, 2048, 3072, 4096, 5120, 6144, 7168, 8192, 9216, 10240, 11264, 12288, 13312, 14336, 15360, 16384, 17408, 18432, 19456, 20480, 21504, 22528, 23552, 24576, 25600, 26624, 27648, 28672, 29696, 30720, 32768, 36864, 40960, 45056, 49152, 53248, 57344, 61440, 65536, 73728, 81920, 90112, 98304, 106496, 114688, 122880) | `satori run ./ --memory 2048` |
+| `--storage GB` | Set storage allocation in GB | `satori run ./ --storage 50` |
 | `--os {windows\|linux}` | Select operating system | `satori run ./ --os linux` |
 | `--image IMAGE_NAME` | Specify custom Docker image | `satori run ./ --image ubuntu:22.04` |
 
