@@ -14,13 +14,19 @@ These settings help customize the playbook performance to your project’s needs
 
 ## Name, Description and Mitigation Settings
 
-In your playbook, you can define a name, description, and mitigation strategy to enhance playbook identification. Here’s how each component contributes to a clear and actionable setup:
+In your playbook, you can define metadata to enhance playbook identification and discoverability. Here’s how each component contributes to a clear and actionable setup:
 
 **- Name:** assign a descriptive name to identify the playbook quickly.
 
-**- Description:** provide details about the playbook's purpose, such as supported languages and tool functionalities. 
+**- Description:** provide details about the playbook’s purpose, such as supported languages and tool functionalities.
 
 **- Mitigation:** specify a remediation step if the playbook fails, it provides clear guidance for necessary actions upon failure.
+
+**- Author:** a list of URLs linking to the author’s profile (e.g., GitHub). This helps users identify who created and maintains the playbook.
+
+**- Gallery:** a list of image URLs showing example output or screenshots of the playbook in action. These are displayed on the playbook’s page on satori.ci.
+
+**- Example:** a sample CLI command showing how to run the playbook. This gives users a ready-to-use command they can copy and execute.
 
 ```yaml
 settings:

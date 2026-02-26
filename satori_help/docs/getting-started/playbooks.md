@@ -79,20 +79,58 @@ For example `--output` will display each command output: stdout, stderr, return 
 ![Hello World Output](img/playbooks_2.png)
 
 ## Public Playbooks
-Satori offers a variety of public playbooks that can be used for different security and analysis purposes. These playbooks are primarily divided into two categories: static (SAST) and dynamic (DAST).
 
-### Static Playbooks
-Some public playbooks are designed for Static Application Security Testing (SAST). These playbooks are used to analyze source code or integrated into CI processes for automated security checks. You can run these Playbooks by using `satori run ./`:
+Satori provides 200+ ready-to-use playbooks covering security testing, code analysis, infrastructure scanning, and more. Browse the full catalog at [satori.ci/playbooks](https://satori.ci/playbooks) or on the [playbook repository](https://github.com/satorici/playbooks).
 
-##### Example:
+### Categories
+
+| Category | Playbooks | What it covers |
+|----------|-----------|----------------|
+| `code/` | 72 | SAST, linting, dependency audit (Python, JS, Go, Java, Ruby, Rust, and more) |
+| `web/` | 34 | DAST, crawling, fuzzing, XSS, SQLi, CMS detection, TLS testing |
+| `dns/` | 17 | Subdomain discovery, DNS enumeration, takeover detection |
+| `scan/` | 17 | Port scanning, banner grabbing, network reconnaissance |
+| `container/` | 8 | Container image scanning, Dockerfile linting, IaC security (Terraform, Kubernetes) |
+| `llm/` | 8 | Query and test LLMs (OpenAI, Gemini, Llama, Qwen) |
+| `cve/` | 8 | Specific CVE detection and testing |
+| `email/` | 7 | Email harvesting and OSINT |
+| `secrets/` | 5 | Secret detection (Gitleaks, Trufflehog, Semgrep) |
+| `monitor/` | 4 | Uptime, SSL expiry, DNS change monitoring |
+| `malware/` | 4 | Antimalware scanning and anomaly detection |
+| `compliance/` | 3 | OWASP Top 10, PCI-DSS, SOC2 |
+| `cloud/` | 2 | AWS and multi-cloud security auditing |
+| `dos/` | 2 | Load testing and slow HTTP attacks |
+
+### Static Playbooks (SAST)
+
+Static playbooks analyze source code without running it. They are designed to be integrated into CI processes or run against a local repository with `satori run ./`:
+
+```bash
+satori run ./ --playbook satori://code/semgrep.yml --sync --report
+```
+
+You can import multiple playbooks in a single `.satori.yml` file:
+
+```yaml
+import:
+  - satori://code/semgrep.yml
+  - satori://secrets/trufflehog.yml
+  - satori://container/grype.yml
+```
+
 ![Code example](img/code_example.png)
 
 ![SAST Output](img/sast.png)
 
-### Dynamic Playbooks
-Dynamic Analysis Playbooks are intended for testing running systems by providing specific parameters, such as the host or service that will be analyzed. These Playbooks are crucial for identifying vulnerabilities in a system’s runtime behavior. A typical DAST Playbook execution will include a parameter:
+### Dynamic Playbooks (DAST)
 
-`satori run satori://playbook -d HOST="host"`
+Dynamic playbooks test running systems by providing parameters such as a host or URL:
+
+```bash
+satori run satori://scan/nmap.yml -d HOST="target.com" --report --output
+satori run satori://web/nuclei.yml -d URL="https://target.com" --report --output
+satori run satori://dns/dnsx.yml -d HOST="target.com" --report --output
+```
 
 ![Dast Output](img/dast_output.png)
 
