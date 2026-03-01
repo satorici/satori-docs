@@ -182,6 +182,17 @@ settings:
 
 If no report format is specified, you can still access the report online using the CLI or Web interface.
 
+## Files Setting
+
+Set `files` to `true` to enable downloading the output files generated during playbook execution. This is useful for playbooks that produce artifacts such as SBOMs, scan reports, or other generated files that you want to retrieve after the execution completes.
+
+```yaml
+settings:
+    files: true
+```
+
+When enabled, any files written during execution can be downloaded using the `--files` flag on the CLI. Without this setting, only the standard output and report are available.
+
 ## Redacted Parameters
 
 When your playbook requires sensitive values such as API keys, tokens, or credentials, use the `redacted` setting to prevent them from appearing in reports and output logs. List the parameter names that should be hidden:

@@ -187,9 +187,27 @@ The `satori run` command provides extensive options for controlling execution be
 
 ### Repository Scanning
 
+Use `--repo` to clone a GitHub repository at execution time and run a playbook against its contents. This is useful for running code analysis, linting, secret detection, or any playbook that needs source code without having to clone the repository locally first.
+
+The format is `user/repo` (GitHub shorthand):
+
+```sh
+satori run satori://secrets/all.yml --repo BonJarber/SecretsTest --report --output
+```
+
+This clones the `BonJarber/SecretsTest` repository and runs the secrets scanner against it.
+
+You can also combine `--repo` with additional parameters:
+
+```sh
+satori run satori://code/python/lint/ruff.yml --repo satorici/satori-cli --report --output
+satori run satori://code/go/gosec.yml --repo securego/gosec --report --output
+satori run satori://code/github/ghwfauditor.yml -d GITHUB_PAT=TBC --repo All-Hands-AI/OpenHands --report --output
+```
+
 | Flag | Description | Example |
 | --- | --- | --- |
-| `--repo URL` | Specify repository to scan | `satori run --repo github.com/user/repo -d PARAM=value` |
+| `--repo REPO` | Clone a GitHub repository and run the playbook against it | `satori run satori://code/semgrep.yml --repo user/repo --report --output` |
 
 ### Output and Report Control
 
