@@ -14,6 +14,7 @@
     * [Gitlab](/modes/ci/gitlab.md)
     * [Jenkins](/modes/ci/jenkins.md)
   * [Run](/modes/run.md)
+  * [Shell](/modes/shell.md)
   * [Monitor](/modes/monitor.md)
   * [Scan](/modes/scan.md)
   * [Shards](/modes/shards.md)

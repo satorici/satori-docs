@@ -189,6 +189,17 @@
 | `satori scan ID delete` | Delete the scan |
 | `satori scan ID visibility {public, private, unlisted}` | Toggles the scan's visibility |
 
+## Shell
+
+| Command | Description |
+| --- | --- |
+| `satori shell` | Launch an interactive remote shell container |
+| `satori shell --image IMAGE` | Use a specific Docker image |
+| `satori shell --timeout SECONDS` | Set session duration limit |
+| `satori shell --cpu CPU` | Set CPU allocation (AWS Fargate) |
+| `satori shell --memory MEMORY` | Set memory allocation (AWS Fargate) |
+| `satori shell --region REGION` | Select AWS region (repeatable) |
+
 ## Teams
 
 | Command | Description |

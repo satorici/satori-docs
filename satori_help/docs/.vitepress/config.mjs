@@ -55,6 +55,7 @@ export default defineConfig({
                 link: "/modes/modes",
                 items: [
                     { text: "Run", link: "/modes/run" },
+                    { text: "Shell", link: "/modes/shell" },
                     {
                         text: "CI",
                         items: [
