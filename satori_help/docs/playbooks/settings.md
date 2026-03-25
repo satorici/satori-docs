@@ -214,4 +214,4 @@ satori run playbook.yml -d API_KEY=secret --redacted API_KEY --sync
 
 The playbook-level setting and the CLI flag serve the same purpose. Use the playbook setting when the parameters are always sensitive, and the CLI flag when you want to redact on a case-by-case basis.
 
-If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
+If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori.ci)

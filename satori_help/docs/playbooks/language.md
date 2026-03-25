@@ -107,4 +107,4 @@ Satori performs schema validation on your Playbook as soon as it is received, en
 The error will be shown when viewing your report with `satori report REPORTID` command or from the **Reports** section of the Satori Web.
 
 ---
-If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
+If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori.ci)

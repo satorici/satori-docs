@@ -58,7 +58,7 @@ test:
   assertStdoutContains: 
   - HTTP/2 200
   - Satori CI
-  - info@satori-ci.com
+  - info@satori.ci
   - nonexistentstring
   satori:
     - curl -si https://satori.ci
@@ -499,4 +499,4 @@ TBC
 
 ---
 
-If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
+If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori.ci)

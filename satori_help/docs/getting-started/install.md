@@ -72,4 +72,4 @@ Learn how to automatically test "[Hello World](../getting-started/hello_world.md
 
 ---
 
-If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
+If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori.ci)

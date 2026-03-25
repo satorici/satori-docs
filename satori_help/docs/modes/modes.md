@@ -2,10 +2,21 @@
 
 Satori is an automated testing platform that offers multiple ways to execute tests, allowing flexibility for different testing needs. You can run tests in the following modes:
 
+  - **AI:** describe what you want to test in plain language and get a ready-to-run playbook.
   - **On demand:** execute tests manually when needed.
   - **As part of a CI/CD process:** integrate automated tests into your CI/CD pipeline.
   - **Scheduled (also known as monitors):** set up tests to run at specific intervals, allowing continuous monitoring of your environments.
   - **On Your Repositories:** run tests directly on the code within your repositories.
+
+## [AI](ai.md)
+
+Tell Satori what you want to test and it will generate the playbook for you. Whether you need a security audit, a compliance check, a CI pipeline, or a monitoring playbook, the AI knows the full Satori playbook language and all 200+ public playbooks. It works interactively or as a one-shot command:
+
+```console
+satori ai "create a .satori.yml to test my Python app for frontend and backend security vulnerabilities"
+```
+
+See [AI documentation](ai.md) for details, or [watch it in action](https://youtu.be/HUv82qwX4Ls).
 
 ## [Run](run.md)
 

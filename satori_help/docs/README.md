@@ -52,4 +52,4 @@ You can access your reports using on the [reports section of the Web](https://ww
 
 ## Support
 
-If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori-ci.com)
+If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori.ci)

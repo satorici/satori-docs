@@ -9,6 +9,7 @@
   * [Inputs](/playbooks/inputs.md)
   * [Settings](/playbooks/settings.md)
 * [Execution modes](/modes/modes.md)
+  * [AI](/modes/ai.md)
   * CI
     * [GitHub Application](/modes/ci/github.md)
     * [Gitlab](/modes/ci/gitlab.md)
