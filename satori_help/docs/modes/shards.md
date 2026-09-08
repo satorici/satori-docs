@@ -21,7 +21,7 @@ It supports IPv4 address ranges, domains, and HTTP/S URLs, and offers high-perfo
   (e.g., `192.168.1.0/24`, `10.0.0.1-10.0.0.255`, `example.com`, `https://example.com`).
 
 - **--results PATH**  
-  Output file path (writes to stdout if omitted).
+  Output file path (writes to stdout if omitted). Must have a `.txt` extension or no extension (`.txt` is appended by default).
 
 
 ## Input Methods
@@ -51,17 +51,17 @@ The `--exclude` flag also supports both file-based and direct input:
 
 ### Basic usage with files
 ```sh
-satori shards --shard 1/10 --input input.txt --exclude exclude.txt --results output.txt
+satori-v2 shards --shard 1/10 --input input.txt --exclude exclude.txt --results output.txt
 ```
 
 ### Direct CIDR input
 ```sh
-satori shards --shard 1/10 --input 0.0.0.0/24 --exclude 192.168.0.0/16 --results output.txt
+satori-v2 shards --shard 1/10 --input 0.0.0.0/24 --exclude 192.168.0.0/16 --results output.txt
 ```
 
 ### IP range processing
 ```sh
-satori shards --shard 1/10 --input 10.0.0.1-10.0.0.255 --exclude 10.0.0.1 --results output.txt
+satori-v2 shards --shard 1/10 --input 10.0.0.1-10.0.0.255 --exclude 10.0.0.1 --results output.txt
 ```
 
 ## Scan entire IPv4 range in seconds
@@ -69,5 +69,5 @@ satori shards --shard 1/10 --input 10.0.0.1-10.0.0.255 --exclude 10.0.0.1 --resu
 To divide the entire IPv4 range (4.3 billion addresses) into 500 parts and process only the first slice while excluding private networks:
 
 ```sh
-satori shards --shard 1/500 --input 0.0.0.0/0 --exclude 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 --results output.txt
+satori-v2 shards --shard 1/500 --input 0.0.0.0/0 --exclude 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 --results output.txt
 ```

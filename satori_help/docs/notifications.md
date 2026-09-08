@@ -1,5 +1,9 @@
 # Notifications
 
+::: warning On development
+The `satori-v2 settings` and `satori-v2 team ... set_config` commands used below to configure notification channels are not available yet in CLI v2. The v1 syntax is kept here for reference; configure the channels from the web [dashboard](https://www.satori.ci/dashboard/) in the meantime. The playbook-level settings (`log`, `logOnFail`, `logOnPass`, `report: pdf`) are still valid and work with playbooks executed by CLI v2.
+:::
+
 Our flexible notification system ensures that your team stays informed about the status of your projects in real-time. We offer integration with multiple communication platforms, including:
 
 - [Slack](#slack)
@@ -19,7 +23,7 @@ You can configure notifications using either the web interface or the CLI.
 To view your current notification settings, run the following command:
 
 ```sh
-satori team Private settings
+satori-v2 team Private settings
 ```
 
 ![View settings:](img/notif_1.png)
@@ -35,7 +39,7 @@ You can also set up notifications using the web interface by completing the nece
 
 ![Settings:](img/dashboard_1.png)
 
-## Interactive Configuration with `satori settings`
+## Interactive Configuration with `satori-v2 settings`
 
 Satori CLI provides an interactive command to easily configure all notification settings. The command supports three modes of operation: interactive menu, viewing current configuration, and direct configuration.
 
@@ -44,7 +48,7 @@ Satori CLI provides an interactive command to easily configure all notification 
 The interactive mode opens a menu with step-by-step instructions for each integration:
 
 ```sh
-satori settings
+satori-v2 settings
 ```
 
 ![Interactive configuration:](img/interactive_settings.png)
@@ -66,10 +70,10 @@ You can view the current value of any notification setting by providing the key 
 
 ```sh
 # View default notification method
-satori settings default
+satori-v2 settings default
 
 # View the current value of any notification setting 
-satori settings KEY
+satori-v2 settings KEY
 
 ```
 
@@ -81,28 +85,28 @@ You can configure notification settings directly from the command line without u
 
 ```sh
 # Set default notification method
-satori settings default slack
+satori-v2 settings default slack
 
 # Configure email addresses
-satori settings email user@example.com
+satori-v2 settings email user@example.com
 
 # Configure Slack workspace
-satori settings slack_workspace T1234567
+satori-v2 settings slack_workspace T1234567
 
 # Configure Slack channel
-satori settings slack_channel C1234567
+satori-v2 settings slack_channel C1234567
 
 # Configure Discord channel ID
-satori settings discord 1234567890
+satori-v2 settings discord 1234567890
 
 # Configure Datadog API key
-satori settings datadog_api_key abc123def456
+satori-v2 settings datadog_api_key abc123def456
 
 # Configure Datadog site region
-satori settings datadog_site us3
+satori-v2 settings datadog_site us3
 
 # Configure Telegram channel ID
-satori settings telegram -1234567890
+satori-v2 settings telegram -1234567890
 ```
 
 ### Team-Specific Configuration
@@ -111,16 +115,16 @@ All modes support team-specific configuration using the `--team` flag:
 
 ```sh
 # Interactive mode for a specific team
-satori settings --team MyTeam
+satori-v2 settings --team MyTeam
 
 # View team settings
-satori settings default --team MyTeam
+satori-v2 settings default --team MyTeam
 
 # Configure team settings
-satori settings email team@example.com --team MyTeam
+satori-v2 settings email team@example.com --team MyTeam
 
 # Alternative: using team command alias
-satori team MyTeam settings
+satori-v2 team MyTeam settings
 ```
 
 After configuring settings, the changes are applied immediately to your team.
@@ -155,7 +159,7 @@ settings:
 To set up email notifications, use this command:
 
 ```sh
-satori team Private set_config notification_email your@email.com
+satori-v2 team Private set_config notification_email your@email.com
 ```
 
 ![Email setting:](img/notif_2.png)
@@ -177,13 +181,13 @@ Steps to Retrieve Workspace and Channel ID:
 Or via the CLI command: 
 
 ```sh
-satori team Private set_config slack_workspace TXXXXXXXXXX
+satori-v2 team Private set_config slack_workspace TXXXXXXXXXX
 ```
 
 ![Workspace ID:](img/notif_3.png)
 
 ```sh
-satori team Private set_config slack_channel CXXXXXXXXXX
+satori-v2 team Private set_config slack_channel CXXXXXXXXXX
 ```
 ![Channel ID:](img/notif_4.png)
 
@@ -204,7 +208,7 @@ To set up Discord notifications in Satori, you first need to obtain the Channel 
 Once you have the Channel ID, you can configure it in Satori Web or with the following command:
 
 ```sh
-satori team Private set_config discord_channel CHANNEL_ID
+satori-v2 team Private set_config discord_channel CHANNEL_ID
 ```
 ![Discord setting:](img/notif_5.png)
 
@@ -220,7 +224,7 @@ Once you have the Channel ID, you can configure it in Satori-CI to start receivi
 ![Telegram Channel ID](img/notif_telegram_2.png)
 
 ```sh
-satori team Private set_config telegram_channel CHANNEL_ID
+satori-v2 team Private set_config telegram_channel CHANNEL_ID
 ```
 
 ### Datadog
@@ -236,7 +240,7 @@ Satori-CI integrates with Datadog Events for notification management. To set thi
 Use the Satori CLI to configure your newly created API key with the following command:
 
 ```shell
-satori team Private set_config datadog_api_key {MyDatadogApiKey}
+satori-v2 team Private set_config datadog_api_key {MyDatadogApiKey}
 ```
 
 - Replace `{MyDatadogApiKey}` with your Datadog API key.
@@ -245,18 +249,18 @@ satori team Private set_config datadog_api_key {MyDatadogApiKey}
 By default, events are sent to the **us1** site region. To configure a different site region, use the following command:
 
 ```shell
-satori team Private set_config datadog_site {MyDatadogRegion}
+satori-v2 team Private set_config datadog_site {MyDatadogRegion}
 ```
 - Replace `{MyDatadogRegion}` with one of the following options: `us1`, `us3`, `us5`, `eu`, `ap1`, or `us1-fed`.
 
 Via CLI with the following command: 
 ```sh
-satori team Private set_config datadog_api_key a123
+satori-v2 team Private set_config datadog_api_key a123
 ```
 ![API Key:](img/notif_6.png)
 
 ```sh
-satori team Private set_config datadog_site us3|eu|etc
+satori-v2 team Private set_config datadog_site us3|eu|etc
 ```
 ![Site Region:](img/notif_7.png)
 

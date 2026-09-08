@@ -47,7 +47,7 @@ test:
 To execute this playbook and provide the required parameter, you would run the command:
 
 ```bash
-satori run params.yml -d WHAT="Hello World" --output
+satori-v2 run params.yml -d WHAT="Hello World" --output
 ```
 
 ![Run with params](img/run_2.png)
@@ -105,27 +105,48 @@ This same playbook can also be employed in CI/CD environments.
 
 You can execute on-demand public playbooks available in the Satori platform. You can see a list of the publicly available playbooks with: 
 
+::: warning On development
+The `--public` flag of `satori-v2 playbooks` is not available yet in CLI v2. Use `satori-v2 playbooks` (optionally with `--json`) for now; the v1 syntax is kept here for reference.
+:::
+
 ```sh
-satori playbooks --public
+satori-v2 playbooks --public
 ```
 To run a public playbook, you can execute them passing parameters if required with `-d`:
 
 ```sh
-satori run satori://some/playbook.yml
+satori-v2 run satori://some/playbook.yml
 ```
 
 ![Run a public playbook with a parameter](img/run_4.png)
 
 This allows you to leverage existing public playbooks that may already address your specific testing needs effectively.
 
+### Playbook aliases
+
+CLI v2 ships shortcuts for the most common code-analysis playbooks. Passing one of these aliases as the `SOURCE` runs the corresponding public playbook against the **current directory**:
+
+```sh
+satori-v2 run semgrep     # same as: satori-v2 run ./ --playbook satori://code/semgrep.yml
+satori-v2 run pyspector   # same as: satori-v2 run ./ --playbook satori://code/python/pyspector.yml
+```
+
+You can combine them with any other `run` option, for example `satori-v2 run semgrep --report --output`.
+
 ## Run Locally
 
 You can execute the playbook named `hello.yml` locally, just as you would run it remotely. This allows you to verify that your playbook functions correctly in your local environment, and Satori will confirm the assertion results. Here’s how you can run it locally:
 
 ```sh
-satori local hello.yml --sync
+satori-v2 local hello.yml --sync
 ```
 ![Run locally aync and async](img/run_local.png)
+
+`satori-v2 local` accepts a subset of the `run` options: `-p/--playbook`, `-d/--data`, `--split`, `--timeout`, `--run`, `--visibility`, `-t/--tag`, `-o/--output`, `--report` and `-s/--sync`.
+
+::: warning On development
+The `local` flags `--test`, `--name`, `--format`, `--redacted`, `-df/--data-file`, `--save-report` and `--save-output` are not available yet in CLI v2.
+:::
 
 ## Run a process in Background
 
@@ -155,33 +176,84 @@ The command `screen -dm` is used to start a new detached `screen` session in the
 
 ## Advanced Run Command Options
 
-The `satori run` command provides extensive options for controlling execution behavior, environment configuration, and output handling.
+The `satori-v2 run` command provides extensive options for controlling execution behavior, environment configuration, and output handling.
 
-### File and Data Management
+### Playbook Selection and Data
 
 | Flag | Description | Example |
 | --- | --- | --- |
-| `-i, --include FILE` | Include additional files in the execution context (repeatable) | `satori run ./ -i config.yaml -i data.json` |
-| `-df, --data-file KEY=PATH` | Load variable values from a file (repeatable) | `satori run ./ -df PAYLOAD=/path/to/data.txt` |
-| `--clone REPORT_ID` | Clone settings from an existing report | `satori run ./ --clone AOQxDWDkXpZp` |
+| `-p, --playbook SOURCE` | Run a playbook other than the one in `SOURCE` (e.g. a public `satori://` playbook against a local directory) | `satori-v2 run ./ -p satori://code/semgrep.yml` |
+| `-d, --data KEY=VALUE` | Define a parameter and its value (repeatable). Multi-line values are split into one value per line | `satori-v2 run ./ -d API_KEY=secret -d HOST=example.com` |
+| `--split KEY=DELIMITER` | Split the value of parameter `KEY` on `DELIMITER` so each part becomes a separate input value (repeatable) | `satori-v2 run ./ -d HOSTS="a.com,b.com" --split HOSTS=,` |
+| `-e, --env KEY VALUE` | Set an environment variable inside the execution container (repeatable) | `satori-v2 run ./ -e DEBUG 1 -e LANG C.UTF-8` |
+| `-t, --tag KEY VALUE` | Attach a tag to the job for later filtering (repeatable) | `satori-v2 run ./ -t team backend -t env staging` |
+
+::: warning On development
+The following file/data flags are not available yet in CLI v2. The v1 syntax is kept here for reference.
+:::
+
+| Flag | Description | Example |
+| --- | --- | --- |
+| `-i, --include FILE` | Include additional files in the execution context (repeatable) *(on development)* | `satori-v2 run ./ -i config.yaml -i data.json` |
+| `-df, --data-file KEY=PATH` | Load variable values from a file (repeatable) *(on development)* | `satori-v2 run ./ -df PAYLOAD=/path/to/data.txt` |
+| `--clone REPORT_ID` | Clone settings from an existing report *(on development)* | `satori-v2 run ./ --clone AOQxDWDkXpZp` |
 
 ### Execution Environment
 
 | Flag | Description | Example |
 | --- | --- | --- |
-| `--cpu COUNT` | Set CPU cores (256, 512, 1024, 2048, 4096, 8192, 16384) | `satori run ./ --cpu 2048` |
-| `--memory MB` | Set memory allocation in MB (512, 1024, 2048, 3072, 4096, 5120, 6144, 7168, 8192, 9216, 10240, 11264, 12288, 13312, 14336, 15360, 16384, 17408, 18432, 19456, 20480, 21504, 22528, 23552, 24576, 25600, 26624, 27648, 28672, 29696, 30720, 32768, 36864, 40960, 45056, 49152, 53248, 57344, 61440, 65536, 73728, 81920, 90112, 98304, 106496, 114688, 122880) | `satori run ./ --memory 2048` |
-| `--storage GB` | Set storage allocation in GB | `satori run ./ --storage 50` |
-| `--os {windows\|linux}` | Select operating system | `satori run ./ --os linux` |
-| `--image IMAGE_NAME` | Specify custom Docker image | `satori run ./ --image ubuntu:22.04` |
+| `--cpu COUNT` | Set CPU units (256, 512, 1024, 2048, 4096, 8192, 16384) | `satori-v2 run ./ --cpu 2048` |
+| `--memory MB` | Set memory allocation in MB (512, 1024, 2048, 3072, 4096, 5120, 6144, 7168, 8192, 9216, 10240, 11264, 12288, 13312, 14336, 15360, 16384, 17408, 18432, 19456, 20480, 21504, 22528, 23552, 24576, 25600, 26624, 27648, 28672, 29696, 30720, 32768, 36864, 40960, 45056, 49152, 53248, 57344, 61440, 65536, 73728, 81920, 90112, 98304, 106496, 114688, 122880) | `satori-v2 run ./ --memory 2048` |
+| `--image IMAGE_NAME` | Specify custom Docker image | `satori-v2 run ./ --image ubuntu:22.04` |
+| `--timeout SECONDS` | Maximum execution time. Defaults to the playbook `settings.timeout` when set | `satori-v2 run ./ --timeout 600` |
+| `--expire EXPIRATION` | Expiration for the run and its data (the value is sent to the platform as provided) | `satori-v2 run ./ --expire EXPIRATION` |
+| `-r, --region-filter REGION` | Restrict the execution to the given region(s) (repeatable) | `satori-v2 run ./ -r us-east-1 -r eu-west-1` |
+| `--visibility {public\|private\|unlisted}` | Set the visibility of the run (default: private) | `satori-v2 run ./ --visibility public` |
+| `--count NUMBER` | Number of parallel executions to launch (default: 1) | `satori-v2 run ./ --count 10` |
 
-### Scheduling and Monitoring
+**Note:** when `--count` is greater than 1 and you also pass `--output` or `--live-output`, the CLI prints a warning and only the output of the **first** execution is shown. With `--report`, a summary table of all executions is shown instead of a single report.
+
+CLI flags take precedence over the values defined in the playbook `settings:` section (`cpu`, `memory`, `image`, `timeout`).
+
+::: warning On development
+`--storage` and `--os` are not available yet as `satori-v2 run` flags. The `storage` playbook setting still works. The v1 syntax is kept here for reference.
+:::
 
 | Flag | Description | Example |
 | --- | --- | --- |
-| `--rate EXPRESSION` | Create monitor with rate-based scheduling | `satori run ./ --rate "every 5 minutes"` |
-| `--cron EXPRESSION` | Create monitor with cron schedule | `satori run ./ --cron "0 * * * *"` |
-| `--count NUMBER` | Number of executions for monitor | `satori run ./ --rate "every 5 minutes" --count 10` |
+| `--storage GB` | Set storage allocation in GB *(on development)* | `satori-v2 run ./ --storage 50` |
+| `--os {windows\|linux}` | Select operating system *(on development)* | `satori-v2 run ./ --os linux` |
+
+### Scheduling and Monitoring
+
+In CLI v2 the schedule is defined **in the playbook**, not on the command line. When the playbook passed to `satori-v2 run` has a `settings.cron`, `settings.rate` or `settings.monitor` entry, the command creates a [monitor](monitor.md) instead of a one-off run:
+
+```yml
+settings:
+  name: Website check
+  rate: 10 minutes
+
+test:
+  assertStdoutContains: HTTP/2 200
+  curl:
+    - curl -is https://satori.ci
+```
+
+```sh
+satori-v2 run monitor.yml    # creates a monitor that runs every 10 minutes
+```
+
+Options such as `-d`, `-e`, `-t`, `-r`, `--cpu`, `--memory`, `--image`, `--timeout` and `--visibility` are applied to the monitor as well. See [Monitor](monitor.md) for how to manage it afterwards.
+
+::: warning On development
+The `--rate` and `--cron` flags of `satori-v2 run` are not available yet in CLI v2; use the playbook settings shown above. The v1 syntax is kept here for reference.
+:::
+
+| Flag | Description | Example |
+| --- | --- | --- |
+| `--rate EXPRESSION` | Create monitor with rate-based scheduling *(on development)* | `satori-v2 run ./ --rate "every 5 minutes"` |
+| `--cron EXPRESSION` | Create monitor with cron schedule *(on development)* | `satori-v2 run ./ --cron "0 * * * *"` |
+| `--count NUMBER` | Number of executions for monitor *(on development, `--count` currently applies to runs only)* | `satori-v2 run ./ --rate "every 5 minutes" --count 10` |
 
 **Note:** `--rate` and `--cron` are mutually exclusive. Use one or the other to create scheduled monitors.
 
@@ -192,36 +264,88 @@ Use `--repo` to clone a GitHub repository at execution time and run a playbook a
 The format is `user/repo` (GitHub shorthand):
 
 ```sh
-satori run satori://secrets/all.yml --repo BonJarber/SecretsTest --report --output
+satori-v2 run satori://secrets/all.yml --repo BonJarber/SecretsTest --report --output
 ```
 
 This clones the `BonJarber/SecretsTest` repository and runs the secrets scanner against it.
 
+Under the hood, `satori-v2 run ... --repo owner/repo` creates a [scan](scan.md) job limited to the latest commit of the repository (the same as `satori-v2 scan owner/repo SOURCE -q 1`). The job is therefore listed by `satori-v2 scans` and can be managed with `satori-v2 scan ID`. `--sync`, `--output`, `--report`, `--stdout` and `--stderr` work as with a regular run; `--count`, `--files`, `--save-files`, `--delete-report`, `--delete-output` and `--expire` do not apply to repository runs.
+
 You can also combine `--repo` with additional parameters:
 
 ```sh
-satori run satori://code/python/lint/ruff.yml --repo satorici/satori-cli --report --output
-satori run satori://code/go/gosec.yml --repo securego/gosec --report --output
-satori run satori://code/github/ghwfauditor.yml -d GITHUB_PAT=TBC --repo All-Hands-AI/OpenHands --report --output
+satori-v2 run satori://code/python/lint/ruff.yml --repo satorici/satori-cli --report --output
+satori-v2 run satori://code/go/gosec.yml --repo securego/gosec --report --output
+satori-v2 run satori://code/github/ghwfauditor.yml -d GITHUB_PAT=TBC --repo All-Hands-AI/OpenHands --report --output
 ```
 
 | Flag | Description | Example |
 | --- | --- | --- |
-| `--repo REPO` | Clone a GitHub repository and run the playbook against it | `satori run satori://code/semgrep.yml --repo user/repo --report --output` |
+| `--repo, --repository REPO` | Clone a GitHub repository and run the playbook against its latest commit | `satori-v2 run satori://code/semgrep.yml --repo user/repo --report --output` |
 
 ### Output and Report Control
 
 | Flag | Description | Example |
 | --- | --- | --- |
-| `--format {plain\|md}` | Set output format (plain text or Markdown) | `satori run ./ --sync --output --format md` |
-| `--redacted PARAM` | Mark parameters as redacted in logs (repeatable) | `satori run ./ --redacted API_KEY --redacted PASSWORD` |
-| `--save-report {true\|false\|PATH}` | Save report to file or default location | `satori run ./ --save-report true` |
-| `--save-output {true\|false\|PATH}` | Save command output to file | `satori run ./ --save-output ./output.log` |
+| `-s, --sync` | Wait until the run finishes, showing its status | `satori-v2 run ./ --sync` |
+| `-o, --output` | Wait for the run and show the output of each command (stdout, stderr, return code, time) | `satori-v2 run ./ --output` |
+| `--live-output` | Stream the execution output while the run is in progress | `satori-v2 run ./ --live-output` |
+| `--report` | Wait for the run and show the report with the assertion results | `satori-v2 run ./ --report` |
+| `--stdout` | Wait for the run and print the raw stdout of the execution | `satori-v2 run ./ --stdout` |
+| `--stderr` | Wait for the run and print the raw stderr of the execution | `satori-v2 run ./ --stderr` |
+| `-f, --files` | Wait for the run and download the files generated by the execution | `satori-v2 run ./ --files` |
+| `--save-files` | Keep the files generated by the execution on the platform without downloading them now (retrieve them later with `satori-v2 report ID files`) | `satori-v2 run ./ --save-files` |
+| `--delete-report` | Do not store the report on Satori servers | `satori-v2 run ./ --delete-report` |
+| `--delete-output` | Do not store the command output on Satori servers | `satori-v2 run ./ --delete-output` |
+| `--json` | Print the job information as JSON | `satori-v2 run ./ --json` |
+
+**Deprecated:** `--save-report true|false` and `--save-output true|false` still work in CLI v2 but print a deprecation warning. They are the inverse of the new flags: `--save-report false` is equivalent to `--delete-report`, and `--save-output false` to `--delete-output`. The v1 `PATH` form (saving the report or output to a local file) is not supported.
+
+::: warning On development
+The following output flags are not available yet in CLI v2. The v1 syntax is kept here for reference.
+:::
+
+| Flag | Description | Example |
+| --- | --- | --- |
+| `--format {plain\|md}` | Set output format (plain text or Markdown) *(on development, `--format` is currently only available on `report ID output`)* | `satori-v2 run ./ --sync --output --format md` |
+| `--redacted PARAM` | Mark parameters as redacted in logs (repeatable) *(on development, use the `redacted` playbook setting)* | `satori-v2 run ./ --redacted API_KEY --redacted PASSWORD` |
+| `--test TEST_NAME` | Show only the output of a given test *(on development, available on `report ID output --test`)* | `satori-v2 run ./ --output --test hello` |
+| `--name NAME` | Override the playbook name *(on development)* | `satori-v2 run ./ --name "Nightly build"` |
+| `--save-report {true\|false\|PATH}` | Save report to file or default location *(deprecated, see above)* | `satori-v2 run ./ --save-report true` |
+| `--save-output {true\|false\|PATH}` | Save command output to file *(deprecated, see above)* | `satori-v2 run ./ --save-output ./output.log` |
 
 ### Complete Example with Multiple Options
 
 ```sh
-satori run ./ \
+satori-v2 run ./ \
+  -p satori://code/semgrep.yml \
+  -d API_KEY=secret \
+  -e DEBUG 1 \
+  -t team backend \
+  --cpu 4096 \
+  --memory 8192 \
+  --timeout 600 \
+  -r us-east-1 \
+  --sync \
+  --report \
+  --output \
+  --delete-output
+```
+
+This command runs the public Semgrep playbook against the current directory with:
+- Secret parameter `API_KEY`
+- Environment variable `DEBUG=1` inside the container
+- The job tagged with `team=backend`
+- 4 vCPU and 8GB memory
+- 10-minute timeout
+- Execution restricted to the `us-east-1` region
+- Synchronous execution with report and output
+- Command output not stored on Satori servers
+
+The v1 example is kept below for reference; the flags marked above as on development (`-i`, `--format`, `--redacted`, `--save-report`) do not work yet in CLI v2:
+
+```sh
+satori-v2 run ./ \
   -d API_KEY=secret \
   -i config.yaml \
   --cpu 4 \
@@ -234,13 +358,3 @@ satori run ./ \
   --redacted API_KEY \
   --save-report true
 ```
-
-This command runs the current directory's playbook with:
-- Secret parameter `API_KEY`
-- Additional config file included
-- 4 CPU cores and 2GB memory
-- 10-minute timeout
-- Synchronous execution with report and output
-- Markdown-formatted output
-- API_KEY redacted in logs
-- Report saved to file

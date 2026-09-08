@@ -38,7 +38,7 @@ settings:
   - https://github.com/satorici
   gallery:
   - https://files.catbox.moe/zz0pll.png
-  example: satori run ./ --playbook="satori://secrets/semgrep.yml" --report --output
+  example: satori-v2 run ./ --playbook="satori://secrets/semgrep.yml" --report --output
     
 install:
   semgrep:
@@ -82,6 +82,8 @@ To schedule playbook execution based on specific times or intervals, configure C
 **- Rate Settings:** configure rate settings for simple, fixed-interval scheduling, such as every 5 minutes or hourly. See the rate setting section in the [Monitor](../modes/monitor.md#rate-setting) documentation for guidance.
 
 These settings help automate playbook runs, ensuring timely and consistent execution based on your testing needs.
+
+In CLI v2, these settings are what turn a run into a monitor: when the playbook file passed to `satori-v2 run` contains `cron`, `rate` (or an already formatted `monitor` expression) under `settings`, the command creates a [monitor](../modes/monitor.md) instead of a one-off execution. There are no `--cron`/`--rate` command-line flags.
 
 ## Notification settings for execution results
 
@@ -134,7 +136,7 @@ settings:
   mitigation: "Use an anti DDoS service such as CloudFlare to prevent network attacks"
   count: 10
   timeout: 300
-  example: satori run satori://dos/siege.yml -d URL="satori.ci" --output
+  example: satori-v2 run satori://dos/siege.yml -d URL="satori.ci" --output
 
 install:
   update:
@@ -180,6 +182,8 @@ settings:
     saveOutput: False
 ```
 
+Both settings have command-line counterparts on `satori-v2 run`: `--delete-report` (equivalent to `saveReport: False`) and `--delete-output` (equivalent to `saveOutput: False`). The v1 flags `--save-report false` and `--save-output false` still work in CLI v2 but are deprecated and print a warning.
+
 If no report format is specified, you can still access the report online using the CLI or Web interface.
 
 ## Files Setting
@@ -208,8 +212,12 @@ Any parameter listed under `redacted` will have its value masked in all report o
 
 You can also redact parameters at runtime using the CLI flag `--redacted`:
 
+::: warning On development
+The `--redacted` flag of `satori-v2 run` is not available yet in CLI v2; use the `redacted` playbook setting above. The v1 syntax is kept here for reference.
+:::
+
 ```sh
-satori run playbook.yml -d API_KEY=secret --redacted API_KEY --sync
+satori-v2 run playbook.yml -d API_KEY=secret --redacted API_KEY --sync
 ```
 
 The playbook-level setting and the CLI flag serve the same purpose. Use the playbook setting when the parameters are always sensitive, and the CLI flag when you want to redact on a case-by-case basis.

@@ -7,7 +7,7 @@ Satori CI is an automated testing platform designed to validate the behavior of 
 ## [Install](getting-started/install.md)
 
 Satori offers flexible execution options for your tests, allowing them to run either synchronously or asynchronously.
-- Use our [CLI tool](https://github.com/satorici/satori-cli), which will allow you to execute tests directly from your terminal installed with `pip install satori-ci`.
+- Use our [CLI tool](https://github.com/satorici/cli-v2), which will allow you to execute tests directly from your terminal installed with `pip install git+https://github.com/satorici/cli-v2`. The console script is named `satori-v2` so it can coexist with the v1 `satori` CLI.
 - Using the [Web](https://satori.ci) Interface, you can use our web interface to manage and execute your tests without any installation required.
 
 ## CI
@@ -26,13 +26,13 @@ All our tests are stored in what we call playbooks. You can check our online pla
 
 ## [Repositories](repo.md)
 
-We provide a comprehensive approach to testing code repositories on Github. Whether your repositories are attached to our CI process or not, you can perform tests on one or all of your repositories to assert their correctness (e.g., ensuring no passwords are stored, that software is being built and executed correctly, and that secure coding standards are followed). You can visualize the results using our [Web interface](https://satori.ci/repos/) or with our CLI (`satori repos`).
+We provide a comprehensive approach to testing code repositories on Github. Whether your repositories are attached to our CI process or not, you can perform tests on one or all of your repositories to assert their correctness (e.g., ensuring no passwords are stored, that software is being built and executed correctly, and that secure coding standards are followed). You can visualize the results using our [Web interface](https://satori.ci/repos/) or with our CLI (`satori-v2 repos`).
 
 ## [Monitor](modes/monitor.md)
 
 Monitors allow you to automate scheduled checks on systems, ensuring they function correctly over time. 
 You can set your playbooks to run at regular intervals, defined by a time rate (e.g., '5 minutes')
-Monitors can be viewed via the [Web interface](https://www.satori.ci/monitors/), the CLI (`satori monitors`), or [Grafana](https://github.com/satorici/satori-plugin-grafana).
+Monitors can be viewed via the [Web interface](https://www.satori.ci/monitors/), the CLI (`satori-v2 monitors`), or [Grafana](https://github.com/satorici/satori-plugin-grafana).
 
 ## [Notifications](notifications.md)
 
@@ -48,7 +48,9 @@ You can define these notifications within your [settings notifications](https://
 ## [Reports](getting-started/execution-data.md)
 
 We process the *output* to generate *reports* based on the *files* that were produced. To help you track changes over time, we can highlight differences between consecutive reports. This feature is useful for identifying whether you are fixing existing bugs or introducing new ones.
-You can access your reports using on the [reports section of the Web](https://www.satori.ci/reports/) or with the CLI: `satori reports`.
+You can access your reports using on the [reports section of the Web](https://www.satori.ci/reports/) or with the CLI: `satori-v2 reports`.
+
+Failed assertions and tool results are also tracked as *findings*: list them with `satori-v2 findings`, see the findings of a report with `satori-v2 issues EXECUTION-ID` and inspect one with `satori-v2 issue FINDING-ID`.
 
 ## Support
 

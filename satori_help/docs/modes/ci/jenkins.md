@@ -26,7 +26,7 @@ You can configure specific details about your project, such as Git repository, b
 - Go to the Build section of your Jenkins project and edit the command to use the absolute path.
 
    ```sh
-   satori run ./ --sync
+   satori-v2 run ./ --sync
    ```
    
 ![Build Step](img/jenkins_4.png)
@@ -39,18 +39,18 @@ Click on Build Now in your Jenkins dashboard to run the build and trigger the Sa
 
 ### Configuring the Satori Path in Jenkins
 
-**Note**: Jenkins may require the absolute path to the `satori` command. If it doesn’t automatically recognize `satori`, follow these steps to set the correct path.
+**Note**: Jenkins may require the absolute path to the `satori-v2` command. If it doesn’t automatically recognize `satori-v2`, follow these steps to set the correct path.
 
-**Locating the full path to `satori`**:
+**Locating the full path to `satori-v2`**:
    - **Linux/Mac**:
      - Open your terminal and run:
        ```sh
-       whereis satori
+       whereis satori-v2
        ```
-     - Copy the full path displayed (e.g., `/usr/local/bin/satori`).
+     - Copy the full path displayed (e.g., `/usr/local/bin/satori-v2`).
    - **Windows**:
      - Open cmd and use:
        ```cmd
-       where satori
+       where satori-v2
        ```
-     - Copy the full path to `satori.exe` displayed in the output (e.g., `C:\Program Files\Satori\satori.exe`).
+     - Copy the full path to `satori-v2.exe` displayed in the output (e.g., `C:\Program Files\Satori\satori-v2.exe`).

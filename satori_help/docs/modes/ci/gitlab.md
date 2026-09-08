@@ -29,10 +29,12 @@ variables:
 SatoriCI:
   stage: build
   script:
-    - pip3 install satori-ci
-    - satori config token $SATORI_TOKEN
-    - satori run ./ --sync
+    - pip install git+https://github.com/satorici/cli-v2
+    - satori-v2 config token $SATORI_TOKEN
+    - satori-v2 run ./ --sync
 ```
+
+The CLI reads the `SATORI_TOKEN` environment variable directly, so the `satori-v2 config token $SATORI_TOKEN` step is optional as long as the variable is defined in the pipeline.
 
 ![Script](img/gitlab_2.png)
 

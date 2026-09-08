@@ -30,13 +30,19 @@ The previous playbook uses an image that has preinstalled node and python. Bash 
 Since the .satori.yml playbook is present in the repository, running Satori on this repository will automatically use the defined configuration file to execute the tests showing the output and report.
 To run the tests on this repository, use the following command:
 
-`satori repo satoridev01/test.blackbird71SR.Hello-World run --output --report `
+`satori-v2 run ./ --repo satoridev01/test.blackbird71SR.Hello-World --output --report`
+
+::: warning On development
+`satori-v2 repo ... run` is not available yet in CLI v2. The v1 syntax is kept here for reference; in v2 use `satori-v2 run PLAYBOOK --repo owner/repo` as shown above.
+
+`satori-v2 repo satoridev01/test.blackbird71SR.Hello-World run --output --report `
+:::
 
 This is how the output and the report will look like on the console:
 
 ![Run Satori on the repo showing the report and the output of multiple Hello World programming languages](img/hello_01.png)
 
-You can also view the report online since we have made it public using the command `satori report ID visibility public`, you can also check it out online at https://satori.ci/report/ID:
+You can also view the report online since we have made it public using the command `satori-v2 report ID visibility public`, you can also check it out online at https://satori.ci/report/ID:
 
 ![Web report of multiple Hello World programming languages](img/hello_02.png)
 
@@ -47,7 +53,7 @@ If you'd like to run a test with code stored on your local machine, you can simu
 ```sh
 ~ $ git clone --quiet https://github.com/satoridev01/test.blackbird71SR.Hello-World.git 
 ~ $ cd test.blackbird71SR.Hello-World/
-test.blackbird71SR.Hello-World $ satori run ./ --output --report
+test.blackbird71SR.Hello-World $ satori-v2 run ./ --output --report
 ```
 
 This is how it looks:
@@ -56,7 +62,7 @@ This is how it looks:
 
 To run the commands locally on your project and then upload the results to Satori for analysis, use the following command:
 
-`satori local ./ --output --report`
+`satori-v2 local ./ --output --report`
 
 And it would look like this:
 

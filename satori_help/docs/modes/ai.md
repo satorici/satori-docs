@@ -6,6 +6,10 @@ next:
 
 # AI
 
+::: warning On development
+`satori-v2 ai` is not available yet in CLI v2. This page documents the v1 command and is kept for reference; every `satori-v2 ai ...` example below will be available once the command is ported.
+:::
+
 Satori AI lets you describe what you want to test in plain language and generates a ready-to-run playbook for you. Whether you are a developer, a pentester, a QA engineer, or a CTO, you can tell it what to check and it will produce the right playbook for your role.
 
 Watch it in action:
@@ -33,7 +37,7 @@ Satori AI works in two modes: interactive and one-shot.
 Launch an interactive session where you can have a conversation about what you want to test. The AI will generate playbooks, explain them, and refine them based on your feedback:
 
 ```console
-satori ai
+satori-v2 ai
 ```
 
 This opens a conversation where you can say things like:
@@ -50,7 +54,7 @@ The AI knows the full Satori playbook language, all public playbooks, and all as
 If you already know what you want, pass it directly as a prompt:
 
 ```console
-satori ai "test my Django app for common security issues"
+satori-v2 ai "test my Django app for common security issues"
 ```
 
 The AI will generate the playbook and provide the execution command without entering an interactive session.
@@ -62,42 +66,42 @@ Different people in an organization need different tests. Satori AI understands 
 **For the CEO or compliance officer** — verify SOC2 controls, check TLS configuration, security headers, and exposed ports. The result is a report that states which controls passed and which did not, with their severities:
 
 ```console
-satori ai "verify SOC2 compliance for our website https://example.com"
+satori-v2 ai "verify SOC2 compliance for our website https://example.com"
 ```
 
 **For the CTO** — run a web security audit that reviews server configuration, checks for common misconfigurations, and validates that infrastructure meets security standards:
 
 ```console
-satori ai "run a security audit on our web server at https://example.com"
+satori-v2 ai "run a security audit on our web server at https://example.com"
 ```
 
 **For the development lead** — scan Docker images for known vulnerabilities before allowing them into production, or check that new code does not introduce regressions:
 
 ```console
-satori ai "scan our Docker image myapp:latest for vulnerabilities"
+satori-v2 ai "scan our Docker image myapp:latest for vulnerabilities"
 ```
 
 **For the pentester** — launch network scans from ephemeral containers, detect open ports, enumerate services, and scan for known vulnerabilities at scale:
 
 ```console
-satori ai "perform a network scan on 10.0.0.0/24 looking for exposed services"
+satori-v2 ai "perform a network scan on 10.0.0.0/24 looking for exposed services"
 ```
 
 **For CI engineers** — generate playbooks that run on every push to detect issues before code is merged:
 
 ```console
-satori ai "create a CI playbook that runs semgrep and trufflehog on every push"
+satori-v2 ai "create a CI playbook that runs semgrep and trufflehog on every push"
 ```
 
 **For QA engineers** — create tests that verify application behavior matches expectations, track regressions, and keep a record of what was tested:
 
 ```console
-satori ai "test that our API at https://api.example.com/health returns status 200"
+satori-v2 ai "test that our API at https://api.example.com/health returns status 200"
 ```
 
 ## What the AI Knows
 
-When you launch `satori ai`, it has access to:
+When you launch `satori-v2 ai`, it has access to:
 
 - The complete Satori playbook syntax, including all assertion types, input formats, and settings
 - All public playbooks in the [Satori playbook library](https://github.com/satorici/playbooks)
@@ -111,19 +115,19 @@ It clones the Satori repositories to `~/.satori/` on first use to keep its knowl
 Generate a playbook and run it immediately:
 
 ```console
-satori ai "check if port 443 is open on satori.ci and verify the TLS certificate is valid"
+satori-v2 ai "check if port 443 is open on satori.ci and verify the TLS certificate is valid"
 ```
 
 Generate a monitoring playbook that runs on a schedule:
 
 ```console
-satori ai "monitor our API every 30 minutes and alert on Slack if it returns anything other than 200"
+satori-v2 ai "monitor our API every 30 minutes and alert on Slack if it returns anything other than 200"
 ```
 
 Generate a comprehensive security check for a repository:
 
 ```console
-satori ai "create a full security playbook for a Python project: lint, secrets, SAST, and dependency audit"
+satori-v2 ai "create a full security playbook for a Python project: lint, secrets, SAST, and dependency audit"
 ```
 
 ---

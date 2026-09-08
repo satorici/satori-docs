@@ -43,8 +43,10 @@ The CLI interface is the best way to interact with Satori. New functionalities g
 Open your command line terminal and execute the following command to install the Satori CLI:
 
 ```console
-pip3 install satori-ci
+pip install git+https://github.com/satorici/cli-v2
 ```
+
+The console script is named `satori-v2` so it can coexist with the v1 `satori` CLI. To update it later, run `satori-v2 update` (it reinstalls the CLI from git with pip).
 
 ![PiPY install](img/install_1.png)
 
@@ -61,10 +63,20 @@ To use Satori-CI, you need to get your API Token. Follow these steps:
 Replace the placeholder `YOUR_TOKEN` on the next command with your Satori CI API Token:
 
 ```console
-satori config token YOUR_TOKEN
+satori-v2 config token YOUR_TOKEN
 ```
 
 ![Satori CLI Config Token](img/install_2.png)
+
+**Configuration**
+
+The token is stored in `~/.satori_credentials.yml`, one section per profile. `satori-v2 config token YOUR_TOKEN` writes to the `default` profile; use `--profile NAME` (only valid on `satori-v2 config`, e.g. `satori-v2 config token TEAMTOKEN --profile TEAM`) to keep a team token on a separate profile. Run `satori-v2 config` to print the current configuration.
+
+The following environment variables are read directly and take precedence over the credentials file:
+
+- `SATORI_TOKEN`: the API token to use (handy for CI, no `config` step needed).
+- `SATORI_PROFILE`: the profile to use (overrides `--profile`).
+- `SATORI_ENDPOINT`: the API endpoint (default: `https://api-v2.satori.ci`).
 
 ### Next Steps
 

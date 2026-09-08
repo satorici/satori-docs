@@ -56,6 +56,7 @@ export default defineConfig({
                 items: [
                     { text: "AI", link: "/modes/ai" },
                     { text: "Run", link: "/modes/run" },
+                    { text: "Executions & Output", link: "/modes/executions" },
                     { text: "Shell", link: "/modes/shell" },
                     {
                         text: "CI",
@@ -63,6 +64,7 @@ export default defineConfig({
                             { text: "GitHub Application", link: "/modes/ci/github" },
                             { text: "GitLab", link: "/modes/ci/gitlab" },
                             { text: "Jenkins", link: "/modes/ci/jenkins" },
+                            { text: "Programmatic", link: "/modes/ci/programmatic" },
                         ],
                     },
                     { text: "Monitor", link: "/modes/monitor" },
@@ -71,11 +73,12 @@ export default defineConfig({
                 ],
             },
             { text: "Repositories", link: "/repo" },
+            { text: "Findings & Issues", link: "/findings" },
             {
                 text: "Notifications",
                 link: "/notifications",
                 items: [
-                    { text: "Settings Command", link: "/notifications#interactive-configuration-with-satori-settings" },
+                    { text: "Settings Command", link: "/notifications#interactive-configuration-with-satori-v2-settings" },
                     { text: "Slack", link: "/notifications#slack" },
                     { text: "Discord", link: "/notifications#discord" },
                     { text: "Email", link: "/notifications#email" },
@@ -88,7 +91,7 @@ export default defineConfig({
         ],
 
         socialLinks: [
-            { icon: "github", link: "https://github.com/satorici/satori-cli" },
+            { icon: "github", link: "https://github.com/satorici/cli-v2" },
         ],
     },
 });

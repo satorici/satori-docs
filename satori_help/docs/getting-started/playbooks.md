@@ -66,7 +66,7 @@ Once you’ve created your Playbook, you need to know how to execute it. There a
 To run a Playbook from the command line, use the following command:
 
 ```bash
-satori run hello.yml
+satori-v2 run hello.yml
 ```
 
 ![Hello World Report](img/playbooks_1.png)
@@ -103,10 +103,10 @@ Satori provides 200+ ready-to-use playbooks covering security testing, code anal
 
 ### Static Playbooks (SAST)
 
-Static playbooks analyze source code without running it. They are designed to be integrated into CI processes or run against a local repository with `satori run ./`:
+Static playbooks analyze source code without running it. They are designed to be integrated into CI processes or run against a local repository with `satori-v2 run ./`:
 
 ```bash
-satori run ./ --playbook satori://code/semgrep.yml --sync --report
+satori-v2 run ./ --playbook satori://code/semgrep.yml --sync --report
 ```
 
 You can import multiple playbooks in a single `.satori.yml` file:
@@ -127,9 +127,9 @@ import:
 Dynamic playbooks test running systems by providing parameters such as a host or URL:
 
 ```bash
-satori run satori://scan/nmap.yml -d HOST="target.com" --report --output
-satori run satori://web/nuclei.yml -d URL="https://target.com" --report --output
-satori run satori://dns/dnsx.yml -d HOST="target.com" --report --output
+satori-v2 run satori://scan/nmap.yml -d HOST="target.com" --report --output
+satori-v2 run satori://web/nuclei.yml -d URL="https://target.com" --report --output
+satori-v2 run satori://dns/dnsx.yml -d HOST="target.com" --report --output
 ```
 
 ![Dast Output](img/dast_output.png)

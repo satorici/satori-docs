@@ -12,8 +12,12 @@ Satori is an automated testing platform that offers multiple ways to execute tes
 
 Tell Satori what you want to test and it will generate the playbook for you. Whether you need a security audit, a compliance check, a CI pipeline, or a monitoring playbook, the AI knows the full Satori playbook language and all 200+ public playbooks. It works interactively or as a one-shot command:
 
+::: warning On development
+`satori-v2 ai` is not available yet in CLI v2. The v1 syntax is kept here for reference.
+:::
+
 ```console
-satori ai "create a .satori.yml to test my Python app for frontend and backend security vulnerabilities"
+satori-v2 ai "create a .satori.yml to test my Python app for frontend and backend security vulnerabilities"
 ```
 
 See [AI documentation](ai.md) for details, or [watch it in action](https://youtu.be/HUv82qwX4Ls).
@@ -22,9 +26,9 @@ See [AI documentation](ai.md) for details, or [watch it in action](https://youtu
 
 You can execute your playbooks on demand using the Satori CLI in several scenarios:
 
-  **- Creating a new playbook:** run the command `satori run playbook.yml` to test the playbook during its creation.
+  **- Creating a new playbook:** run the command `satori-v2 run playbook.yml` to test the playbook during its creation.
   
-  **- Running locally:** use `satori local playbook.yml` to execute your playbook on your local machine.
+  **- Running locally:** use `satori-v2 local playbook.yml` to execute your playbook on your local machine.
   
   **- Verifying production issues:** check if issues found in your testing environment persist in production.
   

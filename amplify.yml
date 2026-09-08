@@ -1,0 +1,19 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm use 20 || nvm install 20
+        - node -v
+        - npm ci
+    build:
+      commands:
+        - npm run docs:build
+  artifacts:
+    # VitePress writes the static site here (see package.json docs:build)
+    baseDirectory: satori_help/docs/.vitepress/dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*

@@ -20,7 +20,7 @@ test:
 When running this playbook, you will need to pass a value for `${{WHAT}}` at execution, as it is not predefined in the playbook, with the next command `-d`:
 
 ```sh
-satori run .satori.yml  -d WHAT="Bye World" --report --output
+satori-v2 run .satori.yml  -d WHAT="Bye World" --report --output
 ```
 
 ![Parametrized inputs](img/inputs_0.png)

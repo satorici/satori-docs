@@ -1,5 +1,9 @@
 # Programmatic CI
 
+::: warning On development
+Assigning playbooks to repositories (`satori-v2 repos playbook ...` and `satori-v2 repo ... playbook ...`) is not available yet in CLI v2. The v1 syntax is kept here for reference. In v2 you can run a playbook on a repository on demand with `satori-v2 run PLAYBOOK --repo owner/repo` or `satori-v2 scan owner/repo PLAYBOOK`.
+:::
+
 With file-based CI (GitHub, GitLab, Jenkins), you commit a `.satori.yml` file into your repository to define what tests run. Programmatic CI takes a different approach: you assign playbooks to repositories from the outside using CLI commands, without modifying the repository's code.
 
 This is useful when you:
@@ -15,13 +19,13 @@ Global playbooks run on **every** repository connected to your account. This is 
 
 ```sh
 # List global playbooks
-satori repos playbook list
+satori-v2 repos playbook list
 
 # Add a playbook that runs on all repos
-satori repos playbook add satori://secrets/semgrep.yml
+satori-v2 repos playbook add satori://secrets/semgrep.yml
 
 # Remove a global playbook
-satori repos playbook del satori://secrets/semgrep.yml
+satori-v2 repos playbook del satori://secrets/semgrep.yml
 ```
 
 ## Per-repo playbooks
@@ -30,13 +34,13 @@ Per-repo playbooks are assigned to a **specific** repository. Use this when diff
 
 ```sh
 # List playbooks assigned to a repo
-satori repo satorici/satori-cli playbook list
+satori-v2 repo satorici/satori-cli playbook list
 
 # Add a playbook to a specific repo
-satori repo satorici/satori-cli playbook add satori://code/yamllint.yml
+satori-v2 repo satorici/satori-cli playbook add satori://code/yamllint.yml
 
 # Remove a playbook from a repo
-satori repo satorici/satori-cli playbook del satori://code/yamllint.yml
+satori-v2 repo satorici/satori-cli playbook del satori://code/yamllint.yml
 ```
 
 ## When to use each approach
