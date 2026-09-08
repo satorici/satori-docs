@@ -48,6 +48,29 @@ HelloWorld:
   - echo Hello World
 ```
 
+#### Dynamic severity
+
+`setSeverity` also accepts a reference to another command's stdout in the form
+`<path>.stdout`. The analyzer reads the referenced output at report time,
+strips it, parses it as an integer, and uses it as the severity. The value
+must fall in the `0..5` range; anything else (out of range, non-numeric,
+missing path) leaves `severity` as `null` and adds a `warnings` entry to the
+test result.
+
+```yml
+severity:
+  - echo 3        # any command whose stdout is an integer 0..5
+
+HelloWorld:
+  setSeverity: severity.stdout
+  assertStdoutContains: "Hello World"
+  echo:
+  - echo Hello World
+```
+
+References may point to any executed path in the same playbook (siblings or
+nested), mirroring `setOutput`. Only the `.stdout` suffix is supported.
+
 You can also define multiple strings that should much, such as the following case:
 ```yml
 install:
