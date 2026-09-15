@@ -10,7 +10,9 @@ Findings are created from the web dashboard (the *Triage* button of a report) an
 | `satori-v2 issues EXECUTION-ID` | List the findings of one execution, sorted by severity |
 | `satori-v2 report EXECUTION-ID issues` | Same as `issues EXECUTION-ID` |
 | `satori-v2 issue FINDING-ID` | Show one finding |
+| `satori-v2 issue FINDING-ID status STATUS` | Set the finding status |
 | `satori-v2 issue FINDING-ID advisory` | Create a GitHub security advisory from a finding |
+| `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 
 ## Listing findings
 
@@ -42,7 +44,15 @@ satori-v2 findings --execution-id 5678 --source TOOL --json
 | `FALSE_POSITIVE` | The tool or assert was wrong |
 | `ACCEPTED_RISK` | Real, but the team decided not to act on it |
 
-Statuses can be changed freely from the dashboard; there is no fixed transition order.
+Statuses can be changed from the dashboard or from the CLI with `issue FINDING-ID status`:
+
+```sh
+satori-v2 issue 42 status investigating
+satori-v2 issue 42 status fixed
+satori-v2 issue 42 status false_positive --json
+```
+
+There is no fixed transition order.
 
 ## Issues of an execution
 
@@ -85,5 +95,26 @@ satori-v2 run satori://code/trufflehog.yml --repo satorici/satori-cli --sync --r
 satori-v2 issues 5678
 satori-v2 issue 42 advisory
 ```
+
+### Listing advisories
+
+`satori-v2 advisories` lists the external issues you have already created (GitHub security advisories and related issues):
+
+```sh
+satori-v2 advisories
+satori-v2 advisories --execution-id 5678
+satori-v2 advisories --kind SECURITY_ADVISORY --provider GITHUB --order DESC
+satori-v2 advisories --json
+```
+
+| Flag | Description |
+| --- | --- |
+| `--execution-id ID` | Only external issues for this execution |
+| `--kind {SECURITY_ADVISORY\|ISSUE}` | Filter by kind |
+| `--provider GITHUB` | Filter by provider |
+| `--order {ASC\|DESC}` | Sort order |
+| `--json` | Print the list as JSON |
+| `--page N` | Page number (default 1) |
+| `-q, --quantity N` | Results per page (default 10, alias `-l/--limit`) |
 
 See [Results](getting-started/execution-data.md) for the report commands and [Jobs, Executions & Output](modes/executions.md) for the job and execution model.

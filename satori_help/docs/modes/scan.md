@@ -155,6 +155,7 @@ The `satori-v2 scan` command provides extensive options for controlling scanning
 | `-q, --quantity NUMBER` | Number of commits to scan, starting from the latest | `satori-v2 scan user/repo semgrep.yml -q 20` |
 | `-d, --data KEY=VALUE` | Define parameters and their values (repeatable) | `satori-v2 scan user/repo semgrep.yml -d API_KEY=secret` |
 | `--split KEY=DELIMITER` | Split the value of parameter `KEY` on `DELIMITER` into several input values | `satori-v2 scan user/repo pb.yml -d HOSTS=a,b --split HOSTS=,` |
+| `-df, --data-file KEY=PATH` | Load variable values from a file (repeatable). Each non-blank line becomes a value for `KEY` | `satori-v2 scan user/repo pb.yml -df PAYLOAD=/path/to/data.txt` |
 | `-e, --env KEY VALUE` | Set an environment variable in the execution container (repeatable) | `satori-v2 scan user/repo pb.yml -e DEBUG 1` |
 
 ### Execution Environment

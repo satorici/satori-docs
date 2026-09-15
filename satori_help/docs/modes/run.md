@@ -142,10 +142,10 @@ satori-v2 local hello.yml --sync
 ```
 ![Run locally aync and async](img/run_local.png)
 
-`satori-v2 local` accepts a subset of the `run` options: `-p/--playbook`, `-d/--data`, `--split`, `--timeout`, `--run`, `--visibility`, `-t/--tag`, `-o/--output`, `--report` and `-s/--sync`.
+`satori-v2 local` accepts a subset of the `run` options: `-p/--playbook`, `-d/--data`, `--split`, `-df/--data-file`, `--timeout`, `--run`, `--visibility`, `-t/--tag`, `-o/--output`, `--report` and `-s/--sync`.
 
 ::: warning On development
-The `local` flags `--test`, `--name`, `--format`, `--redacted`, `-df/--data-file`, `--save-report` and `--save-output` are not available yet in CLI v2.
+The `local` flags `--test`, `--name`, `--format`, `--redacted`, `--save-report` and `--save-output` are not available yet in CLI v2.
 :::
 
 ## Run a process in Background
@@ -185,6 +185,7 @@ The `satori-v2 run` command provides extensive options for controlling execution
 | `-p, --playbook SOURCE` | Run a playbook other than the one in `SOURCE` (e.g. a public `satori://` playbook against a local directory) | `satori-v2 run ./ -p satori://code/semgrep.yml` |
 | `-d, --data KEY=VALUE` | Define a parameter and its value (repeatable). Multi-line values are split into one value per line | `satori-v2 run ./ -d API_KEY=secret -d HOST=example.com` |
 | `--split KEY=DELIMITER` | Split the value of parameter `KEY` on `DELIMITER` so each part becomes a separate input value (repeatable) | `satori-v2 run ./ -d HOSTS="a.com,b.com" --split HOSTS=,` |
+| `-df, --data-file KEY=PATH` | Load variable values from a file (repeatable). Each non-blank line becomes a value for `KEY` | `satori-v2 run ./ -df PAYLOAD=/path/to/data.txt` |
 | `-e, --env KEY VALUE` | Set an environment variable inside the execution container (repeatable) | `satori-v2 run ./ -e DEBUG 1 -e LANG C.UTF-8` |
 | `-t, --tag KEY VALUE` | Attach a tag to the job for later filtering (repeatable) | `satori-v2 run ./ -t team backend -t env staging` |
 
@@ -195,7 +196,6 @@ The following file/data flags are not available yet in CLI v2. The v1 syntax is 
 | Flag | Description | Example |
 | --- | --- | --- |
 | `-i, --include FILE` | Include additional files in the execution context (repeatable) *(on development)* | `satori-v2 run ./ -i config.yaml -i data.json` |
-| `-df, --data-file KEY=PATH` | Load variable values from a file (repeatable) *(on development)* | `satori-v2 run ./ -df PAYLOAD=/path/to/data.txt` |
 | `--clone REPORT_ID` | Clone settings from an existing report *(on development)* | `satori-v2 run ./ --clone AOQxDWDkXpZp` |
 
 ### Execution Environment

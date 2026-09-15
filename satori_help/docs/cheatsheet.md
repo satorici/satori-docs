@@ -12,7 +12,8 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `satori-v2 config` | Show the current configuration |
 | `satori-v2 config token "USERTOKEN"` | Configure your user token as your default profile |
 | `satori-v2 config token "TEAMTOKEN" --profile TEAM` | Configure your team token on your team profile |
-| `satori-v2 whoami` | Display current user information *(on development)* |
+| `satori-v2 config pat "GITHUB_PAT"` | Set your GitHub personal access token (patched via the API) |
+| `satori-v2 whoami` | Show the active profile and whether a GitHub PAT is configured |
 | `satori-v2 width` | Show console width configuration for current profile *(on development)* |
 
 ## Global options & environment
@@ -59,6 +60,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `-p, --playbook` | Playbook to execute instead of the source's `.satori.yml` |
 | `-d, --data KEY=VALUE` | Provide values for the playbook variables (repeatable) |
 | `--split KEY=DELIMITER` | Split the value of `KEY` into several values using `DELIMITER` (repeatable) |
+| `-df, --data-file KEY=PATH` | Load variable values from a file (repeatable) |
 | `--run` | Run specific tests only (repeatable) |
 | `--timeout` | Execution timeout in seconds |
 | `--visibility` | Set report visibility (public/private/unlisted) |
@@ -67,7 +69,6 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `--name` | Name for this run *(on development)* |
 | `--format` | Output format (plain or md) *(on development)* |
 | `--redacted` | Mark parameters as redacted (repeatable) *(on development)* |
-| `-df, --data-file` | Load variable values from file (repeatable) *(on development)* |
 | `--save-report` | Save report to file (true/false or path) *(on development)* |
 | `--save-output` | Save command output to file (true/false or path) *(on development)* |
 
@@ -86,6 +87,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `-p, --playbook` | Playbook to execute instead of the source's `.satori.yml` |
 | `-d, --data KEY=VALUE` | Provide values for the playbook variables (repeatable) |
 | `--split KEY=DELIMITER` | Split the value of `KEY` into several values using `DELIMITER` (repeatable) |
+| `-df, --data-file KEY=PATH` | Load variable values from a file (repeatable) |
 | `-e, --env KEY VALUE` | Set an environment variable in the container (repeatable) |
 | `-t, --tag KEY VALUE` | Tag the run (repeatable) |
 | `--visibility` | Set the visibility dynamically (public/private/unlisted) |
@@ -110,7 +112,6 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `--format` | Set output format (plain or md) *(on development)* |
 | `--redacted` | Mark parameters as redacted in logs (repeatable) *(on development)* |
 | `-i, --include` | Include additional files in execution (repeatable) *(on development)* |
-| `-df, --data-file` | Load variable values from file (repeatable) *(on development)* |
 | `--clone` | Clone settings from another report ID *(on development)* |
 | `--rate` | Create monitor with rate expression (e.g., "every 5 minutes", run only) *(on development)*. In v2 set `rate` in the playbook `settings:`; `run` creates the monitor automatically |
 | `--cron` | Create monitor with cron schedule (e.g., "0 * * * *", run only) *(on development)*. In v2 set `cron` in the playbook `settings:`; `run` creates the monitor automatically |
@@ -257,7 +258,14 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 findings --page N -q N --json` | Pagination and JSON output |
 | `satori-v2 issues EXECUTION-ID` | List the findings of an execution sorted by severity |
 | `satori-v2 issue FINDING-ID` | Show the finding FINDING-ID |
+| `satori-v2 issue FINDING-ID status {OPEN\|INVESTIGATING\|CONFIRMED\|FIXED\|FALSE_POSITIVE\|ACCEPTED_RISK}` | Set the finding status |
 | `satori-v2 issue FINDING-ID advisory` | Create an external advisory (issue) for the finding and print its URL |
+| `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
+| `satori-v2 advisories --execution-id ID` | List external issues for an execution |
+| `satori-v2 advisories --kind {SECURITY_ADVISORY\|ISSUE}` | Filter by kind |
+| `satori-v2 advisories --provider GITHUB` | Filter by provider |
+| `satori-v2 advisories --order {ASC\|DESC}` | Order the list |
+| `satori-v2 advisories --page N -q N --json` | Pagination and JSON output |
 
 ## Repos
 
@@ -325,6 +333,7 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 | `satori-v2 scan GithubUser/Repo SOURCE -q N` | Scan the last N commits of the repository (replaces v1 `-c`) |
 | `satori-v2 scan GithubUser/Repo SOURCE -d KEY=value` | Provide parameters and values |
 | `satori-v2 scan GithubUser/Repo SOURCE --split KEY=DELIMITER` | Split a parameter value into several values |
+| `satori-v2 scan GithubUser/Repo SOURCE -df KEY=PATH` | Load variable values from a file |
 | `satori-v2 scan GithubUser/Repo SOURCE -e KEY VALUE` | Set an environment variable in the container |
 | `satori-v2 scan GithubUser/Repo SOURCE -s --sync` | Wait for scan to complete |
 | `satori-v2 scan GithubUser/Repo SOURCE -r REGION` | Restrict the execution to certain regions (repeatable) |
