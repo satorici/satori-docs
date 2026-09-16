@@ -29,6 +29,6 @@
   * [Telegram](/notifications.md#telegram)
   * [Datadog](/notifications.md#datadog)
 * [Repositories](/repo.md)
-* [Findings & Issues](/findings.md)
+* [Issues](/issues.md)
 * [Teams](/teams.md)
 * [Cheatsheet](/cheatsheet.md)

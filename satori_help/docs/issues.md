@@ -1,8 +1,8 @@
-# Findings & Issues
+# Issues
 
-Executions and their reports are immutable: once a playbook has run, its output and its pass/fail result never change. **Findings** (also called **issues** in the CLI) are the mutable layer on top of them. A finding is an assert failure or a tool hit (semgrep, pyspector, trufflehog, etc.) that has been promoted to something your team tracks: it has a status, a severity, an assignee and a timeline of comments and events.
+Executions and their reports are immutable: once a playbook has run, its output and its pass/fail result never change. **Issues** are the mutable layer on top of them. An issue is an assert failure or a tool hit (semgrep, pyspector, trufflehog, etc.) that has been promoted to something your team tracks: it has a status, a severity, an assignee and a timeline of comments and events.
 
-Findings are created from the web dashboard (the *Triage* button of a report) and can be listed, inspected and turned into GitHub security advisories from the CLI.
+Issues are created from the web dashboard (the *Triage* button of a report) and can be listed, inspected and turned into GitHub security advisories from the CLI.
 
 | Command | Description |
 | --- | --- |
@@ -40,7 +40,7 @@ satori-v2 report 5678 issues
 | `--page N` | Page number (default 1) |
 | `-q, --quantity N` | Results per page (default 10, alias `-l/--limit`) |
 
-Each row shows the finding ID, which you then pass to `issue`.
+Each row shows the issue ID, which you then pass to `issue`.
 
 ### Issue statuses
 
@@ -74,7 +74,7 @@ Shows the issue details: source, title, severity, status, the execution it belon
 
 ## GitHub security advisories
 
-`issue FINDING-ID advisory` creates an **external issue** for the finding and publishes it as a GitHub security advisory in the repository of the execution, through the Satori [GitHub Application](https://github.com/apps/satorici). The command prints the advisory URL (the `GHSA-...` identifier if no URL is available):
+`issue FINDING-ID advisory` creates an **external issue** for the issue and publishes it as a GitHub security advisory in the repository of the execution, through the Satori [GitHub Application](https://github.com/apps/satorici). The command prints the advisory URL (the `GHSA-...` identifier if no URL is available):
 
 ```sh
 satori-v2 issue 42 advisory
@@ -85,7 +85,7 @@ Requirements:
 
 - The execution must belong to a `run --repo owner/repo` or to a scan of a single `owner/repo` repository. Executions that span several repositories are rejected.
 - The Satori GitHub Application must be installed and active on that repository.
-- Only one external issue can exist per execution. Running the command again for a finding whose advisory was already sent returns the existing advisory instead of creating a second one.
+- Only one external issue can exist per execution. Running the command again for an issue whose advisory was already sent returns the existing advisory instead of creating a second one.
 
 ```sh
 satori-v2 run satori://code/trufflehog.yml --repo satorici/satori-cli --sync --report
@@ -123,7 +123,7 @@ satori-v2 advisory 1
 satori-v2 advisory 1 --json
 ```
 
-Shows the advisory details: title, kind, provider, severity, visibility, the related execution and finding, and the external ID/URL on GitHub.
+Shows the advisory details: title, kind, provider, severity, visibility, the related execution and issue, and the external ID/URL on GitHub.
 
 To change who can see the advisory in Satori, set its visibility:
 

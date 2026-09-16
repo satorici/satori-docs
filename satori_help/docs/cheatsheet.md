@@ -245,7 +245,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 
 `--download`, `--reports`, `--stop` and `--delete` are mutually exclusive.
 
-## Findings & Issues
+## Issues
 
 | Command | Description |
 | --- | --- |

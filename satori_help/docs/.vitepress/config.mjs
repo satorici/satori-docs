@@ -73,7 +73,7 @@ export default defineConfig({
                 ],
             },
             { text: "Repositories", link: "/repo" },
-            { text: "Findings & Issues", link: "/findings" },
+            { text: "Issues", link: "/issues" },
             {
                 text: "Notifications",
                 link: "/notifications",

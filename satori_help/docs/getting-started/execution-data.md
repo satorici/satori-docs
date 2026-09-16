@@ -117,7 +117,7 @@ Or on the web:
 
 The same output is available with the shorter `satori-v2 output REPORT_ID` command, which also supports `--raw` to pipe the encoded results to stdout. See [Jobs, Executions & Output](../modes/executions.md#output).
 
-## Findings and issues
+## Issues
 
 Failed asserts and tool hits (semgrep, pyspector, etc.) can be listed as **issues**, sorted by severity. List all of them, or limit to one report:
 
@@ -127,7 +127,7 @@ satori-v2 issues REPORT_ID
 satori-v2 report REPORT_ID issues
 ```
 
-`issues REPORT_ID` and `report REPORT_ID issues` are equivalent. Issues can be filtered (`--status`, `--source`, `--severity`, `--order`), triaged with `issue FINDING-ID status`, and turned into GitHub security advisories; see [Findings & Issues](../findings.md).
+`issues REPORT_ID` and `report REPORT_ID issues` are equivalent. Issues can be filtered (`--status`, `--source`, `--severity`, `--order`), triaged with `issue FINDING-ID status`, and turned into GitHub security advisories; see [Issues](../issues.md).
 
 ## Configuring Report Visibility
 
@@ -180,12 +180,12 @@ List the issues (failed asserts and tool hits) of a report, sorted by severity:
 | `issues` | List the issues of the report | `satori-v2 report ID issues` |
 | `issues --json` | List the issues as JSON | `satori-v2 report ID issues --json` |
 
-The same list is available as `satori-v2 issues ID`. To create a GitHub security advisory from an issue use `satori-v2 issue FINDING-ID advisory` (see [Findings & Issues](../findings.md)).
+The same list is available as `satori-v2 issues ID`. To create a GitHub security advisory from an issue use `satori-v2 issue FINDING-ID advisory` (see [Issues](../issues.md)).
 
 ### GitHub Issue Creation
 
 ::: warning On development
-`satori-v2 report ID issue TEMPLATE_ID [--query --title]` is not available yet in CLI v2. The v1 syntax is kept here for reference. In v2, use `satori-v2 issue FINDING-ID advisory` to create a GitHub security advisory from a finding.
+`satori-v2 report ID issue TEMPLATE_ID [--query --title]` is not available yet in CLI v2. The v1 syntax is kept here for reference. In v2, use `satori-v2 issue FINDING-ID advisory` to create a GitHub security advisory from an issue.
 :::
 
 Create GitHub issues directly from report results:
