@@ -13,6 +13,8 @@ Findings are created from the web dashboard (the *Triage* button of a report) an
 | `satori-v2 issue FINDING-ID status STATUS` | Set the finding status |
 | `satori-v2 issue FINDING-ID advisory` | Create a GitHub security advisory from a finding |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
+| `satori-v2 advisory ADVISORY-ID` | Show one external issue |
+| `satori-v2 advisory ADVISORY-ID visibility VISIBILITY` | Set the external issue visibility |
 
 ## Listing findings
 
@@ -116,5 +118,30 @@ satori-v2 advisories --json
 | `--json` | Print the list as JSON |
 | `--page N` | Page number (default 1) |
 | `-q, --quantity N` | Results per page (default 10, alias `-l/--limit`) |
+
+Each row shows the advisory ID, which you then pass to `advisory`.
+
+### Inspecting and updating an advisory
+
+```sh
+satori-v2 advisory 1
+satori-v2 advisory 1 --json
+```
+
+Shows the advisory details: title, kind, provider, severity, visibility, the related execution and finding, and the external ID/URL on GitHub.
+
+To change who can see the advisory in Satori, set its visibility:
+
+```sh
+satori-v2 advisory 1 visibility public
+satori-v2 advisory 1 visibility private
+satori-v2 advisory 1 visibility unlisted
+```
+
+| Visibility | Meaning |
+| --- | --- |
+| `PUBLIC` | Visible to everyone |
+| `PRIVATE` | Visible only to you |
+| `UNLISTED` | Accessible by link, not listed publicly |
 
 See [Results](getting-started/execution-data.md) for the report commands and [Jobs, Executions & Output](modes/executions.md) for the job and execution model.

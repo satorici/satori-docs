@@ -2,7 +2,7 @@
 
 Satori provides automated testing for repositories, particularly those linked to our [GitHub Application](https://github.com/apps/satorici). You can also test repositories that aren't integrated with your CI pipeline but to which you have access.
 
-To check the status of your repositories, use the Satori CLI `repo` command. This command runs the `.satori.yml` playbook in your repository. If you're using public playbooks, you can view available options with the command `satori-v2 playbooks --public` *(`--public` on development; `satori-v2 playbooks` works)*.
+To list repositories connected to Satori, use `satori-v2 repos`. To run a playbook against a repository, use `satori-v2 run PLAYBOOK --repo owner/repo` or `satori-v2 scan` (see [CLI v2 equivalents](#cli-v2-equivalents) below). If you're using public playbooks, view available options with `satori-v2 playbooks` *(`--public` on development)*.
 
 ## List
 
@@ -13,6 +13,8 @@ satori-v2 repos
 ```
 
 ![Satori repository list](img/repo_1.png)
+
+Each row shows the repository full name, visibility (Public/Private), the playbook in use, and the status and result of the last execution.
 
 The list is paginated and can be sorted and printed as JSON:
 
@@ -31,7 +33,7 @@ The `satori-v2 repo` command group described below is not available yet in CLI v
 | --- | --- |
 | `satori-v2 repo owner/repo run` | `satori-v2 run ./.satori.yml --repo owner/repo` (or any playbook source) |
 | `satori-v2 repo owner/repo run --playbook satori://code/trufflehog.yml --report --output` | `satori-v2 run satori://code/trufflehog.yml --repo owner/repo --report --output` |
-| `satori-v2 repo "owner/*" run --playbook SRC` | `satori-v2 scan "owner/*" SRC` |
+| `satori-v2 repo "owner/*" run --playbook SRC` | `satori-v2 scan "owner/*" SRC` *(account wildcards not confirmed in CLI v2 yet)* |
 | `satori-v2 repo owner/repo commits` | `satori-v2 scan owner/repo SRC` or `satori-v2 scan owner/repo --playbook SRC` |
 
 Running a playbook against a repository with `--repo` creates a one-commit scan job on the latest commit of that repository:

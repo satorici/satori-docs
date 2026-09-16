@@ -266,6 +266,9 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 advisories --provider GITHUB` | Filter by provider |
 | `satori-v2 advisories --order {ASC\|DESC}` | Order the list |
 | `satori-v2 advisories --page N -q N --json` | Pagination and JSON output |
+| `satori-v2 advisory ADVISORY-ID` | Show the external issue ADVISORY-ID |
+| `satori-v2 advisory ADVISORY-ID --json` | Show the external issue as JSON |
+| `satori-v2 advisory ADVISORY-ID visibility {PUBLIC\|PRIVATE\|UNLISTED}` | Set the external issue visibility |
 
 ## Repos
 

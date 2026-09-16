@@ -228,6 +228,9 @@ satori-v2 report AOQxDWDkXpZp output --test integration_test --unredacted
 ```sh
 satori-v2 report AOQxDWDkXpZp issues
 satori-v2 issue FINDING_ID advisory
+satori-v2 advisories
+satori-v2 advisory ADVISORY_ID
+satori-v2 advisory ADVISORY_ID visibility private
 ```
 
 **Create GitHub issue from report** *(on development)*:
