@@ -203,7 +203,7 @@ Every job (run, scan, monitor, CI or local) produces one or more executions. `re
 | `satori-v2 report ID output --test TEST_NAME` | Filter specific test output (repeatable) |
 | `satori-v2 report ID files` | Download the files created (if Files was set to True in settings) |
 | `satori-v2 report ID visibility {public, private, unlisted}` | Toggles the report's visibility |
-| `satori-v2 report ID issues` | List the findings of the report ID |
+| `satori-v2 report ID issues` | List the issues of the report ID |
 | `satori-v2 report ID delete` | Delete the report ID |
 | `satori-v2 report ID --unredacted` | Show unredacted parameters and secrets *(on development)* |
 | `satori-v2 report ID issue TEMPLATE_ID` | Create GitHub issue from report *(on development)* |
@@ -249,17 +249,18 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 
 | Command | Description |
 | --- | --- |
-| `satori-v2 findings` | List your findings |
-| `satori-v2 findings --execution-id ID` | List the findings of an execution |
-| `satori-v2 findings --status {OPEN\|INVESTIGATING\|CONFIRMED\|FIXED\|FALSE_POSITIVE\|ACCEPTED_RISK}` | Filter findings by status |
-| `satori-v2 findings --source {ASSERT\|TOOL}` | Filter findings by source |
-| `satori-v2 findings --severity N` | Filter findings by severity (0 to 5) |
-| `satori-v2 findings --order {ASC\|DESC}` | Order the findings |
-| `satori-v2 findings --page N -q N --json` | Pagination and JSON output |
-| `satori-v2 issues EXECUTION-ID` | List the findings of an execution sorted by severity |
-| `satori-v2 issue FINDING-ID` | Show the finding FINDING-ID |
-| `satori-v2 issue FINDING-ID status {OPEN\|INVESTIGATING\|CONFIRMED\|FIXED\|FALSE_POSITIVE\|ACCEPTED_RISK}` | Set the finding status |
-| `satori-v2 issue FINDING-ID advisory` | Create an external advisory (issue) for the finding and print its URL |
+| `satori-v2 issues` | List your issues (sorted by severity) |
+| `satori-v2 issues EXECUTION-ID` | List the issues of an execution |
+| `satori-v2 issues --execution-id ID` | Same as the positional `EXECUTION-ID` |
+| `satori-v2 issues --status {OPEN\|INVESTIGATING\|CONFIRMED\|FIXED\|FALSE_POSITIVE\|ACCEPTED_RISK}` | Filter issues by status |
+| `satori-v2 issues --source {ASSERT\|TOOL}` | Filter issues by source |
+| `satori-v2 issues --severity N` | Filter issues by severity (0 to 5) |
+| `satori-v2 issues --order {ASC\|DESC}` | Order the issues (disables the default severity sort) |
+| `satori-v2 issues --page N -q N --json` | Pagination and JSON output |
+| `satori-v2 report ID issues` | List the issues of the report ID |
+| `satori-v2 issue FINDING-ID` | Show the issue FINDING-ID |
+| `satori-v2 issue FINDING-ID status {OPEN\|INVESTIGATING\|CONFIRMED\|FIXED\|FALSE_POSITIVE\|ACCEPTED_RISK}` | Set the issue status |
+| `satori-v2 issue FINDING-ID advisory` | Create an external advisory for the issue and print its URL |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 | `satori-v2 advisories --execution-id ID` | List external issues for an execution |
 | `satori-v2 advisories --kind {SECURITY_ADVISORY\|ISSUE}` | Filter by kind |

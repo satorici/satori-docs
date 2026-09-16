@@ -119,13 +119,15 @@ The same output is available with the shorter `satori-v2 output REPORT_ID` comma
 
 ## Findings and issues
 
-Failed asserts and tool hits (semgrep, pyspector, etc.) of a report can be listed as **issues**, sorted by severity:
+Failed asserts and tool hits (semgrep, pyspector, etc.) can be listed as **issues**, sorted by severity. List all of them, or limit to one report:
 
 ```sh
+satori-v2 issues
+satori-v2 issues REPORT_ID
 satori-v2 report REPORT_ID issues
 ```
 
-This is equivalent to `satori-v2 issues REPORT_ID`. Findings can be triaged and turned into GitHub security advisories; see [Findings & Issues](../findings.md).
+`issues REPORT_ID` and `report REPORT_ID issues` are equivalent. Issues can be filtered (`--status`, `--source`, `--severity`, `--order`), triaged with `issue FINDING-ID status`, and turned into GitHub security advisories; see [Findings & Issues](../findings.md).
 
 ## Configuring Report Visibility
 
@@ -171,14 +173,14 @@ The `satori-v2 report` command provides several options for viewing and managing
 
 ### Issues
 
-List the findings (failed asserts and tool hits) of a report, sorted by severity:
+List the issues (failed asserts and tool hits) of a report, sorted by severity:
 
 | Command | Description | Example |
 | --- | --- | --- |
 | `issues` | List the issues of the report | `satori-v2 report ID issues` |
 | `issues --json` | List the issues as JSON | `satori-v2 report ID issues --json` |
 
-To create a GitHub security advisory from a finding use `satori-v2 issue FINDING-ID advisory` (see [Findings & Issues](../findings.md)).
+The same list is available as `satori-v2 issues ID`. To create a GitHub security advisory from an issue use `satori-v2 issue FINDING-ID advisory` (see [Findings & Issues](../findings.md)).
 
 ### GitHub Issue Creation
 

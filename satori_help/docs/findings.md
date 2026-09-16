@@ -1,41 +1,48 @@
 # Findings & Issues
 
-Executions and their reports are immutable: once a playbook has run, its output and its pass/fail result never change. **Findings** are the mutable layer on top of them. A finding is an assert failure or a tool hit (semgrep, pyspector, trufflehog, etc.) that has been promoted to something your team tracks: it has a status, a severity, an assignee and a timeline of comments and events.
+Executions and their reports are immutable: once a playbook has run, its output and its pass/fail result never change. **Findings** (also called **issues** in the CLI) are the mutable layer on top of them. A finding is an assert failure or a tool hit (semgrep, pyspector, trufflehog, etc.) that has been promoted to something your team tracks: it has a status, a severity, an assignee and a timeline of comments and events.
 
 Findings are created from the web dashboard (the *Triage* button of a report) and can be listed, inspected and turned into GitHub security advisories from the CLI.
 
 | Command | Description |
 | --- | --- |
-| `satori-v2 findings` | List findings across all your executions |
-| `satori-v2 issues EXECUTION-ID` | List the findings of one execution, sorted by severity |
+| `satori-v2 issues` | List issues across all your executions (sorted by severity) |
+| `satori-v2 issues EXECUTION-ID` | List the issues of one execution |
 | `satori-v2 report EXECUTION-ID issues` | Same as `issues EXECUTION-ID` |
-| `satori-v2 issue FINDING-ID` | Show one finding |
-| `satori-v2 issue FINDING-ID status STATUS` | Set the finding status |
-| `satori-v2 issue FINDING-ID advisory` | Create a GitHub security advisory from a finding |
+| `satori-v2 issue FINDING-ID` | Show one issue |
+| `satori-v2 issue FINDING-ID status STATUS` | Set the issue status |
+| `satori-v2 issue FINDING-ID advisory` | Create a GitHub security advisory from an issue |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 | `satori-v2 advisory ADVISORY-ID` | Show one external issue |
 | `satori-v2 advisory ADVISORY-ID visibility VISIBILITY` | Set the external issue visibility |
 
-## Listing findings
+## Listing issues
 
 ```sh
-satori-v2 findings
-satori-v2 findings --status OPEN --severity 4
-satori-v2 findings --execution-id 5678 --source TOOL --json
+satori-v2 issues
+satori-v2 issues --status OPEN --severity 4
+satori-v2 issues --execution-id 5678 --source TOOL --json
+satori-v2 issues 5678
+satori-v2 report 5678 issues
 ```
+
+`issues` without an execution ID lists issues across all your executions. Pass an optional `EXECUTION-ID` argument (or `--execution-id`) to limit the list to one report. By default the list is sorted from highest severity to lowest; use `--order` to override that.
 
 | Flag | Description |
 | --- | --- |
-| `--execution-id ID` | Only findings of this execution |
+| `EXECUTION-ID` | Optional positional argument; only issues of this execution |
+| `--execution-id ID` | Same as the positional `EXECUTION-ID` (cannot conflict with it) |
 | `--status STATUS` | One of `OPEN`, `INVESTIGATING`, `CONFIRMED`, `FIXED`, `FALSE_POSITIVE`, `ACCEPTED_RISK` |
 | `--source {ASSERT\|TOOL}` | `ASSERT` for failed playbook asserts, `TOOL` for hits reported by a tool |
 | `--severity {0-5}` | Severity level |
-| `--order {ASC\|DESC}` | Sort order |
+| `--order {ASC\|DESC}` | Sort order (disables the default severity sort) |
 | `--json` | Print the list as JSON |
 | `--page N` | Page number (default 1) |
 | `-q, --quantity N` | Results per page (default 10, alias `-l/--limit`) |
 
-### Finding statuses
+Each row shows the finding ID, which you then pass to `issue`.
+
+### Issue statuses
 
 | Status | Meaning |
 | --- | --- |
@@ -56,26 +63,14 @@ satori-v2 issue 42 status false_positive --json
 
 There is no fixed transition order.
 
-## Issues of an execution
-
-`issues` lists the findings of a single execution sorted from the highest severity to the lowest. It is the quickest way to see what went wrong in a report:
-
-```sh
-satori-v2 issues 5678
-satori-v2 issues 5678 --json
-satori-v2 report 5678 issues
-```
-
-Each row shows the finding ID, which you then pass to `issue`.
-
-## Inspecting a finding
+## Inspecting an issue
 
 ```sh
 satori-v2 issue 42
 satori-v2 issue 42 --json
 ```
 
-Shows the finding details: source, title, severity, status, the execution it belongs to and the identity of the assert or tool hit (test path and assert name, or tool, check ID, file and line).
+Shows the issue details: source, title, severity, status, the execution it belongs to and the identity of the assert or tool hit (test path and assert name, or tool, check ID, file and line).
 
 ## GitHub security advisories
 
