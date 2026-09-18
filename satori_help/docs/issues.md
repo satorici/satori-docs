@@ -9,12 +9,12 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 | `satori-v2 issues` | List issues across all your executions (sorted by severity) |
 | `satori-v2 issues EXECUTION-ID` | List the issues of one execution |
 | `satori-v2 report EXECUTION-ID issues` | Same as `issues EXECUTION-ID` |
-| `satori-v2 issue FINDING-ID` | Show one issue |
-| `satori-v2 issue FINDING-ID status STATUS` | Set the issue status |
-| `satori-v2 issue FINDING-ID comment BODY` | Add a comment to the issue |
-| `satori-v2 issue FINDING-ID advisory` | Create a draft GitHub security advisory from an issue |
-| `satori-v2 issue FINDING-ID advisory --publish` | Publish the draft advisory to GitHub |
-| `satori-v2 issue FINDING-ID advisory --delete` | Delete the advisory |
+| `satori-v2 issue ISSUE-ID` | Show one issue |
+| `satori-v2 issue ISSUE-ID status STATUS` | Set the issue status |
+| `satori-v2 issue ISSUE-ID comment BODY` | Add a comment to the issue |
+| `satori-v2 issue ISSUE-ID advisory` | Create a draft GitHub security advisory from an issue |
+| `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub |
+| `satori-v2 issue ISSUE-ID advisory --delete` | Delete the advisory |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 | `satori-v2 advisory ADVISORY-ID` | Show one external issue |
 | `satori-v2 advisory ADVISORY-ID visibility VISIBILITY` | Set the external issue visibility |
@@ -56,7 +56,7 @@ Each row shows the issue ID, which you then pass to `issue`.
 | `FALSE_POSITIVE` | The tool or assert was wrong |
 | `ACCEPTED_RISK` | Real, but the team decided not to act on it |
 
-Statuses can be changed from the dashboard or from the CLI with `issue FINDING-ID status`:
+Statuses can be changed from the dashboard or from the CLI with `issue ISSUE-ID status`:
 
 ```sh
 satori-v2 issue 42 status investigating
@@ -84,11 +84,11 @@ satori-v2 issue 42 comment "Investigating this further"
 satori-v2 issue 42 comment "Looks like a false positive" --json
 ```
 
-Without `--json`, the CLI prints `Comment {id} added to issue {FINDING-ID}`. With `--json`, it prints the created comment object.
+Without `--json`, the CLI prints `Comment {id} added to issue {ISSUE-ID}`. With `--json`, it prints the created comment object.
 
 ## GitHub security advisories
 
-`issue FINDING-ID advisory` creates a **draft** external issue for the issue, through the Satori [GitHub Application](https://github.com/apps/satorici). It does **not** publish to GitHub yet. The command prints the draft details, a dashboard link (`View on web: …/advisories/{id}`), and a warning with the publish recipe.
+`issue ISSUE-ID advisory` creates a **draft** external issue for the issue, through the Satori [GitHub Application](https://github.com/apps/satorici). It does **not** publish to GitHub yet. The command prints the draft details, a dashboard link (`View on web: …/advisories/{id}`), and a warning with the publish recipe.
 
 ```sh
 satori-v2 issue 42 advisory
