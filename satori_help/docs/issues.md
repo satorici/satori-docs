@@ -2,7 +2,7 @@
 
 Executions and their reports are immutable: once a playbook has run, its output and its pass/fail result never change. **Issues** are the mutable layer on top of them. An issue is an assert failure or a tool hit (semgrep, pyspector, trufflehog, etc.) that has been promoted to something your team tracks: it has a status, a severity, an assignee and a timeline of comments and events.
 
-Issues are created from the web dashboard (the *Triage* button of a report) and can be listed, inspected and turned into GitHub security advisories from the CLI.
+Issues are created from the web dashboard (the *Triage* button of a report) and can be listed, inspected, commented on and turned into GitHub security advisories from the CLI.
 
 | Command | Description |
 | --- | --- |
@@ -11,7 +11,10 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 | `satori-v2 report EXECUTION-ID issues` | Same as `issues EXECUTION-ID` |
 | `satori-v2 issue FINDING-ID` | Show one issue |
 | `satori-v2 issue FINDING-ID status STATUS` | Set the issue status |
-| `satori-v2 issue FINDING-ID advisory` | Create a GitHub security advisory from an issue |
+| `satori-v2 issue FINDING-ID comment BODY` | Add a comment to the issue |
+| `satori-v2 issue FINDING-ID advisory` | Create a draft GitHub security advisory from an issue |
+| `satori-v2 issue FINDING-ID advisory --publish` | Publish the draft advisory to GitHub |
+| `satori-v2 issue FINDING-ID advisory --delete` | Delete the advisory |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 | `satori-v2 advisory ADVISORY-ID` | Show one external issue |
 | `satori-v2 advisory ADVISORY-ID visibility VISIBILITY` | Set the external issue visibility |
@@ -72,25 +75,52 @@ satori-v2 issue 42 --json
 
 Shows the issue details: source, title, severity, status, the execution it belongs to and the identity of the assert or tool hit (test path and assert name, or tool, check ID, file and line).
 
+## Comments
+
+Add a comment to an issue's timeline:
+
+```sh
+satori-v2 issue 42 comment "Investigating this further"
+satori-v2 issue 42 comment "Looks like a false positive" --json
+```
+
+Without `--json`, the CLI prints `Comment {id} added to issue {FINDING-ID}`. With `--json`, it prints the created comment object.
+
 ## GitHub security advisories
 
-`issue FINDING-ID advisory` creates an **external issue** for the issue and publishes it as a GitHub security advisory in the repository of the execution, through the Satori [GitHub Application](https://github.com/apps/satorici). The command prints the advisory URL (the `GHSA-...` identifier if no URL is available):
+`issue FINDING-ID advisory` creates a **draft** external issue for the issue, through the Satori [GitHub Application](https://github.com/apps/satorici). It does **not** publish to GitHub yet. The command prints the draft details, a dashboard link (`View on web: …/advisories/{id}`), and a warning with the publish recipe.
 
 ```sh
 satori-v2 issue 42 advisory
 satori-v2 issue 42 advisory --json
 ```
 
+To publish the draft to GitHub as a security advisory in the repository of the execution, use `--publish`. The command prints the advisory URL (the `GHSA-...` identifier if no URL is available):
+
+```sh
+satori-v2 issue 42 advisory --publish
+satori-v2 issue 42 advisory --publish --json
+```
+
+To delete the advisory (draft or published), use `--delete`:
+
+```sh
+satori-v2 issue 42 advisory --delete
+```
+
+`--publish` and `--delete` are mutually exclusive.
+
 Requirements:
 
 - The execution must belong to a `run --repo owner/repo` or to a scan of a single `owner/repo` repository. Executions that span several repositories are rejected.
 - The Satori GitHub Application must be installed and active on that repository.
-- Only one external issue can exist per execution. Running the command again for an issue whose advisory was already sent returns the existing advisory instead of creating a second one.
+- Only one external issue can exist per execution. Running `advisory` again for an issue that already has a draft returns the existing draft instead of creating a second one.
 
 ```sh
 satori-v2 run satori://code/trufflehog.yml --repo satorici/satori-cli --sync --report
 satori-v2 issues 5678
 satori-v2 issue 42 advisory
+satori-v2 issue 42 advisory --publish
 ```
 
 ### Listing advisories

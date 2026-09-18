@@ -56,6 +56,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | --- | --- |
 | `-s, --sync` | Show summary when execution completes |
 | `--report` | Display test assertions and results |
+| `--issues` | After the run, list issues for the execution |
 | `-o, --output` | Display command output |
 | `-p, --playbook` | Playbook to execute instead of the source's `.satori.yml` |
 | `-d, --data KEY=VALUE` | Provide values for the playbook variables (repeatable) |
@@ -78,6 +79,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | --- | --- |
 | `-s, --sync` | Show the result |
 | `--report` | Show the report |
+| `--issues` | After the run, list issues for the execution (only when `--count` is 1) |
 | `-o, --output` | Show the output |
 | `--live-output` | Stream the output while the execution is running |
 | `--stdout` | Show only the raw stdout of the execution |
@@ -260,7 +262,10 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 report ID issues` | List the issues of the report ID |
 | `satori-v2 issue FINDING-ID` | Show the issue FINDING-ID |
 | `satori-v2 issue FINDING-ID status {OPEN\|INVESTIGATING\|CONFIRMED\|FIXED\|FALSE_POSITIVE\|ACCEPTED_RISK}` | Set the issue status |
-| `satori-v2 issue FINDING-ID advisory` | Create an external advisory for the issue and print its URL |
+| `satori-v2 issue FINDING-ID comment BODY` | Add a comment to the issue |
+| `satori-v2 issue FINDING-ID advisory` | Create a draft external advisory for the issue |
+| `satori-v2 issue FINDING-ID advisory --publish` | Publish the draft advisory to GitHub |
+| `satori-v2 issue FINDING-ID advisory --delete` | Delete the advisory |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 | `satori-v2 advisories --execution-id ID` | List external issues for an execution |
 | `satori-v2 advisories --kind {SECURITY_ADVISORY\|ISSUE}` | Filter by kind |
