@@ -14,6 +14,7 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 | `satori-v2 issue ISSUE-ID comment BODY` | Add a comment to the issue |
 | `satori-v2 issue ISSUE-ID advisory` | Create a draft GitHub security advisory from an issue |
 | `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub |
+| `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |
 | `satori-v2 issue ISSUE-ID advisory --delete` | Delete the advisory |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 | `satori-v2 advisory ADVISORY-ID` | Show one external issue |
@@ -108,7 +109,16 @@ To delete the advisory (draft or published), use `--delete`:
 satori-v2 issue 42 advisory --delete
 ```
 
-`--publish` and `--delete` are mutually exclusive.
+To check the advisory's current state on GitHub (for example `triage`, `draft`, or `published`), use `--status`. This is a live lookup against GitHub; the advisory must already be published (have a remote `GHSA-…` id), and you need a GitHub personal access token configured via settings:
+
+```sh
+satori-v2 issue 42 advisory --status
+satori-v2 issue 42 advisory --status --json
+```
+
+Without `--json`, the CLI prints the status string. With `--json`, it prints `{"status": "…"}`.
+
+`--publish`, `--status`, and `--delete` are mutually exclusive.
 
 Requirements:
 
