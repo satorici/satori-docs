@@ -36,7 +36,7 @@ satori-v2 report 5678 issues
 | --- | --- |
 | `EXECUTION-ID` | Optional positional argument; only issues of this execution |
 | `--execution-id ID` | Same as the positional `EXECUTION-ID` (cannot conflict with it) |
-| `--status STATUS` | One of `OPEN`, `INVESTIGATING`, `CONFIRMED`, `FIXED`, `FALSE_POSITIVE`, `ACCEPTED_RISK` |
+| `--status STATUS` | One of `OPEN`, `INVESTIGATING`, `TP`, `FIXED`, `FP`, `ACCEPTED` |
 | `--source {ASSERT\|TOOL}` | `ASSERT` for failed playbook asserts, `TOOL` for hits reported by a tool |
 | `--severity {0-5}` | Severity level |
 | `--order {ASC\|DESC}` | Sort order (disables the default severity sort) |
@@ -52,17 +52,17 @@ Each row shows the issue ID, which you then pass to `issue`.
 | --- | --- |
 | `OPEN` | Newly triaged, nobody has looked at it yet |
 | `INVESTIGATING` | Someone is checking whether it is real |
-| `CONFIRMED` | Verified as a real problem |
+| `TP` | Verified as a real problem (true positive) |
 | `FIXED` | The underlying problem was solved |
-| `FALSE_POSITIVE` | The tool or assert was wrong |
-| `ACCEPTED_RISK` | Real, but the team decided not to act on it |
+| `FP` | The tool or assert was wrong (false positive) |
+| `ACCEPTED` | Real, but the team decided not to act on it |
 
 Statuses can be changed from the dashboard or from the CLI with `issue ISSUE-ID status`:
 
 ```sh
 satori-v2 issue 42 status investigating
 satori-v2 issue 42 status fixed
-satori-v2 issue 42 status false_positive --json
+satori-v2 issue 42 status fp --json
 ```
 
 There is no fixed transition order.

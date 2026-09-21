@@ -254,14 +254,14 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 issues` | List your issues (sorted by severity) |
 | `satori-v2 issues EXECUTION-ID` | List the issues of an execution |
 | `satori-v2 issues --execution-id ID` | Same as the positional `EXECUTION-ID` |
-| `satori-v2 issues --status {OPEN\|INVESTIGATING\|CONFIRMED\|FIXED\|FALSE_POSITIVE\|ACCEPTED_RISK}` | Filter issues by status |
+| `satori-v2 issues --status {OPEN\|INVESTIGATING\|TP\|FIXED\|FP\|ACCEPTED}` | Filter issues by status |
 | `satori-v2 issues --source {ASSERT\|TOOL}` | Filter issues by source |
 | `satori-v2 issues --severity N` | Filter issues by severity (0 to 5) |
 | `satori-v2 issues --order {ASC\|DESC}` | Order the issues (disables the default severity sort) |
 | `satori-v2 issues --page N -q N --json` | Pagination and JSON output |
 | `satori-v2 report ID issues` | List the issues of the report ID |
 | `satori-v2 issue FINDING-ID` | Show the issue FINDING-ID |
-| `satori-v2 issue FINDING-ID status {OPEN\|INVESTIGATING\|CONFIRMED\|FIXED\|FALSE_POSITIVE\|ACCEPTED_RISK}` | Set the issue status |
+| `satori-v2 issue FINDING-ID status {OPEN\|INVESTIGATING\|TP\|FIXED\|FP\|ACCEPTED}` | Set the issue status |
 | `satori-v2 issue FINDING-ID comment BODY` | Add a comment to the issue |
 | `satori-v2 issue FINDING-ID advisory` | Create a draft external advisory for the issue |
 | `satori-v2 issue FINDING-ID advisory --publish` | Publish the draft advisory to GitHub |
