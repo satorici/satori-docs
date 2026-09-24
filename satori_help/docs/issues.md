@@ -177,6 +177,6 @@ satori-v2 advisory 1 visibility unlisted
 | --- | --- |
 | `PUBLIC` | Visible to everyone |
 | `PRIVATE` | Visible only to you |
-| `UNLISTED` | Accessible by link, not listed publicly |
+| `UNLISTED` | Accessible by link after login, not listed publicly |
 
 See [Results](getting-started/execution-data.md) for the report commands and [Jobs, Executions & Output](modes/executions.md) for the job and execution model.
