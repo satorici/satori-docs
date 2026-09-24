@@ -133,7 +133,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `satori-v2 playbooks --json` | List the playbooks as JSON |
 | `satori-v2 playbooks --public` | List the public playbooks *(on development)* |
 | `satori-v2 playbook satori://...` | Show a certain public playbook |
-| `satori-v2 playbook EXECUTION_ID` | Show the public playbook used by an execution |
+| `satori-v2 playbook EXECUTION_ID` | Show the persisted playbook YAML for that execution's job (subject to the execution's visibility: `PUBLIC`, or `UNLISTED` after login, or `PRIVATE` for your tenant) |
 | `satori-v2 playbook ID visibility {public, private, unlisted}` | Toggles the playbook's visibility *(on development)* |
 
 ## Dashboards
@@ -256,16 +256,18 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 issues --execution-id ID` | Same as the positional `EXECUTION-ID` |
 | `satori-v2 issues --status {OPEN\|INVESTIGATING\|TP\|FIXED\|FP\|ACCEPTED}` | Filter issues by status |
 | `satori-v2 issues --source {ASSERT\|TOOL}` | Filter issues by source |
-| `satori-v2 issues --severity N` | Filter issues by severity (0 to 5) |
+| `satori-v2 issues --severity LEVELS` | Filter by severity (`INFO`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`, `BLOCKER`; comma-separated) |
 | `satori-v2 issues --order {ASC\|DESC}` | Order the issues (disables the default severity sort) |
 | `satori-v2 issues --page N -q N --json` | Pagination and JSON output |
 | `satori-v2 report ID issues` | List the issues of the report ID |
-| `satori-v2 issue FINDING-ID` | Show the issue FINDING-ID |
-| `satori-v2 issue FINDING-ID status {OPEN\|INVESTIGATING\|TP\|FIXED\|FP\|ACCEPTED}` | Set the issue status |
-| `satori-v2 issue FINDING-ID comment BODY` | Add a comment to the issue |
-| `satori-v2 issue FINDING-ID advisory` | Create a draft external advisory for the issue |
-| `satori-v2 issue FINDING-ID advisory --publish` | Publish the draft advisory to GitHub |
-| `satori-v2 issue FINDING-ID advisory --delete` | Delete the advisory |
+| `satori-v2 issue ISSUE-ID` | Show the issue ISSUE-ID (includes History timeline) |
+| `satori-v2 issue ISSUE-ID status {OPEN\|INVESTIGATING\|TP\|FIXED\|FP\|ACCEPTED}` | Set the issue status |
+| `satori-v2 issue ISSUE-ID comment BODY` | Add a comment to the issue |
+| `satori-v2 issue ISSUE-ID verify` | Verify the issue with Claude Code (comment + TP/FP) |
+| `satori-v2 issue ISSUE-ID advisory` | Create a draft external advisory for the issue |
+| `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub |
+| `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |
+| `satori-v2 issue ISSUE-ID advisory --delete` | Delete the advisory |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 | `satori-v2 advisories --execution-id ID` | List external issues for an execution |
 | `satori-v2 advisories --kind {SECURITY_ADVISORY\|ISSUE}` | Filter by kind |

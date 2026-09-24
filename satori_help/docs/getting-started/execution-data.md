@@ -127,7 +127,7 @@ satori-v2 issues REPORT_ID
 satori-v2 report REPORT_ID issues
 ```
 
-`issues REPORT_ID` and `report REPORT_ID issues` are equivalent. Issues can be filtered (`--status`, `--source`, `--severity`, `--order`), triaged with `issue FINDING-ID status`, commented on with `issue FINDING-ID comment`, and turned into a draft GitHub security advisory with `issue FINDING-ID advisory` (then `--publish`); see [Issues](../issues.md).
+`issues REPORT_ID` and `report REPORT_ID issues` are equivalent. Issues can be filtered (`--status`, `--source`, `--severity`, `--order`), triaged with `issue ISSUE-ID status`, commented on with `issue ISSUE-ID comment`, and turned into a draft GitHub security advisory with `issue ISSUE-ID advisory` (then `--publish`); see [Issues](../issues.md).
 
 ## Configuring Report Visibility
 
@@ -180,12 +180,12 @@ List the issues (failed asserts and tool hits) of a report, sorted by severity:
 | `issues` | List the issues of the report | `satori-v2 report ID issues` |
 | `issues --json` | List the issues as JSON | `satori-v2 report ID issues --json` |
 
-The same list is available as `satori-v2 issues ID`. To create a draft GitHub security advisory from an issue use `satori-v2 issue FINDING-ID advisory`, then publish it with `--publish` (see [Issues](../issues.md)).
+The same list is available as `satori-v2 issues ID`. To create a draft GitHub security advisory from an issue use `satori-v2 issue ISSUE-ID advisory`, then publish it with `--publish` (see [Issues](../issues.md)).
 
 ### GitHub Issue Creation
 
 ::: warning On development
-`satori-v2 report ID issue TEMPLATE_ID [--query --title]` is not available yet in CLI v2. The v1 syntax is kept here for reference. In v2, use `satori-v2 issue FINDING-ID advisory` to create a draft GitHub security advisory from an issue, then `--publish` to publish it.
+`satori-v2 report ID issue TEMPLATE_ID [--query --title]` is not available yet in CLI v2. The v1 syntax is kept here for reference. In v2, use `satori-v2 issue ISSUE-ID advisory` to create a draft GitHub security advisory from an issue, then `--publish` to publish it.
 :::
 
 Create GitHub issues directly from report results:
@@ -229,8 +229,8 @@ satori-v2 report AOQxDWDkXpZp output --test integration_test --unredacted
 
 ```sh
 satori-v2 report AOQxDWDkXpZp issues
-satori-v2 issue FINDING_ID advisory
-satori-v2 issue FINDING_ID advisory --publish
+satori-v2 issue ISSUE_ID advisory
+satori-v2 issue ISSUE_ID advisory --publish
 satori-v2 advisories
 satori-v2 advisory ADVISORY_ID
 satori-v2 advisory ADVISORY_ID visibility private

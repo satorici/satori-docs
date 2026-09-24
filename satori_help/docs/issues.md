@@ -12,6 +12,7 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 | `satori-v2 issue ISSUE-ID` | Show one issue |
 | `satori-v2 issue ISSUE-ID status STATUS` | Set the issue status |
 | `satori-v2 issue ISSUE-ID comment BODY` | Add a comment to the issue |
+| `satori-v2 issue ISSUE-ID verify` | Verify the issue with Claude Code (TP/FP) |
 | `satori-v2 issue ISSUE-ID advisory` | Create a draft GitHub security advisory from an issue |
 | `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub |
 | `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |
@@ -24,7 +25,7 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 
 ```sh
 satori-v2 issues
-satori-v2 issues --status OPEN --severity 4
+satori-v2 issues --status OPEN --severity high,critical
 satori-v2 issues --execution-id 5678 --source TOOL --json
 satori-v2 issues 5678
 satori-v2 report 5678 issues
@@ -38,7 +39,7 @@ satori-v2 report 5678 issues
 | `--execution-id ID` | Same as the positional `EXECUTION-ID` (cannot conflict with it) |
 | `--status STATUS` | One of `OPEN`, `INVESTIGATING`, `TP`, `FIXED`, `FP`, `ACCEPTED` |
 | `--source {ASSERT\|TOOL}` | `ASSERT` for failed playbook asserts, `TOOL` for hits reported by a tool |
-| `--severity {0-5}` | Severity level |
+| `--severity LEVELS` | Comma-separated severities: `INFO`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`, `BLOCKER` (e.g. `high,critical`) |
 | `--order {ASC\|DESC}` | Sort order (disables the default severity sort) |
 | `--json` | Print the list as JSON |
 | `--page N` | Page number (default 1) |
@@ -74,7 +75,7 @@ satori-v2 issue 42
 satori-v2 issue 42 --json
 ```
 
-Shows the issue details: source, title, severity, status, the execution it belongs to and the identity of the assert or tool hit (test path and assert name, or tool, check ID, file and line).
+Shows the issue details: source, title, severity, status, the execution it belongs to and the identity of the assert or tool hit (test path and assert name, or tool, check ID, file and line). Without `--json`, it also prints a **History** timeline of status changes, comments and other events, with actor display names when available.
 
 ## Comments
 
@@ -87,9 +88,26 @@ satori-v2 issue 42 comment "Looks like a false positive" --json
 
 Without `--json`, the CLI prints `Comment {id} added to issue {ISSUE-ID}`. With `--json`, it prints the created comment object.
 
+## Verifying an issue
+
+`issue ISSUE-ID verify` uses [Claude Code](https://docs.anthropic.com/en/docs/claude-code) to decide whether the issue is a true positive (`TP`) or a false positive (`FP`):
+
+```sh
+satori-v2 issue 42 verify
+```
+
+The command clones the repository tied to the issue's execution, runs three independent Claude Code agents, takes a majority vote, then posts a short conclusion comment and sets the issue status to `TP` or `FP`.
+
+Requirements:
+
+- `git` and `claude` must be available on your `PATH`.
+- The execution must belong to a `run --repo owner/repo` or to a scan of a single `owner/repo` repository (same repository constraint as advisories).
+
 ## GitHub security advisories
 
 `issue ISSUE-ID advisory` creates a **draft** external issue for the issue, through the Satori [GitHub Application](https://github.com/apps/satorici). It does **not** publish to GitHub yet. The command prints the draft details, a dashboard link (`View on web: …/advisories/{id}`), and a warning with the publish recipe.
+
+If the issue's execution is `PRIVATE`, creating the draft promotes it to `UNLISTED` so the report link embedded in the advisory is reachable by anyone who can open the advisory.
 
 ```sh
 satori-v2 issue 42 advisory
@@ -124,7 +142,7 @@ Requirements:
 
 - The execution must belong to a `run --repo owner/repo` or to a scan of a single `owner/repo` repository. Executions that span several repositories are rejected.
 - The Satori GitHub Application must be installed and active on that repository.
-- Only one external issue can exist per execution. Running `advisory` again for an issue that already has a draft returns the existing draft instead of creating a second one.
+- Only one external issue can exist per finding. Running `advisory` again for an issue that already has a draft or published advisory returns the existing one instead of creating a second one.
 
 ```sh
 satori-v2 run satori://code/trufflehog.yml --repo satorici/satori-cli --sync --report

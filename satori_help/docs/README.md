@@ -50,7 +50,7 @@ You can define these notifications within your [settings notifications](https://
 We process the *output* to generate *reports* based on the *files* that were produced. To help you track changes over time, we can highlight differences between consecutive reports. This feature is useful for identifying whether you are fixing existing bugs or introducing new ones.
 You can access your reports using on the [reports section of the Web](https://www.satori.ci/reports/) or with the CLI: `satori-v2 reports`.
 
-Failed assertions and tool results are also tracked as *issues*: list them with `satori-v2 issues`, see the issues of a report with `satori-v2 issues EXECUTION-ID` (or `satori-v2 report EXECUTION-ID issues`) and inspect one with `satori-v2 issue FINDING-ID`.
+Failed assertions and tool results are also tracked as *issues*: list them with `satori-v2 issues`, see the issues of a report with `satori-v2 issues EXECUTION-ID` (or `satori-v2 report EXECUTION-ID issues`) and inspect one with `satori-v2 issue ISSUE-ID`.
 
 ## Support
 
