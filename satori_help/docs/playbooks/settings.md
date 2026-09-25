@@ -208,7 +208,9 @@ settings:
     - AWS_SECRET_KEY
 ```
 
-Any parameter listed under `redacted` will have its value masked in all report outputs. This is useful for playbooks that are shared publicly or run with `--visibility public`, ensuring that secrets passed via `-d` are never exposed.
+Any parameter listed under `redacted` will have its value masked in reports, API output (`results.msgpack`), and indexed logs. This is useful for playbooks that are shared publicly or run with `--visibility public`, so secrets passed via `-d` are not shown in those surfaces.
+
+An internal unredacted copy may still be stored for a future authorized `--unredacted` reveal. That copy is deleted when output retention removes execution output (`save_output=false` / `delete_output`). Redaction does **not** cover artifacts, recipe text, or values that tools re-encode (for example base64).
 
 You can also redact parameters at runtime using the CLI flag `--redacted`:
 
