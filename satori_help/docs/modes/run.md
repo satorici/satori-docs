@@ -206,14 +206,15 @@ The following file/data flags are not available yet in CLI v2. The v1 syntax is 
 | `--memory MB` | Set memory allocation in MB (512, 1024, 2048, 3072, 4096, 5120, 6144, 7168, 8192, 9216, 10240, 11264, 12288, 13312, 14336, 15360, 16384, 17408, 18432, 19456, 20480, 21504, 22528, 23552, 24576, 25600, 26624, 27648, 28672, 29696, 30720, 32768, 36864, 40960, 45056, 49152, 53248, 57344, 61440, 65536, 73728, 81920, 90112, 98304, 106496, 114688, 122880) | `satori-v2 run ./ --memory 2048` |
 | `--image IMAGE_NAME` | Specify custom Docker image | `satori-v2 run ./ --image ubuntu:22.04` |
 | `--timeout SECONDS` | Maximum execution time. Defaults to the playbook `settings.timeout` when set | `satori-v2 run ./ --timeout 600` |
-| `--expire EXPIRATION` | Expiration for the run and its data (the value is sent to the platform as provided) | `satori-v2 run ./ --expire EXPIRATION` |
+| `--expire EXPIRATION` | Expiration for the run and its data (e.g. `7 days`, `2 weeks`) | `satori-v2 run ./ --expire "7 days"` |
+| `--notify SPEC` | Notification rule for this run (repeatable). **Replaces** playbook `settings.notify`. Format: `result=fail,severity=high,critical,to=slack://W:C` | `satori-v2 run ./ --notify 'result=fail,to=slack://T00:C00'` |
 | `-r, --region-filter REGION` | Restrict the execution to the given region(s) (repeatable) | `satori-v2 run ./ -r us-east-1 -r eu-west-1` |
 | `--visibility {public\|private\|unlisted}` | Set the visibility of the run (default: private) | `satori-v2 run ./ --visibility public` |
 | `--count NUMBER` | Number of parallel executions to launch (default: 1) | `satori-v2 run ./ --count 10` |
 
 **Note:** when `--count` is greater than 1 and you also pass `--output` or `--live-output`, the CLI prints a warning and only the output of the **first** execution is shown. With `--report`, a summary table of all executions is shown instead of a single report.
 
-CLI flags take precedence over the values defined in the playbook `settings:` section (`cpu`, `memory`, `image`, `timeout`).
+CLI flags take precedence over the values defined in the playbook `settings:` section (`cpu`, `memory`, `image`, `timeout`). `--notify` replaces playbook `settings.notify` entirely when provided (it does not merge). See [Notifications](../notifications.md#playbook-settings).
 
 ::: warning On development
 `--storage` and `--os` are not available yet as `satori-v2 run` flags. The `storage` playbook setting still works. The v1 syntax is kept here for reference.

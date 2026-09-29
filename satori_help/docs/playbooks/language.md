@@ -70,7 +70,9 @@ Playbooks allow you to configure various settings to customize test execution an
 settings:
   name: "Tests hello world with parameters"
   timeout: 60 # no more than 60 seconds should be required
-  logOnFail: slack
+  notify:
+    - result: fail
+      to: slack://T00000000:C00000000
 
 Hello_World_Test:
   assertStdoutContains: "Hello World"

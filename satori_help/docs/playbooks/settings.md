@@ -87,27 +87,28 @@ In CLI v2, these settings are what turn a run into a monitor: when the playbook 
 
 ## Notification settings for execution results
 
-You can customize how you receive notifications based on the execution results of your playbook. Choose from three notification settings:
-
-- **log**: receive notifications for every execution, regardless of the outcome.
-- **logOnFail**: get notified only when the result is a failure.
-- **logOnPass**: receive notifications only when the result is a success.
-
-Notifications can be sent through various channels. Use the following formats to define your notification preferences:
-
-- **slack**
-- **email**
-- **telegram**
-- **discord**
-
-You can specify different log types simultaneously to notify users through multiple channels:
+Use `settings.notify` to send Slack messages when an execution finishes. Each entry is a rule with `result` (`pass` or `fail`), optional `severity` list, and a `to` URI:
 
 ```yaml
 settings:
-    logOnFail: slack, email, telegram, discord
+  notify:
+    - result: fail
+      severity: [high, critical, blocker]
+      to: slack://T00000000:C00000000
+    - result: pass
+      to: slack://T00000000:C11111111
 ```
 
-You can [define these notifications](../notifications.md) with our CLI tool.
+On a failing run, a rule with `severity` matches if **any** of those levels appears in the report. Rules without `severity` match on result alone.
+
+For a one-off override on `satori-v2 run`, use repeatable `--notify` (this **replaces** playbook `notify` for that run):
+
+```sh
+satori-v2 run ./ \
+  --notify 'result=fail,severity=high,critical,blocker,to=slack://T00000000:C00000000'
+```
+
+See [Notifications](../notifications.md#playbook-settings) for URI formats, severity names, and Slack setup. Email and other channel URIs may appear in config but only Slack delivery is implemented in v2.
 
 ## Timeout Settings
 

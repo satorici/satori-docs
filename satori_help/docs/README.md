@@ -36,14 +36,9 @@ Monitors can be viewed via the [Web interface](https://www.satori.ci/monitors/),
 
 ## [Notifications](notifications.md)
 
-We offer a flexible notification system to keep your team updated about the satatus of your projects. We support a variety of communication methods:
+We offer a flexible notification system to keep your team updated about the status of your projects. Slack delivery is available today via playbook `settings.notify` or `satori-v2 run --notify`; Discord, email, Telegram, and Datadog integrations are documented for team configuration.
 
-- Slack
-- Discord
-- Email
-- Telegram
-
-You can define these notifications within your [settings notifications](https://satori.ci/settings/notifications/) and set notification preferences in your project’s satori.yml file. Specify the conditions under which you want to be notified, whether on a failure or a success.
+You can define these notifications in your playbook’s `settings.notify` list (and override them per run with `--notify`). Specify the conditions under which you want to be notified — on failure, on success, and optionally filtered by severity.
 
 ## [Reports](getting-started/execution-data.md)
 

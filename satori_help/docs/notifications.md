@@ -1,7 +1,9 @@
 # Notifications
 
 ::: warning On development
-The `satori-v2 settings` and `satori-v2 team ... set_config` commands used below to configure notification channels are not available yet in CLI v2. The v1 syntax is kept here for reference; configure the channels from the web [dashboard](https://www.satori.ci/dashboard/) in the meantime. The playbook-level settings (`log`, `logOnFail`, `logOnPass`, `report: pdf`) are still valid and work with playbooks executed by CLI v2.
+The `satori-v2 settings` and `satori-v2 team ... set_config` commands used below to configure **team default** notification channels are not available yet in CLI v2. Configure Slack bot membership from the web [dashboard](https://www.satori.ci/dashboard/) in the meantime.
+
+Playbook `settings.notify` and the CLI `satori-v2 run --notify` flag **are available** in CLI v2 (Slack destinations only for now). The older playbook keys `log` / `logOnFail` / `logOnPass` are not used by v2 — migrate to `settings.notify`.
 :::
 
 Our flexible notification system ensures that your team stays informed about the status of your projects in real-time. We offer integration with multiple communication platforms, including:
@@ -131,26 +133,67 @@ After configuring settings, the changes are applied immediately to your team.
 
 ## Playbook Settings
 
-To configure your notification preferences, start by defining your **Playbook Settings**. In this section, you can choose how you want to be notified about your tests—whether for every event (`log`), only on failures (`logOnFail`), or only on successes (`logOnPass`). You can specify your preferred notification channels, including email, Slack, Datadog, or Discord.
+Define when and where to notify with a `settings.notify` list. Each rule has:
 
-### Example Configuration
+| Field | Required | Description |
+| --- | --- | --- |
+| `result` | yes | `fail` or `pass` — when the rule applies |
+| `to` | yes | Destination URI (see below) |
+| `severity` | no | List of named levels. On `result: fail`, the rule matches if **any** listed level appears in the execution report. Ignored for `pass`. |
 
-You can set your notification preferences in YAML format as follows:
+Named severities (case-insensitive): `info`, `low`, `medium`, `high`, `critical`, `blocker`.
+
+### Destination URIs
+
+| Scheme | Format | Notes |
+| --- | --- | --- |
+| Slack | `slack://WORKSPACE:CHANNEL` or `slack://WORKSPACE/CHANNEL` | Channel may be a Slack channel ID (`C…`) or `#name`. Invite `@SatoriCIBot` to the channel. **Sending is supported now.** |
+| Email | `email://user@example.com` | Accepted in config; delivery not implemented yet in v2. |
+
+Multiple rules are allowed. Matching rules for Slack are sent at the end of each finished execution. The Slack message includes pass/fail, fail counts, severity summary, and links to the job and report on `https://dashboard.satori.ci`.
+
+### Example
 
 ```yml
 settings:
-  log|logOnFail|logOnPass: email|slack|discord|datadog
-
-[...]
+  notify:
+    - result: fail
+      severity: [high, critical, blocker]
+      to: slack://T00000000:C00000000
+    - result: pass
+      to: slack://T00000000:C11111111
 ```
-For example, to receive notifications on Slack only when a test fails, you would configure your settings like this:
+
+Notify on any failure (no severity filter):
 
 ```yml
 settings:
-  logOnFail: slack
-
-[...]
+  notify:
+    - result: fail
+      to: slack://T00000000:C00000000
 ```
+
+### CLI override: `--notify`
+
+On `satori-v2 run`, `--notify` is repeatable. When present, the CLI rules **replace** playbook `settings.notify` for that run (they do not merge).
+
+```sh
+satori-v2 run ./ \
+  --notify 'severity=blocker,critical,high,result=fail,to=slack://T00000000:C00000000' \
+  --notify 'result=pass,to=slack://T00000000:C11111111'
+```
+
+Each value is a comma-separated `key=value` string:
+
+- Required: `result=pass|fail`, `to=<uri>`
+- Optional: `severity=blocker,critical,high` (comma-separated levels until the next key)
+- `status=…` is accepted but ignored
+
+See also [Run command options](modes/run.md#execution-environment).
+
+### Legacy keys
+
+`log`, `logOnFail`, and `logOnPass` (channel type names without URIs) are **not** applied by CLI v2. Prefer `settings.notify` with explicit `to` URIs.
 
 ## Configuring Notifications
 
@@ -270,7 +313,9 @@ To receive a copy of your test report in PDF format along with your notification
 
 ```yml
 settings:
-  onLogFail: slack
+  notify:
+    - result: fail
+      to: slack://T00000000:C00000000
   report: pdf
 ```
 
@@ -278,6 +323,8 @@ If you wish to prevent the generation of any reports, you can set the report opt
 
 ```yml
 settings:
-  onLogFail: slack 
-  report: false 
+  notify:
+    - result: fail
+      to: slack://T00000000:C00000000
+  report: false
 ```
