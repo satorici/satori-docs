@@ -207,7 +207,7 @@ The following file/data flags are not available yet in CLI v2. The v1 syntax is 
 | `--image IMAGE_NAME` | Specify custom Docker image | `satori-v2 run ./ --image ubuntu:22.04` |
 | `--timeout SECONDS` | Maximum execution time. Defaults to the playbook `settings.timeout` when set | `satori-v2 run ./ --timeout 600` |
 | `--expire EXPIRATION` | Expiration for the run and its data (e.g. `7 days`, `2 weeks`) | `satori-v2 run ./ --expire "7 days"` |
-| `--notify SPEC` | Notification rule for this run (repeatable). **Replaces** playbook `settings.notify`. Format: `result=fail,severity=high,critical,to=slack://W:C` | `satori-v2 run ./ --notify 'result=fail,to=slack://T00:C00'` |
+| `--notify SPEC` | Notification rule for this run (repeatable). **Replaces** playbook `settings.notify`. Format: `result=fail,severity=high,critical,to=slack://W:C`. Add `watch=issue-status` and/or `watch=finish` to choose when it fires (default: finish only) | `satori-v2 run ./ --notify 'result=fail,to=slack://T00:C00'` |
 | `-r, --region-filter REGION` | Restrict the execution to the given region(s) (repeatable) | `satori-v2 run ./ -r us-east-1 -r eu-west-1` |
 | `--visibility {public\|private\|unlisted}` | Set the visibility of the run (default: private) | `satori-v2 run ./ --visibility public` |
 | `--count NUMBER` | Number of parallel executions to launch (default: 1) | `satori-v2 run ./ --count 10` |

@@ -137,9 +137,10 @@ Define when and where to notify with a `settings.notify` list. Each rule has:
 
 | Field | Required | Description |
 | --- | --- | --- |
-| `result` | yes | `fail` or `pass` — when the rule applies |
+| `result` | no | `fail` or `pass` — when the rule applies. Omitted matches both. |
 | `to` | yes | Destination URI (see below) |
-| `severity` | no | List of named levels. On `result: fail`, the rule matches if **any** listed level appears in the execution report. Ignored for `pass`. |
+| `severity` | no | List of named levels. On fail, the rule matches if **any** listed level appears in the execution report. Ignored when the run passed. |
+| `watch` | no | When the rule fires: `finish` (the execution finished) and/or `issue-status` (an issue changed status). Without `watch`, the rule fires on finish only. See [Watching issue status](#watching-issue-status). |
 
 Named severities (case-insensitive): `info`, `low`, `medium`, `high`, `critical`, `blocker`.
 
@@ -173,6 +174,42 @@ settings:
       to: slack://T00000000:C00000000
 ```
 
+Notify on finish regardless of pass or fail:
+
+```yml
+settings:
+  notify:
+    - to: slack://T00000000:C00000000
+```
+
+### Watching issue status
+
+`watch` lists the events that fire a rule:
+
+| `watch` | Sent when |
+| --- | --- |
+| omitted | the execution finishes |
+| `[finish]` | the execution finishes |
+| `[issue-status]` | an issue changes status (not on finish) |
+| `[issue-status, finish]` | both |
+
+An `issue-status` event happens when an issue (finding) of the execution changes status, for example after `satori-v2 issue <id> status TP` or `satori-v2 issue <id> verify`. For these events:
+
+- `result` is checked against the execution the issue belongs to.
+- `severity` is checked against the **issue's** severity, not the report totals. An issue without a severity does not match a rule that sets `severity`.
+- To avoid repeated messages on every run, the new status is compared with the last triaged status (anything but `OPEN`) of the same issue in an earlier execution of the same repository and playbook. If it's the same, nothing is sent.
+
+```yml
+settings:
+  notify:
+    - watch: [issue-status]
+      result: fail
+      severity: [blocker, critical, high]
+      to: slack://T00000000:C00000000
+```
+
+The Slack message includes the issue title, the old and new status, the severity, the repository and a link to the report.
+
 ### CLI override: `--notify`
 
 On `satori-v2 run`, `--notify` is repeatable. When present, the CLI rules **replace** playbook `settings.notify` for that run (they do not merge).
@@ -185,9 +222,18 @@ satori-v2 run ./ \
 
 Each value is a comma-separated `key=value` string:
 
-- Required: `result=pass|fail`, `to=<uri>`
+- Required: `to=<uri>`
+- Optional: `result=pass|fail` (omitted matches both)
 - Optional: `severity=blocker,critical,high` (comma-separated levels until the next key)
+- Optional: `watch=issue-status,finish` (either or both; defaults to finish only, see [Watching issue status](#watching-issue-status))
 - `status=…` is accepted but ignored
+
+Notify only when a blocker, critical or high issue changes status:
+
+```sh
+satori-v2 run ./ --repo owner/repo \
+  --notify 'watch=issue-status,severity=blocker,critical,high,result=fail,to=slack://T00000000:C00000000'
+```
 
 See also [Run command options](modes/run.md#execution-environment).
 
