@@ -103,6 +103,8 @@ To stop a single execution use `satori-v2 execution stop ID`; to stop everything
 | --- | --- |
 | `--job-type {RUN\|SCAN\|MONITOR\|GITHUB\|LOCAL}` | Type of job that produced the execution |
 | `--job-id ID` | Executions of a single job |
+| `--id-gt ID` | Execution id greater than ID (exclusive) |
+| `--id-lt ID` | Execution id less than ID (exclusive) |
 | `--global` | Include public executions from other accounts |
 | `--status {FINISHED\|CANCELED\|RUNNING\|QUEUED}` | Execution status (repeatable) |
 | `--visibility {PUBLIC\|PRIVATE\|UNLISTED}` | Report visibility |
@@ -119,6 +121,7 @@ To stop a single execution use `satori-v2 execution stop ID`; to stop everything
 ```sh
 satori-v2 search --job-type MONITOR --report-status FAIL --from 2026-01-01
 satori-v2 search --playbook satori://code/trufflehog.yml --severity 4
+satori-v2 search --id-gt 100 --id-lt 200
 satori-v2 search --tag env=prod --status FINISHED --status CANCELED
 satori-v2 search --playbook satori://code/python/pyspector.yml \
   --notify slack://T00000000:C00000000

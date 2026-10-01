@@ -40,6 +40,8 @@ You can filter your reports using various parameters to narrow down the results 
 | --- | --- |
 | `--job-type {RUN\|SCAN\|MONITOR\|GITHUB\|LOCAL}` | Filter by the type of job that produced the execution |
 | `--job-id ID` | Filter by job ID |
+| `--id-gt ID` | Execution id greater than ID (exclusive) |
+| `--id-lt ID` | Execution id less than ID (exclusive) |
 | `--global` | Include public executions from other accounts |
 | `--status {FINISHED\|CANCELED\|RUNNING\|QUEUED}` | Filter by execution status (repeatable) |
 | `--visibility {PUBLIC\|PRIVATE\|UNLISTED}` | Filter by report visibility |
