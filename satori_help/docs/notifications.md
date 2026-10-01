@@ -190,10 +190,10 @@ settings:
 | --- | --- |
 | omitted | the execution finishes |
 | `[finish]` | the execution finishes |
-| `[issue-status]` | an issue changes status (not on finish) |
+| `[issue-status]` | an issue is marked True Positive / TP (not on finish) |
 | `[issue-status, finish]` | both |
 
-An `issue-status` event happens when an issue (finding) of the execution changes status, for example after `satori-v2 issue <id> status TP` or `satori-v2 issue <id> verify`. For these events:
+An `issue-status` event happens when an issue (finding) of the execution is marked True Positive (`TP`), for example after `satori-v2 issue <id> status TP` or `satori-v2 issue <id> verify`. Other status changes (FP, investigating, etc.) do not notify. For these events:
 
 - `result` is checked against the execution the issue belongs to.
 - `severity` is checked against the **issue's** severity, not the report totals. An issue without a severity does not match a rule that sets `severity`.
@@ -228,7 +228,7 @@ Each value is a comma-separated `key=value` string:
 - Optional: `watch=issue-status,finish` (either or both; defaults to finish only, see [Watching issue status](#watching-issue-status))
 - `status=…` is accepted but ignored
 
-Notify only when a blocker, critical or high issue changes status:
+Notify only when a blocker, critical or high issue is marked True Positive:
 
 ```sh
 satori-v2 run ./ --repo owner/repo \
