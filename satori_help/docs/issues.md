@@ -13,6 +13,7 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 | `satori-v2 issue ISSUE-ID status STATUS` | Set the issue status |
 | `satori-v2 issue ISSUE-ID comment BODY` | Add a comment to the issue |
 | `satori-v2 issue ISSUE-ID verify` | Verify the issue with Claude Code (TP/FP) |
+| `satori-v2 run PLAYBOOK --repo owner/repo --verify` | After a run finishes, verify every finding the same way |
 | `satori-v2 issue ISSUE-ID advisory` | Create a draft GitHub security advisory from an issue |
 | `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub |
 | `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |
@@ -102,6 +103,12 @@ Requirements:
 
 - `git` and `claude` must be available on your `PATH`.
 - The execution must belong to a `run --repo owner/repo` or to a scan of a single `owner/repo` repository (same repository constraint as advisories).
+
+To verify every finding after a run finishes, use `--verify` on `run` (same Claude majority-vote flow, one clone for the whole batch):
+
+```sh
+satori-v2 run PLAYBOOK --repo owner/repo --verify
+```
 
 ## GitHub security advisories
 

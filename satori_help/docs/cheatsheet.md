@@ -80,6 +80,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `-s, --sync` | Show the result |
 | `--report` | Show the report |
 | `--issues` | After the run, list issues for the execution (only when `--count` is 1) |
+| `--verify` | After the run, verify every finding with Claude Code (comment + TP/FP; requires `--repo` / scan) |
 | `-o, --output` | Show the output |
 | `--live-output` | Stream the output while the execution is running |
 | `--stdout` | Show only the raw stdout of the execution |
@@ -268,6 +269,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 issue ISSUE-ID status {OPEN\|INVESTIGATING\|TP\|FIXED\|FP\|ACCEPTED}` | Set the issue status |
 | `satori-v2 issue ISSUE-ID comment BODY` | Add a comment to the issue |
 | `satori-v2 issue ISSUE-ID verify` | Verify the issue with Claude Code (comment + TP/FP) |
+| `satori-v2 run PLAYBOOK --repo GithubUser/Repo --verify` | After the run, verify every finding the same way |
 | `satori-v2 issue ISSUE-ID advisory` | Create a draft external advisory for the issue |
 | `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub |
 | `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |

@@ -7,16 +7,17 @@ Satori CI is an automated testing platform designed to validate the behavior of 
 ## [Install](getting-started/install.md)
 
 Satori offers flexible execution options for your tests, allowing them to run either synchronously or asynchronously.
+
 - Use our [CLI tool](https://github.com/satorici/cli-v2), which will allow you to execute tests directly from your terminal installed with `pip install git+https://github.com/satorici/cli-v2`. The console script is named `satori-v2` so it can coexist with the v1 `satori` CLI.
 - Using the [Web](https://satori.ci) Interface, you can use our web interface to manage and execute your tests without any installation required.
 
 ## CI
 
 You can integrate Satori with various CI/CD tools:
+
 - Our [Github Application](https://github.com/apps/satorici) to analyze your repositories
 - A [Gitlab](modes/ci/gitlab.md) using the Satori CLI.
 - A [Jenkins](modes/ci/jenkins.md) using the Satori CLI.
-
 
 ## [Playbook's language](playbooks/language.md)
 
@@ -30,7 +31,7 @@ We provide a comprehensive approach to testing code repositories on Github. Whet
 
 ## [Monitor](modes/monitor.md)
 
-Monitors allow you to automate scheduled checks on systems, ensuring they function correctly over time. 
+Monitors allow you to automate scheduled checks on systems, ensuring they function correctly over time.
 You can set your playbooks to run at regular intervals, defined by a time rate (e.g., '5 minutes')
 Monitors can be viewed via the [Web interface](https://www.satori.ci/monitors/), the CLI (`satori-v2 monitors`), or [Grafana](https://github.com/satorici/satori-plugin-grafana).
 
