@@ -71,7 +71,7 @@ satori-v2 reports search --playbook satori://code/trufflehog
 satori-v2 reports search --job-id 1234 --status RUNNING
 ```
 
-The same filters are accepted by `satori-v2 reports download`, `satori-v2 reports stop`, `satori-v2 reports delete` and by the top-level `satori-v2 search` command, which lets you act on everything that matches (download outputs, download reports, stop or delete). See [Jobs, Executions & Output](../modes/executions.md#search).
+The same filters are accepted by `satori-v2 reports download`, `satori-v2 reports stop`, `satori-v2 reports delete` and by the top-level `satori-v2 search` command, which lets you act on everything that matches (download outputs, download reports, stop or delete). On `satori-v2 search` you can also pass `--notify slack://WORKSPACE:CHANNEL` to send the current page of results to Slack. See [Jobs, Executions & Output](../modes/executions.md#search) and [Search notify](../notifications.md#search-notify).
 
 ::: warning On development
 The v1 filters `--repo`, `--result`, `--monitor`, `--execution` and `playbook-type` are not available in CLI v2. Use `--job-type`, `--job-id` and `--report-status` instead. The v1 syntax is kept here for reference:

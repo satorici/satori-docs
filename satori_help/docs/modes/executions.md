@@ -114,11 +114,14 @@ To stop a single execution use `satori-v2 execution stop ID`; to stop everything
 | `--q TEXT` | Free text search |
 | `-t, --tag TAG` | Tag (repeatable) |
 | `--page N`, `-q, --quantity N` | Pagination of the listing |
+| `--notify slack://WORKSPACE:CHANNEL` | Send this page of results to Slack (repeatable). Not a job rule — immediate notify of the listing. See [Search notify](../notifications.md#search-notify) |
 
 ```sh
 satori-v2 search --job-type MONITOR --report-status FAIL --from 2026-01-01
 satori-v2 search --playbook satori://code/trufflehog.yml --severity 4
 satori-v2 search --tag env=prod --status FINISHED --status CANCELED
+satori-v2 search --playbook satori://code/python/pyspector.yml \
+  --notify slack://T00000000:C00000000
 ```
 
 ### Actions

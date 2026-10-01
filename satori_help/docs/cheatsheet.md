@@ -235,17 +235,20 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `--page N`, `-q N` | Pagination |
 | `--repo`, `--result`, `--monitor`, `--execution`, `--playbook-type` | v1 filters *(on development)* |
 
+`--notify` is only on the top-level `satori-v2 search` listing (not on `reports download` / `stop` / `delete`). See [Search notify](/notifications.md#search-notify).
+
 ## Search
 
 | Command | Description |
 | --- | --- |
 | `satori-v2 search [FILTERS]` | Search reports using the [report filters](#report-filters) |
+| `satori-v2 search [FILTERS] --notify slack://W:C` | List matching reports and send this page to Slack (repeatable) |
 | `satori-v2 search [FILTERS] --download PATH` | Download the outputs of the matching FINISHED reports to PATH |
 | `satori-v2 search [FILTERS] --reports PATH` | Download the matching reports as JSON to PATH |
 | `satori-v2 search [FILTERS] --stop` | Stop the matching RUNNING reports |
 | `satori-v2 search [FILTERS] --delete` | Delete the matching FINISHED and CANCELED reports (asks for confirmation) |
 
-`--download`, `--reports`, `--stop` and `--delete` are mutually exclusive.
+`--download`, `--reports`, `--stop` and `--delete` are mutually exclusive. `--notify` only applies when listing (no action flag).
 
 ## Issues
 

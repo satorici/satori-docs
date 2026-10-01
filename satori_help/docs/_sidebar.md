@@ -24,6 +24,7 @@
   * [Notifications](/notifications.md)
   * [Playbook notify](/notifications.md#playbook-settings)
   * [CLI --notify](/notifications.md#cli-override-notify)
+  * [Search --notify](/notifications.md#search-notify)
   * [Settings Command](/notifications.md#interactive-configuration-with-satori-v2-settings)
   * [Slack](/notifications.md#slack)
   * [Discord](/notifications.md#discord)

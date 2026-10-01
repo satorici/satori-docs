@@ -3,7 +3,7 @@
 ::: warning On development
 The `satori-v2 settings` and `satori-v2 team ... set_config` commands used below to configure **team default** notification channels are not available yet in CLI v2. Configure Slack bot membership from the web [dashboard](https://www.satori.ci/dashboard/) in the meantime.
 
-Playbook `settings.notify` and the CLI `satori-v2 run --notify` flag **are available** in CLI v2 (Slack destinations only for now). The older playbook keys `log` / `logOnFail` / `logOnPass` are not used by v2 — migrate to `settings.notify`.
+Playbook `settings.notify`, the CLI `satori-v2 run --notify` flag, and `satori-v2 search --notify` **are available** in CLI v2 (Slack destinations only for now). The older playbook keys `log` / `logOnFail` / `logOnPass` are not used by v2 — migrate to `settings.notify`.
 :::
 
 Our flexible notification system ensures that your team stays informed about the status of your projects in real-time. We offer integration with multiple communication platforms, including:
@@ -236,6 +236,22 @@ satori-v2 run ./ --repo owner/repo \
 ```
 
 See also [Run command options](modes/run.md#execution-environment).
+
+### Search: `--notify`
+
+On `satori-v2 search`, `--notify` is repeatable and takes a bare Slack URI (`slack://workspace:channel`). It is **not** a job rule: the API sends the **current page** of search results to Slack as a monospace table (Id, Playbook source, Status, Result, Created at), and still prints the table in the terminal.
+
+```sh
+satori-v2 search --playbook satori://code/python/pyspector.yml \
+  --notify slack://T00000000:C00000000
+```
+
+- Requires an authenticated session (anonymous search cannot notify)
+- Empty result pages are not sent
+- Invalid URIs fail the request with an error; Slack delivery failures are best-effort and do not hide the listing
+- Does not apply to `--download`, `--reports`, `--stop`, or `--delete`
+
+See also [Search](modes/executions.md#search).
 
 ### Legacy keys
 
