@@ -49,6 +49,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `satori-v2 local ./` | Execute the playbook .satori.yml locally |
 | `satori-v2 local playbook.yml` | Execute the playbook locally |
 | `satori-v2 local ./ --playbook="satori://..."` | Execute the specified playbook locally |
+| `satori-v2 local PLAYBOOK --repo GithubUser/Repo` | Clone the repo and run the playbook locally against it |
 
 ## Local execution parameters
 
@@ -57,6 +58,8 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `-s, --sync` | Show summary when execution completes |
 | `--report` | Display test assertions and results |
 | `--issues` | After the run, list issues for the execution |
+| `--verify` | After the run, verify every finding with Claude Code (comment + TP/FP; requires `--repo`) |
+| `--repo GithubUser/Repo` | Clone the GitHub repository and run the playbook against that checkout |
 | `-o, --output` | Display command output |
 | `-p, --playbook` | Playbook to execute instead of the source's `.satori.yml` |
 | `-d, --data KEY=VALUE` | Provide values for the playbook variables (repeatable) |
@@ -270,6 +273,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 issue ISSUE-ID comment BODY` | Add a comment to the issue |
 | `satori-v2 issue ISSUE-ID verify` | Verify the issue with Claude Code (comment + TP/FP) |
 | `satori-v2 run PLAYBOOK --repo GithubUser/Repo --verify` | After the run, verify every finding the same way |
+| `satori-v2 local PLAYBOOK --repo GithubUser/Repo --verify` | After a local run against a cloned repo, verify every finding |
 | `satori-v2 issue ISSUE-ID advisory` | Create a draft external advisory for the issue |
 | `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub |
 | `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |

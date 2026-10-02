@@ -14,6 +14,7 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 | `satori-v2 issue ISSUE-ID comment BODY` | Add a comment to the issue |
 | `satori-v2 issue ISSUE-ID verify` | Verify the issue with Claude Code (TP/FP) |
 | `satori-v2 run PLAYBOOK --repo owner/repo --verify` | After a run finishes, verify every finding the same way |
+| `satori-v2 local PLAYBOOK --repo owner/repo --verify` | Run locally against a cloned repo, then verify every finding |
 | `satori-v2 issue ISSUE-ID advisory` | Create a draft GitHub security advisory from an issue |
 | `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub |
 | `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |
@@ -102,12 +103,13 @@ The command clones the repository tied to the issue's execution, runs three inde
 Requirements:
 
 - `git` and `claude` must be available on your `PATH`.
-- The execution must belong to a `run --repo owner/repo` or to a scan of a single `owner/repo` repository (same repository constraint as advisories).
+- The execution must belong to a `run --repo owner/repo`, a `local --repo owner/repo`, or to a scan of a single `owner/repo` repository (same repository constraint as advisories).
 
-To verify every finding after a run finishes, use `--verify` on `run` (same Claude majority-vote flow, one clone for the whole batch):
+To verify every finding after a run finishes, use `--verify` on `run` or `local` (same Claude majority-vote flow, one clone for the whole batch):
 
 ```sh
 satori-v2 run PLAYBOOK --repo owner/repo --verify
+satori-v2 local PLAYBOOK --repo owner/repo --verify
 ```
 
 ## GitHub security advisories
@@ -147,7 +149,7 @@ Without `--json`, the CLI prints the status string. With `--json`, it prints `{"
 
 Requirements:
 
-- The execution must belong to a `run --repo owner/repo` or to a scan of a single `owner/repo` repository. Executions that span several repositories are rejected.
+- The execution must belong to a `run --repo owner/repo`, a `local --repo owner/repo`, or to a scan of a single `owner/repo` repository. Executions that span several repositories are rejected.
 - The Satori GitHub Application must be installed and active on that repository.
 - Only one external issue can exist per finding. Running `advisory` again for an issue that already has a draft or published advisory returns the existing one instead of creating a second one.
 
