@@ -55,7 +55,7 @@ input:
 echo:
   assertStdoutEqual: "Hello World"
   input:
-  - echo -n ${{input)}} World
+  - echo -n ${{input}} World
 ```
 
 For example:

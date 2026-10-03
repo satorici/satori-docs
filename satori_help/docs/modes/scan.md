@@ -1,6 +1,6 @@
 # Scan
 
-You can run a playbook on all the repositories of a Github account or on all the commits of a repository
+You can run a playbook on all the repositories of a GitHub account or on all the commits of a repository
 
 Whenever you want to run an execution on each of the individual commits of a repository, you can use the scan functionality.
 
@@ -16,7 +16,7 @@ satori-v2 scan githubUsername/repository .satori.yml
 
 The `SOURCE` can be a public `satori://` playbook or a local `.yml` file. Directories are not accepted as scan sources (use `satori-v2 run ./ --repo owner/repo` to run a local directory playbook against a repository instead).
 
-## Scan Github Account Repositories
+## Scan GitHub Account Repositories
 
 ::: warning On development
 Scanning every repository of an account with a `user/*` wildcard target is not confirmed to work in CLI v2 yet. The v1 syntax is kept here for reference.
@@ -30,7 +30,7 @@ Example:
 
 ![Scan Account](img/scan_account.png)
 
-## Scan Github Repository Commits
+## Scan GitHub Repository Commits
 
 If you target a repo, the optional parameter `-q/--quantity` indicates how many of the repository commits (starting from the latest) to include in the scan. For example `-q 1` scans only the latest commit, which is exactly what `satori-v2 run PLAYBOOK --repo owner/repo` does. This is useful for sampling large repositories:
 

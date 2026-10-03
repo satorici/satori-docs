@@ -49,7 +49,7 @@ satori-v2 team Private members
 To add a specific repository to your team, use the following command:
 
 ```sh
-satori-v2 team Backend add --repo="GithubAccount/Repository"
+satori-v2 team Backend add --repo="GitHubAccount/Repository"
 ```
 
 ![Team Members](img/team_4.png)
@@ -57,7 +57,7 @@ satori-v2 team Backend add --repo="GithubAccount/Repository"
 You can also add all repositories from a specific GitHub account to your team with:
 
 ```sh
-satori-v2 team Backend add --github="GithubAccount"
+satori-v2 team Backend add --github="GitHubAccount"
 ```
 
 ![Team Members](img/team_5.png)
@@ -65,7 +65,7 @@ satori-v2 team Backend add --github="GithubAccount"
 If you need to remove a repository from the team, use the following command with the delete subcommand:
 
 ```sh
-satori-v2 team Backend del --repo="GithubAccount/Repository"
+satori-v2 team Backend del --repo="GitHubAccount/Repository"
 ```
 
 ## Listing your team repositories
@@ -120,7 +120,7 @@ satori-v2 team Private settings
 
 This is an alias for `satori-v2 settings --team Private` and provides a guided setup for all notification channels (Slack, Discord, Email, Telegram, Datadog).
 
-For complete documentation on the `satori-v2 settings` command including all modes of operation (interactive, view, and direct configuration), see the [Notifications](/notifications.md#interactive-configuration-with-satori-settings) section.
+For complete documentation on the `satori-v2 settings` command including all modes of operation (interactive, view, and direct configuration), see the [Notifications](/notifications.md#interactive-configuration-with-satori-v2-settings) section.
 
 ### View Notification Configuration
 

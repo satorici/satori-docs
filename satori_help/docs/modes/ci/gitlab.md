@@ -1,4 +1,4 @@
-# Integrating Satori with Gitlab CI/CD
+# Integrating Satori with GitLab CI/CD
 
 To integrate Satori with GitLab, follow these steps. This integration enables automated testing during your CI/CD pipeline, ensuring that tests are executed at each integration point
 

@@ -23,7 +23,7 @@ You can assert what will be the behavior of [executions](execution.md):
 | [assertReturnCode](#assertreturncode)               | Integer        | Is the return code equal to a certain value?
 | [assertReturnCodeNot](#assertreturncodenot)         | Integer        | Is the return code not equal to a certain value?
 | [assertDifferent](#assertdifferent)                 | Boolean        | Does the execution behave differently when using different inputs?
-| [assertKilled](#assertjilled)                       | Boolean        | Did the software time out?
+| [assertKilled](#assertkilled)                       | Boolean        | Did the software time out?
 
 ---
 
@@ -48,7 +48,7 @@ HelloWorld:
   - echo Hello World
 ```
 
-You can also define multiple strings that should much, such as the following case:
+You can also define multiple strings that should match, such as the following case:
 ```yml
 install:
   - apt update
@@ -455,7 +455,7 @@ test:
   - non_existing_software
 ```
 
-TBC
+The test fails because the command cannot be executed, so no return code is produced. Use `assertReturnCodeNot: null` to require that the program actually runs.
 
 ---
 
@@ -495,7 +495,16 @@ test:
     - sleep 20
 ```
 
-TBC
+- <span style="color:green">Example Pass Test</span>: the software finishes within the 10-second timeout:
+```yml
+settings:
+  timeout: 10
+
+test:
+  assertKilled: False
+  run:
+    - sleep 5
+```
 
 ---
 

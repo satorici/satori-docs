@@ -168,3 +168,4 @@ node_modules/
 **/.vitepress/dist
 **/.vitepress/cache
 CLAUDE.md
+.planner-ai/

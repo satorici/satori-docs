@@ -23,7 +23,7 @@ tests:
     - python3 HelloWorld.py
 ```
 
-The previous playbook uses an image that has preinstalled node and python. Bash and Perl come by default, so no need to install them separatedly.
+The previous playbook uses an image that has preinstalled node and python. Bash and Perl come by default, so no need to install them separately.
 
 **Running tests without cloning the repository**
 

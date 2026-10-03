@@ -12,7 +12,7 @@
   * [AI](/modes/ai.md)
   * CI
     * [GitHub Application](/modes/ci/github.md)
-    * [Gitlab](/modes/ci/gitlab.md)
+    * [GitLab](/modes/ci/gitlab.md)
     * [Jenkins](/modes/ci/jenkins.md)
     * [Programmatic](/modes/ci/programmatic.md)
   * [Run](/modes/run.md)

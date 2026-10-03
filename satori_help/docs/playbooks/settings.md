@@ -128,12 +128,12 @@ The `count` parameter allows you to launch multiple instances of the same playbo
 settings:
   name: "Siege - Load testing web servers"
   description: "Knowing how much traffic your web server can handle when under stress is essential for planning 
-                future grow of your website or application. By using tool called siege, you can run a load test 
+                future growth of your website or application. By using tool called siege, you can run a load test 
                 on your server and see how your system performs under different circumstances.
                 You can use siege to evaluate the amount of data transferred, response time, transaction rate, 
                 throughput, concurrency and how many times the server returned responses. 
                 The tool has three modes, in which it can operate – regression, internet simulation and brute force.
-                Siege must only be ran against servers you own or on such you have explicit permission to test. "
+                Siege must only be run against servers you own or on such you have explicit permission to test. "
   mitigation: "Use an anti DDoS service such as CloudFlare to prevent network attacks"
   count: 10
   timeout: 300
@@ -176,7 +176,7 @@ settings:
     saveReport: False
 ```
 
-**- Disable report storage:** set `saveReport` to `false` to avoid storing the report data on Satori servers, while still receiving an execution summary upon completion.
+**- Disable output storage:** set `saveOutput` to `false` to avoid storing the execution output on Satori servers, while still receiving an execution summary upon completion.
 
 ```yaml
 settings:

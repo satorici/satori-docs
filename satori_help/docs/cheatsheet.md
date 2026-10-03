@@ -40,7 +40,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `satori-v2 run ./ --playbook="satori://..."` | Upload the current dir and run the specified playbook |
 | `satori-v2 run semgrep` | Alias: run `satori://code/semgrep.yml` on the current dir |
 | `satori-v2 run pyspector` | Alias: run `satori://code/python/pyspector.yml` on the current dir |
-| `satori-v2 run PLAYBOOK --repo GithubUser/Repo` | Run the playbook on the latest commit of a Github repository (creates a 1-commit scan) |
+| `satori-v2 run PLAYBOOK --repo GitHubUser/Repo` | Run the playbook on the latest commit of a GitHub repository (creates a 1-commit scan) |
 
 ## Run locally
 
@@ -49,7 +49,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `satori-v2 local ./` | Execute the playbook .satori.yml locally |
 | `satori-v2 local playbook.yml` | Execute the playbook locally |
 | `satori-v2 local ./ --playbook="satori://..."` | Execute the specified playbook locally |
-| `satori-v2 local PLAYBOOK --repo GithubUser/Repo` | Clone the repo and run the playbook locally against it |
+| `satori-v2 local PLAYBOOK --repo GitHubUser/Repo` | Clone the repo and run the playbook locally against it |
 
 ## Local execution parameters
 
@@ -59,7 +59,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `--report` | Display test assertions and results |
 | `--issues` | After the run, list issues for the execution |
 | `--verify` | After the run, verify every finding with Claude Code (comment + TP/FP; requires `--repo`) |
-| `--repo GithubUser/Repo` | Clone the GitHub repository and run the playbook against that checkout |
+| `--repo GitHubUser/Repo` | Clone the GitHub repository and run the playbook against that checkout |
 | `-o, --output` | Display command output |
 | `-p, --playbook` | Playbook to execute instead of the source's `.satori.yml` |
 | `-d, --data KEY=VALUE` | Provide values for the playbook variables (repeatable) |
@@ -103,7 +103,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `--memory` | Change the memory dynamically (run only) |
 | `--image` | Specify a custom Docker image (run only) |
 | `-r, --region-filter REGION` | Restrict the execution to certain regions (repeatable) |
-| `--repo GithubUser/Repo` | Run the playbook on the latest commit of a Github repository (creates a 1-commit scan, run only) |
+| `--repo GitHubUser/Repo` | Run the playbook on the latest commit of a GitHub repository (creates a 1-commit scan, run only) |
 | `--count` | Number of executions for the run (default: 1, run only) |
 | `--delete-report` | Do not keep the report once the run finishes |
 | `--delete-output` | Do not keep the output once the run finishes |
@@ -272,8 +272,8 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 issue ISSUE-ID status {OPEN\|INVESTIGATING\|TP\|FIXED\|FP\|ACCEPTED}` | Set the issue status |
 | `satori-v2 issue ISSUE-ID comment BODY` | Add a comment to the issue |
 | `satori-v2 issue ISSUE-ID verify` | Verify the issue with Claude Code (comment + TP/FP) |
-| `satori-v2 run PLAYBOOK --repo GithubUser/Repo --verify` | After the run, verify every finding the same way |
-| `satori-v2 local PLAYBOOK --repo GithubUser/Repo --verify` | After a local run against a cloned repo, verify every finding |
+| `satori-v2 run PLAYBOOK --repo GitHubUser/Repo --verify` | After the run, verify every finding the same way |
+| `satori-v2 local PLAYBOOK --repo GitHubUser/Repo --verify` | After a local run against a cloned repo, verify every finding |
 | `satori-v2 issue ISSUE-ID advisory` | Create a draft external advisory for the issue |
 | `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub |
 | `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |
@@ -295,32 +295,32 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 repos` | List the repositories connected to CI or tested |
 | `satori-v2 repos --order {ASC\|DESC}` | Order the repository list |
 | `satori-v2 repos --page N -q N --json` | Pagination and JSON output |
-| `satori-v2 run PLAYBOOK --repo GithubUser/Repo` | Run a playbook on the latest commit of the repository (v2 equivalent of `repo X run`) |
-| `satori-v2 run PLAYBOOK --repo GithubUser/Repo -d KEY=value` | Provide parameters/secrets to the repository run |
-| `satori-v2 run PLAYBOOK --repo GithubUser/Repo --sync --output --report` | Wait for the run and display its output and report |
-| `satori-v2 scan GithubUser/Repo PLAYBOOK -q N` | Run a playbook on the last N commits of the repository (see [Scans](#scans)) |
-| `satori-v2 repo GithubUser/Repo` | Shows the repository Visibility, CI, Playbook, Status, Result and its team *(on development)* |
-| `satori-v2 repo GithubUser/Repo --pending` | Show pending actions in repo info *(on development)* |
-| `satori-v2 repo GithubUser/Repo run` | Run the repository's playbook on the latest commit *(on development)* |
-| `satori-v2 repo GithubUser/Repo run --playbook="satori://..."` | Run another playbook on the latest commit *(on development)* |
-| `satori-v2 repo GithubUser/Repo run -b BRANCH` | Run on specific branch (default: main) *(on development)* |
-| `satori-v2 repo GithubUser/Repo run -d '{"KEY":"value"}'` | Provide secrets/parameters as JSON *(on development)* |
-| `satori-v2 repo GithubUser/Repo run -s --sync` | Wait for run to complete *(on development)* |
-| `satori-v2 repo GithubUser/Repo run -o --output` | Display command output *(on development)* |
-| `satori-v2 repo GithubUser/Repo run -r --report` | Display test results *(on development)* |
-| `satori-v2 repo GithubUser/Repo run --visibility {public\|private\|unlisted}` | Set run visibility *(on development)* |
-| `satori-v2 repo GithubUser/Repo commits` | Show the list of commits and the reports associated *(on development)* |
-| `satori-v2 repo GithubUser/Repo tests` | List test results *(on development)* |
-| `satori-v2 repo GithubUser/Repo tests -a --all` | Show all test results *(on development)* |
-| `satori-v2 repo GithubUser/Repo tests -l LIMIT` | Limit number of results (default: 100) *(on development)* |
-| `satori-v2 repo GithubUser/Repo tests --fail` | Show only failed tests *(on development)* |
-| `satori-v2 repo GithubUser/Repo playbook list` | List playbooks for repository *(on development)* |
-| `satori-v2 repo GithubUser/Repo playbook add URI` | Add playbook to repository *(on development)* |
-| `satori-v2 repo GithubUser/Repo playbook del URI` | Remove playbook from repository *(on development)* |
-| `satori-v2 repo GithubUser/Repo visibility {public, private, unlisted}` | Toggles the repo's visibility *(on development)* |
-| `satori-v2 repo GithubUser/Repo params` | List parameters/secrets for the repository *(on development)* |
-| `satori-v2 repo GithubUser/Repo params add 'NAME=VALUE'` | Add a parameter/secret to the repository *(on development)* |
-| `satori-v2 repo GithubUser/Repo params del NAME` | Delete a parameter/secret from the repository *(on development)* |
+| `satori-v2 run PLAYBOOK --repo GitHubUser/Repo` | Run a playbook on the latest commit of the repository (v2 equivalent of `repo X run`) |
+| `satori-v2 run PLAYBOOK --repo GitHubUser/Repo -d KEY=value` | Provide parameters/secrets to the repository run |
+| `satori-v2 run PLAYBOOK --repo GitHubUser/Repo --sync --output --report` | Wait for the run and display its output and report |
+| `satori-v2 scan GitHubUser/Repo PLAYBOOK -q N` | Run a playbook on the last N commits of the repository (see [Scans](#scans)) |
+| `satori-v2 repo GitHubUser/Repo` | Shows the repository Visibility, CI, Playbook, Status, Result and its team *(on development)* |
+| `satori-v2 repo GitHubUser/Repo --pending` | Show pending actions in repo info *(on development)* |
+| `satori-v2 repo GitHubUser/Repo run` | Run the repository's playbook on the latest commit *(on development)* |
+| `satori-v2 repo GitHubUser/Repo run --playbook="satori://..."` | Run another playbook on the latest commit *(on development)* |
+| `satori-v2 repo GitHubUser/Repo run -b BRANCH` | Run on specific branch (default: main) *(on development)* |
+| `satori-v2 repo GitHubUser/Repo run -d '{"KEY":"value"}'` | Provide secrets/parameters as JSON *(on development)* |
+| `satori-v2 repo GitHubUser/Repo run -s --sync` | Wait for run to complete *(on development)* |
+| `satori-v2 repo GitHubUser/Repo run -o --output` | Display command output *(on development)* |
+| `satori-v2 repo GitHubUser/Repo run -r --report` | Display test results *(on development)* |
+| `satori-v2 repo GitHubUser/Repo run --visibility {public\|private\|unlisted}` | Set run visibility *(on development)* |
+| `satori-v2 repo GitHubUser/Repo commits` | Show the list of commits and the reports associated *(on development)* |
+| `satori-v2 repo GitHubUser/Repo tests` | List test results *(on development)* |
+| `satori-v2 repo GitHubUser/Repo tests -a --all` | Show all test results *(on development)* |
+| `satori-v2 repo GitHubUser/Repo tests -l LIMIT` | Limit number of results (default: 100) *(on development)* |
+| `satori-v2 repo GitHubUser/Repo tests --fail` | Show only failed tests *(on development)* |
+| `satori-v2 repo GitHubUser/Repo playbook list` | List playbooks for repository *(on development)* |
+| `satori-v2 repo GitHubUser/Repo playbook add URI` | Add playbook to repository *(on development)* |
+| `satori-v2 repo GitHubUser/Repo playbook del URI` | Remove playbook from repository *(on development)* |
+| `satori-v2 repo GitHubUser/Repo visibility {public, private, unlisted}` | Toggles the repo's visibility *(on development)* |
+| `satori-v2 repo GitHubUser/Repo params` | List parameters/secrets for the repository *(on development)* |
+| `satori-v2 repo GitHubUser/Repo params add 'NAME=VALUE'` | Add a parameter/secret to the repository *(on development)* |
+| `satori-v2 repo GitHubUser/Repo params del NAME` | Delete a parameter/secret from the repository *(on development)* |
 
 ## Monitors
 
@@ -349,27 +349,27 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 | `satori-v2 scans` | List scans |
 | `satori-v2 scans --public` | List public scans |
 | `satori-v2 scans --page N -q N --json` | Pagination and JSON output |
-| `satori-v2 scan GithubUser/Repo playbook.yml` | Scan the Github repository with a local playbook (directory sources are not allowed) |
-| `satori-v2 scan GithubUser/Repo --playbook="satori://..."` | Scan the Github repository with a public playbook |
-| `satori-v2 scan GithubUser/Repo SOURCE -q N` | Scan the last N commits of the repository (replaces v1 `-c`) |
-| `satori-v2 scan GithubUser/Repo SOURCE -d KEY=value` | Provide parameters and values |
-| `satori-v2 scan GithubUser/Repo SOURCE --split KEY=DELIMITER` | Split a parameter value into several values |
-| `satori-v2 scan GithubUser/Repo SOURCE -df KEY=PATH` | Load variable values from a file |
-| `satori-v2 scan GithubUser/Repo SOURCE -e KEY VALUE` | Set an environment variable in the container |
-| `satori-v2 scan GithubUser/Repo SOURCE -s --sync` | Wait for scan to complete |
-| `satori-v2 scan GithubUser/Repo SOURCE -r REGION` | Restrict the execution to certain regions (repeatable) |
-| `satori-v2 scan GithubUser/Repo SOURCE --cpu N --memory N --image IMAGE` | Override the container settings |
-| `satori-v2 scan GithubUser/Repo SOURCE --visibility {public\|private\|unlisted}` | Set scan visibility |
-| `satori-v2 scan GithubUser/Repo SOURCE --json` | Print the raw JSON response |
-| `satori-v2 scan GithubUser/Repo [-c N]` | Scan with the repository's playbook a coverage of 1 to 100 *(on development)*. Use `-q N` with an explicit playbook |
-| `satori-v2 scan GithubUser/Repo -b BRANCH` | Scan specific branch (default: main) *(on development)* |
-| `satori-v2 scan GithubUser/Repo --from YYYY-MM-DD` | Start date for scanning *(on development)* |
-| `satori-v2 scan GithubUser/Repo --to YYYY-MM-DD` | End date for scanning *(on development)* |
-| `satori-v2 scan GithubUser/Repo --skip-check` | Skip repository existence check *(on development)* |
-| `satori-v2 scan GithubUser/Repo -o --output` | Display command output *(on development)* |
-| `satori-v2 scan GithubUser/Repo -r --report` | Display test results *(on development)*. In v2 `-r` is `--region-filter` |
-| `satori-v2 scan GithubUser/Repo check-commits` | Get the repository commits before scanning *(on development)* |
-| `satori-v2 scan GithubUser/Repo check-forks` | Get the repository forks before scanning *(on development)* |
+| `satori-v2 scan GitHubUser/Repo playbook.yml` | Scan the GitHub repository with a local playbook (directory sources are not allowed) |
+| `satori-v2 scan GitHubUser/Repo --playbook="satori://..."` | Scan the GitHub repository with a public playbook |
+| `satori-v2 scan GitHubUser/Repo SOURCE -q N` | Scan the last N commits of the repository (replaces v1 `-c`) |
+| `satori-v2 scan GitHubUser/Repo SOURCE -d KEY=value` | Provide parameters and values |
+| `satori-v2 scan GitHubUser/Repo SOURCE --split KEY=DELIMITER` | Split a parameter value into several values |
+| `satori-v2 scan GitHubUser/Repo SOURCE -df KEY=PATH` | Load variable values from a file |
+| `satori-v2 scan GitHubUser/Repo SOURCE -e KEY VALUE` | Set an environment variable in the container |
+| `satori-v2 scan GitHubUser/Repo SOURCE -s --sync` | Wait for scan to complete |
+| `satori-v2 scan GitHubUser/Repo SOURCE -r REGION` | Restrict the execution to certain regions (repeatable) |
+| `satori-v2 scan GitHubUser/Repo SOURCE --cpu N --memory N --image IMAGE` | Override the container settings |
+| `satori-v2 scan GitHubUser/Repo SOURCE --visibility {public\|private\|unlisted}` | Set scan visibility |
+| `satori-v2 scan GitHubUser/Repo SOURCE --json` | Print the raw JSON response |
+| `satori-v2 scan GitHubUser/Repo [-c N]` | Scan with the repository's playbook a coverage of 1 to 100 *(on development)*. Use `-q N` with an explicit playbook |
+| `satori-v2 scan GitHubUser/Repo -b BRANCH` | Scan specific branch (default: main) *(on development)* |
+| `satori-v2 scan GitHubUser/Repo --from YYYY-MM-DD` | Start date for scanning *(on development)* |
+| `satori-v2 scan GitHubUser/Repo --to YYYY-MM-DD` | End date for scanning *(on development)* |
+| `satori-v2 scan GitHubUser/Repo --skip-check` | Skip repository existence check *(on development)* |
+| `satori-v2 scan GitHubUser/Repo -o --output` | Display command output *(on development)* |
+| `satori-v2 scan GitHubUser/Repo -r --report` | Display test results *(on development)*. In v2 `-r` is `--region-filter` |
+| `satori-v2 scan GitHubUser/Repo check-commits` | Get the repository commits before scanning *(on development)* |
+| `satori-v2 scan GitHubUser/Repo check-forks` | Get the repository forks before scanning *(on development)* |
 | `satori-v2 scan ID` | Show scan information |
 | `satori-v2 scan ID status` | Show the status of a scan |
 | `satori-v2 scan ID stop` | Stop the scan |
@@ -410,15 +410,15 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 | `satori-v2 team TEAM settings` | List your TEAM settings *(on development)* |
 | `satori-v2 team TEAM get_config NAME` | Show your TEAM's config setting *(on development)* |
 | `satori-v2 team TEAM set_config NAME VALUE` | Set your TEAM CONFIG setting *(on development)* |
-| `satori-v2 team TEAM add --github="GithubUser"` | Owners and admins can add users via Github to the TEAM *(on development)* |
+| `satori-v2 team TEAM add --github="GitHubUser"` | Owners and admins can add users via GitHub to the TEAM *(on development)* |
 | `--role="READ"` | Use the role READ (default) or ADMIN *(on development)* |
 | `satori-v2 team TEAM add --email="usr@example.com"` | Owners and admins can add users via Email to the TEAM *(on development)* |
 | `--role="READ"` | Use the role READ (default) or ADMIN *(on development)* |
 | `satori-v2 team TEAM add --monitor="MONITORID"` | Add the monitor ID to your TEAM *(on development)* |
-| `satori-v2 team TEAM add --repo="GithubUser/repo"` | Add the repo to your TEAM *(on development)* |
-| `satori-v2 team TEAM del --github="GithubUser"` | Delete the GithubUser from your TEAM *(on development)* |
+| `satori-v2 team TEAM add --repo="GitHubUser/repo"` | Add the repo to your TEAM *(on development)* |
+| `satori-v2 team TEAM del --github="GitHubUser"` | Delete the GitHubUser from your TEAM *(on development)* |
 | `satori-v2 team TEAM del --email="usr@example.com"` | Delete the email from the TEAM *(on development)* |
-| `satori-v2 team TEAM del --repo="GithubUser/repo"` | Delete the repo from the TEAM *(on development)* |
+| `satori-v2 team TEAM del --repo="GitHubUser/repo"` | Delete the repo from the TEAM *(on development)* |
 | `satori-v2 team TEAM del --monitor="MONITORID"` | Delete the monitor from the TEAM *(on development)* |
 | `satori-v2 team TEAM delete` | Delete the TEAM *(on development)* |
 

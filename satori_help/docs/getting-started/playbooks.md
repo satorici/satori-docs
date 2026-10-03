@@ -58,11 +58,11 @@ test:
 In this example, the `input` list provides different values to the command `echo`, allowing you to test multiple scenarios.
 For more details about the [language](../playbooks/language.md) features and available [asserts](../playbooks/asserts.md).
 
-# Running playbooks
+## Running playbooks
 
 Once you’ve created your Playbook, you need to know how to execute it. There are two primary methods for running Playbooks in Satori:
 
-#### 1. Command Line Interface (CLI)
+### 1. Command Line Interface (CLI)
 To run a Playbook from the command line, use the following command:
 
 ```bash
@@ -78,11 +78,11 @@ For example `--output` will display each command output: stdout, stderr, return 
 
 ![Hello World Output](img/playbooks_2.png)
 
-## Public Playbooks
+#### Public Playbooks
 
 Satori provides 200+ ready-to-use playbooks covering security testing, code analysis, infrastructure scanning, and more. Browse the full catalog at [satori.ci/playbooks](https://satori.ci/playbooks) or on the [playbook repository](https://github.com/satorici/playbooks).
 
-### Categories
+##### Categories
 
 | Category | Playbooks | What it covers |
 |----------|-----------|----------------|
@@ -101,7 +101,7 @@ Satori provides 200+ ready-to-use playbooks covering security testing, code anal
 | `cloud/` | 2 | AWS and multi-cloud security auditing |
 | `dos/` | 2 | Load testing and slow HTTP attacks |
 
-### Static Playbooks (SAST)
+##### Static Playbooks (SAST)
 
 Static playbooks analyze source code without running it. They are designed to be integrated into CI processes or run against a local repository with `satori-v2 run ./`:
 
@@ -122,7 +122,7 @@ import:
 
 ![SAST Output](img/sast.png)
 
-### Dynamic Playbooks (DAST)
+##### Dynamic Playbooks (DAST)
 
 Dynamic playbooks test running systems by providing parameters such as a host or URL:
 
@@ -134,7 +134,7 @@ satori-v2 run satori://dns/dnsx.yml -d HOST="target.com" --report --output
 
 ![Dast Output](img/dast_output.png)
 
-##### 2. Continuous Integration (CI)
+### 2. Continuous Integration (CI)
 
 You can also run your Playbook automatically using GitHub. To do this:
 1. Create a Playbook named `.satori.yml` in the root directory of your GitHub repository.

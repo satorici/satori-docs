@@ -1,4 +1,4 @@
-# Integrating Satori with your commits using our Github App
+# Integrating Satori with your commits using our GitHub App
 
 Each time you push code to your GitHub repository, there is a potential risk that may be introduced. To safeguard your project and its sensitive data, it's crucial to minimize the malfunctions or vulnerabilities. The three primary areas of concern are:
 
@@ -15,7 +15,7 @@ To automatically safeguard your GitHub repositories and ensure continuous testin
 
 Go to the [Satori GitHub App page](https://github.com/apps/satorici). Make sure you are authenticated with GitHub to proceed with the installation. You need to be authenticated to configure it.
 
-![Satori CI Github Install](img/github_1.png)
+![Satori CI GitHub Install](img/github_1.png)
 
 **2. Click on Configure:**
   
@@ -27,7 +27,7 @@ Select which accounts you will be setting it up for.
 
 Select the repositories where you want to install the app. You can choose specific repositories or select All repositories.
 
-![Select your Github repositories where you will use Satori](img/github_3.png)
+![Select your GitHub repositories where you will use Satori](img/github_3.png)
 
 **4. Save:**
   

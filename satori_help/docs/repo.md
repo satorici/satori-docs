@@ -96,12 +96,12 @@ Public playbooks provided by Satori can be listed with the command:
 ```sh
 satori-v2 playbooks --public
 ```
-These are hosted on GitHub at [[GitHub Application](https://github.com/satorici/playbooks/)](https://github.com/apps/satorici). You can run any public playbook using the `satori://` shortcut.
+These are hosted on GitHub at [GitHub](https://github.com/satorici/playbooks/). You can run any public playbook using the `satori://` shortcut.
 
-For example, run the public playbook `satori://code/phyton/ruff.yml` .
+For example, run the public playbook `satori://code/python/ruff.yml` .
 
 ```sh
-satori-v2 repo githubUsername/repository run --playbook satori://code/phyton/ruff.yml --report --output
+satori-v2 repo githubUsername/repository run --playbook satori://code/python/ruff.yml --report --output
 ```
 
 ![Running public playbook](img/repo_6.png)

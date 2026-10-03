@@ -8,7 +8,7 @@ Satori can be executed in two environments:
 
 ## Run Remotely
 
-This playbook named `hello.yml` remotely using Satori. This playbook is defined as follows:
+Run the playbook `hello.yml` remotely using Satori. The playbook is defined as follows:
 
 ```yml
 test:
@@ -28,7 +28,7 @@ When executing this playbook, you have several options:
 
 **- Synchronously with `--output`:** execute the playbook synchronously, showing the output in real-time as it completes.
 
-![Run remotely aync and async](img/run_1.png)
+![Run remotely sync and async](img/run_1.png)
 
 ## Run Remotely with Parameters
 
@@ -140,7 +140,7 @@ You can execute the playbook named `hello.yml` locally, just as you would run it
 ```sh
 satori-v2 local hello.yml --sync
 ```
-![Run locally aync and async](img/run_local.png)
+![Run locally sync and async](img/run_local.png)
 
 `satori-v2 local` accepts a subset of the `run` options: `-p/--playbook`, `-d/--data`, `--split`, `-df/--data-file`, `--timeout`, `--run`, `--visibility`, `-t/--tag`, `-o/--output`, `--report`, `--issues` and `-s/--sync`.
 
@@ -277,8 +277,10 @@ You can also combine `--repo` with additional parameters:
 ```sh
 satori-v2 run satori://code/python/lint/ruff.yml --repo satorici/satori-cli --report --output
 satori-v2 run satori://code/go/gosec.yml --repo securego/gosec --report --output
-satori-v2 run satori://code/github/ghwfauditor.yml -d GITHUB_PAT=TBC --repo All-Hands-AI/OpenHands --report --output
+satori-v2 run satori://code/github/ghwfauditor.yml -d GITHUB_PAT="$GITHUB_PAT" --repo All-Hands-AI/OpenHands --report --output
 ```
+
+Pass secrets such as `GITHUB_PAT` from an environment variable (for example, `export GITHUB_PAT=...` in your shell or a CI secret) instead of typing the token directly on the command line, so it does not end up in your shell history.
 
 | Flag | Description | Example |
 | --- | --- | --- |

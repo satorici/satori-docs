@@ -15,19 +15,19 @@ Satori offers flexible execution options for your tests, allowing them to run ei
 
 You can integrate Satori with various CI/CD tools:
 
-- Our [Github Application](https://github.com/apps/satorici) to analyze your repositories
-- A [Gitlab](modes/ci/gitlab.md) using the Satori CLI.
+- Our [GitHub Application](https://github.com/apps/satorici) to analyze your repositories
+- A [GitLab](modes/ci/gitlab.md) using the Satori CLI.
 - A [Jenkins](modes/ci/jenkins.md) using the Satori CLI.
 
 ## [Playbook's language](playbooks/language.md)
 
 Our YAML-based [language](playbooks/language.md) allows you to define [executions](playbooks/execution.md), specify their [inputs](playbooks/inputs.md), and [assert](playbooks/asserts.md) whether their behavior aligns with your expectations. Tests are encapsulated within files called playbooks, with different [settings](playbooks/settings.md) depending on the [execution mode](modes/modes.md): Run, CI, Scan, and/or Monitor.
 
-All our tests are stored in what we call playbooks. You can check our online playbooks in our [Github repository](https://github.com/satorici/playbooks/) for our public marketplace.
+All our tests are stored in what we call playbooks. You can check our online playbooks in our [GitHub repository](https://github.com/satorici/playbooks/) for our public marketplace.
 
 ## [Repositories](repo.md)
 
-We provide a comprehensive approach to testing code repositories on Github. Whether your repositories are attached to our CI process or not, you can perform tests on one or all of your repositories to assert their correctness (e.g., ensuring no passwords are stored, that software is being built and executed correctly, and that secure coding standards are followed). You can visualize the results using our [Web interface](https://satori.ci/repos/) or with our CLI (`satori-v2 repos`).
+We provide a comprehensive approach to testing code repositories on GitHub. Whether your repositories are attached to our CI process or not, you can perform tests on one or all of your repositories to assert their correctness (e.g., ensuring no passwords are stored, that software is being built and executed correctly, and that secure coding standards are followed). You can visualize the results using our [Web interface](https://satori.ci/repos/) or with our CLI (`satori-v2 repos`).
 
 ## [Monitor](modes/monitor.md)
 
