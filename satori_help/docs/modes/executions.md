@@ -116,7 +116,7 @@ To stop a single execution use `satori-v2 execution stop ID`; to stop everything
 | `--q TEXT` | Free text search |
 | `-t, --tag TAG` | Tag (repeatable) |
 | `--page N`, `-q, --quantity N` | Pagination of the listing |
-| `--notify slack://WORKSPACE:CHANNEL` | Send this page of results to Slack (repeatable). Not a job rule — immediate notify of the listing. See [Search notify](../notifications.md#search-notify) |
+| `--notify slack://…`, `email://…`, `discord://CHANNEL`, or `telegram://CHAT_ID` | Send this page of results to Slack, email, Discord, or Telegram (repeatable). Not a job rule — immediate notify of the listing. See [Search notify](../notifications.md#search-notify) |
 
 ```sh
 satori-v2 search --job-type MONITOR --report-status FAIL --from 2026-01-01
@@ -124,7 +124,10 @@ satori-v2 search --playbook satori://code/trufflehog.yml --severity 4
 satori-v2 search --id-gt 100 --id-lt 200
 satori-v2 search --tag env=prod --status FINISHED --status CANCELED
 satori-v2 search --playbook satori://code/python/pyspector.yml \
-  --notify slack://T00000000:C00000000
+  --notify slack://T00000000:C00000000 \
+  --notify email://security@example.com \
+  --notify discord://123456789012345678 \
+  --notify telegram://-15050500050
 ```
 
 ### Actions

@@ -3,7 +3,7 @@
 ::: warning On development
 The `satori-v2 settings` and `satori-v2 team ... set_config` commands used below to configure **team default** notification channels are not available yet in CLI v2. Configure Slack bot membership from the web [dashboard](https://www.satori.ci/dashboard/) in the meantime.
 
-Playbook `settings.notify`, the CLI `satori-v2 run --notify` flag, and `satori-v2 search --notify` **are available** in CLI v2 (Slack destinations only for now). The older playbook keys `log` / `logOnFail` / `logOnPass` are not used by v2 — migrate to `settings.notify`.
+Playbook `settings.notify`, the CLI `satori-v2 run --notify` flag, and `satori-v2 search --notify` **are available** in CLI v2 (Slack, email, Discord, and Telegram destinations). The older playbook keys `log` / `logOnFail` / `logOnPass` are not used by v2 — migrate to `settings.notify`.
 :::
 
 Our flexible notification system ensures that your team stays informed about the status of your projects in real-time. We offer integration with multiple communication platforms, including:
@@ -148,10 +148,12 @@ Named severities (case-insensitive): `info`, `low`, `medium`, `high`, `critical`
 
 | Scheme | Format | Notes |
 | --- | --- | --- |
-| Slack | `slack://WORKSPACE:CHANNEL` or `slack://WORKSPACE/CHANNEL` | Channel may be a Slack channel ID (`C…`) or `#name`. Invite `@SatoriCIBot` to the channel. **Sending is supported now.** |
-| Email | `email://user@example.com` | Accepted in config; delivery not implemented yet in v2. |
+| Slack | `slack://WORKSPACE:CHANNEL` or `slack://WORKSPACE/CHANNEL` | Channel may be a Slack channel ID (`C…`) or `#name`. Invite `@SatoriCIBot` to the channel. **Sending is supported.** |
+| Email | `email://user@example.com` | Sent from `info@satori.ci` via Satori's Gmail integration. **Sending is supported.** |
+| Discord | `discord://CHANNEL_ID` or `discord://GUILD/CHANNEL_ID` | Channel ID from Discord Developer Mode. Invite the Satori bot to the server/channel (see [Discord](#discord)). **Sending is supported.** |
+| Telegram | `telegram://CHAT_ID` or `telegram://bot:chat` | Chat/channel ID (often negative, e.g. `-15050500050`). Invite `@satori_ci_bot` (see [Telegram](#telegram)). **Sending is supported.** |
 
-Multiple rules are allowed. Matching rules for Slack are sent at the end of each finished execution. The Slack message includes pass/fail, fail counts, severity summary, and links to the job and report on `https://dashboard.satori.ci`.
+Multiple rules are allowed. Matching Slack, email, Discord, and Telegram destinations are notified at the end of each finished execution (and on issue-status events when `watch` includes `issue-status`). Messages include pass/fail, fail counts, severity summary, and links to the job and report on `https://dashboard.satori.ci`.
 
 ### Example
 
@@ -161,6 +163,15 @@ settings:
     - result: fail
       severity: [high, critical, blocker]
       to: slack://T00000000:C00000000
+    - result: fail
+      severity: [high, critical, blocker]
+      to: email://security@example.com
+    - result: fail
+      severity: [high, critical, blocker]
+      to: discord://123456789012345678
+    - result: fail
+      severity: [high, critical, blocker]
+      to: telegram://-15050500050
     - result: pass
       to: slack://T00000000:C11111111
 ```
@@ -206,9 +217,21 @@ settings:
       result: fail
       severity: [blocker, critical, high]
       to: slack://T00000000:C00000000
+    - watch: [issue-status]
+      result: fail
+      severity: [blocker, critical, high]
+      to: email://security@example.com
+    - watch: [issue-status]
+      result: fail
+      severity: [blocker, critical, high]
+      to: discord://123456789012345678
+    - watch: [issue-status]
+      result: fail
+      severity: [blocker, critical, high]
+      to: telegram://-15050500050
 ```
 
-The Slack message includes the issue title, the old and new status, the severity, the repository and a link to the report.
+The message includes the issue title, the old and new status, the severity, the repository and a link to the report.
 
 ### CLI override: `--notify`
 
@@ -217,7 +240,10 @@ On `satori-v2 run`, `--notify` is repeatable. When present, the CLI rules **repl
 ```sh
 satori-v2 run ./ \
   --notify 'severity=blocker,critical,high,result=fail,to=slack://T00000000:C00000000' \
-  --notify 'result=pass,to=slack://T00000000:C11111111'
+  --notify 'result=pass,to=slack://T00000000:C11111111' \
+  --notify 'result=fail,to=email://security@example.com' \
+  --notify 'result=fail,to=discord://123456789012345678' \
+  --notify 'result=fail,to=telegram://-15050500050'
 ```
 
 Each value is a comma-separated `key=value` string:
@@ -239,16 +265,19 @@ See also [Run command options](modes/run.md#execution-environment).
 
 ### Search: `--notify`
 
-On `satori-v2 search`, `--notify` is repeatable and takes a bare Slack URI (`slack://workspace:channel`). It is **not** a job rule: the API sends the **current page** of search results to Slack as a monospace table (Id, Playbook source, Status, Result, Created at), and still prints the table in the terminal.
+On `satori-v2 search`, `--notify` is repeatable and takes a bare Slack, email, Discord, or Telegram URI (`slack://workspace:channel`, `email://user@example.com`, `discord://CHANNEL_ID`, or `telegram://CHAT_ID`). It is **not** a job rule: the API sends the **current page** of search results as a monospace table (Id, Playbook source, Status, Result, Created at), and still prints the table in the terminal.
 
 ```sh
 satori-v2 search --playbook satori://code/python/pyspector.yml \
-  --notify slack://T00000000:C00000000
+  --notify slack://T00000000:C00000000 \
+  --notify email://security@example.com \
+  --notify discord://123456789012345678 \
+  --notify telegram://-15050500050
 ```
 
 - Requires an authenticated session (anonymous search cannot notify)
 - Empty result pages are not sent
-- Invalid URIs fail the request with an error; Slack delivery failures are best-effort and do not hide the listing
+- Invalid URIs fail the request with an error; delivery failures are best-effort and do not hide the listing
 - Does not apply to `--download`, `--reports`, `--stop`, or `--delete`
 
 See also [Search](modes/executions.md#search).
@@ -310,7 +339,11 @@ To set up Discord notifications in Satori, you first need to obtain the Channel 
 2. Select Copy ID from the dropdown menu. The Channel ID is now copied to your clipboard.
 *Note: This method can be used to obtain IDs for text channels, voice channels, categories, and individual messages.*
 
-Once you have the Channel ID, you can configure it in Satori Web or with the following command:
+Once you have the Channel ID, use it in playbook `settings.notify` (or `satori-v2 run --notify`) as `discord://CHANNEL_ID`. Invite the Satori Discord bot to your server first:
+
+https://discord.com/api/oauth2/authorize?client_id=1038196776752128131&permissions=2048&scope=bot
+
+You can also configure a team default channel in Satori Web or with the following command:
 
 ```sh
 satori-v2 team Private set_config discord_channel CHANNEL_ID
@@ -325,8 +358,10 @@ To set up Telegram notifications with Satori, follow these steps:
 ![Telegram Bot](img/notif_telegram_1.png)
 
 2. Obtain the Channel ID: access your channel via the web at Telegram Web. The Channel ID is the number that appears after the # in the URL (e.g., -15050500050).
-Once you have the Channel ID, you can configure it in Satori-CI to start receiving notifications.
+Once you have the Channel ID, use it in playbook `settings.notify` (or `satori-v2 run --notify`) as `telegram://CHAT_ID` (include the leading minus for channels). Invite `@satori_ci_bot` to the channel first.
 ![Telegram Channel ID](img/notif_telegram_2.png)
+
+You can also configure a team default channel:
 
 ```sh
 satori-v2 team Private set_config telegram_channel CHANNEL_ID

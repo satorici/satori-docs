@@ -87,7 +87,7 @@ In CLI v2, these settings are what turn a run into a monitor: when the playbook 
 
 ## Notification settings for execution results
 
-Use `settings.notify` to send Slack messages when an execution finishes. Each entry is a rule with `result` (`pass` or `fail`), optional `severity` list, and a `to` URI:
+Use `settings.notify` to send Slack, email, Discord, or Telegram messages when an execution finishes. Each entry is a rule with `result` (`pass` or `fail`), optional `severity` list, and a `to` URI:
 
 ```yaml
 settings:
@@ -95,6 +95,15 @@ settings:
     - result: fail
       severity: [high, critical, blocker]
       to: slack://T00000000:C00000000
+    - result: fail
+      severity: [high, critical, blocker]
+      to: email://security@example.com
+    - result: fail
+      severity: [high, critical, blocker]
+      to: discord://123456789012345678
+    - result: fail
+      severity: [high, critical, blocker]
+      to: telegram://-15050500050
     - result: pass
       to: slack://T00000000:C11111111
 ```
@@ -105,10 +114,13 @@ For a one-off override on `satori-v2 run`, use repeatable `--notify` (this **rep
 
 ```sh
 satori-v2 run ./ \
-  --notify 'result=fail,severity=high,critical,blocker,to=slack://T00000000:C00000000'
+  --notify 'result=fail,severity=high,critical,blocker,to=slack://T00000000:C00000000' \
+  --notify 'result=fail,to=email://security@example.com' \
+  --notify 'result=fail,to=discord://123456789012345678' \
+  --notify 'result=fail,to=telegram://-15050500050'
 ```
 
-See [Notifications](../notifications.md#playbook-settings) for URI formats, severity names, and Slack setup. Email and other channel URIs may appear in config but only Slack delivery is implemented in v2.
+See [Notifications](../notifications.md#playbook-settings) for URI formats, severity names, and Slack/email/Discord/Telegram setup. Datadog URIs may appear in config but are not delivered from `settings.notify` yet.
 
 ## Timeout Settings
 

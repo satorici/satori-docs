@@ -248,6 +248,9 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | --- | --- |
 | `satori-v2 search [FILTERS]` | Search reports using the [report filters](#report-filters) |
 | `satori-v2 search [FILTERS] --notify slack://W:C` | List matching reports and send this page to Slack (repeatable) |
+| `satori-v2 search [FILTERS] --notify email://user@example.com` | List matching reports and send this page by email (repeatable) |
+| `satori-v2 search [FILTERS] --notify discord://CHANNEL` | List matching reports and send this page to Discord (repeatable) |
+| `satori-v2 search [FILTERS] --notify telegram://CHAT_ID` | List matching reports and send this page to Telegram (repeatable) |
 | `satori-v2 search [FILTERS] --download PATH` | Download the outputs of the matching FINISHED reports to PATH |
 | `satori-v2 search [FILTERS] --reports PATH` | Download the matching reports as JSON to PATH |
 | `satori-v2 search [FILTERS] --stop` | Stop the matching RUNNING reports |
