@@ -5,6 +5,7 @@
     "docs:preview": "vitepress preview satori_help/docs"
   },
   "devDependencies": {
-    "vitepress": "^1.6.0"
+    "vitepress": "^1.6.0",
+    "vitepress-plugin-llms": "^1.14.0"
   }
 }

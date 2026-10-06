@@ -1,4 +1,5 @@
 import { defineConfig } from "vitepress";
+import llmstxt from "vitepress-plugin-llms";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -6,6 +7,9 @@ export default defineConfig({
     description:
         "Satori CI is an Automated Testing platform that asserts the behavior of command executions. Testing software and systems using our Playbook marketplace or by defining your own playbooks",
     sitemap: { hostname: "https://docs.satori.ci" },
+    vite: {
+        plugins: [llmstxt()],
+    },
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
         logo: "https://satori.ci/img/logo.svg",
