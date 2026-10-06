@@ -72,7 +72,8 @@ settings:
   timeout: 60 # no more than 60 seconds should be required
   notify:
     - result: fail
-      to: slack://T00000000:C00000000
+      to: slack
+    # or full URI: to: slack://T00000000:C00000000
 
 Hello_World_Test:
   assertStdoutContains: "Hello World"

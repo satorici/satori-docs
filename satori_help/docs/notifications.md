@@ -1,7 +1,7 @@
 # Notifications
 
 ::: warning On development
-The `satori-v2 settings` and `satori-v2 team ... set_config` commands used below to configure **team default** notification channels are not available yet in CLI v2. Configure Slack bot membership from the web [dashboard](https://www.satori.ci/dashboard/) in the meantime.
+The `satori-v2 settings` and `satori-v2 team ... set_config` commands used below to configure **team default** notification channels are not available yet in CLI v2. Store personal notification defaults with `PATCH /settings` (`notify` block) for now; the web [dashboard](https://www.satori.ci/dashboard/) still covers Slack bot membership.
 
 Playbook `settings.notify`, the CLI `satori-v2 run --notify` flag, and `satori-v2 search --notify` **are available** in CLI v2 (Slack, email, Discord, and Telegram destinations). The older playbook keys `log` / `logOnFail` / `logOnPass` are not used by v2 — migrate to `settings.notify`.
 :::
@@ -14,7 +14,22 @@ Our flexible notification system ensures that your team stays informed about the
 - [Telegram](#telegram)
 - [Datadog](#datadog)
 
-You can define the specific conditions under which you wish to receive updates—whether on test failures, successes, or both. 
+You can define the specific conditions under which you wish to receive updates—whether on test failures, successes, or both.
+
+## User notification defaults
+
+Store personal defaults with `GET` / `PATCH /settings` under `notify`:
+
+| Key | Purpose |
+| --- | --- |
+| `default` | Preferred platform: `slack`, `email`, `discord`, or `telegram` |
+| `slack_workspace` | Slack team ID (`T…`) |
+| `slack_channel` | Channel ID or `#name` |
+| `email` | Address |
+| `discord` | Channel ID |
+| `telegram` | Chat ID |
+
+When a notify rule’s `to` is incomplete — bare `slack` / `email` / `discord` / `telegram` / `default`, empty `scheme://`, or a Slack URI missing workspace and/or channel — the server fills those values from the job owner’s defaults (finish and issue-status notify) or the authenticated caller’s defaults (`search --notify`). Full URIs are left unchanged. Destinations that still cannot be completed are skipped.
 
 ## Notification settings
 
@@ -152,6 +167,7 @@ Named severities (case-insensitive): `info`, `low`, `medium`, `high`, `critical`
 | Email | `email://user@example.com` | Sent from `info@satori.ci` via Satori's Gmail integration. **Sending is supported.** |
 | Discord | `discord://CHANNEL_ID` or `discord://GUILD/CHANNEL_ID` | Channel ID from Discord Developer Mode. Invite the Satori bot to the server/channel (see [Discord](#discord)). **Sending is supported.** |
 | Telegram | `telegram://CHAT_ID` or `telegram://bot:chat` | Chat/channel ID (often negative, e.g. `-15050500050`). Invite `@satori_ci_bot` (see [Telegram](#telegram)). **Sending is supported.** |
+| Short form | `slack`, `email`, `discord`, `telegram`, `default`, or empty `scheme://` | Expanded from the user's `PATCH /settings` `notify` defaults at send time. |
 
 Multiple rules are allowed. Matching Slack, email, Discord, and Telegram destinations are notified at the end of each finished execution (and on issue-status events when `watch` includes `issue-status`). Messages include pass/fail, fail counts, severity summary, and links to the job and report on `https://dashboard.satori.ci`.
 
@@ -174,6 +190,15 @@ settings:
       to: telegram://-15050500050
     - result: pass
       to: slack://T00000000:C11111111
+```
+
+Use saved user defaults (no workspace/channel in the playbook):
+
+```yml
+settings:
+  notify:
+    - result: fail
+      to: slack
 ```
 
 Notify on any failure (no severity filter):
