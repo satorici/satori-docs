@@ -10,6 +10,7 @@
   * [Settings](/playbooks/settings.md)
 * [Execution modes](/modes/modes.md)
   * [AI](/modes/ai.md)
+  * [MCP](/modes/mcp.md)
   * CI
     * [GitHub Application](/modes/ci/github.md)
     * [GitLab](/modes/ci/gitlab.md)

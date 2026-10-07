@@ -59,6 +59,7 @@ export default defineConfig({
                 link: "/modes/modes",
                 items: [
                     { text: "AI", link: "/modes/ai" },
+                    { text: "MCP", link: "/modes/mcp" },
                     { text: "Run", link: "/modes/run" },
                     { text: "Executions & Output", link: "/modes/executions" },
                     { text: "Shell", link: "/modes/shell" },

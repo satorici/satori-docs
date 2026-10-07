@@ -1,13 +1,13 @@
 ---
 next:
-  text: 'Shell'
-  link: '/modes/shell'
+  text: 'MCP server'
+  link: '/modes/mcp'
 ---
 
 # AI
 
 ::: warning On development
-`satori-v2 ai` is not available yet in CLI v2. This page documents the v1 command and is kept for reference; every `satori-v2 ai ...` example below will be available once the command is ported.
+`satori-v2 ai` is not available yet in CLI v2. This page documents the v1 command and is kept for reference; every `satori-v2 ai ...` example below will be available once the command is ported. For AI agents today, use the [MCP server](mcp.md) (`satori-v2 mcp`).
 :::
 
 Satori AI lets you describe what you want to test in plain language and generates a ready-to-run playbook for you. Whether you are a developer, a pentester, a QA engineer, or a CTO, you can tell it what to check and it will produce the right playbook for your role.

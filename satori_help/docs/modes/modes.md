@@ -3,6 +3,7 @@
 Satori is an automated testing platform that offers multiple ways to execute tests, allowing flexibility for different testing needs. You can run tests in the following modes:
 
   - **AI:** describe what you want to test in plain language and get a ready-to-run playbook.
+  - **MCP:** connect Cursor, Claude Code, or Codex to Satori through a local MCP server (`satori-v2 mcp`).
   - **On demand:** execute tests manually when needed.
   - **As part of a CI/CD process:** integrate automated tests into your CI/CD pipeline.
   - **Scheduled (also known as monitors):** set up tests to run at specific intervals, allowing continuous monitoring of your environments.
@@ -21,6 +22,16 @@ satori-v2 ai "create a .satori.yml to test my Python app for frontend and backen
 ```
 
 See [AI documentation](ai.md) for details, or [watch it in action](https://youtu.be/HUv82qwX4Ls).
+
+## [MCP](mcp.md)
+
+Run a local MCP server so AI agents can write playbooks, run them, and inspect results with your Satori token:
+
+```console
+satori-v2 mcp
+```
+
+See [MCP server](mcp.md) for agent config, tools, and playbook doc resources.
 
 ## [Run](run.md)
 

@@ -14,6 +14,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `satori-v2 config token "TEAMTOKEN" --profile TEAM` | Configure your team token on your team profile |
 | `satori-v2 config pat "GITHUB_PAT"` | Set your GitHub personal access token (patched via the API) |
 | `satori-v2 whoami` | Show the active profile and whether a GitHub PAT is configured |
+| `satori-v2 mcp` | Run a local MCP server over stdio for AI agents (Cursor, Claude Code, Codex). See [MCP server](/modes/mcp.md) |
 | `satori-v2 width` | Show console width configuration for current profile *(on development)* |
 
 ## Global options & environment
