@@ -6,13 +6,21 @@ next:
 
 # MCP server
 
-`satori-v2 mcp` starts a local [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server over stdio. AI agents such as Cursor, Claude Code, and Codex can use it to run playbooks, inspect executions, and read findings through your existing Satori credentials.
+`satori-v2 mcp` starts a local [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server over stdio. AI agents such as Claude Code, Codex, and Cursor can use it to run playbooks, inspect executions, and read findings through your existing Satori credentials.
 
 The server uses the token from `satori-v2 config token` (or `SATORI_TOKEN` / `SATORI_PROFILE`). Configure a token first — see [Installation](/getting-started/install.md).
 
 ## Configure your agent
 
-Add the server to your agent's MCP config. For example in Cursor (`.cursor/mcp.json` or global MCP settings):
+Add the server to your agent's MCP config. The agent launches `satori-v2 mcp` itself — stdout is the protocol channel, so do not pipe or redirect it.
+
+### Claude Code
+
+```console
+claude mcp add --scope user satori -- satori-v2 mcp
+```
+
+Or write a project `.mcp.json` (and commit it for the team):
 
 ```json
 {
@@ -22,13 +30,31 @@ Add the server to your agent's MCP config. For example in Cursor (`.cursor/mcp.j
 }
 ```
 
-Then start it with:
+### Codex
 
 ```console
-satori-v2 mcp
+codex mcp add satori -- satori-v2 mcp
 ```
 
-stdout is the MCP protocol channel; do not pipe or redirect it when the agent launches the server.
+Or add to `~/.codex/config.toml` (or a trusted project's `.codex/config.toml`):
+
+```toml
+[mcp_servers.satori]
+command = "satori-v2"
+args = ["mcp"]
+```
+
+### Cursor
+
+In `.cursor/mcp.json` or global MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "satori": { "command": "satori-v2", "args": ["mcp"] }
+  }
+}
+```
 
 ## Tools
 
@@ -41,6 +67,9 @@ stdout is the MCP protocol channel; do not pipe or redirect it when the agent la
 | `list_findings` | List findings (optional `execution_id`, severity, status) |
 | `get_finding` | Details of one finding |
 | `list_repos` | Repositories Satori can target, with their last execution |
+| `list_executions` | Past executions, newest first (filter by `job_id`, `status`, `report_status`, `job_type`, `from_`/`to`, `q`; paginated, max 25) |
+| `stop_execution` | Cancel a running execution (no-op if it is not running) |
+| `get_execution_playbook` | The playbook YAML an execution ran (capped) |
 
 All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs.
 
