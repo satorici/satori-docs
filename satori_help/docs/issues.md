@@ -2,6 +2,8 @@
 
 Executions and their reports are immutable: once a playbook has run, its output and its pass/fail result never change. **Issues** are the mutable layer on top of them. An issue is an assert failure or a tool hit (semgrep, pyspector, trufflehog, etc.) that has been promoted to something your team tracks: it has a status, a severity, an assignee and a timeline of comments and events.
 
+Tool hits come from structured JSON stdout. When writing playbooks, prefer each tool’s JSON flags — see [Tool output](playbooks/tool-output.md).
+
 Issues are created from the web dashboard (the *Triage* button of a report) and can be listed, inspected, commented on and turned into GitHub security advisories from the CLI.
 
 | Command | Description |

@@ -88,12 +88,13 @@ The server exposes playbook reference pages as MCP resources (fetched from `http
 | `satori-docs://playbooks/inputs` | Inputs |
 | `satori-docs://playbooks/settings` | Settings |
 | `satori-docs://playbooks/execution` | Execution |
+| `satori-docs://playbooks/tool-output` | Prefer JSON tool stdout for `TOOL` findings |
 
-Agents should read `satori-docs://playbooks/language` before writing or running a playbook.
+Agents should read `satori-docs://playbooks/language` before writing or running a playbook. When the playbook runs a security/analysis tool, also read `satori-docs://playbooks/tool-output` and prefer that tool’s JSON flags.
 
 ## Prompt
 
-`write_and_run_playbook` guides the agent to read the language docs, write YAML, call `run_playbook`, then summarize with `get_execution` / `get_execution_output` / `list_findings` and include the `report_url`.
+`write_and_run_playbook` guides the agent to read the language docs (and tool-output when using scan tools), write YAML with preferred JSON tool flags, call `run_playbook`, then summarize with `get_execution` / `get_execution_output` / `list_findings` and include the `report_url`.
 
 ## Errors
 

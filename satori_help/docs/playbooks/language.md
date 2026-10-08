@@ -84,6 +84,10 @@ Hello_World_Test:
   - HelloWorld.exe ${{who}}
 ```
 
+## [Tool output](tool-output.md)
+
+When a test runs a security or analysis tool that can emit JSON (or JSON Lines), prefer that format over human-readable text so Satori can parse `TOOL` findings. See [Tool output](tool-output.md).
+
 ## Imports
 
 Imports allow you to include other Playbooks into your own, enabling you to leverage existing tests or configurations. You can import both public Playbooks and local files. 

@@ -52,6 +52,7 @@ export default defineConfig({
                     { text: "Asserts", link: "/playbooks/asserts" },
                     { text: "Inputs", link: "/playbooks/inputs" },
                     { text: "Settings", link: "/playbooks/settings" },
+                    { text: "Tool output", link: "/playbooks/tool-output" },
                 ],
             },
             {

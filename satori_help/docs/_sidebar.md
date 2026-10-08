@@ -8,6 +8,7 @@
   * [Asserts](/playbooks/asserts.md)
   * [Inputs](/playbooks/inputs.md)
   * [Settings](/playbooks/settings.md)
+  * [Tool output](/playbooks/tool-output.md)
 * [Execution modes](/modes/modes.md)
   * [AI](/modes/ai.md)
   * [MCP](/modes/mcp.md)
