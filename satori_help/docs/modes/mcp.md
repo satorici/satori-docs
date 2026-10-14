@@ -70,12 +70,21 @@ In `.cursor/mcp.json` or global MCP settings:
 | `list_executions` | Past executions, newest first (filter by `job_id`, `status`, `report_status`, `job_type`, `from_`/`to`, `q`; paginated, max 25) |
 | `stop_execution` | Cancel a running execution (no-op if it is not running) |
 | `get_execution_playbook` | The playbook YAML an execution ran (capped) |
+| `recommend_playbook` | Inspect a repo (Python, JS/TS, Go, Java, C#) and propose a lint/format/types/unit/security playbook, or the changes to an existing `.satori.yml` |
 
 All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs.
 
 ### `run_playbook` notes
 
 Provide exactly one of `playbook_path` (local `.yml` / `.yaml` file) or `playbook_yaml` (inline YAML). Optional `repository` is an `owner/repo` from `list_repos`. With `wait` (default true), the tool polls until the job finishes or `wait_seconds` elapses (max 600); then call `get_execution` with the returned `execution_id`.
+
+### `recommend_playbook` notes
+
+Pass `directory` (default: the server's working directory). A new repo gets `playbook_yaml` plus a `checks` list explaining each check. If `.satori.yml` exists, you get `changes` (missing or different checks with `suggested_yaml`) to merge by hand. Checks for tools the repo already configures are blocking (`assertReturnCode: 0`); the rest are informational.
+
+Only what the repo cannot settle comes back in `questions` (for example formatter, dead-code detection). Ask the user, then call again with `prefs`, e.g. `{"formatter": "black", "dead_code": false}`. Answers are stored in the first line of the playbook, `# satori:recommended v1 python/uv prefs: formatter=black`, so later updates only ask about checks added since. The generated playbook is validated before it is returned.
+
+Suggested loop: write the file with the user's approval, run `run_local` once as a baseline before editing code, and after each change fix only the failures that were not in the baseline.
 
 ## Playbook docs as resources
 
