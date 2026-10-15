@@ -48,7 +48,7 @@ After defining the script, click **Commit changes** to save the configuration.
 
 **6. Expand the Variables section and click Add variable:**
 
-For the secret value, paste your Team API Token, which you can find it going to you [Dashboard](https://satori.ci/dashboard), select your team, click on Settings and copy your Team API token.
+For the secret value, paste your Satori API token, which you can find in your Profile on the [Satori CI website](https://satori.ci/login).
    - Set the following variable to securely store your Satori token:
      - **Key**: `SATORI_TOKEN`
      - **Value**: `<token>` (replace `<token>` with your actual Satori token).

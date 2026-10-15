@@ -92,7 +92,6 @@ export default defineConfig({
                     { text: "Datadog", link: "/notifications#datadog" },
                 ],
             },
-            { text: "Teams", link: "/teams" },
             { text: "Cheatsheet", link: "/cheatsheet" },
         ],
 

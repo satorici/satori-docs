@@ -1,7 +1,7 @@
 # Notifications
 
 ::: warning On development
-The `satori-v2 settings` and `satori-v2 team ... set_config` commands used below to configure **team default** notification channels are not available yet in CLI v2. Store personal notification defaults with `PATCH /settings` (`notify` block) for now; the web [dashboard](https://www.satori.ci/dashboard/) still covers Slack bot membership.
+The `satori-v2 settings` command used below to configure **default** notification channels is not available yet in CLI v2. Store personal notification defaults with `PATCH /settings` (`notify` block) for now; the web [dashboard](https://www.satori.ci/dashboard/) still covers Slack bot membership.
 
 Playbook `settings.notify`, the CLI `satori-v2 run --notify` flag, and `satori-v2 search --notify` **are available** in CLI v2 (Slack, email, Discord, and Telegram destinations). The older playbook keys `log` / `logOnFail` / `logOnPass` are not used by v2 — migrate to `settings.notify`.
 :::
@@ -37,20 +37,14 @@ You can configure notifications using either the web interface or the CLI.
 
 ### Via CLI
 
-To view your current notification settings, run the following command:
-
-```sh
-satori-v2 team Private settings
-```
-
-![View settings:](img/notif_1.png)
+Use the [`satori-v2 settings`](#interactive-configuration-with-satori-v2-settings) command described below.
 
 ### Via Web 
 
 You can also set up notifications using the web interface by completing the necessary fields in the Notifications section of the Satori web [dashboard.](https://www.satori.ci/dashboard/)
 
 1. Log in to the Satori web dashboard.
-2. Navigate to the Team > Settings section.
+2. Navigate to the Settings section.
 3. Fill in the required fields for your notification preferences (e.g., email, Slack, Discord, etc.).
 4. Save your settings to activate notifications for your project.
 
@@ -125,26 +119,6 @@ satori-v2 settings datadog_site us3
 # Configure Telegram channel ID
 satori-v2 settings telegram -1234567890
 ```
-
-### Team-Specific Configuration
-
-All modes support team-specific configuration using the `--team` flag:
-
-```sh
-# Interactive mode for a specific team
-satori-v2 settings --team MyTeam
-
-# View team settings
-satori-v2 settings default --team MyTeam
-
-# Configure team settings
-satori-v2 settings email team@example.com --team MyTeam
-
-# Alternative: using team command alias
-satori-v2 team MyTeam settings
-```
-
-After configuring settings, the changes are applied immediately to your team.
 
 ## Playbook Settings
 
@@ -318,10 +292,8 @@ See also [Search](modes/executions.md#search).
 To set up email notifications, use this command:
 
 ```sh
-satori-v2 team Private set_config notification_email your@email.com
+satori-v2 settings email your@email.com
 ```
-
-![Email setting:](img/notif_2.png)
 
 ### Slack
 
@@ -331,7 +303,7 @@ Steps to Retrieve Workspace and Channel ID:
 
 1. Open the web version of Slack and navigate to the channel you're interested in.
 2. In your browser’s URL bar, you’ll see a URL like this: https://app.slack.com/client/T00000000/C00000000. The part after '/client/' is split into two segments.
-3. In the Satori CI dashboard, go to Team > Settings.
+3. In the Satori CI dashboard, go to Settings.
 4. Enter the first segment of the URL (e.g., T00000000) in the workspace ID field.
 5. Insert the Channel ID (e.g., C00000000) in the default channel field to receive notifications.
 6. Select Add Satori to Workspace and follow the instructions on the Slack website to add the bot.
@@ -340,15 +312,9 @@ Steps to Retrieve Workspace and Channel ID:
 Or via the CLI command: 
 
 ```sh
-satori-v2 team Private set_config slack_workspace TXXXXXXXXXX
+satori-v2 settings slack_workspace TXXXXXXXXXX
+satori-v2 settings slack_channel CXXXXXXXXXX
 ```
-
-![Workspace ID:](img/notif_3.png)
-
-```sh
-satori-v2 team Private set_config slack_channel CXXXXXXXXXX
-```
-![Channel ID:](img/notif_4.png)
 
 ### Discord
 
@@ -368,28 +334,27 @@ Once you have the Channel ID, use it in playbook `settings.notify` (or `satori-v
 
 https://discord.com/api/oauth2/authorize?client_id=1038196776752128131&permissions=2048&scope=bot
 
-You can also configure a team default channel in Satori Web or with the following command:
+You can also configure a default channel in Satori Web or with the following command:
 
 ```sh
-satori-v2 team Private set_config discord_channel CHANNEL_ID
+satori-v2 settings discord CHANNEL_ID
 ```
-![Discord setting:](img/notif_5.png)
 
 ### Telegram
 
 To set up Telegram notifications with Satori, follow these steps:
 
-1. Create a Telegram Channel: ensure you have a Telegram channel and invite the `@satori_ci_bot` to your team.
+1. Create a Telegram Channel: ensure you have a Telegram channel and invite the `@satori_ci_bot` to it.
 ![Telegram Bot](img/notif_telegram_1.png)
 
 2. Obtain the Channel ID: access your channel via the web at Telegram Web. The Channel ID is the number that appears after the # in the URL (e.g., -15050500050).
 Once you have the Channel ID, use it in playbook `settings.notify` (or `satori-v2 run --notify`) as `telegram://CHAT_ID` (include the leading minus for channels). Invite `@satori_ci_bot` to the channel first.
 ![Telegram Channel ID](img/notif_telegram_2.png)
 
-You can also configure a team default channel:
+You can also configure a default channel:
 
 ```sh
-satori-v2 team Private set_config telegram_channel CHANNEL_ID
+satori-v2 settings telegram CHANNEL_ID
 ```
 
 ### Datadog
@@ -405,7 +370,7 @@ Satori-CI integrates with Datadog Events for notification management. To set thi
 Use the Satori CLI to configure your newly created API key with the following command:
 
 ```shell
-satori-v2 team Private set_config datadog_api_key {MyDatadogApiKey}
+satori-v2 settings datadog_api_key {MyDatadogApiKey}
 ```
 
 - Replace `{MyDatadogApiKey}` with your Datadog API key.
@@ -414,20 +379,9 @@ satori-v2 team Private set_config datadog_api_key {MyDatadogApiKey}
 By default, events are sent to the **us1** site region. To configure a different site region, use the following command:
 
 ```shell
-satori-v2 team Private set_config datadog_site {MyDatadogRegion}
+satori-v2 settings datadog_site {MyDatadogRegion}
 ```
 - Replace `{MyDatadogRegion}` with one of the following options: `us1`, `us3`, `us5`, `eu`, `ap1`, or `us1-fed`.
-
-Via CLI with the following command: 
-```sh
-satori-v2 team Private set_config datadog_api_key a123
-```
-![API Key:](img/notif_6.png)
-
-```sh
-satori-v2 team Private set_config datadog_site us3|eu|etc
-```
-![Site Region:](img/notif_7.png)
 
 ## Report notifications
 

@@ -11,7 +11,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `satori-v2 update` | Update to the latest version (reinstalls from git with pip) |
 | `satori-v2 config` | Show the current configuration |
 | `satori-v2 config token "USERTOKEN"` | Configure your user token as your default profile |
-| `satori-v2 config token "TEAMTOKEN" --profile TEAM` | Configure your team token on your team profile |
+| `satori-v2 config token "TOKEN" --profile NAME` | Configure a token on a separate profile |
 | `satori-v2 config pat "GITHUB_PAT"` | Set your GitHub personal access token (patched via the API) |
 | `satori-v2 whoami` | Show the active profile and whether a GitHub PAT is configured |
 | `satori-v2 mcp` | Run a local MCP server over stdio for AI agents (Cursor, Claude Code, Codex). See [MCP server](/modes/mcp.md) |
@@ -27,7 +27,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `-q N, --quantity N` (aliases `-l`, `--limit`) | Number of results per page on list commands (default: 10) |
 | `--public` | List public items instead of yours on the root, `jobs`, `reports`, `monitors` and `scans` |
 | `--profile PROFILE` | Select the credentials profile. Only valid on `satori-v2 config` |
-| `~/.satori_credentials.yml` | Credentials file, one section per profile (`default`, `TEAM`, ...) |
+| `~/.satori_credentials.yml` | Credentials file, one section per profile (`default`, ...) |
 | `SATORI_TOKEN` | Token read directly from the environment (overrides the credentials file) |
 | `SATORI_PROFILE` | Profile to use (overrides `--profile`) |
 | `SATORI_ENDPOINT` | API endpoint (default: `https://api-v2.satori.ci`) |
@@ -149,7 +149,6 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `satori-v2 --public` | Show the latest public jobs |
 | `satori-v2 jobs` | List your jobs (runs, scans, monitors, CI and local executions) |
 | `satori-v2 job ID` | Show a job and its last 5 executions |
-| `satori-v2 team TEAM` | Show your TEAM dashboard *(on development)* |
 
 ## Jobs
 
@@ -219,7 +218,6 @@ Every job (run, scan, monitor, CI or local) produces one or more executions. `re
 | `satori-v2 report ID issue TEMPLATE_ID --query "SEARCH"` | Create issue with search query filter *(on development)* |
 | `satori-v2 report ID issue TEMPLATE_ID --title "TITLE"` | Create issue with custom title *(on development)* |
 | `satori-v2 report ID status` | Get report status *(on development)*. Use `satori-v2 report ID` |
-| `satori-v2 report ID set-team TEAM_NAME` | Assign report to team *(on development)* |
 
 ### Report filters
 
@@ -304,7 +302,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 run PLAYBOOK --repo GitHubUser/Repo -d KEY=value` | Provide parameters/secrets to the repository run |
 | `satori-v2 run PLAYBOOK --repo GitHubUser/Repo --sync --output --report` | Wait for the run and display its output and report |
 | `satori-v2 scan GitHubUser/Repo PLAYBOOK -q N` | Run a playbook on the last N commits of the repository (see [Scans](#scans)) |
-| `satori-v2 repo GitHubUser/Repo` | Shows the repository Visibility, CI, Playbook, Status, Result and its team *(on development)* |
+| `satori-v2 repo GitHubUser/Repo` | Shows the repository Visibility, CI, Playbook, Status and Result *(on development)* |
 | `satori-v2 repo GitHubUser/Repo --pending` | Show pending actions in repo info *(on development)* |
 | `satori-v2 repo GitHubUser/Repo run` | Run the repository's playbook on the latest commit *(on development)* |
 | `satori-v2 repo GitHubUser/Repo run --playbook="satori://..."` | Run another playbook on the latest commit *(on development)* |
@@ -401,34 +399,6 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 | `satori-v2 shell sessions --page N -q N --json` | Pagination and JSON output |
 | `satori-v2 shell --timeout SECONDS` | Set session duration limit *(on development)* |
 
-## Teams
-
-| Command | Description |
-| --- | --- |
-| `satori-v2 teams` | List your teams *(on development)* |
-| `satori-v2 team TEAM` | Show the TEAM dashboard *(on development)* |
-| `satori-v2 team TEAM create` | Create a new team named TEAM *(on development)* |
-| `satori-v2 team TEAM members` | List your TEAM members *(on development)* |
-| `satori-v2 team TEAM monitors` | List your TEAM monitors *(on development)* |
-| `satori-v2 team TEAM repos` | List your TEAM repositories *(on development)* |
-| `satori-v2 team TEAM reports` | List your TEAM reports *(on development)* |
-| `satori-v2 team TEAM settings` | List your TEAM settings *(on development)* |
-| `satori-v2 team TEAM get_config NAME` | Show your TEAM's config setting *(on development)* |
-| `satori-v2 team TEAM set_config NAME VALUE` | Set your TEAM CONFIG setting *(on development)* |
-| `satori-v2 team TEAM add --github="GitHubUser"` | Owners and admins can add users via GitHub to the TEAM *(on development)* |
-| `--role="READ"` | Use the role READ (default) or ADMIN *(on development)* |
-| `satori-v2 team TEAM add --email="usr@example.com"` | Owners and admins can add users via Email to the TEAM *(on development)* |
-| `--role="READ"` | Use the role READ (default) or ADMIN *(on development)* |
-| `satori-v2 team TEAM add --monitor="MONITORID"` | Add the monitor ID to your TEAM *(on development)* |
-| `satori-v2 team TEAM add --repo="GitHubUser/repo"` | Add the repo to your TEAM *(on development)* |
-| `satori-v2 team TEAM del --github="GitHubUser"` | Delete the GitHubUser from your TEAM *(on development)* |
-| `satori-v2 team TEAM del --email="usr@example.com"` | Delete the email from the TEAM *(on development)* |
-| `satori-v2 team TEAM del --repo="GitHubUser/repo"` | Delete the repo from the TEAM *(on development)* |
-| `satori-v2 team TEAM del --monitor="MONITORID"` | Delete the monitor from the TEAM *(on development)* |
-| `satori-v2 team TEAM delete` | Delete the TEAM *(on development)* |
-
-Team tokens can still be used in v2 through profiles: `satori-v2 config token "TEAMTOKEN" --profile TEAM` and `SATORI_PROFILE=TEAM`.
-
 ## Shards
 
 | Command | Description |
@@ -447,5 +417,3 @@ Team tokens can still be used in v2 through profiles: `satori-v2 config token "T
 | `satori-v2 settings` | Interactive menu to configure notification settings (Slack, Discord, Email, Telegram, Datadog) *(on development)* |
 | `satori-v2 settings KEY` | View current value of a notification setting *(on development)* |
 | `satori-v2 settings KEY VALUE` | Set a notification setting directly *(on development)* |
-| `satori-v2 settings --team TEAM` | Configure notifications for a specific team *(on development)* |
-| `satori-v2 team TEAM settings` | Alias for configuring team notifications interactively *(on development)* |
