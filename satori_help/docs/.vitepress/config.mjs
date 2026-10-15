@@ -59,7 +59,6 @@ export default defineConfig({
                 text: "Execution modes",
                 link: "/modes/modes",
                 items: [
-                    { text: "AI", link: "/modes/ai" },
                     { text: "MCP", link: "/modes/mcp" },
                     { text: "Run", link: "/modes/run" },
                     { text: "Executions & Output", link: "/modes/executions" },
