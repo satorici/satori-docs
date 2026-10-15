@@ -25,6 +25,8 @@ test:
     - echo Hello world!
 ```
 
+![Write a playbook, run it, assert, and get a report](/playbook_loop.svg)
+
 In this setup, you have a test that includes both execution and assertions. You can define multiple tests within a single Playbook, and tests can also be nested. For example:
 
 ```yml

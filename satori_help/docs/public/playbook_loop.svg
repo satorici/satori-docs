@@ -1,0 +1,605 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-labelledby="title desc">
+<title id="title">Your first Satori playbook: write, run, assert, report</title>
+<desc id="desc">A 15-second loop. In an editor, the playbook hello.yml is written line by line: a test with assertStdoutEqual "Hello world!\n", assertReturnCode 0, and execute echo Hello world!; the two assert lines are highlighted. In a terminal, satori-v2 run hello.yml --sync --report --output is typed and run. Job status goes from Running to Finished, and the output shows the command echo Hello world!, return code 0 and stdout Hello world!. Both asserts, assertStdoutEqual and assertReturnCode, are marked PASS. A report card shows Passed, 1/1 tests and 2/2 asserts, with Report ID 90412 and its dashboard link. Caption: Write. Run. Assert. Report. A playbook is YAML that checks command behavior.</desc>
+<style>
+svg {
+  --bg:#151f2c; --panel:#182433; --term:#111a26; --chip:#1d2b3d; --border:#2a3a50;
+  --text:#e3e8ef; --muted:#8fa0b5; --blue:#06adee; --green:#a6ce39; --red:#f66f81;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+text { font-family: var(--sans); }
+.mono { font-family: var(--mono); }
+.muted, .m { fill: var(--muted); }
+.k { fill: var(--blue); } .s { fill: var(--green); } .n { fill: #f9b44e; } .p { fill: var(--muted); }
+.t { fill: var(--text); } .f { fill: #9fb6cf; } .g { fill: var(--green); } .b { font-weight: 700; }
+.h { opacity: 0; }
+.pop { transform-box: fill-box; transform-origin: center; }
+@keyframes spin { 0% { opacity: 1; } 24.9% { opacity: 1; } 25% { opacity: 0; } 100% { opacity: 0; } }
+.spin { animation: spin .5s linear infinite both; }
+@keyframes chipE {
+  0% { opacity: 1; }
+  29.667% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  31.667% { opacity: 0; }
+  96.333% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.667% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes chipT {
+  0% { opacity: 0; }
+  29.667% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  31.667% { opacity: 1; }
+  96.333% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes ty0 {
+  0% { transform: translateX(0px); }
+  7% { transform: translateX(0px); animation-timing-function: steps(5, end); }
+  8.667% { transform: translateX(57.00px); }
+  98.6% { transform: translateX(57.00px); }
+  98.667% { transform: translateX(0px); }
+  100% { transform: translateX(0px); }
+}
+@keyframes w0 {
+  0% { opacity: 1; }
+  9.267% { opacity: 1; }
+  9.333% { opacity: 0; }
+  98.6% { opacity: 0; }
+  98.667% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes c0 {
+  0% { opacity: 1; }
+  2.6% { opacity: 1; }
+  2.667% { opacity: 0; }
+  5.267% { opacity: 0; }
+  5.333% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes band1 {
+  0% { opacity: 0; }
+  17.667% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  19.333% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes tag1 {
+  0% { opacity: 0; transform: scale(0.92); }
+  18% { opacity: 0; transform: scale(0.92); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  20% { opacity: 1; transform: scale(1); }
+  98.6% { opacity: 1; transform: scale(1); }
+  98.667% { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 0; transform: scale(0.92); }
+}
+@keyframes ln1 {
+  0% { opacity: 0; }
+  9.267% { opacity: 0; }
+  9.333% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes ty1 {
+  0% { transform: translateX(0px); }
+  9.667% { transform: translateX(0px); animation-timing-function: steps(35, end); }
+  17.333% { transform: translateX(399.00px); }
+  98.6% { transform: translateX(399.00px); }
+  98.667% { transform: translateX(0px); }
+  100% { transform: translateX(0px); }
+}
+@keyframes w1 {
+  0% { opacity: 1; }
+  17.933% { opacity: 1; }
+  18% { opacity: 0; }
+  98.6% { opacity: 0; }
+  98.667% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes c1 {
+  0% { opacity: 0; }
+  9.267% { opacity: 0; }
+  9.333% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes band2 {
+  0% { opacity: 0; }
+  22.667% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.333% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes tag2 {
+  0% { opacity: 0; transform: scale(0.92); }
+  23% { opacity: 0; transform: scale(0.92); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  25% { opacity: 1; transform: scale(1); }
+  98.6% { opacity: 1; transform: scale(1); }
+  98.667% { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 0; transform: scale(0.92); }
+}
+@keyframes ln2 {
+  0% { opacity: 0; }
+  17.933% { opacity: 0; }
+  18% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes ty2 {
+  0% { transform: translateX(0px); }
+  18.333% { transform: translateX(0px); animation-timing-function: steps(19, end); }
+  22.333% { transform: translateX(216.60px); }
+  98.6% { transform: translateX(216.60px); }
+  98.667% { transform: translateX(0px); }
+  100% { transform: translateX(0px); }
+}
+@keyframes w2 {
+  0% { opacity: 1; }
+  22.933% { opacity: 1; }
+  23% { opacity: 0; }
+  98.6% { opacity: 0; }
+  98.667% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes c2 {
+  0% { opacity: 0; }
+  17.933% { opacity: 0; }
+  18% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes ln3 {
+  0% { opacity: 0; }
+  22.933% { opacity: 0; }
+  23% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes ty3 {
+  0% { transform: translateX(0px); }
+  23.333% { transform: translateX(0px); animation-timing-function: steps(8, end); }
+  25% { transform: translateX(91.20px); }
+  98.6% { transform: translateX(91.20px); }
+  98.667% { transform: translateX(0px); }
+  100% { transform: translateX(0px); }
+}
+@keyframes w3 {
+  0% { opacity: 1; }
+  25.6% { opacity: 1; }
+  25.667% { opacity: 0; }
+  98.6% { opacity: 0; }
+  98.667% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes c3 {
+  0% { opacity: 0; }
+  22.933% { opacity: 0; }
+  23% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes ln4 {
+  0% { opacity: 0; }
+  25.6% { opacity: 0; }
+  25.667% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes ty4 {
+  0% { transform: translateX(0px); }
+  26% { transform: translateX(0px); animation-timing-function: steps(19, end); }
+  29.667% { transform: translateX(216.60px); }
+  98.6% { transform: translateX(216.60px); }
+  98.667% { transform: translateX(0px); }
+  100% { transform: translateX(0px); }
+}
+@keyframes w4 {
+  0% { opacity: 1; }
+  30.267% { opacity: 1; }
+  30.333% { opacity: 0; }
+  98.6% { opacity: 0; }
+  98.667% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes c4 {
+  0% { opacity: 0; }
+  25.6% { opacity: 0; }
+  25.667% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes tty {
+  0% { transform: translateX(0px); }
+  31.667% { transform: translateX(0px); animation-timing-function: steps(48, end); }
+  40.667% { transform: translateX(489.60px); }
+  98.6% { transform: translateX(489.60px); }
+  98.667% { transform: translateX(0px); }
+  100% { transform: translateX(0px); }
+}
+@keyframes tcaret {
+  0% { opacity: 1; }
+  42.933% { opacity: 1; }
+  43% { opacity: 0; }
+  98.6% { opacity: 0; }
+  98.667% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes key {
+  0% { opacity: 0; transform: scale(.8); }
+  41.333% { opacity: 0; transform: scale(.8); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  42.533% { opacity: 1; transform: scale(1); }
+  42.667% { opacity: 1; transform: scale(1); }
+  43.067% { opacity: 1; transform: scale(.86); }
+  43.867% { opacity: 1; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  46.333% { opacity: 0; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+@keyframes st {
+  0% { opacity: 0; }
+  43.467% { opacity: 0; }
+  43.533% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes stRun {
+  0% { opacity: 0; }
+  43.467% { opacity: 0; }
+  43.533% { opacity: 1; }
+  48.933% { opacity: 1; }
+  49% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes stFin {
+  0% { opacity: 0; }
+  49% { opacity: 0; }
+  49.067% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes rule {
+  0% { opacity: 0; }
+  50.333% { opacity: 0; }
+  50.4% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes o0 {
+  0% { opacity: 0; }
+  51.667% { opacity: 0; }
+  51.733% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes o1 {
+  0% { opacity: 0; }
+  53% { opacity: 0; }
+  53.067% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes o2 {
+  0% { opacity: 0; }
+  54.333% { opacity: 0; }
+  54.4% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes alab {
+  0% { opacity: 0; }
+  57% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  58.667% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes a0 {
+  0% { opacity: 0; transform: translateY(8px); }
+  57.333% { opacity: 0; transform: translateY(8px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  59.2% { opacity: 1; transform: translateY(0px); }
+  98.6% { opacity: 1; transform: translateY(0px); }
+  98.667% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+@keyframes ap0 {
+  0% { opacity: 0; }
+  59.667% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  61% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pp0 {
+  0% { opacity: 0; transform: scale(0.6); }
+  59.667% { opacity: 0; transform: scale(0.6); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  61.533% { opacity: 1; transform: scale(1); }
+  98.6% { opacity: 1; transform: scale(1); }
+  98.667% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 0; transform: scale(0.6); }
+}
+@keyframes a1 {
+  0% { opacity: 0; transform: translateY(8px); }
+  61.667% { opacity: 0; transform: translateY(8px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.533% { opacity: 1; transform: translateY(0px); }
+  98.6% { opacity: 1; transform: translateY(0px); }
+  98.667% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+@keyframes ap1 {
+  0% { opacity: 0; }
+  64% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  65.333% { opacity: 1; }
+  98.6% { opacity: 1; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pp1 {
+  0% { opacity: 0; transform: scale(0.6); }
+  64% { opacity: 0; transform: scale(0.6); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  65.867% { opacity: 1; transform: scale(1); }
+  98.6% { opacity: 1; transform: scale(1); }
+  98.667% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 0; transform: scale(0.6); }
+}
+@keyframes dimO {
+  0% { opacity: 0; }
+  56.667% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  58.667% { opacity: 0.5; }
+  69.667% { opacity: 0.5; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  71.667% { opacity: 0.6; }
+  98.6% { opacity: 0.6; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes dimA {
+  0% { opacity: 0; }
+  69.667% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  71.667% { opacity: 0.55; }
+  98.6% { opacity: 0.55; }
+  98.667% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes card {
+  0% { opacity: 0; transform: scale(0.9); }
+  70.667% { opacity: 0; transform: scale(0.9); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  72.8% { opacity: 1; transform: scale(1); }
+  98.6% { opacity: 1; transform: scale(1); }
+  98.667% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 0; transform: scale(0.9); }
+}
+@keyframes Ewrap {
+  0% { opacity: 1; }
+  29.667% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  31.667% { opacity: 0.4; }
+  96.333% { opacity: 0.4; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  99% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes Twrap {
+  0% { opacity: 0.45; }
+  29.667% { opacity: 0.45; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  31.667% { opacity: 1; }
+  96.333% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  99% { opacity: 0.45; }
+  100% { opacity: 0.45; }
+}
+@keyframes Ecode {
+  0% { opacity: 1; }
+  96% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.133% { opacity: 0; }
+  99% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  100% { opacity: 1; }
+}
+@keyframes Tcode {
+  0% { opacity: 1; }
+  96% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.133% { opacity: 0; }
+  99% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  100% { opacity: 1; }
+}
+@keyframes cw0 {
+  0% { fill: #4f6178; }
+  5.667% { fill: #4f6178; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  7.333% { fill: #06adee; }
+  30% { fill: #06adee; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  31.667% { fill: #e3e8ef; }
+  96% { fill: #e3e8ef; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.667% { fill: #4f6178; }
+  100% { fill: #4f6178; }
+}
+@keyframes cw1 {
+  0% { fill: #4f6178; }
+  30% { fill: #4f6178; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  31.667% { fill: #06adee; }
+  56.667% { fill: #06adee; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  58.333% { fill: #e3e8ef; }
+  96% { fill: #e3e8ef; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.667% { fill: #4f6178; }
+  100% { fill: #4f6178; }
+}
+@keyframes cw2 {
+  0% { fill: #4f6178; }
+  56.667% { fill: #4f6178; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  58.333% { fill: #06adee; }
+  70% { fill: #06adee; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  71.667% { fill: #e3e8ef; }
+  96% { fill: #e3e8ef; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.667% { fill: #4f6178; }
+  100% { fill: #4f6178; }
+}
+@keyframes cw3 {
+  0% { fill: #4f6178; }
+  70% { fill: #4f6178; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  71.667% { fill: #06adee; }
+  96% { fill: #06adee; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.667% { fill: #4f6178; }
+  100% { fill: #4f6178; }
+}
+@keyframes sub {
+  0% { opacity: 0; }
+  73.333% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  75.667% { opacity: 1; }
+  96% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+#chipE { animation: chipE 15s linear infinite both; }
+#chipT { animation: chipT 15s linear infinite both; }
+#ty0 { animation: ty0 15s linear infinite both; }
+#w0 { animation: w0 15s linear infinite both; }
+#c0 { animation: c0 15s linear infinite both; }
+#band1 { animation: band1 15s linear infinite both; }
+#tag1 { animation: tag1 15s linear infinite both; }
+#ln1 { animation: ln1 15s linear infinite both; }
+#ty1 { animation: ty1 15s linear infinite both; }
+#w1 { animation: w1 15s linear infinite both; }
+#c1 { animation: c1 15s linear infinite both; }
+#band2 { animation: band2 15s linear infinite both; }
+#tag2 { animation: tag2 15s linear infinite both; }
+#ln2 { animation: ln2 15s linear infinite both; }
+#ty2 { animation: ty2 15s linear infinite both; }
+#w2 { animation: w2 15s linear infinite both; }
+#c2 { animation: c2 15s linear infinite both; }
+#ln3 { animation: ln3 15s linear infinite both; }
+#ty3 { animation: ty3 15s linear infinite both; }
+#w3 { animation: w3 15s linear infinite both; }
+#c3 { animation: c3 15s linear infinite both; }
+#ln4 { animation: ln4 15s linear infinite both; }
+#ty4 { animation: ty4 15s linear infinite both; }
+#w4 { animation: w4 15s linear infinite both; }
+#c4 { animation: c4 15s linear infinite both; }
+#tty { animation: tty 15s linear infinite both; }
+#tcaret { animation: tcaret 15s linear infinite both; }
+#key { animation: key 15s linear infinite both; }
+#st { animation: st 15s linear infinite both; }
+#stRun { animation: stRun 15s linear infinite both; }
+#stFin { animation: stFin 15s linear infinite both; }
+#rule { animation: rule 15s linear infinite both; }
+#o0 { animation: o0 15s linear infinite both; }
+#o1 { animation: o1 15s linear infinite both; }
+#o2 { animation: o2 15s linear infinite both; }
+#alab { animation: alab 15s linear infinite both; }
+#a0 { animation: a0 15s linear infinite both; }
+#ap0 { animation: ap0 15s linear infinite both; }
+#pp0 { animation: pp0 15s linear infinite both; }
+#a1 { animation: a1 15s linear infinite both; }
+#ap1 { animation: ap1 15s linear infinite both; }
+#pp1 { animation: pp1 15s linear infinite both; }
+#dimO { animation: dimO 15s linear infinite both; }
+#dimA { animation: dimA 15s linear infinite both; }
+#card { animation: card 15s linear infinite both; }
+#Ewrap { animation: Ewrap 15s linear infinite both; }
+#Twrap { animation: Twrap 15s linear infinite both; }
+#Ecode { animation: Ecode 15s linear infinite both; }
+#Tcode { animation: Tcode 15s linear infinite both; }
+#cw0 { animation: cw0 15s linear infinite both; }
+#cw1 { animation: cw1 15s linear infinite both; }
+#cw2 { animation: cw2 15s linear infinite both; }
+#cw3 { animation: cw3 15s linear infinite both; }
+#sub { animation: sub 15s linear infinite both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  .hero { opacity: 1 !important; transform: none !important; }
+  .nohero { display: none !important; }
+  #Ewrap { opacity: .7 !important; }
+  #chipT { opacity: 1 !important; }
+  #chipE { opacity: 0 !important; }
+  #cw0, #cw1, #cw2 { fill: #e3e8ef !important; }
+  #cw3 { fill: #06adee !important; }
+}
+</style>
+<defs><clipPath id="clipE"><rect x="25" y="109" width="558" height="480"/></clipPath>
+<clipPath id="clipT"><rect x="609" y="109" width="646" height="480"/></clipPath></defs>
+<rect width="1280" height="720" fill="var(--bg)"/>
+<rect x="24" y="22" width="93" height="30" rx="15" fill="var(--chip)" stroke="var(--border)"/>
+<text x="38" y="42" font-size="14" font-weight="600" class="muted">Playbook</text>
+<g id="chipE" class="h"><rect x="24" y="22" width="93" height="30" rx="15" fill="var(--blue)"/>
+<text x="38" y="42" font-size="14" font-weight="700" fill="#0b1520">Playbook</text></g>
+<rect x="608" y="22" width="116" height="30" rx="15" fill="var(--chip)" stroke="var(--border)"/>
+<text x="622" y="42" font-size="14" font-weight="600" class="muted">satori-v2 CLI</text>
+<g id="chipT" class="h"><rect x="608" y="22" width="116" height="30" rx="15" fill="var(--blue)"/>
+<text x="622" y="42" font-size="14" font-weight="700" fill="#0b1520">satori-v2 CLI</text></g>
+<text x="1256" y="42" font-size="13" class="muted" text-anchor="end">Getting started · your first playbook</text>
+<g id="Ewrap">
+<rect x="24" y="72" width="560" height="518" rx="10" fill="var(--panel)"/>
+<path d="M24 82 a10 10 0 0 1 10 -10 h540 a10 10 0 0 1 10 10 v26 h-560 z" fill="#1b2838"/>
+<rect x="24.5" y="72.5" width="559" height="517" rx="10" fill="none" stroke="var(--border)"/>
+<line x1="24" y1="108" x2="584" y2="108" stroke="var(--border)"/>
+<circle cx="44" cy="90" r="5.5" fill="#ff5f57"/><circle cx="62" cy="90" r="5.5" fill="#febc2e"/><circle cx="80" cy="90" r="5.5" fill="#28c840"/>
+<text x="304.0" y="95" class="muted" font-size="13" text-anchor="middle">hello.yml</text>
+<text x="568" y="576" font-size="12" class="muted" text-anchor="end">YAML · UTF-8</text>
+<g id="Ecode">
+<text x="62" y="160" class="mono muted" font-size="15" text-anchor="end">1</text>
+<text x="82.0" y="160" class="mono" font-size="19" xml:space="preserve"><tspan class="k b">test</tspan><tspan class="p">:</tspan></text>
+<g clip-path="url(#clipE)"><g id="w0" class="nohero" transform="translate(82.0 136)"><g id="ty0"><rect x="0" y="0" width="71.0" height="32" fill="var(--panel)"/><rect id="c0" x="1" y="3" width="2.5" height="26" fill="var(--blue)"/></g></g></g>
+<g id="band1" class="h hero"><rect x="25" y="173" width="558" height="34" fill="rgba(6,173,238,.13)"/><rect x="25" y="173" width="3" height="34" fill="var(--blue)"/></g>
+<g transform="translate(546 190)"><g id="tag1" class="pop h hero"><rect x="-24" y="-11" width="48" height="22" rx="11" fill="rgba(6,173,238,.18)" stroke="var(--blue)" stroke-opacity=".7"/><text x="0" y="4" font-size="11" font-weight="700" letter-spacing=".6" text-anchor="middle" fill="var(--blue)">assert</text></g></g>
+<text id="ln1" x="62" y="198" class="mono muted h hero" font-size="15" text-anchor="end">2</text>
+<text x="104.8" y="198" class="mono" font-size="19" xml:space="preserve"><tspan class="k">assertStdoutEqual</tspan><tspan class="p">:</tspan> <tspan class="s">"Hello world!\n"</tspan></text>
+<g clip-path="url(#clipE)"><g id="w1" class="nohero" transform="translate(104.8 174)"><g id="ty1"><rect x="0" y="0" width="413.0" height="32" fill="var(--panel)"/><rect id="c1" x="1" y="3" width="2.5" height="26" fill="var(--blue)"/></g></g></g>
+<g id="band2" class="h hero"><rect x="25" y="211" width="558" height="34" fill="rgba(6,173,238,.13)"/><rect x="25" y="211" width="3" height="34" fill="var(--blue)"/></g>
+<g transform="translate(546 228)"><g id="tag2" class="pop h hero"><rect x="-24" y="-11" width="48" height="22" rx="11" fill="rgba(6,173,238,.18)" stroke="var(--blue)" stroke-opacity=".7"/><text x="0" y="4" font-size="11" font-weight="700" letter-spacing=".6" text-anchor="middle" fill="var(--blue)">assert</text></g></g>
+<text id="ln2" x="62" y="236" class="mono muted h hero" font-size="15" text-anchor="end">3</text>
+<text x="104.8" y="236" class="mono" font-size="19" xml:space="preserve"><tspan class="k">assertReturnCode</tspan><tspan class="p">:</tspan> <tspan class="n">0</tspan></text>
+<g clip-path="url(#clipE)"><g id="w2" class="nohero" transform="translate(104.8 212)"><g id="ty2"><rect x="0" y="0" width="230.6" height="32" fill="var(--panel)"/><rect id="c2" x="1" y="3" width="2.5" height="26" fill="var(--blue)"/></g></g></g>
+<text id="ln3" x="62" y="274" class="mono muted h hero" font-size="15" text-anchor="end">4</text>
+<text x="104.8" y="274" class="mono" font-size="19" xml:space="preserve"><tspan class="k">execute</tspan><tspan class="p">:</tspan></text>
+<g clip-path="url(#clipE)"><g id="w3" class="nohero" transform="translate(104.8 250)"><g id="ty3"><rect x="0" y="0" width="105.2" height="32" fill="var(--panel)"/><rect id="c3" x="1" y="3" width="2.5" height="26" fill="var(--blue)"/></g></g></g>
+<text id="ln4" x="62" y="312" class="mono muted h hero" font-size="15" text-anchor="end">5</text>
+<text x="127.6" y="312" class="mono" font-size="19" xml:space="preserve"><tspan class="p">-</tspan> <tspan class="t">echo Hello world!</tspan></text>
+<g clip-path="url(#clipE)"><g id="w4" class="nohero" transform="translate(127.6 288)"><g id="ty4"><rect x="0" y="0" width="230.6" height="32" fill="var(--panel)"/><rect id="c4" x="1" y="3" width="2.5" height="26" fill="var(--blue)"/></g></g></g>
+</g>
+</g>
+<g id="Twrap">
+<rect x="608" y="72" width="648" height="518" rx="10" fill="var(--term)"/>
+<path d="M608 82 a10 10 0 0 1 10 -10 h628 a10 10 0 0 1 10 10 v26 h-648 z" fill="#1b2838"/>
+<rect x="608.5" y="72.5" width="647" height="517" rx="10" fill="none" stroke="var(--border)"/>
+<line x1="608" y1="108" x2="1256" y2="108" stroke="var(--border)"/>
+<circle cx="628" cy="90" r="5.5" fill="#ff5f57"/><circle cx="646" cy="90" r="5.5" fill="#febc2e"/><circle cx="664" cy="90" r="5.5" fill="#28c840"/>
+<text x="932.0" y="95" class="muted" font-size="13" text-anchor="middle">terminal</text>
+<g id="Tcode">
+<text x="630" y="146" class="mono" font-size="17" fill="var(--blue)">$</text>
+<text x="650.4" y="146" class="mono" font-size="17" xml:space="preserve"><tspan class="t b">satori-v2</tspan><tspan class="t"> run hello.yml</tspan><tspan class="f"> --sync --report --output</tspan></text>
+<g clip-path="url(#clipT)"><g transform="translate(650.4 127)" class="nohero"><g id="tty"><rect x="0" y="0" width="503.6" height="26" fill="var(--term)"/><rect id="tcaret" x="1" y="2" width="9" height="22" fill="var(--text)"/></g></g></g>
+<g transform="translate(1192.0 140)" class="nohero"><g id="key" class="pop h"><rect x="-22" y="-14" width="44" height="28" rx="6" fill="var(--chip)" stroke="var(--blue)"/><text x="0" y="6" font-size="16" font-weight="700" text-anchor="middle" fill="var(--blue)">↵</text></g></g>
+<g id="st" class="h hero"><text x="630" y="182" class="mono" font-size="17" xml:space="preserve"><tspan class="m">Job 4821</tspan>  <tspan class="t">Status:</tspan></text></g>
+<g id="stRun" class="h nohero"><text x="823.8" y="182" class="mono" font-size="17" fill="var(--text)">Running</text><g transform="translate(909.4 0)"><text class="mono spin" style="animation-delay:0.000s" x="0" y="182" font-size="17" fill="var(--blue)">⠋</text><text class="mono spin" style="animation-delay:-0.375s" x="0" y="182" font-size="17" fill="var(--blue)">⠙</text><text class="mono spin" style="animation-delay:-0.250s" x="0" y="182" font-size="17" fill="var(--blue)">⠹</text><text class="mono spin" style="animation-delay:-0.125s" x="0" y="182" font-size="17" fill="var(--blue)">⠸</text></g></g>
+<text id="stFin" x="823.8" y="182" class="mono h hero" font-size="17" fill="var(--green)">Finished</text>
+<g id="rule" class="h hero"><line x1="630" y1="211" x2="646" y2="211" stroke="var(--green)" stroke-width="1.5"/><text x="654" y="216" class="mono" font-size="17" font-weight="700" fill="var(--text)">test</text><line x1="702.8" y1="211" x2="1234" y2="211" stroke="var(--green)" stroke-width="1.5"/></g>
+<g id="o0" class="h hero"><text x="630" y="248" class="mono g" font-size="17">Command:</text><text x="772.8" y="248" class="mono t" font-size="17">echo Hello world!</text></g>
+<g id="o1" class="h hero"><text x="630" y="276" class="mono m" font-size="17">Return code:</text><text x="772.8" y="276" class="mono t" font-size="17">0</text></g>
+<g id="o2" class="h hero"><text x="630" y="304" class="mono m" font-size="17">Stdout:</text><text x="772.8" y="304" class="mono t b" font-size="17">Hello world!</text></g>
+<text id="alab" x="630" y="338" class="h hero" font-size="12" font-weight="700" letter-spacing="1.5" fill="var(--muted)">ASSERTS</text>
+<g id="a0" class="h hero"><rect x="630" y="350" width="604" height="38" rx="8" fill="var(--chip)" stroke="var(--border)"/><text x="648" y="375" class="mono" font-size="17" fill="var(--text)">assertStdoutEqual</text><text x="841.8" y="375" class="mono" font-size="17" fill="var(--muted)">"Hello world!\n"</text></g>
+<g id="ap0" class="h hero"><rect x="630" y="350" width="4" height="38" fill="var(--green)"/></g>
+<g transform="translate(1189 369)"><g id="pp0" class="pop h hero"><rect x="-33" y="-12" width="66" height="24" rx="12" fill="rgba(166,206,57,.16)" stroke="var(--green)" stroke-opacity=".8"/><circle cx="-18" cy="0" r="7" fill="var(--green)"/><path d="M-21.2 0.2 l2.2 2.2 l4.2 -4.6" fill="none" stroke="#0e1620" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="9" y="5" font-size="13" font-weight="800" text-anchor="middle" fill="var(--green)">PASS</text></g></g>
+<g id="a1" class="h hero"><rect x="630" y="396" width="604" height="38" rx="8" fill="var(--chip)" stroke="var(--border)"/><text x="648" y="421" class="mono" font-size="17" fill="var(--text)">assertReturnCode</text><text x="841.8" y="421" class="mono" font-size="17" fill="var(--muted)">0</text></g>
+<g id="ap1" class="h hero"><rect x="630" y="396" width="4" height="38" fill="var(--green)"/></g>
+<g transform="translate(1189 415)"><g id="pp1" class="pop h hero"><rect x="-33" y="-12" width="66" height="24" rx="12" fill="rgba(166,206,57,.16)" stroke="var(--green)" stroke-opacity=".8"/><circle cx="-18" cy="0" r="7" fill="var(--green)"/><path d="M-21.2 0.2 l2.2 2.2 l4.2 -4.6" fill="none" stroke="#0e1620" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="9" y="5" font-size="13" font-weight="800" text-anchor="middle" fill="var(--green)">PASS</text></g></g>
+<rect id="dimO" class="h nohero" x="609" y="109" width="646" height="213" fill="var(--term)"/>
+<rect id="dimA" class="h nohero" x="609" y="322" width="646" height="118" fill="var(--term)"/>
+<g transform="translate(932.0 512.0)"><g id="card" class="pop h hero"><g transform="translate(-932.0 -512.0)"><rect x="630" y="452" width="604" height="120" rx="12" fill="#17261f" stroke="var(--green)" stroke-opacity=".75"/><circle cx="674" cy="512" r="26" fill="var(--green)"/><path d="M662.5 512.5 l7.5 7.5 l14.5 -15.5" fill="none" stroke="#0e1620" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><text x="718" y="488" font-size="12" font-weight="700" letter-spacing="1.5" fill="var(--muted)">REPORT</text><text x="718" y="524" font-size="32" font-weight="800" fill="var(--text)">Passed</text><text x="718" y="552" font-size="15" fill="var(--muted)"><tspan fill="var(--text)" font-weight="700">1/1</tspan> tests  ·  <tspan fill="var(--text)" font-weight="700">2/2</tspan> asserts</text><line x1="892" y1="474" x2="892" y2="550" stroke="var(--border)"/><text x="914" y="488" font-size="12" font-weight="700" letter-spacing="1.5" fill="var(--muted)">REPORT ID</text><text x="914" y="516" class="mono" font-size="20" font-weight="700" fill="var(--text)">90412</text><text x="914" y="550" class="mono" font-size="15" fill="var(--blue)">dashboard.satori.ci/reports/90412</text><line x1="914" y1="554" x2="1211.0" y2="554" stroke="var(--blue)" stroke-opacity=".6"/></g></g></g>
+</g>
+</g>
+<text id="cw0" x="417.8" y="652" font-size="30" font-weight="800" fill="#4f6178">Write.</text>
+<text id="cw1" x="532.7" y="652" font-size="30" font-weight="800" fill="#4f6178">Run.</text>
+<text id="cw2" x="622.7" y="652" font-size="30" font-weight="800" fill="#4f6178">Assert.</text>
+<text id="cw3" x="750.4" y="652" font-size="30" font-weight="800" fill="#4f6178">Report.</text>
+<text id="sub" x="640" y="690" class="h hero muted" font-size="17" text-anchor="middle">A playbook is YAML that checks command behavior.</text>
+</svg>
