@@ -1,454 +1,694 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-labelledby="title desc">
-<title id="title">AI asked for unit tests vs. AI powered by Satori</title>
-<desc id="desc">A 35-second loop. An AI writes unit tests that pass, but pulling back reveals a type error and a vulnerable dependency outside the tested area. Satori scans the repository, detects the stack and tools, and generates a .satori.yml playbook with Tests, Lint, Formatting, Types and Security lanes. The run surfaces two findings; the AI fixes them and reruns the playbook until all five checks pass.</desc>
+<title id="title">Plain LLM test run vs. Satori quality checks</title>
+<desc id="desc">A 26-second loop on the web repo. Left: an assistant runs pnpm test:unit and all tests pass. Right, in five steps: Satori detects pnpm, TypeScript and Svelte and keeps the existing .satori.yml; recommends Lint, Format, Types, Unit and Security checks; finds 132 lint errors, 280 unformatted files and 21 dependency advisories while unit tests and types pass; catches an existing XSS check that never ran and replaces it with an unsafe_html rule that catches a planted file; and turns results into findings with a baseline so the next run flags only new failures. Closing title: Tests passing does not equal quality. Satori writes the playbook that checks the rest.</desc>
 <style>
-@keyframes k1{0.000%{transform:translate(128px,-58px) scale(1.6);opacity:1}18.286%{transform:translate(128px,-58px) scale(1.6);opacity:1}23.429%{transform:translate(0px,0px) scale(1);opacity:1}34.286%{transform:translate(0px,0px) scale(1);opacity:1}37.714%{transform:translate(24.8px,193px) scale(0.44);opacity:1}56.000%{transform:translate(24.8px,193px) scale(0.44);opacity:1}57.714%{transform:translate(24.8px,193px) scale(0.44);opacity:0}100.000%{transform:translate(24.8px,193px) scale(0.44);opacity:0}}
-.k1{animation:k1 35s ease-in-out infinite;transform-box:view-box;transform-origin:0 0}
-@keyframes k2{0.000%{opacity:0}18.857%{opacity:0}22.857%{opacity:1}100.000%{opacity:1}}
-.k2{animation:k2 35s ease-in-out infinite;}
-@keyframes k3{0.000%{opacity:0}24.571%{opacity:0}25.714%{opacity:1}100.000%{opacity:1}}
-.k3{animation:k3 35s ease-in-out infinite;}
-@keyframes k4{0.000%{opacity:0}24.571%{opacity:0}25.714%{opacity:1}100.000%{opacity:1}}
-.k4{animation:k4 35s ease-in-out infinite;}
-@keyframes k5{0.000%{opacity:0}25.143%{opacity:0}26.286%{opacity:1}100.000%{opacity:1}}
-.k5{animation:k5 35s ease-in-out infinite;}
-@keyframes k6{0.000%{opacity:0}24.571%{opacity:0}25.714%{opacity:1}100.000%{opacity:1}}
-.k6{animation:k6 35s ease-in-out infinite;}
-@keyframes k7{0.000%{opacity:0}27.429%{opacity:0}28.571%{opacity:1}100.000%{opacity:1}}
-.k7{animation:k7 35s ease-in-out infinite;}
-@keyframes k8{0.000%{opacity:0}28.000%{opacity:0}29.143%{opacity:1}100.000%{opacity:1}}
-.k8{animation:k8 35s ease-in-out infinite;}
-@keyframes k9{0.000%{opacity:0}27.429%{opacity:0}28.571%{opacity:1}100.000%{opacity:1}}
-.k9{animation:k9 35s ease-in-out infinite;}
-@keyframes k10{0.000%{opacity:0}4.000%{opacity:0}5.143%{opacity:1}100.000%{opacity:1}}
-.k10{animation:k10 35s ease-in-out infinite;}
-@keyframes k11{0.000%{opacity:0;transform:translateY(8px)}5.143%{opacity:0;transform:translateY(8px)}6.286%{opacity:1;transform:translateY(0px)}100.000%{opacity:1;transform:translateY(0px)}}
-.k11{animation:k11 35s ease-in-out infinite;}
-@keyframes k12{0.000%{opacity:0}9.714%{opacity:0}10.857%{opacity:1}100.000%{opacity:1}}
-.k12{animation:k12 35s ease-in-out infinite;}
-@keyframes k13{0.000%{opacity:0;transform:translateY(8px)}6.571%{opacity:0;transform:translateY(8px)}7.714%{opacity:1;transform:translateY(0px)}100.000%{opacity:1;transform:translateY(0px)}}
-.k13{animation:k13 35s ease-in-out infinite;}
-@keyframes k14{0.000%{opacity:0}10.857%{opacity:0}12.000%{opacity:1}100.000%{opacity:1}}
-.k14{animation:k14 35s ease-in-out infinite;}
-@keyframes k15{0.000%{opacity:0;transform:translateY(8px)}8.000%{opacity:0;transform:translateY(8px)}9.143%{opacity:1;transform:translateY(0px)}100.000%{opacity:1;transform:translateY(0px)}}
-.k15{animation:k15 35s ease-in-out infinite;}
-@keyframes k16{0.000%{opacity:0}12.000%{opacity:0}13.143%{opacity:1}100.000%{opacity:1}}
-.k16{animation:k16 35s ease-in-out infinite;}
-@keyframes k17{0.000%{opacity:0}13.714%{opacity:0}14.857%{opacity:1}100.000%{opacity:1}}
-.k17{animation:k17 35s ease-in-out infinite;}
-@keyframes k18{0.000%{opacity:0}24.000%{opacity:0}25.143%{opacity:1}34.286%{opacity:1}35.429%{opacity:0}100.000%{opacity:0}}
-.k18{animation:k18 35s ease-in-out infinite;}
-@keyframes k19{0.000%{opacity:0;transform:translateY(10px)}1.143%{opacity:0;transform:translateY(10px)}2.286%{opacity:1;transform:translateY(0px)}18.286%{opacity:1;transform:translateY(0px)}19.429%{opacity:0;transform:translateY(0px)}100.000%{opacity:0;transform:translateY(0px)}}
-.k19{animation:k19 35s ease-in-out infinite;}
-@keyframes k20{0.000%{opacity:0;transform:translateY(10px)}3.429%{opacity:0;transform:translateY(10px)}4.571%{opacity:1;transform:translateY(0px)}18.286%{opacity:1;transform:translateY(0px)}19.429%{opacity:0;transform:translateY(0px)}100.000%{opacity:0;transform:translateY(0px)}}
-.k20{animation:k20 35s ease-in-out infinite;}
-@keyframes k21{0.000%{opacity:0}36.857%{opacity:0}38.000%{opacity:1}44.000%{opacity:1}45.143%{opacity:0}100.000%{opacity:0}}
-.k21{animation:k21 35s ease-in-out infinite;}
-@keyframes k22{0.000%{opacity:0}44.000%{opacity:0}45.143%{opacity:1}56.000%{opacity:1}57.143%{opacity:0}100.000%{opacity:0}}
-.k22{animation:k22 35s ease-in-out infinite;}
-@keyframes k23{0.000%{opacity:0;transform:translateX(0px)}38.000%{opacity:0;transform:translateX(0px)}38.571%{opacity:1;transform:translateX(20px)}42.857%{opacity:1;transform:translateX(470px)}43.714%{opacity:0;transform:translateX(493px)}100.000%{opacity:0;transform:translateX(493px)}}
-.k23{animation:k23 35s linear infinite;}
-@keyframes k24{0.000%{opacity:0}39.429%{opacity:0}40.571%{opacity:1}56.000%{opacity:1}57.143%{opacity:0}100.000%{opacity:0}}
-.k24{animation:k24 35s ease-in-out infinite;}
-@keyframes k25{0.000%{opacity:0;transform:translate(0px,6px)}39.714%{opacity:0;transform:translate(0px,6px)}40.571%{opacity:1;transform:translate(0px,0px)}45.714%{opacity:1;transform:translate(0px,0px)}47.000%{opacity:1;transform:translate(479px,-213px)}47.714%{opacity:0;transform:translate(684px,-304.0px)}100.000%{opacity:0;transform:translate(684px,-304.0px)}}
-.k25{animation:k25 35s ease-in-out infinite;}
-@keyframes k26{0.000%{opacity:0;transform:translate(0px,6px)}40.571%{opacity:0;transform:translate(0px,6px)}41.429%{opacity:1;transform:translate(0px,0px)}46.629%{opacity:1;transform:translate(0px,0px)}47.914%{opacity:1;transform:translate(398px,-213px)}48.629%{opacity:0;transform:translate(568px,-304.0px)}100.000%{opacity:0;transform:translate(568px,-304.0px)}}
-.k26{animation:k26 35s ease-in-out infinite;}
-@keyframes k27{0.000%{opacity:0;transform:translate(0px,6px)}41.429%{opacity:0;transform:translate(0px,6px)}42.286%{opacity:1;transform:translate(0px,0px)}47.543%{opacity:1;transform:translate(0px,0px)}48.829%{opacity:1;transform:translate(349px,-154px)}49.543%{opacity:0;transform:translate(498px,-220.0px)}100.000%{opacity:0;transform:translate(498px,-220.0px)}}
-.k27{animation:k27 35s ease-in-out infinite;}
-@keyframes k28{0.000%{opacity:0;transform:translate(0px,6px)}42.286%{opacity:0;transform:translate(0px,6px)}43.143%{opacity:1;transform:translate(0px,0px)}48.457%{opacity:1;transform:translate(0px,0px)}49.743%{opacity:1;transform:translate(289px,-107px)}50.457%{opacity:0;transform:translate(413px,-152.79999999999995px)}100.000%{opacity:0;transform:translate(413px,-152.79999999999995px)}}
-.k28{animation:k28 35s ease-in-out infinite;}
-@keyframes k29{0.000%{opacity:0;transform:translate(0px,6px)}43.143%{opacity:0;transform:translate(0px,6px)}44.000%{opacity:1;transform:translate(0px,0px)}49.371%{opacity:1;transform:translate(0px,0px)}50.657%{opacity:1;transform:translate(230px,-60px)}51.371%{opacity:0;transform:translate(328px,-85.60000000000002px)}100.000%{opacity:0;transform:translate(328px,-85.60000000000002px)}}
-.k29{animation:k29 35s ease-in-out infinite;}
-@keyframes k30{0.000%{opacity:0;transform:translate(0px,6px)}44.000%{opacity:0;transform:translate(0px,6px)}44.857%{opacity:1;transform:translate(0px,0px)}50.286%{opacity:1;transform:translate(0px,0px)}51.571%{opacity:1;transform:translate(479px,-42px)}52.286%{opacity:0;transform:translate(684px,-60.39999999999998px)}100.000%{opacity:0;transform:translate(684px,-60.39999999999998px)}}
-.k30{animation:k30 35s ease-in-out infinite;}
-@keyframes k31{0.000%{opacity:0;transform:translate(0px,6px)}44.857%{opacity:0;transform:translate(0px,6px)}45.714%{opacity:1;transform:translate(0px,0px)}51.200%{opacity:1;transform:translate(0px,0px)}52.486%{opacity:1;transform:translate(435px,5px)}53.200%{opacity:0;transform:translate(622px,6.7999999999999545px)}100.000%{opacity:0;transform:translate(622px,6.7999999999999545px)}}
-.k31{animation:k31 35s ease-in-out infinite;}
-@keyframes k32{0.000%{opacity:0}36.000%{opacity:0}37.143%{opacity:1}56.571%{opacity:1}57.714%{opacity:0}100.000%{opacity:0}}
-.k32{animation:k32 35s ease-in-out infinite;}
-@keyframes k33{0.000%{opacity:0;transform:translateX(20px)}36.571%{opacity:0;transform:translateX(20px)}38.000%{opacity:1;transform:translateX(0px)}56.000%{opacity:1;transform:translateX(0px)}57.429%{opacity:0;transform:translateX(0px)}100.000%{opacity:0;transform:translateX(0px)}}
-.k33{animation:k33 35s ease-in-out infinite;}
-@keyframes k34{0.000%{opacity:0}53.714%{opacity:0}54.857%{opacity:1}100.000%{opacity:1}}
-.k34{animation:k34 35s ease-in-out infinite;}
-@keyframes k35{0.000%{opacity:0}47.714%{opacity:0}48.714%{opacity:1}100.000%{opacity:1}}
-.k35{animation:k35 35s ease-in-out infinite;}
-@keyframes k36{0.000%{opacity:0}49.543%{opacity:0}50.543%{opacity:1}100.000%{opacity:1}}
-.k36{animation:k36 35s ease-in-out infinite;}
-@keyframes k37{0.000%{opacity:0}50.457%{opacity:0}51.457%{opacity:1}100.000%{opacity:1}}
-.k37{animation:k37 35s ease-in-out infinite;}
-@keyframes k38{0.000%{opacity:0}51.371%{opacity:0}52.371%{opacity:1}100.000%{opacity:1}}
-.k38{animation:k38 35s ease-in-out infinite;}
-@keyframes k39{0.000%{opacity:0}52.286%{opacity:0}53.286%{opacity:1}100.000%{opacity:1}}
-.k39{animation:k39 35s ease-in-out infinite;}
-@keyframes k40{0.000%{opacity:0}53.200%{opacity:0}54.200%{opacity:1}100.000%{opacity:1}}
-.k40{animation:k40 35s ease-in-out infinite;}
-@keyframes k41{0.000%{opacity:0}57.143%{opacity:0}58.571%{opacity:1}100.000%{opacity:1}}
-.k41{animation:k41 35s ease-in-out infinite;}
-@keyframes k42{0.000%{opacity:0}57.714%{opacity:0}58.857%{opacity:1}82.857%{opacity:1}84.000%{opacity:0}100.000%{opacity:0}}
-.k42{animation:k42 35s ease-in-out infinite;}
-@keyframes k43{0.000%{opacity:0}83.429%{opacity:0}84.571%{opacity:1}100.000%{opacity:1}}
-.k43{animation:k43 35s ease-in-out infinite;}
-@keyframes k44{0.000%{opacity:0;transform:translateY(12px)}57.714%{opacity:0;transform:translateY(12px)}58.857%{opacity:1;transform:translateY(0px)}100.000%{opacity:1;transform:translateY(0px)}}
-.k44{animation:k44 35s ease-in-out infinite;}
-@keyframes k45{0.000%{transform:scaleX(0)}59.429%{transform:scaleX(0)}64.000%{transform:scaleX(1)}83.143%{transform:scaleX(1)}84.000%{transform:scaleX(0)}84.571%{transform:scaleX(0)}88.000%{transform:scaleX(1)}100.000%{transform:scaleX(1)}}
-.k45{animation:k45 35s ease-in-out infinite;transform-box:fill-box;transform-origin:0 50%}
-@keyframes k46{0.000%{opacity:0}64.000%{opacity:0}64.714%{opacity:1}82.857%{opacity:1}83.571%{opacity:0}100.000%{opacity:0}}
-.k46{animation:k46 35s ease-in-out infinite;}
-@keyframes k47{0.000%{opacity:0}88.000%{opacity:0}88.714%{opacity:1}100.000%{opacity:1}}
-.k47{animation:k47 35s ease-in-out infinite;}
-@keyframes k48{0.000%{opacity:0;transform:translateY(12px)}58.143%{opacity:0;transform:translateY(12px)}59.286%{opacity:1;transform:translateY(0px)}100.000%{opacity:1;transform:translateY(0px)}}
-.k48{animation:k48 35s ease-in-out infinite;}
-@keyframes k49{0.000%{transform:scaleX(0)}60.286%{transform:scaleX(0)}64.857%{transform:scaleX(1)}83.143%{transform:scaleX(1)}84.000%{transform:scaleX(0)}85.143%{transform:scaleX(0)}88.571%{transform:scaleX(1)}100.000%{transform:scaleX(1)}}
-.k49{animation:k49 35s ease-in-out infinite;transform-box:fill-box;transform-origin:0 50%}
-@keyframes k50{0.000%{opacity:0}64.857%{opacity:0}65.571%{opacity:1}82.857%{opacity:1}83.571%{opacity:0}100.000%{opacity:0}}
-.k50{animation:k50 35s ease-in-out infinite;}
-@keyframes k51{0.000%{opacity:0}88.571%{opacity:0}89.286%{opacity:1}100.000%{opacity:1}}
-.k51{animation:k51 35s ease-in-out infinite;}
-@keyframes k52{0.000%{opacity:0;transform:translateY(12px)}58.571%{opacity:0;transform:translateY(12px)}59.714%{opacity:1;transform:translateY(0px)}100.000%{opacity:1;transform:translateY(0px)}}
-.k52{animation:k52 35s ease-in-out infinite;}
-@keyframes k53{0.000%{transform:scaleX(0)}61.143%{transform:scaleX(0)}65.714%{transform:scaleX(1)}83.143%{transform:scaleX(1)}84.000%{transform:scaleX(0)}85.714%{transform:scaleX(0)}89.143%{transform:scaleX(1)}100.000%{transform:scaleX(1)}}
-.k53{animation:k53 35s ease-in-out infinite;transform-box:fill-box;transform-origin:0 50%}
-@keyframes k54{0.000%{opacity:0}65.714%{opacity:0}66.429%{opacity:1}82.857%{opacity:1}83.571%{opacity:0}100.000%{opacity:0}}
-.k54{animation:k54 35s ease-in-out infinite;}
-@keyframes k55{0.000%{opacity:0}89.143%{opacity:0}89.857%{opacity:1}100.000%{opacity:1}}
-.k55{animation:k55 35s ease-in-out infinite;}
-@keyframes k56{0.000%{opacity:0;transform:translateY(12px)}59.000%{opacity:0;transform:translateY(12px)}60.143%{opacity:1;transform:translateY(0px)}100.000%{opacity:1;transform:translateY(0px)}}
-.k56{animation:k56 35s ease-in-out infinite;}
-@keyframes k57{0.000%{transform:scaleX(0)}62.000%{transform:scaleX(0)}66.571%{transform:scaleX(1)}83.143%{transform:scaleX(1)}84.000%{transform:scaleX(0)}86.286%{transform:scaleX(0)}89.714%{transform:scaleX(1)}100.000%{transform:scaleX(1)}}
-.k57{animation:k57 35s ease-in-out infinite;transform-box:fill-box;transform-origin:0 50%}
-@keyframes k58{0.000%{fill:#f87171}83.714%{fill:#f87171}84.000%{fill:#34d399}100.000%{fill:#34d399}}
-.k58{animation:k58 35s step-end infinite;}
-@keyframes k59{0.000%{opacity:0}66.571%{opacity:0}67.714%{opacity:1}82.857%{opacity:1}84.000%{opacity:0}100.000%{opacity:0}}
-.k59{animation:k59 35s ease-in-out infinite;}
-@keyframes k60{0.000%{opacity:0}66.571%{opacity:0}67.286%{opacity:1}82.857%{opacity:1}83.571%{opacity:0}100.000%{opacity:0}}
-.k60{animation:k60 35s ease-in-out infinite;}
-@keyframes k61{0.000%{opacity:0}89.714%{opacity:0}90.429%{opacity:1}100.000%{opacity:1}}
-.k61{animation:k61 35s ease-in-out infinite;}
-@keyframes k62{0.000%{opacity:0;transform:translateY(12px)}59.429%{opacity:0;transform:translateY(12px)}60.571%{opacity:1;transform:translateY(0px)}100.000%{opacity:1;transform:translateY(0px)}}
-.k62{animation:k62 35s ease-in-out infinite;}
-@keyframes k63{0.000%{transform:scaleX(0)}62.857%{transform:scaleX(0)}67.429%{transform:scaleX(1)}83.143%{transform:scaleX(1)}84.000%{transform:scaleX(0)}86.857%{transform:scaleX(0)}90.286%{transform:scaleX(1)}100.000%{transform:scaleX(1)}}
-.k63{animation:k63 35s ease-in-out infinite;transform-box:fill-box;transform-origin:0 50%}
-@keyframes k64{0.000%{fill:#f87171}83.714%{fill:#f87171}84.000%{fill:#34d399}100.000%{fill:#34d399}}
-.k64{animation:k64 35s step-end infinite;}
-@keyframes k65{0.000%{opacity:0}67.429%{opacity:0}68.571%{opacity:1}82.857%{opacity:1}84.000%{opacity:0}100.000%{opacity:0}}
-.k65{animation:k65 35s ease-in-out infinite;}
-@keyframes k66{0.000%{opacity:0}67.429%{opacity:0}68.143%{opacity:1}82.857%{opacity:1}83.571%{opacity:0}100.000%{opacity:0}}
-.k66{animation:k66 35s ease-in-out infinite;}
-@keyframes k67{0.000%{opacity:0}90.286%{opacity:0}91.000%{opacity:1}100.000%{opacity:1}}
-.k67{animation:k67 35s ease-in-out infinite;}
-@keyframes k68{0.000%{opacity:0}68.571%{opacity:0}69.714%{opacity:1}81.143%{opacity:1}82.286%{opacity:0}100.000%{opacity:0}}
-.k68{animation:k68 35s ease-in-out infinite;}
-@keyframes k69{0.000%{opacity:0}81.714%{opacity:0}82.857%{opacity:1}89.714%{opacity:1}90.857%{opacity:0}100.000%{opacity:0}}
-.k69{animation:k69 35s ease-in-out infinite;}
-@keyframes k70{0.000%{opacity:0}90.286%{opacity:0}91.429%{opacity:1}100.000%{opacity:1}}
-.k70{animation:k70 35s ease-in-out infinite;}
-@keyframes k71{0.000%{opacity:0}60.000%{opacity:0}61.143%{opacity:1}100.000%{opacity:1}}
-.k71{animation:k71 35s ease-in-out infinite;}
-@keyframes k72{0.000%{opacity:0;transform:translateY(12px)}70.286%{opacity:0;transform:translateY(12px)}71.429%{opacity:1;transform:translateY(0px)}100.000%{opacity:1;transform:translateY(0px)}}
-.k72{animation:k72 35s ease-in-out infinite;}
-@keyframes k73{0.000%{opacity:0}82.857%{opacity:0}84.000%{opacity:1}100.000%{opacity:1}}
-.k73{animation:k73 35s ease-in-out infinite;}
-@keyframes k74{0.000%{opacity:0}71.143%{opacity:0}72.286%{opacity:1}82.857%{opacity:1}84.000%{opacity:0}100.000%{opacity:0}}
-.k74{animation:k74 35s ease-in-out infinite;}
-@keyframes k75{0.000%{opacity:0;transform:translateY(12px)}72.000%{opacity:0;transform:translateY(12px)}73.143%{opacity:1;transform:translateY(0px)}100.000%{opacity:1;transform:translateY(0px)}}
-.k75{animation:k75 35s ease-in-out infinite;}
-@keyframes k76{0.000%{opacity:0}83.714%{opacity:0}84.857%{opacity:1}100.000%{opacity:1}}
-.k76{animation:k76 35s ease-in-out infinite;}
-@keyframes k77{0.000%{opacity:1}34.286%{opacity:1}35.429%{opacity:0}100.000%{opacity:0}}
-.k77{animation:k77 35s ease-in-out infinite;}
-@keyframes k78{0.000%{opacity:0}34.857%{opacity:0}36.000%{opacity:1}100.000%{opacity:1}}
-.k78{animation:k78 35s ease-in-out infinite;}
-@keyframes k79{0.000%{opacity:0}92.000%{opacity:0}93.714%{opacity:1}100.000%{opacity:1}}
-.k79{animation:k79 35s ease-in-out infinite;}
-@keyframes k80{0.000%{opacity:0}1.143%{opacity:0}2.000%{opacity:1}17.143%{opacity:1}18.000%{opacity:0}100.000%{opacity:0}}
-.k80{animation:k80 35s ease-in-out infinite;}
-@keyframes k81{0.000%{opacity:0}17.714%{opacity:0}18.571%{opacity:1}34.286%{opacity:1}35.143%{opacity:0}100.000%{opacity:0}}
-.k81{animation:k81 35s ease-in-out infinite;}
-@keyframes k82{0.000%{opacity:0}34.857%{opacity:0}35.714%{opacity:1}57.143%{opacity:1}58.000%{opacity:0}100.000%{opacity:0}}
-.k82{animation:k82 35s ease-in-out infinite;}
-@keyframes k83{0.000%{opacity:0}57.714%{opacity:0}58.571%{opacity:1}80.000%{opacity:1}80.857%{opacity:0}100.000%{opacity:0}}
-.k83{animation:k83 35s ease-in-out infinite;}
-@keyframes k84{0.000%{opacity:0}80.571%{opacity:0}81.429%{opacity:1}100.000%{opacity:1}}
-.k84{animation:k84 35s ease-in-out infinite;}
-@keyframes k85{0.000%{transform:scaleX(0)}100.000%{transform:scaleX(1)}}
-.k85{animation:k85 35s linear infinite;transform-box:fill-box;transform-origin:0 50%}
-@keyframes k86{0.000%{opacity:1}1.429%{opacity:0}98.286%{opacity:0}100.000%{opacity:1}}
-.k86{animation:k86 35s ease-in-out infinite;}
+svg {
+  --bg:#151f2c; --panel:#182433; --term:#111a26; --chip:#1d2b3d; --border:#2a3a50;
+  --text:#e3e8ef; --muted:#8fa0b5; --blue:#06adee; --green:#a6ce39; --red:#f66f81;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+text { font-family: var(--sans); }
+.mono { font-family: var(--mono); }
+.muted { fill: var(--muted); }
+.win { fill: var(--panel); }
+.bar { fill: #1b2838; }
+.h { opacity: 0; }
+.pop { transform-box: fill-box; transform-origin: center; }
+.grow { transform-box: fill-box; transform-origin: left center; }
+@keyframes typer {
+  0% { transform: translateX(0px); }
+  1.731% { transform: translateX(0px); animation-timing-function: steps(14, end); }
+  5.231% { transform: translateX(151.70px); }
+  88.423% { transform: translateX(151.70px); }
+  88.462% { transform: translateX(0px); }
+  100% { transform: translateX(0px); }
+}
+@keyframes caret {
+  0% { opacity: 1; }
+  6.154% { opacity: 1; }
+  6.192% { opacity: 0; }
+  88.423% { opacity: 0; }
+  88.462% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes lout {
+  0% { opacity: 0; }
+  6.923% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  6.962% { opacity: 1; }
+  88.423% { opacity: 1; }
+  88.462% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes lpass {
+  0% { opacity: 0; transform: scale(0.85); }
+  8.846% { opacity: 0; transform: scale(0.85); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  10.192% { opacity: 1; transform: scale(1); }
+  88.423% { opacity: 1; transform: scale(1); }
+  88.462% { opacity: 0; transform: scale(0.85); }
+  100% { opacity: 0; transform: scale(0.85); }
+}
+@keyframes Lwrap {
+  0% { opacity: 1; }
+  17.308% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  19.231% { opacity: 0.45; }
+  88.423% { opacity: 0.45; }
+  88.462% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes aCmd {
+  0% { opacity: 0; }
+  0.962% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  1.731% { opacity: 1; }
+  88.423% { opacity: 1; }
+  88.462% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes aBar {
+  0% { opacity: 0; }
+  1.154% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  1.923% { opacity: 1; }
+  88.423% { opacity: 1; }
+  88.462% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes aFill {
+  0% { transform: scaleX(0); }
+  1.923% { transform: scaleX(0); animation-timing-function: cubic-bezier(.3,.6,.4,1); }
+  8.077% { transform: scaleX(1); }
+  88.423% { transform: scaleX(1); }
+  88.462% { transform: scaleX(0); }
+  100% { transform: scaleX(0); }
+}
+@keyframes b0 {
+  0% { opacity: 0; transform: scale(0.5); }
+  4.615% { opacity: 0; transform: scale(0.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  5.769% { opacity: 1; transform: scale(1); }
+  88.423% { opacity: 1; transform: scale(1); }
+  88.462% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 0; transform: scale(0.5); }
+}
+@keyframes b1 {
+  0% { opacity: 0; transform: scale(0.5); }
+  5.769% { opacity: 0; transform: scale(0.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  6.923% { opacity: 1; transform: scale(1); }
+  88.423% { opacity: 1; transform: scale(1); }
+  88.462% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 0; transform: scale(0.5); }
+}
+@keyframes b2 {
+  0% { opacity: 0; transform: scale(0.5); }
+  6.923% { opacity: 0; transform: scale(0.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  8.077% { opacity: 1; transform: scale(1); }
+  88.423% { opacity: 1; transform: scale(1); }
+  88.462% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 0; transform: scale(0.5); }
+}
+@keyframes aKeep {
+  0% { opacity: 0; transform: translateY(6px); }
+  9.615% { opacity: 0; transform: translateY(6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  10.769% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 0; transform: translateY(6px); }
+}
+@keyframes sceneA {
+  0% { opacity: 1; }
+  16.154% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  17.308% { opacity: 0.0; }
+  88.423% { opacity: 0.0; }
+  88.462% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes lane0 {
+  0% { opacity: 0; transform: translateY(8px); }
+  17.692% { opacity: 0; transform: translateY(8px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  18.846% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+@keyframes prog0 {
+  0% { opacity: 0; }
+  30.577% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  31.346% { opacity: 1; }
+  36.154% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  36.615% { opacity: 0; }
+  88.462% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pf0 {
+  0% { transform: scaleX(0); }
+  30.962% { transform: scaleX(0); animation-timing-function: cubic-bezier(.3,.6,.4,1); }
+  36.154% { transform: scaleX(1); }
+  88.423% { transform: scaleX(1); }
+  88.462% { transform: scaleX(0); }
+  100% { transform: scaleX(0); }
+}
+@keyframes res0 {
+  0% { opacity: 0; transform: translateY(4px); }
+  36.538% { opacity: 0; transform: translateY(4px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  37.308% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 0; transform: translateY(4px); }
+}
+@keyframes lane1 {
+  0% { opacity: 0; transform: translateY(8px); }
+  19.038% { opacity: 0; transform: translateY(8px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  20.192% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+@keyframes prog1 {
+  0% { opacity: 0; }
+  30.577% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  31.346% { opacity: 1; }
+  37.308% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  37.769% { opacity: 0; }
+  88.462% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pf1 {
+  0% { transform: scaleX(0); }
+  30.962% { transform: scaleX(0); animation-timing-function: cubic-bezier(.3,.6,.4,1); }
+  37.308% { transform: scaleX(1); }
+  88.423% { transform: scaleX(1); }
+  88.462% { transform: scaleX(0); }
+  100% { transform: scaleX(0); }
+}
+@keyframes res1 {
+  0% { opacity: 0; transform: translateY(4px); }
+  37.692% { opacity: 0; transform: translateY(4px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  38.462% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 0; transform: translateY(4px); }
+}
+@keyframes lane2 {
+  0% { opacity: 0; transform: translateY(8px); }
+  20.385% { opacity: 0; transform: translateY(8px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  21.538% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+@keyframes prog2 {
+  0% { opacity: 0; }
+  30.577% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  31.346% { opacity: 1; }
+  34.808% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  35.269% { opacity: 0; }
+  88.462% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pf2 {
+  0% { transform: scaleX(0); }
+  30.962% { transform: scaleX(0); animation-timing-function: cubic-bezier(.3,.6,.4,1); }
+  34.808% { transform: scaleX(1); }
+  88.423% { transform: scaleX(1); }
+  88.462% { transform: scaleX(0); }
+  100% { transform: scaleX(0); }
+}
+@keyframes res2 {
+  0% { opacity: 0; transform: translateY(4px); }
+  35.192% { opacity: 0; transform: translateY(4px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  35.962% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 0; transform: translateY(4px); }
+}
+@keyframes lane3 {
+  0% { opacity: 0; transform: translateY(8px); }
+  21.731% { opacity: 0; transform: translateY(8px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  22.885% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+@keyframes prog3 {
+  0% { opacity: 0; }
+  30.577% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  31.346% { opacity: 1; }
+  33.846% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  34.308% { opacity: 0; }
+  88.462% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pf3 {
+  0% { transform: scaleX(0); }
+  30.962% { transform: scaleX(0); animation-timing-function: cubic-bezier(.3,.6,.4,1); }
+  33.846% { transform: scaleX(1); }
+  88.423% { transform: scaleX(1); }
+  88.462% { transform: scaleX(0); }
+  100% { transform: scaleX(0); }
+}
+@keyframes res3 {
+  0% { opacity: 0; transform: translateY(4px); }
+  34.231% { opacity: 0; transform: translateY(4px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  35% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 0; transform: translateY(4px); }
+}
+@keyframes lane4 {
+  0% { opacity: 0; transform: translateY(8px); }
+  23.077% { opacity: 0; transform: translateY(8px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.231% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+@keyframes prog4 {
+  0% { opacity: 0; }
+  30.577% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  31.346% { opacity: 1; }
+  38.462% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  38.923% { opacity: 0; }
+  88.462% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pf4 {
+  0% { transform: scaleX(0); }
+  30.962% { transform: scaleX(0); animation-timing-function: cubic-bezier(.3,.6,.4,1); }
+  38.462% { transform: scaleX(1); }
+  88.423% { transform: scaleX(1); }
+  88.462% { transform: scaleX(0); }
+  100% { transform: scaleX(0); }
+}
+@keyframes res4 {
+  0% { opacity: 0; transform: translateY(4px); }
+  38.846% { opacity: 0; transform: translateY(4px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  39.615% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 0; transform: translateY(4px); }
+}
+@keyframes silent {
+  0% { opacity: 0; transform: scale(0.4); }
+  41.154% { opacity: 0; transform: scale(0.4); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  42.5% { opacity: 1; transform: scale(1); }
+  88.423% { opacity: 1; transform: scale(1); }
+  88.462% { opacity: 0; transform: scale(0.4); }
+  100% { opacity: 0; transform: scale(0.4); }
+}
+@keyframes lanes {
+  0% { opacity: 1; }
+  68.462% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  69.615% { opacity: 0.0; }
+  88.423% { opacity: 0.0; }
+  88.462% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes dim {
+  0% { opacity: 0; }
+  46.154% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  47.692% { opacity: 0.85; }
+  68.462% { opacity: 0.85; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  69.615% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes card {
+  0% { opacity: 0; transform: scale(0.9); }
+  46.538% { opacity: 0; transform: scale(0.9); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  48.269% { opacity: 1; transform: scale(1); }
+  68.269% { opacity: 1; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  69.423% { opacity: 0; transform: scale(1); }
+  88.462% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 0; transform: scale(0.9); }
+}
+@keyframes hl {
+  0% { opacity: 0; }
+  48.846% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  49.808% { opacity: 1; }
+  88.423% { opacity: 1; }
+  88.462% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes never {
+  0% { opacity: 0; transform: translateY(6px); }
+  50% { opacity: 0; transform: translateY(6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  51.346% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 0; transform: translateY(6px); }
+}
+@keyframes strike {
+  0% { transform: scaleX(0); }
+  57.692% { transform: scaleX(0); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  59.038% { transform: scaleX(1); }
+  88.423% { transform: scaleX(1); }
+  88.462% { transform: scaleX(0); }
+  100% { transform: scaleX(0); }
+}
+@keyframes before {
+  0% { opacity: 1; }
+  58.462% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  59.615% { opacity: 0.45; }
+  88.423% { opacity: 0.45; }
+  88.462% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes after {
+  0% { opacity: 0; transform: translateY(8px); }
+  59.231% { opacity: 0; transform: translateY(8px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  60.577% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+@keyframes caught {
+  0% { opacity: 0; transform: scale(0.8); }
+  63.077% { opacity: 0; transform: scale(0.8); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  64.231% { opacity: 1; transform: scale(1); }
+  88.423% { opacity: 1; transform: scale(1); }
+  88.462% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 0; transform: scale(0.8); }
+}
+@keyframes card0 {
+  0% { opacity: 0; transform: translateY(10px); }
+  69.808% { opacity: 0; transform: translateY(10px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  70.962% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 0; transform: translateY(10px); }
+}
+@keyframes card1 {
+  0% { opacity: 0; transform: translateY(10px); }
+  70.385% { opacity: 0; transform: translateY(10px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  71.538% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 0; transform: translateY(10px); }
+}
+@keyframes card2 {
+  0% { opacity: 0; transform: translateY(10px); }
+  70.962% { opacity: 0; transform: translateY(10px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  72.115% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 0; transform: translateY(10px); }
+}
+@keyframes board {
+  0% { opacity: 0; }
+  69.231% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  70.385% { opacity: 1; }
+  88.423% { opacity: 1; }
+  88.462% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes base {
+  0% { transform: scaleX(0); }
+  74.231% { transform: scaleX(0); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  76.538% { transform: scaleX(1); }
+  88.423% { transform: scaleX(1); }
+  88.462% { transform: scaleX(0); }
+  100% { transform: scaleX(0); }
+}
+@keyframes baseL {
+  0% { opacity: 0; transform: translateY(6px); }
+  75.769% { opacity: 0; transform: translateY(6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  77.115% { opacity: 1; transform: translateY(0px); }
+  88.423% { opacity: 1; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 0; transform: translateY(6px); }
+}
+@keyframes cap0 {
+  0% { opacity: 0; transform: translateY(6px); }
+  1.154% { opacity: 0; transform: translateY(6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  2.308% { opacity: 1; transform: translateY(0px); }
+  16.538% { opacity: 1; transform: translateY(0px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  17.692% { opacity: 0; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 0; transform: translateY(6px); }
+}
+@keyframes cap1 {
+  0% { opacity: 0; transform: translateY(6px); }
+  17.308% { opacity: 0; transform: translateY(6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  18.462% { opacity: 1; transform: translateY(0px); }
+  30% { opacity: 1; transform: translateY(0px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  31.154% { opacity: 0; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 0; transform: translateY(6px); }
+}
+@keyframes cap2 {
+  0% { opacity: 0; transform: translateY(6px); }
+  30.769% { opacity: 0; transform: translateY(6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  31.923% { opacity: 1; transform: translateY(0px); }
+  45.385% { opacity: 1; transform: translateY(0px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  46.538% { opacity: 0; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 0; transform: translateY(6px); }
+}
+@keyframes cap3 {
+  0% { opacity: 0; transform: translateY(6px); }
+  46.154% { opacity: 0; transform: translateY(6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  47.308% { opacity: 1; transform: translateY(0px); }
+  68.462% { opacity: 1; transform: translateY(0px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  69.615% { opacity: 0; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 0; transform: translateY(6px); }
+}
+@keyframes cap4 {
+  0% { opacity: 0; transform: translateY(6px); }
+  69.231% { opacity: 0; transform: translateY(6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  70.385% { opacity: 1; transform: translateY(0px); }
+  86.154% { opacity: 1; transform: translateY(0px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  87.308% { opacity: 0; transform: translateY(0px); }
+  88.462% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 0; transform: translateY(6px); }
+}
+@keyframes loopbar {
+  0% { transform: scaleX(0); }
+  86.538% { transform: scaleX(1); }
+  88.423% { transform: scaleX(1); }
+  88.462% { transform: scaleX(0); }
+  100% { transform: scaleX(0); }
+}
+@keyframes closing {
+  0% { opacity: 0; }
+  86.538% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  88.077% { opacity: 1; }
+  98.077% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  100% { opacity: 0; }
+}
+
+#typer { animation: typer 26s linear infinite both; }
+#caret { animation: caret 26s linear infinite both; }
+#lout { animation: lout 26s linear infinite both; }
+#lpass { animation: lpass 26s linear infinite both; }
+#Lwrap { animation: Lwrap 26s linear infinite both; }
+#aCmd { animation: aCmd 26s linear infinite both; }
+#aBar { animation: aBar 26s linear infinite both; }
+#aFill { animation: aFill 26s linear infinite both; }
+#b0 { animation: b0 26s linear infinite both; }
+#b1 { animation: b1 26s linear infinite both; }
+#b2 { animation: b2 26s linear infinite both; }
+#aKeep { animation: aKeep 26s linear infinite both; }
+#sceneA { animation: sceneA 26s linear infinite both; }
+#lane0 { animation: lane0 26s linear infinite both; }
+#prog0 { animation: prog0 26s linear infinite both; }
+#pf0 { animation: pf0 26s linear infinite both; }
+#res0 { animation: res0 26s linear infinite both; }
+#lane1 { animation: lane1 26s linear infinite both; }
+#prog1 { animation: prog1 26s linear infinite both; }
+#pf1 { animation: pf1 26s linear infinite both; }
+#res1 { animation: res1 26s linear infinite both; }
+#lane2 { animation: lane2 26s linear infinite both; }
+#prog2 { animation: prog2 26s linear infinite both; }
+#pf2 { animation: pf2 26s linear infinite both; }
+#res2 { animation: res2 26s linear infinite both; }
+#lane3 { animation: lane3 26s linear infinite both; }
+#prog3 { animation: prog3 26s linear infinite both; }
+#pf3 { animation: pf3 26s linear infinite both; }
+#res3 { animation: res3 26s linear infinite both; }
+#lane4 { animation: lane4 26s linear infinite both; }
+#prog4 { animation: prog4 26s linear infinite both; }
+#pf4 { animation: pf4 26s linear infinite both; }
+#res4 { animation: res4 26s linear infinite both; }
+#silent { animation: silent 26s linear infinite both; }
+#lanes { animation: lanes 26s linear infinite both; }
+#dim { animation: dim 26s linear infinite both; }
+#card { animation: card 26s linear infinite both; }
+#hl { animation: hl 26s linear infinite both; }
+#never { animation: never 26s linear infinite both; }
+#strike { animation: strike 26s linear infinite both; }
+#before { animation: before 26s linear infinite both; }
+#after { animation: after 26s linear infinite both; }
+#caught { animation: caught 26s linear infinite both; }
+#card0 { animation: card0 26s linear infinite both; }
+#card1 { animation: card1 26s linear infinite both; }
+#card2 { animation: card2 26s linear infinite both; }
+#board { animation: board 26s linear infinite both; }
+#base { animation: base 26s linear infinite both; }
+#baseL { animation: baseL 26s linear infinite both; }
+#cap0 { animation: cap0 26s linear infinite both; }
+#cap1 { animation: cap1 26s linear infinite both; }
+#cap2 { animation: cap2 26s linear infinite both; }
+#cap3 { animation: cap3 26s linear infinite both; }
+#cap4 { animation: cap4 26s linear infinite both; }
+#loopbar { animation: loopbar 26s linear infinite both; }
+#closing { animation: closing 26s linear infinite both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  .hero { opacity: 1 !important; transform: none !important; }
+  #Lwrap { opacity: .6 !important; }
+  .nohero, #typer { display: none !important; }
+}
 </style>
-<rect x="0" y="0" width="1280" height="720" rx="0" fill="#0b1020" stroke="none"/>
-<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#26324f" stroke-width="0.5" opacity="0.35"/></pattern>
-<rect x="0" y="0" width="1280" height="720" rx="0" fill="url(#grid)" stroke="none"/>
-<linearGradient id="beam" x1="0" x2="1"><stop offset="0" stop-color="#a78bfa" stop-opacity="0"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0.35"/></linearGradient>
-<g class="k1">
-<g class="k2">
-<rect x="80" y="100" width="1120" height="424" rx="16" fill="#0e1527" stroke="#26324f"/>
-<path d="M104 116 h12 l4 5 h16 v15 h-32z" fill="#8b97b5"/>
-<text x="146" y="134" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" fill="#e7ecf6" font-weight="700" text-anchor="start">acme-shop/</text>
-<rect x="560" y="170" width="600" height="100" rx="8" fill="#111a2e" stroke="#26324f"/>
-<text x="580" y="194" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">src/checkout.ts</text>
-<rect x="572" y="210" width="576" height="26" rx="4" fill="#f87171" stroke="none" class="k3" fill-opacity="0.12"/>
-<text x="580" y="228" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#5b6785" font-weight="400" text-anchor="start">42</text>
-<text x="612" y="228" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#e7ecf6" font-weight="400" text-anchor="start" textLength="351" lengthAdjust="spacing">const total: number = formatPrice(sum);</text>
-<path class="k4" d="M612 236 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0 q 3 4 6 0 q 3 -4 6 0" fill="none" stroke="#f87171" stroke-width="1.6"/>
-<text x="580" y="258" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#f87171" font-weight="400" text-anchor="start" class="k5">TS2322: Type &#x27;string&#x27; is not assignable to type &#x27;number&#x27;.</text>
-<rect x="560" y="170" width="600" height="100" rx="8" fill="none" stroke="#f87171" class="k6" stroke-width="2"/>
-<rect x="560" y="290" width="600" height="100" rx="8" fill="#111a2e" stroke="#26324f"/>
-<text x="580" y="314" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">package.json</text>
-<rect x="572" y="330" width="576" height="26" rx="4" fill="#fb923c" stroke="none" class="k7" fill-opacity="0.12"/>
-<text x="580" y="348" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#5b6785" font-weight="400" text-anchor="start">18</text>
-<text x="612" y="348" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#e7ecf6" font-weight="400" text-anchor="start">&quot;lodash&quot;: &quot;4.17.15&quot;,</text>
-<text x="580" y="378" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#fb923c" font-weight="400" text-anchor="start" class="k8">Known vulnerability · prototype pollution (CVE-2020-8203)</text>
-<rect x="560" y="290" width="600" height="100" rx="8" fill="none" stroke="#fb923c" class="k9" stroke-width="2"/>
-<rect x="120" y="412" width="196" height="38" rx="6" fill="#111a2e" stroke="#26324f"/>
-<circle cx="136" cy="431" r="4" fill="#34d399"/>
-<text x="150" y="436" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">src/cart.ts</text>
-<rect x="336" y="412" width="196" height="38" rx="6" fill="#111a2e" stroke="#26324f"/>
-<circle cx="352" cy="431" r="4" fill="#34d399"/>
-<text x="366" y="436" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">src/pricing.ts</text>
-<rect x="552" y="412" width="196" height="38" rx="6" fill="#111a2e" stroke="#26324f"/>
-<circle cx="568" cy="431" r="4" fill="#34d399"/>
-<text x="582" y="436" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">src/utils.ts</text>
-<rect x="768" y="412" width="196" height="38" rx="6" fill="#111a2e" stroke="#26324f"/>
-<circle cx="784" cy="431" r="4" fill="#5b6785"/>
-<text x="798" y="436" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">src/api/routes.ts</text>
-<rect x="984" y="412" width="196" height="38" rx="6" fill="#111a2e" stroke="#26324f"/>
-<circle cx="1000" cy="431" r="4" fill="#5b6785"/>
-<text x="1014" y="436" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">src/db.ts</text>
-<rect x="120" y="464" width="196" height="38" rx="6" fill="#111a2e" stroke="#26324f"/>
-<circle cx="136" cy="483" r="4" fill="#5b6785"/>
-<text x="150" y="488" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">src/auth/session.ts</text>
-<rect x="336" y="464" width="196" height="38" rx="6" fill="#111a2e" stroke="#26324f"/>
-<circle cx="352" cy="483" r="4" fill="#5b6785"/>
-<text x="366" y="488" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">tsconfig.json</text>
-<rect x="552" y="464" width="196" height="38" rx="6" fill="#111a2e" stroke="#26324f"/>
-<circle cx="568" cy="483" r="4" fill="#5b6785"/>
-<text x="582" y="488" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">eslint.config.js</text>
-<rect x="768" y="464" width="196" height="38" rx="6" fill="#111a2e" stroke="#26324f"/>
-<circle cx="784" cy="483" r="4" fill="#5b6785"/>
-<text x="798" y="488" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">.prettierrc</text>
-<rect x="984" y="464" width="196" height="38" rx="6" fill="#111a2e" stroke="#26324f"/>
-<circle cx="1000" cy="483" r="4" fill="#5b6785"/>
-<text x="1014" y="488" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">pnpm-lock.yaml</text>
+<rect width="1280" height="720" fill="var(--bg)"/>
+<rect x="24" y="22" width="233" height="30" rx="15" fill="var(--chip)" stroke="var(--border)"/>
+<text x="38" y="42" font-size="14" font-weight="600" class="muted">Plain LLM · “just run the tests”</text>
+<rect x="440" y="22" width="169" height="30" rx="15" fill="var(--blue)"/>
+<text x="454" y="42" font-size="14" font-weight="700" fill="#0b1520">Satori quality checks</text>
+<text x="1256" y="42" font-size="13" class="muted" text-anchor="end">Satori MCP · recommend_playbook</text><g id="Lwrap">
+  <rect x="24" y="72" width="392" height="548" rx="10" class="win"/>
+  <path d="M24 82 a10 10 0 0 1 10 -10 h372 a10 10 0 0 1 10 10 v26 h-392 z" class="bar"/>
+  <path d="M24 108 h392 v502 a10 10 0 0 1 -10 10 h-372 a10 10 0 0 1 -10 -10 z" fill="var(--term)"/>
+  <rect x="24.5" y="72.5" width="391" height="547" rx="10" fill="none" stroke="var(--border)"/>
+  <line x1="24" y1="108" x2="416" y2="108" stroke="var(--border)"/>
+  <circle cx="44" cy="90" r="5.5" fill="#ff5f57"/><circle cx="62" cy="90" r="5.5" fill="#febc2e"/><circle cx="80" cy="90" r="5.5" fill="#28c840"/>
+  <text x="220.0" y="95" class="muted" font-size="13" text-anchor="middle">assistant · web</text><text x="44" y="142" font-size="15" class="muted"><tspan fill="var(--blue)" font-weight="600">you ›</tspan> run the tests</text><text x="44" y="190" class="mono" font-size="18" fill="var(--blue)">$</text><text x="64" y="190" class="mono" font-size="18" fill="var(--text)">pnpm test:unit</text><g transform="translate(64 171)"><g id="typer">
+  <rect x="0" y="0" width="165.7" height="26" fill="var(--term)"/>
+  <rect id="caret" x="1" y="2" width="10" height="22" fill="var(--text)"/>
+</g></g><text id="lout" class="mono h hero" x="44" y="236" font-size="16" fill="var(--green)">✓ 35 test files passed</text><g transform="translate(220 390)"><g id="lpass" class="pop h hero">
+  <rect x="-176" y="-75" width="352" height="150" rx="12" fill="rgba(166,206,57,.12)" stroke="var(--green)" stroke-opacity=".7"/>
+  <circle cx="0" cy="-18" r="32" fill="var(--green)"/><path d="M-14.4 -17.4 l9.6 9.6 l18.6 -19.8" fill="none" stroke="#0e1620" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="0" y="48" font-size="28" font-weight="700" text-anchor="middle" fill="var(--text)">All tests passed</text>
+</g></g></g>
+  <rect x="440" y="72" width="816" height="548" rx="10" class="win"/>
+  <path d="M440 82 a10 10 0 0 1 10 -10 h796 a10 10 0 0 1 10 10 v26 h-816 z" class="bar"/>
+  <path d="M440 108 h816 v502 a10 10 0 0 1 -10 10 h-796 a10 10 0 0 1 -10 -10 z" fill="var(--panel)"/>
+  <rect x="440.5" y="72.5" width="815" height="547" rx="10" fill="none" stroke="var(--border)"/>
+  <line x1="440" y1="108" x2="1256" y2="108" stroke="var(--border)"/>
+  <circle cx="460" cy="90" r="5.5" fill="#ff5f57"/><circle cx="478" cy="90" r="5.5" fill="#febc2e"/><circle cx="496" cy="90" r="5.5" fill="#28c840"/>
+  <text x="848.0" y="95" class="muted" font-size="13" text-anchor="middle">Satori · web</text><g id="sceneA" class="nohero"><text id="aCmd" class="mono h" x="848" y="210" font-size="18" text-anchor="middle" fill="var(--muted)">reading <tspan fill="var(--text)">web/</tspan></text><g id="aBar" class="h"><rect x="648" y="234" width="400" height="4" rx="2" fill="var(--border)"/><rect id="aFill" class="grow" x="648" y="234" width="400" height="4" rx="2" fill="var(--blue)"/></g><g transform="translate(711.4 310)"><g id="b0" class="pop h">
+  <rect x="-48.5" y="-22" width="97.0" height="44" rx="22" fill="rgba(6,173,238,.14)" stroke="var(--blue)" stroke-width="1.5"/>
+  <text x="0" y="7" font-size="20" font-weight="600" text-anchor="middle" fill="var(--text)">pnpm</text>
+</g></g><g transform="translate(847.0 310)"><g id="b1" class="pop h">
+  <rect x="-71.1" y="-22" width="142.2" height="44" rx="22" fill="rgba(6,173,238,.14)" stroke="var(--blue)" stroke-width="1.5"/>
+  <text x="0" y="7" font-size="20" font-weight="600" text-anchor="middle" fill="var(--text)">TypeScript</text>
+</g></g><g transform="translate(983.6 310)"><g id="b2" class="pop h">
+  <rect x="-49.5" y="-22" width="99.1" height="44" rx="22" fill="rgba(6,173,238,.14)" stroke="var(--blue)" stroke-width="1.5"/>
+  <text x="0" y="7" font-size="20" font-weight="600" text-anchor="middle" fill="var(--text)">Svelte</text>
+</g></g><g id="aKeep" class="h">
+  <rect x="714.0" y="384" width="267.9" height="34" rx="17" fill="var(--chip)" stroke="var(--border)"/>
+  <circle cx="736.05" cy="401" r="8" fill="var(--green)"/><path d="M732.4 401.2 l2.4 2.4 l4.6 -5.0" fill="none" stroke="#0e1620" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="752.0" y="406" font-size="15" class="muted">keeps your existing <tspan class="mono" fill="var(--text)">.satori.yml</tspan></text>
+</g></g><g id="lanes"><g id="lane0" class="h hero">
+  <rect x="464" y="128" width="768" height="80" rx="8" fill="var(--chip)" stroke="var(--border)"/>
+  <rect x="464" y="128" width="4" height="80" fill="var(--blue)"/>
+  <text x="492" y="165" font-size="21" font-weight="700" fill="var(--text)">Lint</text>
+  <text x="492" y="189" font-size="14" class="muted">eslint</text>
+  <g id="prog0" class="h nohero"><rect x="1060" y="166" width="150" height="5" rx="2.5" fill="var(--border)"/>
+    <rect id="pf0" class="grow" x="1060" y="166" width="150" height="5" rx="2.5" fill="var(--blue)"/></g>
+  <g id="res0" class="h hero"><rect x="464" y="128" width="4" height="80" fill="var(--red)"/><circle cx="1070" cy="168" r="11" fill="var(--red)"/><path d="M1066.0 164.0 L1074.0 172.0 M1074.0 164.0 L1066.0 172.0" stroke="#0e1620" stroke-width="2.4" stroke-linecap="round"/>
+    <text x="1090" y="175" font-size="19" font-weight="700" fill="var(--red)">132 errors</text></g>
+</g><g id="lane1" class="h hero">
+  <rect x="464" y="220" width="768" height="80" rx="8" fill="var(--chip)" stroke="var(--border)"/>
+  <rect x="464" y="220" width="4" height="80" fill="var(--blue)"/>
+  <text x="492" y="257" font-size="21" font-weight="700" fill="var(--text)">Format</text>
+  <text x="492" y="281" font-size="14" class="muted">prettier</text>
+  <g id="prog1" class="h nohero"><rect x="1060" y="258" width="150" height="5" rx="2.5" fill="var(--border)"/>
+    <rect id="pf1" class="grow" x="1060" y="258" width="150" height="5" rx="2.5" fill="var(--blue)"/></g>
+  <g id="res1" class="h hero"><rect x="464" y="220" width="4" height="80" fill="var(--red)"/><circle cx="1070" cy="260" r="11" fill="var(--red)"/><path d="M1066.0 256.0 L1074.0 264.0 M1074.0 256.0 L1066.0 264.0" stroke="#0e1620" stroke-width="2.4" stroke-linecap="round"/>
+    <text x="1090" y="267" font-size="19" font-weight="700" fill="var(--red)">280 files</text></g>
+</g><g id="lane2" class="h hero">
+  <rect x="464" y="312" width="768" height="80" rx="8" fill="var(--chip)" stroke="var(--border)"/>
+  <rect x="464" y="312" width="4" height="80" fill="var(--blue)"/>
+  <text x="492" y="349" font-size="21" font-weight="700" fill="var(--text)">Types</text>
+  <text x="492" y="373" font-size="14" class="muted">svelte-check (covers .svelte)</text>
+  <g id="prog2" class="h nohero"><rect x="1060" y="350" width="150" height="5" rx="2.5" fill="var(--border)"/>
+    <rect id="pf2" class="grow" x="1060" y="350" width="150" height="5" rx="2.5" fill="var(--blue)"/></g>
+  <g id="res2" class="h hero"><rect x="464" y="312" width="4" height="80" fill="var(--green)"/><circle cx="1070" cy="352" r="11" fill="var(--green)"/><path d="M1065.0 352.2 l3.3 3.3 l6.4 -6.8" fill="none" stroke="#0e1620" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="1090" y="359" font-size="19" font-weight="700" fill="var(--green)">0 errors</text></g>
+</g><g id="lane3" class="h hero">
+  <rect x="464" y="404" width="768" height="80" rx="8" fill="var(--chip)" stroke="var(--border)"/>
+  <rect x="464" y="404" width="4" height="80" fill="var(--blue)"/>
+  <text x="492" y="441" font-size="21" font-weight="700" fill="var(--text)">Unit</text>
+  <text x="492" y="465" font-size="14" class="muted">vitest</text>
+  <g id="prog3" class="h nohero"><rect x="1060" y="442" width="150" height="5" rx="2.5" fill="var(--border)"/>
+    <rect id="pf3" class="grow" x="1060" y="442" width="150" height="5" rx="2.5" fill="var(--blue)"/></g>
+  <g id="res3" class="h hero"><rect x="464" y="404" width="4" height="80" fill="var(--green)"/><circle cx="1070" cy="444" r="11" fill="var(--green)"/><path d="M1065.0 444.2 l3.3 3.3 l6.4 -6.8" fill="none" stroke="#0e1620" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="1090" y="451" font-size="19" font-weight="700" fill="var(--green)">passed</text></g>
+</g><g id="lane4" class="h hero">
+  <rect x="464" y="496" width="768" height="80" rx="8" fill="var(--chip)" stroke="var(--border)"/>
+  <rect x="464" y="496" width="4" height="80" fill="var(--blue)"/>
+  <text x="492" y="533" font-size="21" font-weight="700" fill="var(--text)">Security</text>
+  <text x="492" y="557" font-size="14" class="muted">pnpm audit + XSS rule</text>
+  <g id="prog4" class="h nohero"><rect x="1060" y="534" width="150" height="5" rx="2.5" fill="var(--border)"/>
+    <rect id="pf4" class="grow" x="1060" y="534" width="150" height="5" rx="2.5" fill="var(--blue)"/></g>
+  <g id="res4" class="h hero"><rect x="464" y="496" width="4" height="80" fill="var(--red)"/><circle cx="1070" cy="536" r="11" fill="var(--red)"/><path d="M1066.0 532.0 L1074.0 540.0 M1074.0 532.0 L1066.0 540.0" stroke="#0e1620" stroke-width="2.4" stroke-linecap="round"/>
+    <text x="1090" y="543" font-size="19" font-weight="700" fill="var(--red)">21 advisories</text></g>
+</g><g transform="translate(641.4 526)"><g id="silent" class="pop h hero">
+  <rect x="-50" y="-13" width="100" height="26" rx="13" fill="rgba(246,111,129,.18)" stroke="var(--red)"/>
+  <text x="0" y="5" font-size="13" font-weight="700" fill="var(--red)" text-anchor="middle">silent check</text>
+</g></g></g><rect id="dim" class="h nohero" x="441" y="109" width="814" height="510" fill="#0c131c"/><g transform="translate(848 360)"><g id="card" class="pop h nohero"><g transform="translate(-848 -360)"><rect x="500" y="160" width="696" height="400" rx="12" fill="var(--term)" stroke="var(--blue)" stroke-opacity=".6"/><g id="before"><text x="532" y="204" font-size="12" font-weight="700" letter-spacing="1.5" fill="var(--muted)">EXISTING CHECK</text><rect id="hl" class="h" x="522" y="221" width="419.1" height="32" rx="5" fill="rgba(246,111,129,.16)" stroke="var(--red)" stroke-opacity=".6"/><text x="532" y="243" class="mono" font-size="17" fill="var(--text)">pnpm run eslint | grep "no-unsanitized"</text></g><line id="strike" class="grow" x1="532" y1="237" x2="931.1" y2="237" stroke="var(--red)" stroke-width="3"/><g id="never" class="h">
+  <text x="532" y="306" font-size="30" font-weight="700" fill="var(--red)">This check never ran.</text>
+  <text x="532" y="336" font-size="16" class="muted">The eslint script doesn’t exist, so it always passed.</text>
+</g><g id="after" class="h">
+  <line x1="532" y1="378" x2="1164" y2="378" stroke="var(--border)"/>
+  <text x="532" y="416" font-size="12" font-weight="700" letter-spacing="1.5" fill="var(--green)">SATORI REPLACES IT WITH</text>
+  <text x="532" y="452" font-size="20" fill="var(--text)"><tspan class="mono" fill="var(--green)" font-weight="700">unsafe_html</tspan>  fails on any unsanitized <tspan class="mono">{@html}</tspan></text>
 </g>
-<g class="k10">
-<rect x="120" y="170" width="400" height="220" rx="12" fill="#111a2e" stroke="#34d399" stroke-dasharray="6 5" stroke-opacity="0.7" fill-opacity="0.9"/>
-<text x="140" y="196" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">tests/</text>
+<g id="caught" class="h">
+  <rect x="532" y="484" width="292.8" height="38" rx="19" fill="rgba(246,111,129,.14)" stroke="var(--red)" stroke-opacity=".6"/>
+  <circle cx="556" cy="503" r="10" fill="var(--red)"/><path d="M552.4 499.4 L559.6 506.6 M559.6 499.4 L552.4 506.6" stroke="#0e1620" stroke-width="2.2" stroke-linecap="round"/>
+  <text x="576" y="508.5" font-size="15" font-weight="700" fill="var(--red)">caught a planted <tspan class="mono">{@html}</tspan> file</text>
+</g></g></g></g><g id="board" class="h nohero" transform="translate(0 36)"><text x="472" y="160" font-size="22" font-weight="700" fill="var(--text)">Findings</text><g id="card0" class="h">
+  <rect x="472" y="184" width="240" height="160" rx="10" fill="var(--chip)" stroke="var(--border)"/>
+  <rect x="472" y="184" width="4" height="160" fill="#fb923c"/>
+  <rect x="492" y="202" width="63.0" height="22" rx="11" fill="#fb923c" fill-opacity=".16"/>
+  <text x="502" y="217" font-size="11" font-weight="700" letter-spacing=".8" fill="#fb923c">6 HIGH</text>
+  <text x="492" y="278" font-size="44" font-weight="800" fill="var(--text)">21</text>
+  <text x="492" y="306" font-size="16" class="muted">dependency advisories</text>
+  <rect x="492.0" y="320" width="54.1" height="6" rx="3" fill="#fb923c"/><rect x="549.1" y="320" width="92.2" height="6" rx="3" fill="#f9b44e"/><rect x="644.4" y="320" width="44.6" height="6" rx="3" fill="var(--blue)"/>
+</g><g id="card1" class="h">
+  <rect x="728" y="184" width="240" height="160" rx="10" fill="var(--chip)" stroke="var(--border)"/>
+  <rect x="728" y="184" width="4" height="160" fill="var(--red)"/>
+  <rect x="748" y="202" width="84.5" height="22" rx="11" fill="var(--red)" fill-opacity=".16"/>
+  <text x="758" y="217" font-size="11" font-weight="700" letter-spacing=".8" fill="var(--red)">FAILS RUN</text>
+  <text x="748" y="278" font-size="44" font-weight="800" fill="var(--text)">132</text>
+  <text x="748" y="306" font-size="16" class="muted">lint errors</text>
+  
+</g><g id="card2" class="h">
+  <rect x="984" y="184" width="240" height="160" rx="10" fill="var(--chip)" stroke="var(--border)"/>
+  <rect x="984" y="184" width="4" height="160" fill="var(--red)"/>
+  <rect x="1004" y="202" width="84.5" height="22" rx="11" fill="var(--red)" fill-opacity=".16"/>
+  <text x="1014" y="217" font-size="11" font-weight="700" letter-spacing=".8" fill="var(--red)">FAILS RUN</text>
+  <text x="1004" y="278" font-size="44" font-weight="800" fill="var(--text)">280</text>
+  <text x="1004" y="306" font-size="16" class="muted">unformatted files</text>
+  
+</g><g id="base" class="grow"><line x1="574" y1="409" x2="1224" y2="409" stroke="var(--blue)" stroke-width="2" stroke-dasharray="8 6"/></g>
+<g id="baseL" class="h">
+  <rect x="472" y="398" width="98" height="22" rx="4" fill="var(--blue)"/>
+  <text x="483" y="414" font-size="12" font-weight="700" letter-spacing="1" fill="#0b1520">BASELINE</text>
+  <text x="472" y="462" font-size="20" fill="var(--text)">Next run flags <tspan font-weight="700" fill="var(--blue)">only new failures</tspan>.</text>
+</g></g><g id="cap0" class="h nohero">
+  <circle cx="522.5" cy="664" r="17" fill="var(--blue)"/>
+  <text x="522.5" y="670" font-size="17" font-weight="800" text-anchor="middle" fill="#0b1520">1</text>
+  <text x="551.5" y="672" font-size="24" font-weight="700" fill="var(--text)">Detects your stack</text>
+</g><g id="cap1" class="h nohero">
+  <circle cx="486.1" cy="664" r="17" fill="var(--blue)"/>
+  <text x="486.1" y="670" font-size="17" font-weight="800" text-anchor="middle" fill="#0b1520">2</text>
+  <text x="515.0" y="672" font-size="24" font-weight="700" fill="var(--text)">Recommends the checks</text>
+</g><g id="cap2" class="h hero">
+  <circle cx="505.6" cy="664" r="17" fill="var(--blue)"/>
+  <text x="505.6" y="670" font-size="17" font-weight="800" text-anchor="middle" fill="#0b1520">3</text>
+  <text x="534.6" y="672" font-size="24" font-weight="700" fill="var(--text)">Finds what tests miss</text>
+</g><g id="cap3" class="h nohero">
+  <circle cx="453.8" cy="664" r="17" fill="var(--blue)"/>
+  <text x="453.8" y="670" font-size="17" font-weight="800" text-anchor="middle" fill="#0b1520">4</text>
+  <text x="482.8" y="672" font-size="24" font-weight="700" fill="var(--text)">Catches checks that never ran</text>
+</g><g id="cap4" class="h nohero">
+  <circle cx="462.8" cy="664" r="17" fill="var(--blue)"/>
+  <text x="462.8" y="670" font-size="17" font-weight="800" text-anchor="middle" fill="#0b1520">5</text>
+  <text x="491.8" y="672" font-size="24" font-weight="700" fill="var(--text)">Baseline: fix only what’s new</text>
+</g><rect id="loopbar" class="grow nohero" x="0" y="716" width="1280" height="4" fill="var(--blue)" fill-opacity=".55"/><g id="closing" class="h nohero">
+  <rect width="1280" height="720" fill="var(--bg)"/>
+  <text x="640" y="340" font-size="50" font-weight="800" text-anchor="middle" fill="var(--text)">Tests passing <tspan fill="var(--blue)">≠</tspan> quality.</text>
+  <text x="640" y="396" font-size="24" text-anchor="middle" class="muted"><tspan fill="var(--green)" font-weight="700">Satori</tspan> writes the playbook that checks the rest.</text>
 </g>
-<g class="k11">
-<rect x="140" y="210" width="360" height="38" rx="6" fill="#0e1527" stroke="#26324f"/>
-<rect x="154" y="221" width="12" height="16" rx="2" fill="none" stroke="#8b97b5"/>
-<text x="178" y="234" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#e7ecf6" font-weight="400" text-anchor="start">cart.test.ts</text>
-<text x="452" y="234" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#8b97b5" font-weight="400" text-anchor="end">5 tests</text>
-</g>
-<g class="k12"><circle cx="480" cy="229" r="10" fill="#34d399"/><path d="M475.5,229 l3.2,3.4000000000000004 l6.0,-6.6000000000000005" fill="none" stroke="#0b1020" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
-<g class="k13">
-<rect x="140" y="256" width="360" height="38" rx="6" fill="#0e1527" stroke="#26324f"/>
-<rect x="154" y="267" width="12" height="16" rx="2" fill="none" stroke="#8b97b5"/>
-<text x="178" y="280" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#e7ecf6" font-weight="400" text-anchor="start">pricing.test.ts</text>
-<text x="452" y="280" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#8b97b5" font-weight="400" text-anchor="end">4 tests</text>
-</g>
-<g class="k14"><circle cx="480" cy="275" r="10" fill="#34d399"/><path d="M475.5,275 l3.2,3.4000000000000004 l6.0,-6.6000000000000005" fill="none" stroke="#0b1020" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
-<g class="k15">
-<rect x="140" y="302" width="360" height="38" rx="6" fill="#0e1527" stroke="#26324f"/>
-<rect x="154" y="313" width="12" height="16" rx="2" fill="none" stroke="#8b97b5"/>
-<text x="178" y="326" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#e7ecf6" font-weight="400" text-anchor="start">utils.test.ts</text>
-<text x="452" y="326" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#8b97b5" font-weight="400" text-anchor="end">3 tests</text>
-</g>
-<g class="k16"><circle cx="480" cy="321" r="10" fill="#34d399"/><path d="M475.5,321 l3.2,3.4000000000000004 l6.0,-6.6000000000000005" fill="none" stroke="#0b1020" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
-<g class="k17">
-<g><circle cx="150" cy="367" r="9" fill="#34d399"/><path d="M145.95,367 l2.88,3.06 l5.3999999999999995,-5.94" fill="none" stroke="#0b1020" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
-<text x="166" y="372" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="15" fill="#34d399" font-weight="700" text-anchor="start">12 passed</text>
-<text x="246" y="372" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="start">vitest</text>
-</g>
-<g class="k18"><rect x="400" y="160" width="112" height="22" rx="11.0" fill="#34d399" stroke="none"/><text x="456.0" y="174.96" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#0b1020" font-weight="600" text-anchor="middle">Covered by tests</text></g>
-</g>
-<g class="k19">
-<rect x="450" y="80" width="380" height="46" rx="23" fill="#111a2e" stroke="#26324f"/>
-<circle cx="474" cy="103" r="13" fill="#5b6785"/>
-<text x="474" y="107" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="10" fill="#e7ecf6" font-weight="700" text-anchor="middle">You</text>
-<text x="498" y="109" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="18" fill="#e7ecf6" font-weight="500" text-anchor="start">Write some unit tests.</text>
-</g>
-<g class="k20">
-<rect x="470" y="136" width="340" height="34" rx="17" fill="#0e1527" stroke="#26324f"/>
-<text x="640" y="158" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="middle">AI · added 3 test files, running vitest</text>
-</g>
-<text x="60" y="222" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#a78bfa" font-weight="600" text-anchor="start" class="k21">Scanning acme-shop/ …</text>
-<text x="60" y="222" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#34d399" font-weight="600" text-anchor="start" class="k22">Stack and tools detected</text>
-<g class="k23"><rect x="0" y="236" width="60" height="190" rx="0" fill="url(#beam)" stroke="none"/><rect x="58" y="232" width="3" height="198" rx="1.5" fill="#a78bfa" stroke="none"/></g>
-<text x="60" y="452" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#5b6785" font-weight="700" text-anchor="start" class="k24" letter-spacing="1.5">DETECTED</text>
-<g class="k25"><rect x="60" y="462" width="106" height="30" rx="15" fill="#111a2e" stroke="#a78bfa"/><circle cx="74" cy="477" r="3.5" fill="#a78bfa"/><text x="84" y="482" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#e7ecf6" font-weight="500" text-anchor="start">TypeScript</text></g>
-<g class="k26"><rect x="176" y="462" width="60" height="30" rx="15" fill="#111a2e" stroke="#a78bfa"/><circle cx="190" cy="477" r="3.5" fill="#a78bfa"/><text x="200" y="482" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#e7ecf6" font-weight="500" text-anchor="start">pnpm</text></g>
-<g class="k27"><rect x="246" y="462" width="75" height="30" rx="15" fill="#111a2e" stroke="#a78bfa"/><circle cx="260" cy="477" r="3.5" fill="#a78bfa"/><text x="270" y="482" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#e7ecf6" font-weight="500" text-anchor="start">Vitest</text></g>
-<g class="k28"><rect x="331" y="462" width="75" height="30" rx="15" fill="#111a2e" stroke="#a78bfa"/><circle cx="345" cy="477" r="3.5" fill="#a78bfa"/><text x="355" y="482" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#e7ecf6" font-weight="500" text-anchor="start">ESLint</text></g>
-<g class="k29"><rect x="416" y="462" width="90" height="30" rx="15" fill="#111a2e" stroke="#a78bfa"/><circle cx="430" cy="477" r="3.5" fill="#a78bfa"/><text x="440" y="482" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#e7ecf6" font-weight="500" text-anchor="start">Prettier</text></g>
-<g class="k30"><rect x="60" y="504" width="52" height="30" rx="15" fill="#111a2e" stroke="#a78bfa"/><circle cx="74" cy="519" r="3.5" fill="#a78bfa"/><text x="84" y="524" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#e7ecf6" font-weight="500" text-anchor="start">tsc</text></g>
-<g class="k31"><rect x="122" y="504" width="136" height="30" rx="15" fill="#111a2e" stroke="#a78bfa"/><circle cx="136" cy="519" r="3.5" fill="#a78bfa"/><text x="146" y="524" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#e7ecf6" font-weight="500" text-anchor="start">pnpm-lock.yaml</text></g>
-<g class="k32">
-<path d="M572 330 H700" stroke="#a78bfa" stroke-width="2" stroke-dasharray="5 5" fill="none"/><path d="M700 323 l10 7 l-10 7z" fill="#a78bfa"/>
-</g>
-<g class="k33">
-<rect x="720" y="110" width="500" height="480" rx="12" fill="#111a2e" stroke="#26324f"/>
-<path d="M720 146 H1220" stroke="#26324f"/>
-<rect x="740" y="120" width="14" height="18" rx="2" fill="none" stroke="#a78bfa"/>
-<text x="764" y="134" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#e7ecf6" font-weight="600" text-anchor="start">.satori.yml</text>
-<g class="k34"><rect x="1084" y="117" width="118" height="22" rx="11.0" fill="#a78bfa" stroke="none"/><text x="1143.0" y="131.96" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#0b1020" font-weight="600" text-anchor="middle">generated · v1</text></g>
-<g class="k35">
-<text x="744" y="172.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#5b6785" font-weight="400" text-anchor="start"># satori:recommended v1 node/pnpm</text>
-<text x="744" y="188.8" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#7dd3fc" font-weight="400" text-anchor="start">settings:</text>
-<text x="760" y="205.6" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5"><tspan fill="#7dd3fc">name:</tspan><tspan fill="#e7ecf6"> Quality checks (node/pnpm)</tspan></text>
-<text x="744" y="222.4" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#7dd3fc" font-weight="400" text-anchor="start">install:</text>
-<text x="744" y="239.2" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#e7ecf6" font-weight="400" text-anchor="start">- pnpm install --frozen-lockfile</text>
-</g>
-<g class="k36">
-<text x="744" y="256.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#7dd3fc" font-weight="400" text-anchor="start">unit:</text>
-<text x="760" y="272.8" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#7dd3fc" font-weight="400" text-anchor="start">vitest:</text>
-<text x="776" y="289.6" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5"><tspan fill="#7dd3fc">assertReturnCode:</tspan><tspan fill="#e7ecf6"> 0</tspan></text>
-<text x="776" y="306.4" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5"><tspan fill="#7dd3fc">run:</tspan><tspan fill="#e7ecf6"> [pnpm run test]</tspan></text>
-</g>
-<g class="k37">
-<text x="744" y="323.20000000000005" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#7dd3fc" font-weight="400" text-anchor="start">lint:</text>
-<text x="760" y="340.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#7dd3fc" font-weight="400" text-anchor="start">eslint:</text>
-<text x="776" y="356.8" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5"><tspan fill="#7dd3fc">assertReturnCode:</tspan><tspan fill="#e7ecf6"> 0</tspan></text>
-<text x="776" y="373.6" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5"><tspan fill="#7dd3fc">run:</tspan><tspan fill="#e7ecf6"> [pnpm exec eslint .]</tspan></text>
-</g>
-<g class="k38">
-<text x="744" y="390.4" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#7dd3fc" font-weight="400" text-anchor="start">format:</text>
-<text x="760" y="407.20000000000005" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#7dd3fc" font-weight="400" text-anchor="start">prettier:</text>
-<text x="776" y="424.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5"><tspan fill="#7dd3fc">assertReturnCode:</tspan><tspan fill="#e7ecf6"> 0</tspan></text>
-<text x="776" y="440.8" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5"><tspan fill="#7dd3fc">run:</tspan><tspan fill="#e7ecf6"> [pnpm exec prettier --check .]</tspan></text>
-</g>
-<g class="k39">
-<text x="744" y="457.6" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#7dd3fc" font-weight="400" text-anchor="start">types:</text>
-<text x="760" y="474.40000000000003" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#7dd3fc" font-weight="400" text-anchor="start">tsc:</text>
-<text x="776" y="491.2" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5"><tspan fill="#7dd3fc">assertReturnCode:</tspan><tspan fill="#e7ecf6"> 0</tspan></text>
-<text x="776" y="508.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5"><tspan fill="#7dd3fc">run:</tspan><tspan fill="#e7ecf6"> [pnpm exec tsc --noEmit]</tspan></text>
-</g>
-<g class="k40">
-<text x="744" y="524.8" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#7dd3fc" font-weight="400" text-anchor="start">security:</text>
-<text x="760" y="541.6" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5" fill="#7dd3fc" font-weight="400" text-anchor="start">pnpm_audit:</text>
-<text x="776" y="558.4000000000001" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.5"><tspan fill="#7dd3fc">run:</tspan><tspan fill="#e7ecf6"> [pnpm audit --json]</tspan></text>
-</g>
-</g>
-<g class="k41">
-<rect x="60" y="110" width="14" height="18" rx="2" fill="none" stroke="#a78bfa"/>
-<text x="84" y="124" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#e7ecf6" font-weight="600" text-anchor="start">.satori.yml</text>
-<text x="190" y="124" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#8b97b5" font-weight="400" text-anchor="start">Quality checks (node/pnpm)</text>
-</g>
-<text x="820" y="124" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#8b97b5" font-weight="600" text-anchor="end" class="k42">Run #1</text>
-<text x="820" y="124" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#a78bfa" font-weight="600" text-anchor="end" class="k43">Run #2 · after fixes</text>
-<g class="k44">
-<rect x="60" y="146" width="760" height="64" rx="10" fill="#111a2e" stroke="#26324f"/>
-<rect x="60" y="146" width="4" height="64" rx="2" fill="#a78bfa" stroke="none"/>
-<text x="84" y="174" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" fill="#e7ecf6" font-weight="700" text-anchor="start">Tests</text>
-<text x="84" y="195" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#8b97b5" font-weight="400" text-anchor="start">vitest · pnpm run test</text>
-<rect x="360" y="174" width="260" height="8" rx="4" fill="#0e1527" stroke="#26324f"/>
-</g>
-<rect x="360" y="174" width="260" height="8" rx="4" fill="#34d399" stroke="none" class="k45"/>
-<g class="k46"><text x="644" y="183" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#34d399" font-weight="600" text-anchor="start">12 passed</text><g><circle cx="790" cy="178" r="11" fill="#34d399"/><path d="M785.05,178 l3.52,3.74 l6.6,-7.260000000000001" fill="none" stroke="#0b1020" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g></g>
-<g class="k47"><text x="644" y="183" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#34d399" font-weight="600" text-anchor="start">12 passed</text><g><circle cx="790" cy="178" r="11" fill="#34d399"/><path d="M785.05,178 l3.52,3.74 l6.6,-7.260000000000001" fill="none" stroke="#0b1020" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g></g>
-<g class="k48">
-<rect x="60" y="222" width="760" height="64" rx="10" fill="#111a2e" stroke="#26324f"/>
-<rect x="60" y="222" width="4" height="64" rx="2" fill="#a78bfa" stroke="none"/>
-<text x="84" y="250" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" fill="#e7ecf6" font-weight="700" text-anchor="start">Lint</text>
-<text x="84" y="271" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#8b97b5" font-weight="400" text-anchor="start">eslint · pnpm exec eslint .</text>
-<rect x="360" y="250" width="260" height="8" rx="4" fill="#0e1527" stroke="#26324f"/>
-</g>
-<rect x="360" y="250" width="260" height="8" rx="4" fill="#34d399" stroke="none" class="k49"/>
-<g class="k50"><text x="644" y="259" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#34d399" font-weight="600" text-anchor="start">0 problems</text><g><circle cx="790" cy="254" r="11" fill="#34d399"/><path d="M785.05,254 l3.52,3.74 l6.6,-7.260000000000001" fill="none" stroke="#0b1020" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g></g>
-<g class="k51"><text x="644" y="259" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#34d399" font-weight="600" text-anchor="start">0 problems</text><g><circle cx="790" cy="254" r="11" fill="#34d399"/><path d="M785.05,254 l3.52,3.74 l6.6,-7.260000000000001" fill="none" stroke="#0b1020" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g></g>
-<g class="k52">
-<rect x="60" y="298" width="760" height="64" rx="10" fill="#111a2e" stroke="#26324f"/>
-<rect x="60" y="298" width="4" height="64" rx="2" fill="#a78bfa" stroke="none"/>
-<text x="84" y="326" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" fill="#e7ecf6" font-weight="700" text-anchor="start">Formatting</text>
-<text x="84" y="347" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#8b97b5" font-weight="400" text-anchor="start">prettier --check .</text>
-<rect x="360" y="326" width="260" height="8" rx="4" fill="#0e1527" stroke="#26324f"/>
-</g>
-<rect x="360" y="326" width="260" height="8" rx="4" fill="#34d399" stroke="none" class="k53"/>
-<g class="k54"><text x="644" y="335" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#34d399" font-weight="600" text-anchor="start">formatted</text><g><circle cx="790" cy="330" r="11" fill="#34d399"/><path d="M785.05,330 l3.52,3.74 l6.6,-7.260000000000001" fill="none" stroke="#0b1020" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g></g>
-<g class="k55"><text x="644" y="335" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#34d399" font-weight="600" text-anchor="start">formatted</text><g><circle cx="790" cy="330" r="11" fill="#34d399"/><path d="M785.05,330 l3.52,3.74 l6.6,-7.260000000000001" fill="none" stroke="#0b1020" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g></g>
-<g class="k56">
-<rect x="60" y="374" width="760" height="64" rx="10" fill="#111a2e" stroke="#26324f"/>
-<rect x="60" y="374" width="4" height="64" rx="2" fill="#a78bfa" stroke="none"/>
-<text x="84" y="402" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" fill="#e7ecf6" font-weight="700" text-anchor="start">Types</text>
-<text x="84" y="423" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#8b97b5" font-weight="400" text-anchor="start">tsc · pnpm exec tsc --noEmit</text>
-<rect x="360" y="402" width="260" height="8" rx="4" fill="#0e1527" stroke="#26324f"/>
-</g>
-<g class="k57"><rect x="360" y="402" width="260" height="8" rx="4" fill="none" stroke="none" class="k58"/></g>
-<rect x="60" y="374" width="760" height="64" rx="10" fill="none" stroke="#f87171" class="k59" stroke-width="1.5"/>
-<g class="k60"><text x="644" y="411" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#f87171" font-weight="600" text-anchor="start">1 error</text><g><circle cx="790" cy="406" r="11" fill="#f87171"/><path d="M785.82,401.82 L794.18,410.18 M794.18,401.82 L785.82,410.18" stroke="#0b1020" stroke-width="2.6" stroke-linecap="round"/></g></g>
-<g class="k61"><text x="644" y="411" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#34d399" font-weight="600" text-anchor="start">0 errors</text><g><circle cx="790" cy="406" r="11" fill="#34d399"/><path d="M785.05,406 l3.52,3.74 l6.6,-7.260000000000001" fill="none" stroke="#0b1020" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g></g>
-<g class="k62">
-<rect x="60" y="450" width="760" height="64" rx="10" fill="#111a2e" stroke="#26324f"/>
-<rect x="60" y="450" width="4" height="64" rx="2" fill="#a78bfa" stroke="none"/>
-<text x="84" y="478" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="17" fill="#e7ecf6" font-weight="700" text-anchor="start">Security</text>
-<text x="84" y="499" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#8b97b5" font-weight="400" text-anchor="start">pnpm audit --json</text>
-<rect x="360" y="478" width="260" height="8" rx="4" fill="#0e1527" stroke="#26324f"/>
-</g>
-<g class="k63"><rect x="360" y="478" width="260" height="8" rx="4" fill="none" stroke="none" class="k64"/></g>
-<rect x="60" y="450" width="760" height="64" rx="10" fill="none" stroke="#f87171" class="k65" stroke-width="1.5"/>
-<g class="k66"><text x="644" y="487" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#f87171" font-weight="600" text-anchor="start">1 high finding</text><g><circle cx="790" cy="482" r="11" fill="#f87171"/><path d="M785.82,477.82 L794.18,486.18 M794.18,477.82 L785.82,486.18" stroke="#0b1020" stroke-width="2.6" stroke-linecap="round"/></g></g>
-<g class="k67"><text x="644" y="487" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#34d399" font-weight="600" text-anchor="start">0 findings</text><g><circle cx="790" cy="482" r="11" fill="#34d399"/><path d="M785.05,482 l3.52,3.74 l6.6,-7.260000000000001" fill="none" stroke="#0b1020" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g></g>
-<text x="60" y="556" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="15" fill="#e7ecf6" font-weight="600" text-anchor="start" class="k68">3 passed · 2 failed — findings ready for your AI agent</text>
-<text x="60" y="556" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="15" fill="#a78bfa" font-weight="600" text-anchor="start" class="k69">AI agent applied fixes · rerunning the playbook …</text>
-<g class="k70"><g><circle cx="70" cy="551" r="10" fill="#34d399"/><path d="M65.5,551 l3.2,3.4000000000000004 l6.0,-6.6000000000000005" fill="none" stroke="#0b1020" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g><text x="88" y="556" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="15" fill="#34d399" font-weight="700" text-anchor="start">5 of 5 checks passed</text></g>
-<text x="820" y="556" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#5b6785" font-weight="400" text-anchor="end" class="k71">Lanes depend on your stack and configured tools</text>
-<g class="k72">
-<rect x="850" y="146" width="370" height="216" rx="12" fill="#111a2e" stroke="#f87171" stroke-opacity="0.6"/>
-<text x="870" y="172" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#5b6785" font-weight="700" text-anchor="start" letter-spacing="1.5">FINDING</text>
-<g><rect x="1140" y="158" width="62" height="22" rx="11.0" fill="#f87171" stroke="none"/><text x="1171.0" y="172.96" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#0b1020" font-weight="600" text-anchor="middle">High</text></g>
-<text x="870" y="200" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" fill="#e7ecf6" font-weight="700" text-anchor="start">Vulnerable dependency</text>
-<text x="870" y="224" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#7dd3fc" font-weight="400" text-anchor="start">package.json › lodash 4.17.15</text>
-<text x="870" y="248" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12.5" fill="#8b97b5" font-weight="400" text-anchor="start">Prototype pollution (CVE-2020-8203)</text>
-<text x="870" y="346" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#5b6785" font-weight="400" text-anchor="start">pnpm audit --json</text>
-</g>
-<g class="k73">
-<rect x="850" y="146" width="370" height="216" rx="12" fill="#0b1020" stroke="#34d399" fill-opacity="0.88" stroke-width="2"/>
-<g><rect x="935" y="239.0" width="200" height="30" rx="15.0" fill="#34d399" stroke="none"/><text x="1035.0" y="258.68" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#0b1020" font-weight="700" text-anchor="middle">✓ Fixed · lodash 4.17.21</text></g>
-</g>
-<text x="870" y="298" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12.5" fill="#34d399" font-weight="400" text-anchor="start" class="k74">Suggested fix: upgrade lodash to 4.17.21</text>
-<g class="k75">
-<rect x="850" y="374" width="370" height="148" rx="12" fill="#111a2e" stroke="#f87171" stroke-opacity="0.6"/>
-<text x="870" y="400" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#5b6785" font-weight="700" text-anchor="start" letter-spacing="1.5">FINDING</text>
-<g><rect x="1140" y="386" width="62" height="22" rx="11.0" fill="#f87171" stroke="none"/><text x="1171.0" y="400.96" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#0b1020" font-weight="600" text-anchor="middle">Error</text></g>
-<text x="870" y="428" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" fill="#e7ecf6" font-weight="700" text-anchor="start">Type error · TS2322</text>
-<text x="870" y="452" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#7dd3fc" font-weight="400" text-anchor="start">src/checkout.ts:42</text>
-<text x="870" y="476" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12.5" fill="#8b97b5" font-weight="400" text-anchor="start">Type &#x27;string&#x27; is not assignable to type &#x27;number&#x27;.</text>
-<text x="870" y="506" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#5b6785" font-weight="400" text-anchor="start">tsc --noEmit</text>
-</g>
-<g class="k76">
-<rect x="850" y="374" width="370" height="148" rx="12" fill="#0b1020" stroke="#34d399" fill-opacity="0.88" stroke-width="2"/>
-<g><rect x="935" y="433.0" width="200" height="30" rx="15.0" fill="#34d399" stroke="none"/><text x="1035.0" y="452.68" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#0b1020" font-weight="700" text-anchor="middle">✓ Fixed · checkout.ts:42</text></g>
-</g>
-<g class="k77"><rect x="40" y="28" width="214" height="32" rx="16.0" fill="#26324f" stroke="none"/><text x="147.0" y="49.04" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#e7ecf6" font-weight="600" text-anchor="middle">AI asked for unit tests</text></g>
-<g class="k78"><rect x="40" y="28" width="206" height="32" rx="16.0" fill="#a78bfa" stroke="none"/><text x="143.0" y="49.04" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#0b1020" font-weight="700" text-anchor="middle">AI powered by Satori</text></g>
-<text x="1240" y="50" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" fill="#5b6785" font-weight="600" text-anchor="end">Satori Playbook Generators</text>
-<g class="k79">
-<rect x="0" y="0" width="1280" height="720" rx="0" fill="#0b1020" stroke="none" fill-opacity="0.95"/>
-<rect x="465" y="160" width="350" height="96" rx="14" fill="#111a2e" stroke="#26324f"/>
-<path d="M485 176 h12 l4 5 h16 v15 h-32z" fill="#8b97b5"/>
-<text x="527" y="194" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="15" fill="#e7ecf6" font-weight="700" text-anchor="start">acme-shop/</text>
-<rect x="485" y="210" width="58" height="30" rx="6" fill="#0e1527" stroke="#26324f"/>
-<text x="514.0" y="230" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="middle">src/</text>
-<rect x="553" y="210" width="70" height="30" rx="6" fill="#0e1527" stroke="#26324f"/>
-<text x="588.0" y="230" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#8b97b5" font-weight="400" text-anchor="middle">tests/</text>
-<rect x="633" y="210" width="162" height="30" rx="6" fill="#0b1020" stroke="#a78bfa" stroke-width="1.5"/>
-<text x="704.0" y="230" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#a78bfa" font-weight="600" text-anchor="middle">.satori.yml</text>
-<g><circle cx="782" cy="225" r="9" fill="#34d399"/><path d="M777.95,225 l2.88,3.06 l5.3999999999999995,-5.94" fill="none" stroke="#0b1020" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
-<text x="640" y="360" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="46" fill="#e7ecf6" font-weight="800" text-anchor="middle">Beyond passing tests.</text>
-<text x="640" y="404" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="26" fill="#8b97b5" font-weight="400" text-anchor="middle">A broader picture of code quality.</text>
-<text x="640" y="478" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="24" fill="#a78bfa" font-weight="800" text-anchor="middle">Satori</text>
-<text x="640" y="504" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#5b6785" font-weight="600" text-anchor="middle" letter-spacing="1.5">Playbook Generators</text>
-</g>
-<text x="640" y="668" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="22" fill="#e7ecf6" font-weight="500" text-anchor="middle" class="k80">You ask your AI for unit tests. It writes them. They pass.</text>
-<text x="640" y="668" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="22" fill="#e7ecf6" font-weight="500" text-anchor="middle" class="k81">But passing tests only tell you about the behavior they cover.</text>
-<text x="640" y="668" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="21" fill="#e7ecf6" font-weight="500" text-anchor="middle" class="k82">Satori examines your project and generates a quality playbook tailored to your stack.</text>
-<text x="640" y="668" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="19" fill="#e7ecf6" font-weight="500" text-anchor="middle" class="k83">Run your tests alongside relevant code-quality and security checks, with results your AI can act on.</text>
-<text x="640" y="668" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="22" fill="#e7ecf6" font-weight="500" text-anchor="middle" class="k84">Give every change a repeatable quality check. With Satori.</text>
-<rect x="0" y="714" width="1280" height="6" rx="0" fill="#111a2e" stroke="none"/>
-<rect x="0" y="714" width="1280" height="6" rx="0" fill="#a78bfa" stroke="none" class="k85"/>
-<rect x="218.42857142857144" y="714" width="2" height="6" rx="0" fill="#0b1020" stroke="none"/>
-<rect x="437.8571428571429" y="714" width="2" height="6" rx="0" fill="#0b1020" stroke="none"/>
-<rect x="730.4285714285713" y="714" width="2" height="6" rx="0" fill="#0b1020" stroke="none"/>
-<rect x="1023.0" y="714" width="2" height="6" rx="0" fill="#0b1020" stroke="none"/>
-<rect x="0" y="0" width="1280" height="720" rx="0" fill="#0b1020" stroke="none" class="k86"/>
 </svg>
