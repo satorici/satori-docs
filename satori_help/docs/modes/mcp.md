@@ -86,6 +86,10 @@ Only what the repo cannot settle comes back in `questions` (for example formatte
 
 Suggested loop: write the file with the user's approval, run `run_local` once as a baseline before editing code, and after each change fix only the failures that were not in the baseline.
 
+The flow looks like this — an AI that only writes unit tests can miss type and security gaps outside the tested area; `recommend_playbook` builds a multi-lane playbook and closes the loop:
+
+![AI asked for unit tests vs. AI powered by Satori](/playbook_generator.svg)
+
 ## Playbook docs as resources
 
 The server exposes playbook reference pages as MCP resources (fetched from `https://docs-v2.satori.ci`, override with `SATORI_DOCS_URL`):
