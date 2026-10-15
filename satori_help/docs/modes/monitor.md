@@ -75,6 +75,8 @@ test:
 
 This configuration will run the check every 5 minutes.
 
+![Cron fires, curl check fails, Slack is notified](/monitor_loop.svg)
+
 CRON expressions provide more flexibility than the simple rate setting, allowing for precise control over when your monitors run. This can be particularly useful for scheduling checks during specific time windows, on particular days of the week, or even for complex yearly schedules. 
 
 ## Rate Setting

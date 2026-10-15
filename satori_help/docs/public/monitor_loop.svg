@@ -1,0 +1,692 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-labelledby="title desc">
+<title id="title">Satori monitor: cron tick, curl check, failed assert, Slack alert</title>
+<desc id="desc">A 16-second loop. The playbook monitor.yml defines a monitor named Website Check with cron "*/5 * * * *", image curlimages/curl:7.83.1, a settings.notify rule result: fail, to: slack, and a test that runs curl -is https://satori.ci with assertStdoutContains HTTP/2 200 and Satori CI. A schedule strip counts down to the next run; the 12:05 UTC cron tick reaches now and fires. The run starts: curl connects and returns HTTP/2 503 Service Unavailable. Both asserts, assertStdoutContains HTTP/2 200 and Satori CI, fail and the run is marked FAILED. A Slack notification from Satori CI in #alerts arrives: Website Check failed, 2 failing asserts, assertStdoutContains: HTTP/2 200, with report link dashboard.satori.ci/reports/90518. The next run is in 5:00, at 12:10 UTC. Caption: Schedule. Check. Alert. A monitor is a playbook that runs on a cron or rate.</desc>
+<style>
+svg {
+  --bg:#151f2c; --panel:#182433; --term:#111a26; --chip:#1d2b3d; --border:#2a3a50;
+  --text:#e3e8ef; --muted:#8fa0b5; --blue:#06adee; --green:#a6ce39; --red:#f66f81;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+text { font-family: var(--sans); }
+.mono { font-family: var(--mono); }
+.muted, .m { fill: var(--muted); }
+.k { fill: var(--blue); } .s { fill: var(--green); } .r { fill: var(--red); } .p { fill: var(--muted); }
+.t { fill: var(--text); } .f { fill: #9fb6cf; } .g { fill: var(--green); } .b { font-weight: 700; }
+.h { opacity: 0; }
+.pop, #ring { transform-box: fill-box; transform-origin: center; }
+@keyframes spin { 0% { opacity: 1; } 24.9% { opacity: 1; } 25% { opacity: 0; } 100% { opacity: 0; } }
+.spin { animation: spin .5s linear infinite both; }
+@keyframes chip0 {
+  0% { opacity: 1; }
+  7.5% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  9.062% { opacity: 0; }
+  90.625% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  92.5% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes chip1 {
+  0% { opacity: 0; }
+  7.5% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  9.062% { opacity: 1; }
+  18.438% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  20% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes chip2 {
+  0% { opacity: 0; }
+  18.438% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  20% { opacity: 1; }
+  47.812% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  49.375% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes chip3 {
+  0% { opacity: 0; }
+  47.812% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  49.375% { opacity: 1; }
+  90.625% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  92.5% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes ovCron {
+  0% { opacity: 0; }
+  7.5% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  9.062% { opacity: 1; }
+  18.438% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  20% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes ovCurl {
+  0% { opacity: 0; }
+  18.438% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  20% { opacity: 1; }
+  33.75% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  35.312% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes ovAssert {
+  0% { opacity: 0; }
+  33.75% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  35.312% { opacity: 1; }
+  47.812% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  49.375% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes ovNotify {
+  0% { opacity: 0; }
+  47.812% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  49.375% { opacity: 1; }
+  90.625% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  92.5% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes tapeIn {
+  0% { transform: translateX(60px); }
+  17.5% { transform: translateX(0px); }
+  93.062% { transform: translateX(0px); }
+  93.125% { transform: translateX(60px); }
+  100% { transform: translateX(60px); }
+}
+@keyframes fireDot {
+  0% { opacity: 0; }
+  17.5% { opacity: 0; }
+  17.562% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes fireLab {
+  0% { opacity: 0; }
+  17.5% { opacity: 0; }
+  17.562% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes ring {
+  0% { opacity: 0; transform: scale(.4); }
+  17.5% { opacity: 0; transform: scale(.4); }
+  17.562% { opacity: 0.9; transform: scale(.4); animation-timing-function: cubic-bezier(0,0,.2,1); }
+  21.25% { opacity: 0; transform: scale(1.8); }
+  100% { opacity: 0; transform: scale(1.8); }
+}
+@keyframes cd0 {
+  0% { opacity: 1; }
+  5.875% { opacity: 1; }
+  5.938% { opacity: 0; }
+  93.688% { opacity: 0; }
+  93.75% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes cd1 {
+  0% { opacity: 0; }
+  5.938% { opacity: 0; }
+  6% { opacity: 1; }
+  11.812% { opacity: 1; }
+  11.875% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes cd2 {
+  0% { opacity: 0; }
+  11.875% { opacity: 0; }
+  11.938% { opacity: 1; }
+  17.438% { opacity: 1; }
+  17.5% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes nt0 {
+  0% { opacity: 1; }
+  71.25% { opacity: 1; }
+  71.312% { opacity: 0; }
+  93.688% { opacity: 0; }
+  93.75% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes nowPill {
+  0% { opacity: 0; transform: scale(.7); }
+  17.5% { opacity: 0; transform: scale(.7); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  18.75% { opacity: 1; transform: scale(1.08); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  20% { opacity: 1; transform: scale(1); }
+  71.188% { opacity: 1; transform: scale(1); }
+  71.25% { opacity: 0; transform: scale(.7); }
+  100% { opacity: 0; transform: scale(.7); }
+}
+@keyframes nx5 {
+  0% { opacity: 0; }
+  71.25% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  73.125% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes nt1 {
+  0% { opacity: 0; }
+  71.25% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  73.125% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes bSched {
+  0% { opacity: 1; }
+  18.375% { opacity: 1; }
+  18.438% { opacity: 0; }
+  93.688% { opacity: 0; }
+  93.75% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes bRun {
+  0% { opacity: 0; }
+  18.438% { opacity: 0; }
+  18.5% { opacity: 1; }
+  46.812% { opacity: 1; }
+  46.875% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes bFail {
+  0% { opacity: 0; transform: scale(0.8); }
+  46.875% { opacity: 0; transform: scale(0.8); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  48.438% { opacity: 1; transform: scale(1); }
+  93.062% { opacity: 1; transform: scale(1); }
+  93.125% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 0; transform: scale(0.8); }
+}
+@keyframes idle {
+  0% { opacity: 1; }
+  18.375% { opacity: 1; }
+  18.438% { opacity: 0; }
+  93.688% { opacity: 0; }
+  93.75% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes caret {
+  0% { opacity: 1; }
+  2.438% { opacity: 1; }
+  2.5% { opacity: 0; }
+  4.938% { opacity: 0; }
+  5% { opacity: 1; }
+  7.438% { opacity: 1; }
+  7.5% { opacity: 0; }
+  9.938% { opacity: 0; }
+  10% { opacity: 1; }
+  12.438% { opacity: 1; }
+  12.5% { opacity: 0; }
+  14.938% { opacity: 0; }
+  15% { opacity: 1; }
+  17.438% { opacity: 1; }
+  17.5% { opacity: 0; }
+  18.375% { opacity: 0; }
+  18.438% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes cmd {
+  0% { opacity: 0; }
+  18.438% { opacity: 0; }
+  18.5% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes rc {
+  0% { opacity: 0; }
+  28.125% { opacity: 0; }
+  28.188% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes so {
+  0% { opacity: 0; }
+  28.875% { opacity: 0; }
+  28.938% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes h1 {
+  0% { opacity: 0; }
+  29.625% { opacity: 0; }
+  29.688% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes h2 {
+  0% { opacity: 0; }
+  30.375% { opacity: 0; }
+  30.438% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes h3 {
+  0% { opacity: 0; }
+  31.125% { opacity: 0; }
+  31.188% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes conn {
+  0% { opacity: 0; }
+  19.375% { opacity: 0; }
+  19.438% { opacity: 1; }
+  28.062% { opacity: 1; }
+  28.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes alab {
+  0% { opacity: 0; }
+  33.75% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  35.312% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes a0 {
+  0% { opacity: 0; transform: translateY(8px); }
+  34.062% { opacity: 0; transform: translateY(8px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  35.812% { opacity: 1; transform: translateY(0px); }
+  93.062% { opacity: 1; transform: translateY(0px); }
+  93.125% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+@keyframes af0 {
+  0% { opacity: 0; }
+  36.562% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  37.813% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes fp0 {
+  0% { opacity: 0; transform: scale(0.6); }
+  36.562% { opacity: 0; transform: scale(0.6); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  38.313% { opacity: 1; transform: scale(1); }
+  93.062% { opacity: 1; transform: scale(1); }
+  93.125% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 0; transform: scale(0.6); }
+}
+@keyframes ef0 {
+  0% { opacity: 0; }
+  36.562% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  37.813% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes a1 {
+  0% { opacity: 0; transform: translateY(8px); }
+  39.062% { opacity: 0; transform: translateY(8px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  40.812% { opacity: 1; transform: translateY(0px); }
+  93.062% { opacity: 1; transform: translateY(0px); }
+  93.125% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+@keyframes af1 {
+  0% { opacity: 0; }
+  41.875% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  43.125% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes fp1 {
+  0% { opacity: 0; transform: scale(0.6); }
+  41.875% { opacity: 0; transform: scale(0.6); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  43.625% { opacity: 1; transform: scale(1); }
+  93.062% { opacity: 1; transform: scale(1); }
+  93.125% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 0; transform: scale(0.6); }
+}
+@keyframes ef1 {
+  0% { opacity: 0; }
+  41.875% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  43.125% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes soBand {
+  0% { opacity: 0; }
+  36.562% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  37.813% { opacity: 1; }
+  93.062% { opacity: 1; }
+  93.125% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes dimO {
+  0% { opacity: 0; }
+  33.75% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  35.625% { opacity: 0.45; }
+  47.812% { opacity: 0.45; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  49.688% { opacity: 0.6; }
+  62.5% { opacity: 0.6; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  64.375% { opacity: 0.3; }
+  90.625% { opacity: 0.3; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  92.5% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes dimA {
+  0% { opacity: 0; }
+  47.812% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  49.688% { opacity: 0.5; }
+  62.5% { opacity: 0.5; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  64.375% { opacity: 0.2; }
+  90.625% { opacity: 0.2; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  92.5% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes conn1 {
+  0% { opacity: 0; stroke-dasharray: 1; stroke-dashoffset: 1; }
+  17.5% { opacity: 1; stroke-dasharray: 1; stroke-dashoffset: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  18.438% { opacity: 1; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  22.188% { opacity: 1; stroke-dasharray: 1; stroke-dashoffset: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.062% { opacity: 0; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  100% { opacity: 0; stroke-dasharray: 1; stroke-dashoffset: 0; }
+}
+@keyframes conn2 {
+  0% { opacity: 0; }
+  18.25% { opacity: 0; }
+  18.438% { opacity: 1; }
+  22.188% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.062% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes toast {
+  0% { opacity: 0; transform: translateX(36px); }
+  47.812% { opacity: 0; transform: translateX(36px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  49.813% { opacity: 1; transform: translateX(0px); }
+  93.062% { opacity: 1; transform: translateX(0px); }
+  93.125% { opacity: 0; transform: translateX(36px); }
+  100% { opacity: 0; transform: translateX(36px); }
+}
+@keyframes Ewrap {
+  0% { opacity: 1; }
+  7.5% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  9.375% { opacity: 0.55; }
+  90.625% { opacity: 0.55; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  92.5% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes Swrap {
+  0% { opacity: 0.75; }
+  7.5% { opacity: 0.75; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  9.375% { opacity: 1; }
+  19.062% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  20.938% { opacity: 0.5; }
+  70% { opacity: 0.5; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  71.875% { opacity: 0.9; }
+  90.625% { opacity: 0.9; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  92.5% { opacity: 0.75; }
+  100% { opacity: 0.75; }
+}
+@keyframes Rwrap {
+  0% { opacity: 0.5; }
+  17.812% { opacity: 0.5; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  19.687% { opacity: 1; }
+  90.625% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  92.5% { opacity: 0.5; }
+  100% { opacity: 0.5; }
+}
+@keyframes Ecode {
+  0% { opacity: 1; }
+  90.625% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  92.5% { opacity: 0; }
+  93.75% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  96.25% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes Rcode {
+  0% { opacity: 1; }
+  90.625% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  92.5% { opacity: 0; }
+  93.75% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  96.25% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes toastWrap {
+  0% { opacity: 1; }
+  90.625% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  92.5% { opacity: 0; }
+  93.75% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  96.25% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes tapeFade {
+  0% { opacity: 1; }
+  90.625% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  92.5% { opacity: 0; }
+  93.75% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  96.25% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes cw0 {
+  0% { fill: #4f6178; }
+  7.5% { fill: #4f6178; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  9.062% { fill: #06adee; }
+  18.438% { fill: #06adee; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  20% { fill: #e3e8ef; }
+  90.625% { fill: #e3e8ef; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  93.125% { fill: #4f6178; }
+  100% { fill: #4f6178; }
+}
+@keyframes cw1 {
+  0% { fill: #4f6178; }
+  18.438% { fill: #4f6178; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  20% { fill: #06adee; }
+  47.812% { fill: #06adee; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  49.375% { fill: #e3e8ef; }
+  90.625% { fill: #e3e8ef; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  93.125% { fill: #4f6178; }
+  100% { fill: #4f6178; }
+}
+@keyframes cw2 {
+  0% { fill: #4f6178; }
+  47.812% { fill: #4f6178; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  49.375% { fill: #06adee; }
+  90.625% { fill: #06adee; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  93.125% { fill: #4f6178; }
+  100% { fill: #4f6178; }
+}
+@keyframes sub {
+  0% { opacity: 0; }
+  62.5% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  64.688% { opacity: 1; }
+  90.625% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  92.5% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+#chip0 { animation: chip0 16s linear infinite both; }
+#chip1 { animation: chip1 16s linear infinite both; }
+#chip2 { animation: chip2 16s linear infinite both; }
+#chip3 { animation: chip3 16s linear infinite both; }
+#ovCron { animation: ovCron 16s linear infinite both; }
+#ovCurl { animation: ovCurl 16s linear infinite both; }
+#ovAssert { animation: ovAssert 16s linear infinite both; }
+#ovNotify { animation: ovNotify 16s linear infinite both; }
+#tapeIn { animation: tapeIn 16s linear infinite both; }
+#fireDot { animation: fireDot 16s linear infinite both; }
+#fireLab { animation: fireLab 16s linear infinite both; }
+#ring { animation: ring 16s linear infinite both; }
+#cd0 { animation: cd0 16s linear infinite both; }
+#cd1 { animation: cd1 16s linear infinite both; }
+#cd2 { animation: cd2 16s linear infinite both; }
+#nt0 { animation: nt0 16s linear infinite both; }
+#nowPill { animation: nowPill 16s linear infinite both; }
+#nx5 { animation: nx5 16s linear infinite both; }
+#nt1 { animation: nt1 16s linear infinite both; }
+#bSched { animation: bSched 16s linear infinite both; }
+#bRun { animation: bRun 16s linear infinite both; }
+#bFail { animation: bFail 16s linear infinite both; }
+#idle { animation: idle 16s linear infinite both; }
+#caret { animation: caret 16s linear infinite both; }
+#cmd { animation: cmd 16s linear infinite both; }
+#rc { animation: rc 16s linear infinite both; }
+#so { animation: so 16s linear infinite both; }
+#h1 { animation: h1 16s linear infinite both; }
+#h2 { animation: h2 16s linear infinite both; }
+#h3 { animation: h3 16s linear infinite both; }
+#conn { animation: conn 16s linear infinite both; }
+#alab { animation: alab 16s linear infinite both; }
+#a0 { animation: a0 16s linear infinite both; }
+#af0 { animation: af0 16s linear infinite both; }
+#fp0 { animation: fp0 16s linear infinite both; }
+#ef0 { animation: ef0 16s linear infinite both; }
+#a1 { animation: a1 16s linear infinite both; }
+#af1 { animation: af1 16s linear infinite both; }
+#fp1 { animation: fp1 16s linear infinite both; }
+#ef1 { animation: ef1 16s linear infinite both; }
+#soBand { animation: soBand 16s linear infinite both; }
+#dimO { animation: dimO 16s linear infinite both; }
+#dimA { animation: dimA 16s linear infinite both; }
+#conn1 { animation: conn1 16s linear infinite both; }
+#conn2 { animation: conn2 16s linear infinite both; }
+#toast { animation: toast 16s linear infinite both; }
+#Ewrap { animation: Ewrap 16s linear infinite both; }
+#Swrap { animation: Swrap 16s linear infinite both; }
+#Rwrap { animation: Rwrap 16s linear infinite both; }
+#Ecode { animation: Ecode 16s linear infinite both; }
+#Rcode { animation: Rcode 16s linear infinite both; }
+#toastWrap { animation: toastWrap 16s linear infinite both; }
+#tapeFade { animation: tapeFade 16s linear infinite both; }
+#cw0 { animation: cw0 16s linear infinite both; }
+#cw1 { animation: cw1 16s linear infinite both; }
+#cw2 { animation: cw2 16s linear infinite both; }
+#sub { animation: sub 16s linear infinite both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  .hero { opacity: 1 !important; transform: none !important; }
+  .nohero { display: none !important; }
+  #Ewrap { opacity: .7 !important; }
+  #Swrap { opacity: .9 !important; }
+  #cw0, #cw1 { fill: #e3e8ef !important; }
+  #cw2 { fill: #06adee !important; }
+}
+</style>
+<rect width="1280" height="720" fill="var(--bg)"/>
+<rect x="24" y="18" width="92" height="30" rx="15" fill="var(--chip)" stroke="var(--border)"/><text x="38" y="38" font-size="14" font-weight="600" class="muted">Playbook</text>
+<g id="chip0" class="h nohero"><rect x="24" y="18" width="92" height="30" rx="15" fill="var(--blue)"/><text x="38" y="38" font-size="14" font-weight="700" fill="#0b1520">Playbook</text></g>
+<rect x="568" y="18" width="91" height="30" rx="15" fill="var(--chip)" stroke="var(--border)"/><text x="582" y="38" font-size="14" font-weight="600" class="muted">Schedule</text>
+<g id="chip1" class="h nohero"><rect x="568" y="18" width="91" height="30" rx="15" fill="var(--blue)"/><text x="582" y="38" font-size="14" font-weight="700" fill="#0b1520">Schedule</text></g>
+<rect x="669" y="18" width="88" height="30" rx="15" fill="var(--chip)" stroke="var(--border)"/><text x="683" y="38" font-size="14" font-weight="600" class="muted">Runtime</text>
+<g id="chip2" class="h nohero"><rect x="669" y="18" width="88" height="30" rx="15" fill="var(--blue)"/><text x="683" y="38" font-size="14" font-weight="700" fill="#0b1520">Runtime</text></g>
+<rect x="767" y="18" width="72" height="30" rx="15" fill="var(--chip)" stroke="var(--border)"/><text x="781" y="38" font-size="14" font-weight="600" class="muted">Notify</text>
+<g id="chip3" class="h hero"><rect x="767" y="18" width="72" height="30" rx="15" fill="var(--blue)"/><text x="781" y="38" font-size="14" font-weight="700" fill="#0b1520">Notify</text></g>
+<text x="1256" y="38" font-size="13" class="muted" text-anchor="end">Monitor · every 5 min</text>
+<g id="Ewrap">
+<rect x="24" y="60" width="520" height="570" rx="10" fill="var(--panel)"/>
+<path d="M24 70 a10 10 0 0 1 10 -10 h500 a10 10 0 0 1 10 10 v26 h-520 z" fill="#1b2838"/>
+<rect x="24.5" y="60.5" width="519" height="569" rx="10" fill="none" stroke="var(--border)"/>
+<line x1="24" y1="96" x2="544" y2="96" stroke="var(--border)"/>
+<circle cx="44" cy="78" r="5.5" fill="#ff5f57"/><circle cx="62" cy="78" r="5.5" fill="#febc2e"/><circle cx="80" cy="78" r="5.5" fill="#28c840"/>
+<text x="284.0" y="83" class="muted" font-size="13" text-anchor="middle">monitor.yml</text>
+<text x="528" y="616" font-size="12" class="muted" text-anchor="end">YAML · UTF-8</text>
+<g id="Ecode">
+<text x="62" y="130" class="mono muted" font-size="14" text-anchor="end">1</text>
+<text x="82.0" y="130" class="mono" font-size="17" xml:space="preserve"><tspan class="k b">settings</tspan><tspan class="p">:</tspan></text>
+<text x="62" y="165" class="mono muted" font-size="14" text-anchor="end">2</text>
+<text x="102.4" y="165" class="mono" font-size="17" xml:space="preserve"><tspan class="k">name</tspan><tspan class="p">:</tspan> <tspan class="s">"Website Check"</tspan></text>
+<text x="62" y="200" class="mono muted" font-size="14" text-anchor="end">3</text>
+<text x="102.4" y="200" class="mono" font-size="17" xml:space="preserve"><tspan class="k">cron</tspan><tspan class="p">:</tspan> <tspan class="s">"*/5 * * * *"</tspan></text>
+<text x="62" y="235" class="mono muted" font-size="14" text-anchor="end">4</text>
+<text x="102.4" y="235" class="mono" font-size="17" xml:space="preserve"><tspan class="k">image</tspan><tspan class="p">:</tspan> <tspan class="f">curlimages/curl:7.83.1</tspan></text>
+<text x="62" y="270" class="mono muted" font-size="14" text-anchor="end">5</text>
+<text x="102.4" y="270" class="mono" font-size="17" xml:space="preserve"><tspan class="k">notify</tspan><tspan class="p">:</tspan></text>
+<text x="62" y="305" class="mono muted" font-size="14" text-anchor="end">6</text>
+<text x="122.8" y="305" class="mono" font-size="17" xml:space="preserve"><tspan class="p">-</tspan> <tspan class="k">result</tspan><tspan class="p">:</tspan> <tspan class="r">fail</tspan></text>
+<text x="62" y="340" class="mono muted" font-size="14" text-anchor="end">7</text>
+<text x="143.2" y="340" class="mono" font-size="17" xml:space="preserve"><tspan class="k">to</tspan><tspan class="p">:</tspan> <tspan class="t">slack</tspan></text>
+<text x="62" y="375" class="mono muted" font-size="14" text-anchor="end">8</text>
+<text x="82.0" y="375" class="mono" font-size="17" xml:space="preserve"><tspan class="k b">test</tspan><tspan class="p">:</tspan></text>
+<text x="62" y="410" class="mono muted" font-size="14" text-anchor="end">9</text>
+<text x="102.4" y="410" class="mono" font-size="17" xml:space="preserve"><tspan class="k">assertStdoutContains</tspan><tspan class="p">:</tspan></text>
+<text x="62" y="445" class="mono muted" font-size="14" text-anchor="end">10</text>
+<text x="122.8" y="445" class="mono" font-size="17" xml:space="preserve"><tspan class="p">-</tspan> <tspan class="t">HTTP/2 200</tspan></text>
+<text x="62" y="480" class="mono muted" font-size="14" text-anchor="end">11</text>
+<text x="122.8" y="480" class="mono" font-size="17" xml:space="preserve"><tspan class="p">-</tspan> <tspan class="t">Satori CI</tspan></text>
+<text x="62" y="515" class="mono muted" font-size="14" text-anchor="end">12</text>
+<text x="102.4" y="515" class="mono" font-size="17" xml:space="preserve"><tspan class="k">curl</tspan><tspan class="p">:</tspan></text>
+<text x="62" y="550" class="mono muted" font-size="14" text-anchor="end">13</text>
+<text x="122.8" y="550" class="mono" font-size="17" xml:space="preserve"><tspan class="p">-</tspan> <tspan class="t">curl -is https://satori.ci</tspan></text>
+</g>
+<g id="ovCron" class="h nohero"><path d="M25 97H543V629H25Z M25 176V211H543V176Z" fill-rule="evenodd" fill="var(--panel)" fill-opacity=".68"/><rect x="25" y="176" width="3" height="35" fill="var(--blue)"/></g>
+<g id="ovCurl" class="h nohero"><path d="M25 97H543V629H25Z M25 491V561H543V491Z" fill-rule="evenodd" fill="var(--panel)" fill-opacity=".68"/><rect x="25" y="491" width="3" height="70" fill="var(--blue)"/></g>
+<g id="ovAssert" class="h nohero"><path d="M25 97H543V629H25Z M25 386V491H543V386Z" fill-rule="evenodd" fill="var(--panel)" fill-opacity=".68"/><rect x="25" y="386" width="3" height="105" fill="var(--blue)"/></g>
+<g id="ovNotify" class="h hero"><path d="M25 97H543V629H25Z M25 246V351H543V246Z" fill-rule="evenodd" fill="var(--panel)" fill-opacity=".68"/><rect x="25" y="246" width="3" height="105" fill="var(--blue)"/></g>
+<g id="ef0" class="h hero"><rect x="485" y="429" width="44" height="20" rx="10" fill="rgba(246,111,129,.16)" stroke="var(--red)" stroke-opacity=".8"/><text x="507" y="443" font-size="11" font-weight="800" letter-spacing=".6" text-anchor="middle" fill="var(--red)">FAIL</text></g>
+<g id="ef1" class="h hero"><rect x="485" y="464" width="44" height="20" rx="10" fill="rgba(246,111,129,.16)" stroke="var(--red)" stroke-opacity=".8"/><text x="507" y="478" font-size="11" font-weight="800" letter-spacing=".6" text-anchor="middle" fill="var(--red)">FAIL</text></g>
+</g>
+<g id="Swrap">
+<rect x="568" y="60" width="688" height="100" rx="10" fill="var(--panel)"/><rect x="568.5" y="60.5" width="687" height="99" rx="10" fill="none" stroke="var(--border)"/>
+<text x="588" y="86" font-size="11" font-weight="700" letter-spacing="1.5" fill="var(--muted)">SCHEDULE · UTC</text>
+<rect x="588" y="98" width="146.8" height="32" rx="8" fill="var(--chip)" stroke="var(--border)"/><text x="602" y="121" class="mono" font-size="18" font-weight="700" fill="var(--green)" xml:space="preserve">*/5 * * * *</text>
+<text x="588" y="150" font-size="13" fill="var(--muted)">every 5 minutes</text>
+<defs><clipPath id="clipTape"><rect x="768" y="62" width="340" height="96"/></clipPath><linearGradient id="fadeL" x1="0" x2="1"><stop offset="0" stop-color="#182433"/><stop offset="1" stop-color="#182433" stop-opacity="0"/></linearGradient><linearGradient id="fadeR" x1="0" x2="1"><stop offset="0" stop-color="#182433" stop-opacity="0"/><stop offset="1" stop-color="#182433"/></linearGradient></defs>
+<line x1="768" y1="118" x2="1108" y2="118" stroke="var(--border)" stroke-width="2"/>
+<g clip-path="url(#clipTape)"><g id="tapeFade"><g id="tapeIn">
+<line x1="696" y1="109" x2="696" y2="127" stroke="var(--border)" stroke-width="2"/><circle cx="696" cy="118" r="5" fill="#4f6178"/><text x="696" y="148" class="mono" font-size="13" fill="var(--muted)" text-anchor="middle">11:55</text>
+<line x1="816" y1="109" x2="816" y2="127" stroke="var(--border)" stroke-width="2"/><circle cx="816" cy="118" r="5" fill="#4f6178"/><text x="816" y="148" class="mono" font-size="13" fill="var(--muted)" text-anchor="middle">12:00</text>
+<line x1="936" y1="109" x2="936" y2="127" stroke="var(--border)" stroke-width="2"/><circle cx="936" cy="118" r="5" fill="var(--panel)" stroke="#4f6178" stroke-width="2"/><text x="936" y="148" class="mono" font-size="13" fill="var(--muted)" text-anchor="middle">12:05</text>
+<line x1="1056" y1="109" x2="1056" y2="127" stroke="var(--border)" stroke-width="2"/><circle cx="1056" cy="118" r="5" fill="var(--panel)" stroke="#4f6178" stroke-width="2"/><text x="1056" y="148" class="mono" font-size="13" fill="var(--muted)" text-anchor="middle">12:10</text>
+<line x1="1176" y1="109" x2="1176" y2="127" stroke="var(--border)" stroke-width="2"/><circle cx="1176" cy="118" r="5" fill="var(--panel)" stroke="#4f6178" stroke-width="2"/><text x="1176" y="148" class="mono" font-size="13" fill="var(--muted)" text-anchor="middle">12:15</text>
+<circle id="fireDot" class="h hero" cx="936" cy="118" r="6" fill="var(--blue)"/>
+<text id="fireLab" class="h hero mono" x="936" y="148" font-size="13" font-weight="700" fill="var(--blue)" text-anchor="middle">12:05</text>
+</g></g></g>
+<rect x="768" y="62" width="40" height="96" fill="url(#fadeL)"/><rect x="1068" y="62" width="40" height="96" fill="url(#fadeR)"/>
+<g transform="translate(936 118)"><circle id="ring" class="nohero" r="14" fill="none" stroke="var(--blue)" stroke-width="2.5" opacity="0"/></g>
+<path d="M930 74 h12 l-6 7 z" fill="var(--blue)"/><line x1="936" y1="80" x2="936" y2="130" stroke="var(--blue)" stroke-width="2"/><text x="946" y="82" font-size="11" font-weight="700" letter-spacing="1" fill="var(--blue)">now</text>
+<line x1="1112" y1="78" x2="1112" y2="142" stroke="var(--border)"/>
+<text x="1128" y="86" font-size="11" font-weight="700" letter-spacing="1.5" fill="var(--muted)">NEXT RUN</text>
+<text id="cd0" class="mono nohero" x="1128" y="120" font-size="24" font-weight="700" fill="var(--text)">0:03</text>
+<text id="cd1" class="mono nohero h" x="1128" y="120" font-size="24" font-weight="700" fill="var(--text)">0:02</text>
+<text id="cd2" class="mono nohero h" x="1128" y="120" font-size="24" font-weight="700" fill="var(--text)">0:01</text>
+<text id="nt0" class="nohero" x="1128" y="146" font-size="12" fill="var(--muted)">at 12:05 UTC</text>
+<g transform="translate(1162 113)"><g id="nowPill" class="pop h nohero"><rect x="-34" y="-15" width="68" height="30" rx="15" fill="var(--blue)"/><text x="0" y="5" font-size="14" font-weight="800" letter-spacing="1" text-anchor="middle" fill="#0b1520">NOW</text></g></g>
+<text id="nx5" class="mono h hero" x="1128" y="120" font-size="24" font-weight="700" fill="var(--text)">5:00</text>
+<text id="nt1" class="h hero" x="1128" y="146" font-size="12" fill="var(--muted)">at 12:10 UTC</text>
+</g>
+<g id="Rwrap">
+<rect x="568" y="172" width="688" height="458" rx="10" fill="var(--term)"/>
+<path d="M568 182 a10 10 0 0 1 10 -10 h668 a10 10 0 0 1 10 10 v26 h-688 z" fill="#1b2838"/>
+<rect x="568.5" y="172.5" width="687" height="457" rx="10" fill="none" stroke="var(--border)"/>
+<line x1="568" y1="208" x2="1256" y2="208" stroke="var(--border)"/>
+<circle cx="588" cy="190" r="5.5" fill="#ff5f57"/><circle cx="606" cy="190" r="5.5" fill="#febc2e"/><circle cx="624" cy="190" r="5.5" fill="#28c840"/>
+<text x="912.0" y="195" class="muted" font-size="13" text-anchor="middle">satori-v2 · monitor run</text>
+<g id="Rcode">
+<text x="590" y="236" font-size="16" font-weight="700" fill="var(--text)">Website Check</text><text x="714" y="236" class="mono" font-size="14" fill="var(--muted)">run #128 · 12:05 UTC</text>
+<line x1="590" y1="252" x2="1234" y2="252" stroke="var(--border)"/>
+<g id="bSched" class="nohero"><rect x="1123.5" y="218" width="110.5" height="26" rx="13" fill="var(--chip)" stroke="var(--muted)" stroke-opacity=".8"/><text x="1137.5" y="236" font-size="12" font-weight="800" letter-spacing="1" fill="var(--muted)">SCHEDULED</text></g>
+<g id="bRun" class="h nohero"><rect x="1117.6" y="218" width="116.4" height="26" rx="13" fill="rgba(6,173,238,.14)" stroke="var(--blue)" stroke-opacity=".8"/><text x="1147.6" y="236" font-size="12" font-weight="800" letter-spacing="1" fill="var(--blue)">RUNNING</text><text class="mono spin" style="animation-delay:0.000s" x="1127.6" y="237" font-size="15" fill="var(--blue)">⠋</text><text class="mono spin" style="animation-delay:-0.375s" x="1127.6" y="237" font-size="15" fill="var(--blue)">⠙</text><text class="mono spin" style="animation-delay:-0.250s" x="1127.6" y="237" font-size="15" fill="var(--blue)">⠹</text><text class="mono spin" style="animation-delay:-0.125s" x="1127.6" y="237" font-size="15" fill="var(--blue)">⠸</text></g>
+<g id="bFail" class="h hero"><rect x="1152.0" y="218" width="82.0" height="26" rx="13" fill="rgba(246,111,129,.16)" stroke="var(--red)" stroke-opacity=".8"/><text x="1166.0" y="236" font-size="12" font-weight="800" letter-spacing="1" fill="var(--red)">FAILED</text></g>
+<text id="idle" class="nohero mono" x="590" y="276" font-size="16" fill="var(--muted)">waiting for the next cron tick…</text>
+<rect id="caret" class="nohero" x="891.6" y="261" width="9" height="19" fill="var(--text)"/>
+<g id="soBand" class="h hero"><rect x="716.4" y="304" width="112.0" height="25" rx="5" fill="rgba(246,111,129,.16)" stroke="var(--red)" stroke-opacity=".6"/></g>
+<g id="cmd" class="h hero"><text x="590" y="276" class="mono g" font-size="16">Command:</text><text x="724.4" y="276" class="mono t b" font-size="16">curl -is https://satori.ci</text></g>
+<g id="rc" class="h hero"><text x="590" y="299" class="mono m" font-size="16">Return code:</text><text x="724.4" y="299" class="mono t" font-size="16">0</text></g>
+<g id="so" class="h hero"><text x="590" y="322" class="mono m" font-size="16">Stdout:</text><text x="724.4" y="322" class="mono r b" font-size="16">HTTP/2 503</text></g>
+<g id="h1" class="h hero"><text x="724.4" y="345" class="mono f" font-size="16">content-type: text/html</text></g>
+<g id="h2" class="h hero"><text x="724.4" y="368" class="mono f" font-size="16">retry-after: 30</text></g>
+<g id="h3" class="h hero"><text x="724.4" y="391" class="mono f" font-size="16">&lt;title&gt;503 Service Unavailable&lt;/title&gt;</text></g>
+<g id="conn" class="h nohero"><g transform="translate(590 0)"><text class="mono spin" style="animation-delay:0.000s" x="0" y="299" font-size="16" fill="var(--blue)">⠋</text><text class="mono spin" style="animation-delay:-0.375s" x="0" y="299" font-size="16" fill="var(--blue)">⠙</text><text class="mono spin" style="animation-delay:-0.250s" x="0" y="299" font-size="16" fill="var(--blue)">⠹</text><text class="mono spin" style="animation-delay:-0.125s" x="0" y="299" font-size="16" fill="var(--blue)">⠸</text></g><text x="609.2" y="299" class="mono m" font-size="16">connecting to satori.ci:443…</text></g>
+<text id="alab" x="590" y="421" class="h hero" font-size="12" font-weight="700" letter-spacing="1.5" fill="var(--muted)">ASSERTS</text>
+<g id="a0" class="h hero"><rect x="590" y="433" width="644" height="32" rx="8" fill="var(--chip)" stroke="var(--border)"/><text x="608" y="455" class="mono" font-size="16" fill="var(--text)">assertStdoutContains</text><text x="819.2" y="455" class="mono" font-size="16" fill="var(--muted)">HTTP/2 200</text></g>
+<g id="af0" class="h hero"><rect x="590" y="433" width="4" height="32" fill="var(--red)"/></g>
+<g transform="translate(1190 449)"><g id="fp0" class="pop h hero"><rect x="-30" y="-12" width="60" height="24" rx="12" fill="rgba(246,111,129,.16)" stroke="var(--red)" stroke-opacity=".8"/><circle cx="-15" cy="0" r="7" fill="var(--red)"/><path d="M-17.6 -2.6 l5.2 5.2 M-12.4 -2.6 l-5.2 5.2" stroke="#0e1620" stroke-width="1.8" stroke-linecap="round"/><text x="9" y="5" font-size="12" font-weight="800" text-anchor="middle" fill="var(--red)">FAIL</text></g></g>
+<g id="a1" class="h hero"><rect x="590" y="471" width="644" height="32" rx="8" fill="var(--chip)" stroke="var(--border)"/><text x="608" y="493" class="mono" font-size="16" fill="var(--text)">assertStdoutContains</text><text x="819.2" y="493" class="mono" font-size="16" fill="var(--muted)">Satori CI</text></g>
+<g id="af1" class="h hero"><rect x="590" y="471" width="4" height="32" fill="var(--red)"/></g>
+<g transform="translate(1190 487)"><g id="fp1" class="pop h hero"><rect x="-30" y="-12" width="60" height="24" rx="12" fill="rgba(246,111,129,.16)" stroke="var(--red)" stroke-opacity=".8"/><circle cx="-15" cy="0" r="7" fill="var(--red)"/><path d="M-17.6 -2.6 l5.2 5.2 M-12.4 -2.6 l-5.2 5.2" stroke="#0e1620" stroke-width="1.8" stroke-linecap="round"/><text x="9" y="5" font-size="12" font-weight="800" text-anchor="middle" fill="var(--red)">FAIL</text></g></g>
+<rect id="dimO" class="h nohero" x="569" y="256" width="686" height="147" fill="var(--term)"/>
+<rect id="dimA" class="h nohero" x="569" y="403" width="686" height="100" fill="var(--term)"/>
+</g>
+</g>
+<path id="conn1" class="nohero" d="M936 155 V216" pathLength="1" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round"/><g transform="translate(936 216)"><path id="conn2" class="nohero" d="M-6 -7 L0 0 L6 -7" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></g>
+<g id="toastWrap"><g id="toast" class="h hero"><rect x="586" y="513" width="652" height="105" rx="12" fill="#1f2b3c" stroke="var(--red)" stroke-opacity=".75"/><rect x="602" y="529" width="40" height="40" rx="9" fill="var(--chip)" stroke="var(--border)"/><path d="M618 539 l-3 20 M627 539 l-3 20 M612 545 h20 M610 553 h20" stroke="var(--text)" stroke-width="2.4" stroke-linecap="round"/><text x="656" y="541" font-size="14" fill="var(--muted)"><tspan font-weight="700" fill="var(--text)">Satori CI</tspan>  ·  slack  ·  #alerts</text><text x="1222" y="541" font-size="12" fill="var(--muted)" text-anchor="end">via <tspan class="mono" fill="var(--blue)">settings.notify</tspan> · <tspan class="mono" fill="var(--text)">result: fail</tspan></text><rect x="656" y="555" width="56" height="20" rx="10" fill="var(--red)"/><text x="684" y="569" font-size="11" font-weight="800" letter-spacing=".8" text-anchor="middle" fill="#0e1620">FAILED</text><text x="722" y="571" font-size="17" font-weight="700" fill="var(--text)">Website Check failed<tspan font-size="14" font-weight="400" fill="var(--muted)">  ·  2 failing asserts</tspan></text><text x="656" y="597" class="mono" font-size="13" fill="var(--muted)">assertStdoutContains: <tspan fill="var(--red)">HTTP/2 200</tspan></text><text x="1222" y="597" class="mono" font-size="13" fill="var(--blue)" text-anchor="end">dashboard.satori.ci/reports/90518</text></g></g>
+<text id="cw0" x="452.6" y="674" font-size="30" font-weight="800" fill="#4f6178">Schedule.</text>
+<text id="cw1" x="620.2" y="674" font-size="30" font-weight="800" fill="#4f6178">Check.</text>
+<text id="cw2" x="743.0" y="674" font-size="30" font-weight="800" fill="#4f6178">Alert.</text>
+<text id="sub" x="640" y="705" class="h hero muted" font-size="16" text-anchor="middle">A monitor is a playbook that runs on a cron or rate.</text>
+</svg>
