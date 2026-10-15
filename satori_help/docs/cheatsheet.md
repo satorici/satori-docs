@@ -175,7 +175,7 @@ Every job (run, scan, monitor, CI or local) produces one or more executions. `re
 | `satori-v2 execution output ID --test TEST_NAME` | Filter specific test output (repeatable) |
 | `satori-v2 execution output ID --format {json\|md}` | Show output in specified format |
 | `satori-v2 execution files ID` | Download the files created by the execution |
-| `satori-v2 execution stop ID` | Stop the execution ID |
+| `satori-v2 execution stop ID` | Stop the execution ID (same as `satori-v2 report ID stop`) |
 | `satori-v2 execution delete ID` | Delete the execution ID |
 | `satori-v2 output ID` | Show the output of the execution ID |
 | `satori-v2 output ID --raw` | Pipe the encoded results to stdout |
@@ -186,6 +186,7 @@ Every job (run, scan, monitor, CI or local) produces one or more executions. `re
 
 | Command | Description |
 | --- | --- |
+| `satori-v2 report ID stop` | Stop the running report (execution) ID |
 | `satori-v2 stop run ID` | Stop the run ID |
 | `satori-v2 stop all` | Stop all your queued and running runs |
 
@@ -211,12 +212,12 @@ Every job (run, scan, monitor, CI or local) produces one or more executions. `re
 | `satori-v2 report ID files` | Download the files created (if Files was set to True in settings) |
 | `satori-v2 report ID visibility {public, private, unlisted}` | Toggles the report's visibility |
 | `satori-v2 report ID issues` | List the issues of the report ID |
+| `satori-v2 report ID stop` | Stop the report ID while it is running |
 | `satori-v2 report ID delete` | Delete the report ID |
 | `satori-v2 report ID --unredacted` | Show unredacted parameters and secrets *(on development)* |
 | `satori-v2 report ID issue TEMPLATE_ID` | Create GitHub issue from report *(on development)* |
 | `satori-v2 report ID issue TEMPLATE_ID --query "SEARCH"` | Create issue with search query filter *(on development)* |
 | `satori-v2 report ID issue TEMPLATE_ID --title "TITLE"` | Create issue with custom title *(on development)* |
-| `satori-v2 report ID stop` | Stop the current report execution *(on development)*. Use `satori-v2 execution stop ID` |
 | `satori-v2 report ID status` | Get report status *(on development)*. Use `satori-v2 report ID` |
 | `satori-v2 report ID set-team TEAM_NAME` | Assign report to team *(on development)* |
 

@@ -13,6 +13,7 @@ CLI v2 separates *what you asked Satori to do* from *what actually ran*:
 | `satori-v2 job JOB-ID` | Show a job and its last 5 executions |
 | `satori-v2 execution ...` | Get, list, delete, stop or download executions |
 | `satori-v2 output EXECUTION-ID` | Show the output of an execution |
+| `satori-v2 report EXECUTION-ID stop` | Stop a running report (execution) |
 | `satori-v2 stop ...` | Stop runs |
 | `satori-v2 search ...` | Filter executions and act on the whole result set |
 
@@ -61,7 +62,7 @@ satori-v2 execution files 5678
 satori-v2 execution stop 5678
 ```
 
-The same actions are available through `satori-v2 report ID [output|files|visibility|delete|issues]`, which additionally lets you change the visibility and list the issues of the execution. See [Results](../getting-started/execution-data.md).
+The same actions are available through `satori-v2 report ID [output|files|stop|visibility|delete|issues]`, which additionally lets you change the visibility and list the issues of the execution. See [Results](../getting-started/execution-data.md).
 
 ## Output
 
@@ -81,6 +82,16 @@ satori-v2 output EXECUTION-ID --raw > output.msgpack
 
 ## Stop
 
+To stop a single running report (execution), use `report ID stop`:
+
+```sh
+satori-v2 report 5678 stop
+```
+
+`satori-v2 execution stop ID` does the same. Stopping is asynchronous: the report moves to `CANCELED` once its container is torn down, so check it with `satori-v2 report ID`.
+
+To stop whole jobs instead of a single report:
+
 | Command | Description |
 | --- | --- |
 | `stop run RUN-ID` | Cancel a run job |
@@ -91,7 +102,7 @@ satori-v2 stop run 1234
 satori-v2 stop all
 ```
 
-To stop a single execution use `satori-v2 execution stop ID`; to stop everything matching a filter use `satori-v2 search ... --stop` (below). Monitors and scans have their own `stop` subcommands (`satori-v2 monitor ID stop`, `satori-v2 scan ID stop`).
+To stop everything matching a filter use `satori-v2 search ... --stop` (below). Monitors and scans have their own `stop` subcommands (`satori-v2 monitor ID stop`, `satori-v2 scan ID stop`).
 
 ## Search
 
