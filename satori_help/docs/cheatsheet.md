@@ -414,6 +414,7 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 
 | Command | Description |
 | --- | --- |
-| `satori-v2 settings` | Interactive menu to configure notification settings (Slack, Discord, Email, Telegram, Datadog) *(on development)* |
-| `satori-v2 settings KEY` | View current value of a notification setting *(on development)* |
-| `satori-v2 settings KEY VALUE` | Set a notification setting directly *(on development)* |
+| `satori-v2 settings` | List personal notification defaults (Slack, email, Discord, Telegram) |
+| `satori-v2 settings KEY` | View current value (`default`, `email`, `slack_workspace`, `slack_channel`, `discord`, `telegram`) |
+| `satori-v2 settings KEY VALUE` | Set a notification default |
+| `satori-v2 settings KEY --clear` | Clear a notification default |

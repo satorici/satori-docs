@@ -84,7 +84,7 @@ export default defineConfig({
                 text: "Notifications",
                 link: "/notifications",
                 items: [
-                    { text: "Settings Command", link: "/notifications#interactive-configuration-with-satori-v2-settings" },
+                    { text: "Settings Command", link: "/notifications#satori-v2-settings" },
                     { text: "Slack", link: "/notifications#slack" },
                     { text: "Discord", link: "/notifications#discord" },
                     { text: "Email", link: "/notifications#email" },

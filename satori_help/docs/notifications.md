@@ -1,10 +1,6 @@
 # Notifications
 
-::: warning On development
-The `satori-v2 settings` command used below to configure **default** notification channels is not available yet in CLI v2. Store personal notification defaults with `PATCH /settings` (`notify` block) for now; the web [dashboard](https://www.satori.ci/dashboard/) still covers Slack bot membership.
-
-Playbook `settings.notify`, the CLI `satori-v2 run --notify` flag, and `satori-v2 search --notify` **are available** in CLI v2 (Slack, email, Discord, and Telegram destinations). The older playbook keys `log` / `logOnFail` / `logOnPass` are not used by v2 — migrate to `settings.notify`.
-:::
+Personal notification defaults are configured with `satori-v2 settings` (or the web [dashboard](https://www.satori.ci/dashboard/) Settings page). Playbook `settings.notify`, `satori-v2 run --notify`, and `satori-v2 search --notify` send to Slack, email, Discord, and Telegram. The older playbook keys `log` / `logOnFail` / `logOnPass` are not used by v2 — migrate to `settings.notify`.
 
 Our flexible notification system ensures that your team stays informed about the status of your projects in real-time. We offer integration with multiple communication platforms, including:
 
@@ -18,7 +14,7 @@ You can define the specific conditions under which you wish to receive updates�
 
 ## User notification defaults
 
-Store personal defaults with `GET` / `PATCH /settings` under `notify`:
+Store personal defaults with `satori-v2 settings` (backed by `GET` / `PATCH /settings` under `notify`):
 
 | Key | Purpose |
 | --- | --- |
@@ -37,7 +33,7 @@ You can configure notifications using either the web interface or the CLI.
 
 ### Via CLI
 
-Use the [`satori-v2 settings`](#interactive-configuration-with-satori-v2-settings) command described below.
+Use [`satori-v2 settings`](#satori-v2-settings) described below.
 
 ### Via Web 
 
@@ -50,74 +46,46 @@ You can also set up notifications using the web interface by completing the nece
 
 ![Settings:](img/dashboard_1.png)
 
-## Interactive Configuration with `satori-v2 settings`
+## `satori-v2 settings`
 
-Satori CLI provides an interactive command to easily configure all notification settings. The command supports three modes of operation: interactive menu, viewing current configuration, and direct configuration.
+Manage personal notification defaults (Slack, email, Discord, Telegram). There is no interactive menu and no Datadog keys — those are out of scope for this command.
 
-### Interactive Mode (Guided Setup)
-
-The interactive mode opens a menu with step-by-step instructions for each integration:
+### List all defaults
 
 ```sh
 satori-v2 settings
 ```
 
-![Interactive configuration:](img/interactive_settings.png)
+Prints a table of every notify key and its current value (`(not set)` when empty).
 
-This command opens an interactive menu where you can:
-
-1. **Set default notification method** - Choose which channel (slack, discord, email, telegram, datadog) should be used by default, or disable default notifications
-2. **Configure Datadog** - Enter your Datadog API key and select your region (us1, us3, us5, eu1, ap1, ap2, us1-fed)
-3. **Configure Discord** - Add the Satori bot to your Discord server and enter the channel ID
-4. **Configure Email** - Set notification email addresses (comma-separated for multiple emails)
-5. **Configure Slack** - Authorize the Satori bot in your workspace and configure workspace/channel IDs
-6. **Configure Telegram** - Add the Satori bot to your Telegram channel and enter the channel ID
-
-The command provides step-by-step instructions for each integration, including links to authorization pages and detailed setup guides.
-
-### View Current Settings
-
-You can view the current value of any notification setting by providing the key name:
+### View one key
 
 ```sh
-# View default notification method
 satori-v2 settings default
-
-# View the current value of any notification setting 
+satori-v2 settings email
 satori-v2 settings KEY
-
 ```
 
-**Available keys:** `default`, `datadog_api_key`, `datadog_site`, `discord`, `email`, `slack_workspace`, `slack_channel`, `telegram`
+**Available keys:** `default`, `email`, `slack_workspace`, `slack_channel`, `discord`, `telegram`
 
-### Set Values Directly
-
-You can configure notification settings directly from the command line without using the interactive menu:
+### Set a value
 
 ```sh
-# Set default notification method
 satori-v2 settings default slack
-
-# Configure email addresses
 satori-v2 settings email user@example.com
-
-# Configure Slack workspace
 satori-v2 settings slack_workspace T1234567
-
-# Configure Slack channel
 satori-v2 settings slack_channel C1234567
-
-# Configure Discord channel ID
 satori-v2 settings discord 1234567890
-
-# Configure Datadog API key
-satori-v2 settings datadog_api_key abc123def456
-
-# Configure Datadog site region
-satori-v2 settings datadog_site us3
-
-# Configure Telegram channel ID
 satori-v2 settings telegram -1234567890
+```
+
+`default` must be one of `slack`, `email`, `discord`, or `telegram`. Empty values are rejected; use `--clear` to remove a setting.
+
+### Clear a value
+
+```sh
+satori-v2 settings email --clear
+satori-v2 settings default --clear
 ```
 
 ## Playbook Settings
@@ -359,29 +327,7 @@ satori-v2 settings telegram CHANNEL_ID
 
 ### Datadog
 
-Satori-CI integrates with Datadog Events for notification management. To set this up, you'll need to create an **API Key** and specify the **Site Region** from Datadog.
-
-#### Step 1: Create an API Key
-1. Navigate to **Organization Settings** in your Datadog account.
-2. Go to **API Keys**.
-3. Click on **+ New Key** to create a new API key for Satori.
-
-#### Step 2: Configure the API Key in Satori-CI
-Use the Satori CLI to configure your newly created API key with the following command:
-
-```shell
-satori-v2 settings datadog_api_key {MyDatadogApiKey}
-```
-
-- Replace `{MyDatadogApiKey}` with your Datadog API key.
-
-#### Step 3: (Optional) Configure Site Region
-By default, events are sent to the **us1** site region. To configure a different site region, use the following command:
-
-```shell
-satori-v2 settings datadog_site {MyDatadogRegion}
-```
-- Replace `{MyDatadogRegion}` with one of the following options: `us1`, `us3`, `us5`, `eu`, `ap1`, or `us1-fed`.
+Datadog delivery is handled by the platform notification service. User notification defaults (`satori-v2 settings` / `PATCH /settings` `notify`) and playbook `settings.notify` rules do **not** currently support Datadog destinations — configure Slack, email, Discord, or Telegram instead.
 
 ## Report notifications
 
