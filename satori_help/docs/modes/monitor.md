@@ -5,36 +5,42 @@ By incorporating monitors into your playbooks, you can regularly validate that y
 
 ## CRON Scheduling
 
-In addition to the simple rate setting, Satori supports AWS-style CRON expressions for more flexible and powerful scheduling options. This CRON format allows you to define complex scheduling patterns, including specific minutes, hours, days of the month, months, days of the week, and even years.
+In addition to the simple rate setting, Satori supports standard CRON expressions for more flexible and powerful scheduling options. This CRON format allows you to define complex scheduling patterns, including specific minutes, hours, days of the month, months and days of the week.
 
 ### Expression Format
 
-CRON expressions in Satori follow the AWS CRON format with 6 fields:
+CRON expressions in Satori use the standard 5-field format, evaluated in **UTC**:
 
 ```
 ┌───────────── minute (0 - 59)
 │ ┌───────────── hour (0 - 23)
 │ │ ┌───────────── day of the month (1 - 31)
 │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
-│ │ │ │ ┌───────────── day of the week (1 - 7 or SUN-SAT)
-│ │ │ │ │ ┌───────────── year (1970 - 2199)
-│ │ │ │ │ │
-│ │ │ │ │ │
-* * * * * *
+│ │ │ │ ┌───────────── day of the week (0 - 7 or SUN-SAT, 0 and 7 are Sunday)
+│ │ │ │ │
+│ │ │ │ │
+* * * * *
 ```
+
+::: warning AWS-style expressions are not supported
+The 6-field AWS format (with a year field and `?`, e.g. `0 12 * * ? *`) and shortcuts such as `@daily` or `@hourly` are rejected. Drop the year field and use `*` instead of `?`: `0 12 * * *`.
+:::
 
 ### CRON Expression Examples
 
-Here are some examples of CRON expressions and their meanings:
+Here are some examples of CRON expressions and their meanings (all times in UTC):
 
-| CRON Expression | Meaning                                         |
-|-----------------|-------------------------------------------------|
-| `0 * * * ? *`   | Run at the start of every hour                  |
-| `*/15 * * * ? *`| Run every 15 minutes                            |
-| `0 0 * * ? *`   | Run daily at midnight                           |
-| `0 0 ? * MON *` | Run every Monday at midnight                    |
-| `0 0 1 * ? *`   | Run at midnight on the first day of every month |
-| `0 0 1 JAN ? *` | Run at midnight on January 1st every year       |
+| CRON Expression          | Meaning                                                  |
+|--------------------------|----------------------------------------------------------|
+| `0 * * * *`              | Run at the start of every hour                           |
+| `*/15 * * * *`           | Run every 15 minutes                                     |
+| `0 0 * * *`              | Run daily at midnight                                    |
+| `0 0 * * MON`            | Run every Monday at midnight                             |
+| `*/15 9-17 * * MON-FRI`  | Run every 15 minutes from 09:00 to 17:45 on weekdays     |
+| `0 0 1 * *`              | Run at midnight on the first day of every month          |
+| `0 0 1 JAN *`            | Run at midnight on January 1st every year                |
+| `0 0 L * *`              | Run at midnight on the last day of every month           |
+| `0 0 * * 5#3`            | Run at midnight on the third Friday of every month       |
 
 ### Special Characters in CRON Expressions
 
@@ -42,10 +48,11 @@ Here are some examples of CRON expressions and their meanings:
 - `,`: Used to specify multiple values (e.g., `MON,WED,FRI`)
 - `-`: Defines a range of values (e.g., `MON-FRI`)
 - `/`: Specifies increments (e.g., `*/15` for every 15 units)
-- `?`: Used instead of `*` for day-of-month and day-of-week to avoid conflict
-- `L`: "Last" day of the month or week
-- `W`: Nearest weekday to the given day of the month
-- `#`: Nth day of the month (e.g., `6#3` for the third Friday of the month)
+- `L`: Last day of the month in the day-of-month field (`L`), or the last given weekday of the month in the day-of-week field (e.g., `L5` for the last Friday)
+- `W`: Nearest weekday to the given day of the month (e.g., `15W`)
+- `#`: Nth weekday of the month (e.g., `5#3` for the third Friday of the month)
+
+When both the day-of-month and day-of-week fields are restricted, the monitor runs when **either** one matches (e.g., `0 0 1 * MON` runs on the 1st of the month and on every Monday).
 
 ### Using CRON in Satori Monitors
 
@@ -54,7 +61,7 @@ To use a CRON expression in your Satori monitor, include it in your playbook `.y
 ```yml
 settings:
     name: "Website Check"
-    cron: "*/5 * * * ? *"
+    cron: "*/5 * * * *"
     image: curlimages/curl:7.83.1
 
 test:
@@ -68,8 +75,6 @@ test:
 
 This configuration will run the check every 5 minutes.
 
-![Cron Monitor Execution](img/cronMonitorRun.png)
-
 CRON expressions provide more flexibility than the simple rate setting, allowing for precise control over when your monitors run. This can be particularly useful for scheduling checks during specific time windows, on particular days of the week, or even for complex yearly schedules. 
 
 ## Rate Setting
@@ -78,10 +83,13 @@ The **rate** setting allow you to schedule the execution of your playbooks with 
 
 This is the simplest way to define how often a playbook should run. You specify the frequency using a natural language expression.
 
+The expression is a number followed by `minute`, `hour` or `day`. Use the plural form for values greater than 1 (`10 minutes`, not `10 minute`). Weeks and other units are not supported; use `7 days` instead of `1 week`.
+
 **Rate expression examples**:
 
 | Frequency        | Expression       |
 |------------------|------------------|
+| Every minute     | rate: 1 minute   |
 | Every 10 minutes | rate: 10 minutes |
 | Every hour       | rate: 1 hour     |
 | Every seven days | rate: 7 days     |
@@ -112,6 +120,12 @@ satori-v2 run monitor.yml
 ![Run Monitor](img/monitor_1.png)
 
 There is no separate "create monitor" command: whenever the playbook file passed to `satori-v2 run` contains a `cron`, `rate` or `monitor` entry under `settings`, the CLI creates a monitor instead of a one-off run and prints its ID. The usual `run` options (`-d`, `-e`, `-t`, `-r/--region-filter`, `--cpu`, `--memory`, `--image`, `--timeout`, `--visibility`) are applied to the monitor. See [Run](run.md#scheduling-and-monitoring) for details.
+
+## When Monitors Run
+
+- A new monitor does not run immediately: its first execution happens at the next time matching its schedule (e.g., 10 minutes after creation for `rate: 10 minutes`, or at the next full hour for `cron: "0 * * * *"`). The same applies when a paused monitor is started again.
+- Rate schedules keep a fixed interval between runs; they do not drift with the time each execution takes.
+- If a run cannot start on time and is more than 5 minutes late (for example during a service interruption), it is skipped instead of being executed later. The monitor continues with its next scheduled run.
 
 ## Managing Monitors
 
