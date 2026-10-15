@@ -12,7 +12,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `satori-v2 config` | Show the current configuration |
 | `satori-v2 config token "USERTOKEN"` | Configure your user token as your default profile |
 | `satori-v2 config token "TOKEN" --profile NAME` | Configure a token on a separate profile |
-| `satori-v2 config pat "GITHUB_PAT"` | Set your GitHub personal access token (patched via the API) |
+| `satori-v2 config pat "GITHUB_PAT"` | Set your GitHub personal access token (alias of `satori-v2 settings github`) |
 | `satori-v2 whoami` | Show the active profile and whether a GitHub PAT is configured |
 | `satori-v2 mcp` | Run a local MCP server over stdio for AI agents (Cursor, Claude Code, Codex). See [MCP server](/modes/mcp.md) |
 | `satori-v2 width` | Show console width configuration for current profile *(on development)* |
@@ -410,11 +410,18 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 | `--seed N` | Seed for deterministic pseudorandom distribution (default: 1) |
 | `--results PATH` | Output file path (writes to stdout if omitted) |
 
-## Notifications
+## Settings
+
+Personal account settings via `GET` / `PATCH /settings` (GitHub PAT, AI, notification defaults).
 
 | Command | Description |
 | --- | --- |
-| `satori-v2 settings` | List personal notification defaults (Slack, email, Discord, Telegram) |
-| `satori-v2 settings KEY` | View current value (`default`, `email`, `slack_workspace`, `slack_channel`, `discord`, `telegram`) |
-| `satori-v2 settings KEY VALUE` | Set a notification default |
-| `satori-v2 settings KEY --clear` | Clear a notification default |
+| `satori-v2 settings` | List github, AI, and notify settings |
+| `satori-v2 settings KEY` | View one key (secrets show `configured` / `(not set)`) |
+| `satori-v2 settings KEY VALUE` | Set a key |
+| `satori-v2 settings KEY --clear` | Clear a key |
+| `satori-v2 settings github TOKEN` | Set GitHub PAT (`config pat` is an alias) |
+| `satori-v2 settings ai.anthropic KEY` | Store Anthropic API key (`ai.openai`, `ai.openrouter` likewise) |
+| `satori-v2 settings ai.provider anthropic` | Select AI provider (picks a default model) |
+| `satori-v2 settings ai.model_id MODEL` | Set model for the current provider |
+| `satori-v2 settings email user@example.com` | Notify keys: `default`, `email`, `slack_workspace`, `slack_channel`, `discord`, `telegram` |

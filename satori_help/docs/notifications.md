@@ -1,6 +1,6 @@
 # Notifications
 
-Personal notification defaults are configured with `satori-v2 settings` (or the web [dashboard](https://www.satori.ci/dashboard/) Settings page). Playbook `settings.notify`, `satori-v2 run --notify`, and `satori-v2 search --notify` send to Slack, email, Discord, and Telegram. The older playbook keys `log` / `logOnFail` / `logOnPass` are not used by v2 — migrate to `settings.notify`.
+Personal notification defaults are configured with `satori-v2 settings` (or the web [dashboard](https://www.satori.ci/dashboard/) Settings page). The same command also manages GitHub PAT and AI credentials — see [Other settings](#other-settings). Playbook `settings.notify`, `satori-v2 run --notify`, and `satori-v2 search --notify` send to Slack, email, Discord, and Telegram. The older playbook keys `log` / `logOnFail` / `logOnPass` are not used by v2 — migrate to `settings.notify`.
 
 Our flexible notification system ensures that your team stays informed about the status of your projects in real-time. We offer integration with multiple communication platforms, including:
 
@@ -48,27 +48,31 @@ You can also set up notifications using the web interface by completing the nece
 
 ## `satori-v2 settings`
 
-Manage personal notification defaults (Slack, email, Discord, Telegram). There is no interactive menu and no Datadog keys — those are out of scope for this command.
+Manage personal account settings: GitHub PAT, AI provider/credentials, and notification defaults (Slack, email, Discord, Telegram). There is no interactive menu and no Datadog keys.
 
-### List all defaults
+### List all settings
 
 ```sh
 satori-v2 settings
 ```
 
-Prints a table of every notify key and its current value (`(not set)` when empty).
+Prints three tables (`github`, `ai`, `notify`). Secrets (`github`, `ai.anthropic`, …) show `configured` or `(not set)`, never the raw value.
 
 ### View one key
 
 ```sh
 satori-v2 settings default
 satori-v2 settings email
+satori-v2 settings github
+satori-v2 settings ai.provider
 satori-v2 settings KEY
 ```
 
-**Available keys:** `default`, `email`, `slack_workspace`, `slack_channel`, `discord`, `telegram`
+**Notify keys:** `default`, `email`, `slack_workspace`, `slack_channel`, `discord`, `telegram`
 
-### Set a value
+**Other keys:** `github`, `ai.provider`, `ai.model_id`, `ai.anthropic`, `ai.openai`, `ai.openrouter`
+
+### Set a notify value
 
 ```sh
 satori-v2 settings default slack
@@ -87,6 +91,25 @@ satori-v2 settings telegram -1234567890
 satori-v2 settings email --clear
 satori-v2 settings default --clear
 ```
+
+### Other settings
+
+```sh
+# GitHub PAT (also: satori-v2 config pat TOKEN)
+satori-v2 settings github ghp_...
+satori-v2 settings github --clear
+
+# AI credentials and selection
+satori-v2 settings ai.anthropic sk-ant-...
+satori-v2 settings ai.openai sk-...
+satori-v2 settings ai.openrouter sk-or-...
+satori-v2 settings ai.provider anthropic
+satori-v2 settings ai.model_id claude-sonnet-4-5
+satori-v2 settings ai.provider --clear
+satori-v2 settings ai.anthropic --clear
+```
+
+Setting `ai.provider` picks a default model from the provider’s allowed list when the current model is not valid for that provider. Clear `ai.model_id` by clearing `ai.provider` instead.
 
 ## Playbook Settings
 
