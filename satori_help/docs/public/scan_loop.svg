@@ -1,0 +1,899 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-labelledby="title desc">
+<title id="title">Satori scan: one playbook run across every commit of a repository</title>
+<desc id="desc">A 17.5-second loop. A terminal runs satori-v2 scan acme/api satori://code/semgrep.yml -q 10 and prints Job 4127, type Scan, status Running. Below, a commit history timeline of the latest 10 commits of acme/api, oldest on the left and newest (HEAD) on the right. The same playbook, satori://code/semgrep.yml, travels across the timeline and runs on every commit: each node pulses blue while running, then turns green with a check (pass) or red with a cross (fail). Commits 1 to 3 pass; commits 4 to 6 (a41c9e2 feat: auth redirect, 5d73b18 refactor: session store, e902f6a feat: oauth login) fail, marked as a regression of 3 failing commits; commit 7 (7ac4d31 fix: XSS in auth) and the rest pass. A spotlight on a41c9e2, the first failure, shows assert semgrep.high assertStdoutNotContains ❯❯❱ failed with finding python.flask.security.xss.audit.explicit-unescape-with-markup in auth/views.py:42. A summary card reads Scan 4127 finished: 10 commits, 7 passed, 3 failed, broke in a41c9e2, fixed in 7ac4d31. Caption: One playbook. Every commit. See where assertions started failing in history.</desc>
+<style>
+svg {
+  --bg:#151f2c; --panel:#182433; --term:#111a26; --chip:#1d2b3d; --border:#2a3a50;
+  --text:#e3e8ef; --muted:#8fa0b5; --blue:#06adee; --green:#a6ce39; --red:#f66f81;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+text { font-family: var(--sans); }
+.mono { font-family: var(--mono); }
+.h { opacity: 0; }
+.pop, #pbRing, #spotRing { transform-box: fill-box; transform-origin: center; }
+@keyframes rst {
+  0% { opacity: 1; }
+  93.714% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  95.714% { opacity: 0; }
+  95.943% { opacity: 0; }
+  96% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes dim {
+  0% { opacity: 1; }
+  65.143% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  66.857% { opacity: 0.28; }
+  77.143% { opacity: 0.28; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  78.857% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes pbRing {
+  0% { opacity: 0; transform: scale(1); }
+  0.857% { opacity: 0.9; transform: scale(1); animation-timing-function: cubic-bezier(0,0,.2,1); }
+  4.857% { opacity: 0; transform: scale(1.12,1.5); }
+  19.429% { opacity: 0; transform: scale(1); }
+  19.486% { opacity: 0.9; transform: scale(1); animation-timing-function: cubic-bezier(0,0,.2,1); }
+  23.429% { opacity: 0; transform: scale(1.12,1.5); }
+  100% { opacity: 0; transform: scale(1.12,1.5); }
+}
+@keyframes pbHot {
+  0% { opacity: 0; }
+  19.371% { opacity: 0; }
+  19.429% { opacity: 1; }
+  62% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.714% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes typer {
+  0% { transform: translateX(0px); }
+  5.714% { transform: translateX(0px); animation-timing-function: steps(55, end); }
+  17.657% { transform: translateX(528.55px); }
+  95.829% { transform: translateX(528.55px); }
+  95.886% { transform: translateX(0px); }
+  100% { transform: translateX(0px); }
+}
+@keyframes caret {
+  0% { opacity: 1; }
+  2.8% { opacity: 1; }
+  2.857% { opacity: 0; }
+  5.657% { opacity: 0; }
+  5.714% { opacity: 1; }
+  19.371% { opacity: 1; }
+  19.429% { opacity: 0; }
+  95.943% { opacity: 0; }
+  96% { opacity: 1; }
+  97.943% { opacity: 1; }
+  98% { opacity: 0; }
+  99.943% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes jobRun {
+  0% { opacity: 0; }
+  19.657% { opacity: 0; }
+  19.714% { opacity: 1; }
+  61.943% { opacity: 1; }
+  62% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes jobLine {
+  0% { opacity: 0; }
+  19.657% { opacity: 0; }
+  19.714% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes jobDone {
+  0% { opacity: 0; }
+  61.943% { opacity: 0; }
+  62% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes cwOn0 {
+  0% { opacity: 0; }
+  19.429% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  21.143% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes cwOn1 {
+  0% { opacity: 0; }
+  62% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.714% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes sub {
+  0% { opacity: 0; transform: translateY(6px); }
+  78.286% { opacity: 0; transform: translateY(6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  80% { opacity: 1; transform: translateY(0px); }
+  95.829% { opacity: 1; transform: translateY(0px); }
+  95.886% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 0; transform: translateY(6px); }
+}
+@keyframes mkMove {
+  0% { transform: translateX(0px); }
+  22.857% { transform: translateX(0.00px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.286% { transform: translateX(111.11px); }
+  27.143% { transform: translateX(111.11px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  28.571% { transform: translateX(222.22px); }
+  31.429% { transform: translateX(222.22px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  32.857% { transform: translateX(333.33px); }
+  35.714% { transform: translateX(333.33px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  37.143% { transform: translateX(444.44px); }
+  40% { transform: translateX(444.44px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  41.429% { transform: translateX(555.56px); }
+  44.286% { transform: translateX(555.56px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  45.714% { transform: translateX(666.67px); }
+  48.571% { transform: translateX(666.67px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  50% { transform: translateX(777.78px); }
+  52.857% { transform: translateX(777.78px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  54.286% { transform: translateX(888.89px); }
+  57.143% { transform: translateX(888.89px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  58.571% { transform: translateX(1000.00px); }
+  95.829% { transform: translateX(1000.00px); }
+  95.886% { transform: translateX(0px); }
+  100% { transform: translateX(0px); }
+}
+@keyframes mkFade {
+  0% { opacity: 0; }
+  19.714% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  20.571% { opacity: 1; }
+  61.714% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.143% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes run0 {
+  0% { opacity: 0; }
+  19.943% { opacity: 0; }
+  20% { opacity: 1; }
+  23.143% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pulse0 {
+  0% { opacity: 0; transform: scale(1); }
+  19.943% { opacity: 0; transform: scale(1); }
+  20% { opacity: 0.9; transform: scale(1); animation-timing-function: cubic-bezier(0,0,.2,1); }
+  23.143% { opacity: 0; transform: scale(1.9); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+@keyframes shaB0 {
+  0% { opacity: 0; }
+  19.943% { opacity: 0; }
+  20% { opacity: 1; }
+  23.143% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.286% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes shaR0 {
+  0% { opacity: 0; }
+  23.143% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.286% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes res0 {
+  0% { opacity: 0; transform: scale(.5); }
+  23.143% { opacity: 0; transform: scale(.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.171% { opacity: 1; transform: scale(1.12); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.286% { opacity: 1; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.971% { opacity: 1; transform: scale(1); }
+  25.714% { opacity: 0.62; transform: scale(1); }
+  62% { opacity: 0.62; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.714% { opacity: 1; transform: scale(1); }
+  95.829% { opacity: 1; transform: scale(1); }
+  95.886% { opacity: 0; transform: scale(.5); }
+  100% { opacity: 0; transform: scale(.5); }
+}
+@keyframes run1 {
+  0% { opacity: 0; }
+  24.229% { opacity: 0; }
+  24.286% { opacity: 1; }
+  27.429% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  28.286% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pulse1 {
+  0% { opacity: 0; transform: scale(1); }
+  24.229% { opacity: 0; transform: scale(1); }
+  24.286% { opacity: 0.9; transform: scale(1); animation-timing-function: cubic-bezier(0,0,.2,1); }
+  27.429% { opacity: 0; transform: scale(1.9); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+@keyframes shaB1 {
+  0% { opacity: 0; }
+  24.229% { opacity: 0; }
+  24.286% { opacity: 1; }
+  27.429% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  28.571% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes shaR1 {
+  0% { opacity: 0; }
+  27.429% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  28.571% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes res1 {
+  0% { opacity: 0; transform: scale(.5); }
+  27.429% { opacity: 0; transform: scale(.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  28.457% { opacity: 1; transform: scale(1.12); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  28.571% { opacity: 1; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  29.257% { opacity: 1; transform: scale(1); }
+  30% { opacity: 0.62; transform: scale(1); }
+  62% { opacity: 0.62; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.714% { opacity: 1; transform: scale(1); }
+  95.829% { opacity: 1; transform: scale(1); }
+  95.886% { opacity: 0; transform: scale(.5); }
+  100% { opacity: 0; transform: scale(.5); }
+}
+@keyframes run2 {
+  0% { opacity: 0; }
+  28.514% { opacity: 0; }
+  28.571% { opacity: 1; }
+  31.714% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  32.571% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pulse2 {
+  0% { opacity: 0; transform: scale(1); }
+  28.514% { opacity: 0; transform: scale(1); }
+  28.571% { opacity: 0.9; transform: scale(1); animation-timing-function: cubic-bezier(0,0,.2,1); }
+  31.714% { opacity: 0; transform: scale(1.9); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+@keyframes shaB2 {
+  0% { opacity: 0; }
+  28.514% { opacity: 0; }
+  28.571% { opacity: 1; }
+  31.714% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  32.857% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes shaR2 {
+  0% { opacity: 0; }
+  31.714% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  32.857% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes res2 {
+  0% { opacity: 0; transform: scale(.5); }
+  31.714% { opacity: 0; transform: scale(.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  32.743% { opacity: 1; transform: scale(1.12); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  32.857% { opacity: 1; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  33.543% { opacity: 1; transform: scale(1); }
+  34.286% { opacity: 0.62; transform: scale(1); }
+  62% { opacity: 0.62; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.714% { opacity: 1; transform: scale(1); }
+  95.829% { opacity: 1; transform: scale(1); }
+  95.886% { opacity: 0; transform: scale(.5); }
+  100% { opacity: 0; transform: scale(.5); }
+}
+@keyframes run3 {
+  0% { opacity: 0; }
+  32.8% { opacity: 0; }
+  32.857% { opacity: 1; }
+  36% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  36.857% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pulse3 {
+  0% { opacity: 0; transform: scale(1); }
+  32.8% { opacity: 0; transform: scale(1); }
+  32.857% { opacity: 0.9; transform: scale(1); animation-timing-function: cubic-bezier(0,0,.2,1); }
+  36% { opacity: 0; transform: scale(1.9); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+@keyframes shaB3 {
+  0% { opacity: 0; }
+  32.8% { opacity: 0; }
+  32.857% { opacity: 1; }
+  36% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  37.143% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes shaR3 {
+  0% { opacity: 0; }
+  36% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  37.143% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes res3 {
+  0% { opacity: 0; transform: scale(.5); }
+  36% { opacity: 0; transform: scale(.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  37.029% { opacity: 1; transform: scale(1.12); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  37.143% { opacity: 1; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  37.829% { opacity: 1; transform: scale(1); }
+  38.571% { opacity: 0.62; transform: scale(1); }
+  62% { opacity: 0.62; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.714% { opacity: 1; transform: scale(1); }
+  95.829% { opacity: 1; transform: scale(1); }
+  95.886% { opacity: 0; transform: scale(.5); }
+  100% { opacity: 0; transform: scale(.5); }
+}
+@keyframes run4 {
+  0% { opacity: 0; }
+  37.086% { opacity: 0; }
+  37.143% { opacity: 1; }
+  40.286% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  41.143% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pulse4 {
+  0% { opacity: 0; transform: scale(1); }
+  37.086% { opacity: 0; transform: scale(1); }
+  37.143% { opacity: 0.9; transform: scale(1); animation-timing-function: cubic-bezier(0,0,.2,1); }
+  40.286% { opacity: 0; transform: scale(1.9); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+@keyframes shaB4 {
+  0% { opacity: 0; }
+  37.086% { opacity: 0; }
+  37.143% { opacity: 1; }
+  40.286% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  41.429% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes shaR4 {
+  0% { opacity: 0; }
+  40.286% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  41.429% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes res4 {
+  0% { opacity: 0; transform: scale(.5); }
+  40.286% { opacity: 0; transform: scale(.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  41.314% { opacity: 1; transform: scale(1.12); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  41.429% { opacity: 1; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  42.114% { opacity: 1; transform: scale(1); }
+  42.857% { opacity: 0.62; transform: scale(1); }
+  62% { opacity: 0.62; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.714% { opacity: 1; transform: scale(1); }
+  95.829% { opacity: 1; transform: scale(1); }
+  95.886% { opacity: 0; transform: scale(.5); }
+  100% { opacity: 0; transform: scale(.5); }
+}
+@keyframes run5 {
+  0% { opacity: 0; }
+  41.371% { opacity: 0; }
+  41.429% { opacity: 1; }
+  44.571% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  45.429% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pulse5 {
+  0% { opacity: 0; transform: scale(1); }
+  41.371% { opacity: 0; transform: scale(1); }
+  41.429% { opacity: 0.9; transform: scale(1); animation-timing-function: cubic-bezier(0,0,.2,1); }
+  44.571% { opacity: 0; transform: scale(1.9); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+@keyframes shaB5 {
+  0% { opacity: 0; }
+  41.371% { opacity: 0; }
+  41.429% { opacity: 1; }
+  44.571% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  45.714% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes shaR5 {
+  0% { opacity: 0; }
+  44.571% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  45.714% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes res5 {
+  0% { opacity: 0; transform: scale(.5); }
+  44.571% { opacity: 0; transform: scale(.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  45.6% { opacity: 1; transform: scale(1.12); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  45.714% { opacity: 1; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  46.4% { opacity: 1; transform: scale(1); }
+  47.143% { opacity: 0.62; transform: scale(1); }
+  62% { opacity: 0.62; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.714% { opacity: 1; transform: scale(1); }
+  95.829% { opacity: 1; transform: scale(1); }
+  95.886% { opacity: 0; transform: scale(.5); }
+  100% { opacity: 0; transform: scale(.5); }
+}
+@keyframes run6 {
+  0% { opacity: 0; }
+  45.657% { opacity: 0; }
+  45.714% { opacity: 1; }
+  48.857% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  49.714% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pulse6 {
+  0% { opacity: 0; transform: scale(1); }
+  45.657% { opacity: 0; transform: scale(1); }
+  45.714% { opacity: 0.9; transform: scale(1); animation-timing-function: cubic-bezier(0,0,.2,1); }
+  48.857% { opacity: 0; transform: scale(1.9); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+@keyframes shaB6 {
+  0% { opacity: 0; }
+  45.657% { opacity: 0; }
+  45.714% { opacity: 1; }
+  48.857% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  50% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes shaR6 {
+  0% { opacity: 0; }
+  48.857% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  50% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes res6 {
+  0% { opacity: 0; transform: scale(.5); }
+  48.857% { opacity: 0; transform: scale(.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  49.886% { opacity: 1; transform: scale(1.12); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  50% { opacity: 1; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  50.686% { opacity: 1; transform: scale(1); }
+  51.429% { opacity: 0.62; transform: scale(1); }
+  62% { opacity: 0.62; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.714% { opacity: 1; transform: scale(1); }
+  95.829% { opacity: 1; transform: scale(1); }
+  95.886% { opacity: 0; transform: scale(.5); }
+  100% { opacity: 0; transform: scale(.5); }
+}
+@keyframes run7 {
+  0% { opacity: 0; }
+  49.943% { opacity: 0; }
+  50% { opacity: 1; }
+  53.143% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  54% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pulse7 {
+  0% { opacity: 0; transform: scale(1); }
+  49.943% { opacity: 0; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1); animation-timing-function: cubic-bezier(0,0,.2,1); }
+  53.143% { opacity: 0; transform: scale(1.9); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+@keyframes shaB7 {
+  0% { opacity: 0; }
+  49.943% { opacity: 0; }
+  50% { opacity: 1; }
+  53.143% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  54.286% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes shaR7 {
+  0% { opacity: 0; }
+  53.143% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  54.286% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes res7 {
+  0% { opacity: 0; transform: scale(.5); }
+  53.143% { opacity: 0; transform: scale(.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  54.171% { opacity: 1; transform: scale(1.12); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  54.286% { opacity: 1; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  54.971% { opacity: 1; transform: scale(1); }
+  55.714% { opacity: 0.62; transform: scale(1); }
+  62% { opacity: 0.62; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.714% { opacity: 1; transform: scale(1); }
+  95.829% { opacity: 1; transform: scale(1); }
+  95.886% { opacity: 0; transform: scale(.5); }
+  100% { opacity: 0; transform: scale(.5); }
+}
+@keyframes run8 {
+  0% { opacity: 0; }
+  54.229% { opacity: 0; }
+  54.286% { opacity: 1; }
+  57.429% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  58.286% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pulse8 {
+  0% { opacity: 0; transform: scale(1); }
+  54.229% { opacity: 0; transform: scale(1); }
+  54.286% { opacity: 0.9; transform: scale(1); animation-timing-function: cubic-bezier(0,0,.2,1); }
+  57.429% { opacity: 0; transform: scale(1.9); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+@keyframes shaB8 {
+  0% { opacity: 0; }
+  54.229% { opacity: 0; }
+  54.286% { opacity: 1; }
+  57.429% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  58.571% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes shaR8 {
+  0% { opacity: 0; }
+  57.429% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  58.571% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes res8 {
+  0% { opacity: 0; transform: scale(.5); }
+  57.429% { opacity: 0; transform: scale(.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  58.457% { opacity: 1; transform: scale(1.12); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  58.571% { opacity: 1; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  59.257% { opacity: 1; transform: scale(1); }
+  60% { opacity: 0.62; transform: scale(1); }
+  62% { opacity: 0.62; transform: scale(1); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.714% { opacity: 1; transform: scale(1); }
+  95.829% { opacity: 1; transform: scale(1); }
+  95.886% { opacity: 0; transform: scale(.5); }
+  100% { opacity: 0; transform: scale(.5); }
+}
+@keyframes run9 {
+  0% { opacity: 0; }
+  58.514% { opacity: 0; }
+  58.571% { opacity: 1; }
+  61.714% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  62.571% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes pulse9 {
+  0% { opacity: 0; transform: scale(1); }
+  58.514% { opacity: 0; transform: scale(1); }
+  58.571% { opacity: 0.9; transform: scale(1); animation-timing-function: cubic-bezier(0,0,.2,1); }
+  61.714% { opacity: 0; transform: scale(1.9); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+@keyframes shaB9 {
+  0% { opacity: 0; }
+  58.514% { opacity: 0; }
+  58.571% { opacity: 1; }
+  61.714% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  62.857% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes shaR9 {
+  0% { opacity: 0; }
+  61.714% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  62.857% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes res9 {
+  0% { opacity: 0; transform: scale(.5); }
+  61.714% { opacity: 0; transform: scale(.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  62.743% { opacity: 1; transform: scale(1.12); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  63.543% { opacity: 1; transform: scale(1); }
+  95.829% { opacity: 1; transform: scale(1); }
+  95.886% { opacity: 0; transform: scale(.5); }
+  100% { opacity: 0; transform: scale(.5); }
+}
+@keyframes bracket {
+  0% { opacity: 0; transform: translateY(6px); }
+  62.571% { opacity: 0; transform: translateY(6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  64.286% { opacity: 1; transform: translateY(0px); }
+  95.829% { opacity: 1; transform: translateY(0px); }
+  95.886% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 0; transform: translateY(6px); }
+}
+@keyframes spotRing {
+  0% { opacity: 0; transform: scale(1.35); }
+  65.429% { opacity: 0; transform: scale(1.35); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  67.143% { opacity: 1; transform: scale(1); }
+  95.829% { opacity: 1; transform: scale(1); }
+  95.886% { opacity: 0; transform: scale(1.35); }
+  100% { opacity: 0; transform: scale(1.35); }
+}
+@keyframes spotCard {
+  0% { opacity: 0; transform: translateY(12px); }
+  66% { opacity: 0; transform: translateY(12px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  67.714% { opacity: 1; transform: translateY(0px); }
+  95.829% { opacity: 1; transform: translateY(0px); }
+  95.886% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 0; transform: translateY(12px); }
+}
+@keyframes spl0 {
+  0% { opacity: 0; }
+  67.714% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  68.857% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes spl1 {
+  0% { opacity: 0; }
+  69.143% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  70.286% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes spl2 {
+  0% { opacity: 0; }
+  70.571% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  71.714% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes sumCard {
+  0% { opacity: 0; transform: translateY(12px); }
+  77.714% { opacity: 0; transform: translateY(12px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  79.429% { opacity: 1; transform: translateY(0px); }
+  95.829% { opacity: 1; transform: translateY(0px); }
+  95.886% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 0; transform: translateY(12px); }
+}
+@keyframes seg0 {
+  0% { opacity: 0; }
+  79.143% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  80% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes seg1 {
+  0% { opacity: 0; }
+  79.371% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  80.229% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes seg2 {
+  0% { opacity: 0; }
+  79.6% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  80.457% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes seg3 {
+  0% { opacity: 0; }
+  79.829% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  80.686% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes seg4 {
+  0% { opacity: 0; }
+  80.057% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  80.914% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes seg5 {
+  0% { opacity: 0; }
+  80.286% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  81.143% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes seg6 {
+  0% { opacity: 0; }
+  80.514% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  81.371% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes seg7 {
+  0% { opacity: 0; }
+  80.743% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  81.6% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes seg8 {
+  0% { opacity: 0; }
+  80.971% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  81.829% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes seg9 {
+  0% { opacity: 0; }
+  81.2% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  82.057% { opacity: 1; }
+  95.829% { opacity: 1; }
+  95.886% { opacity: 0; }
+  100% { opacity: 0; }
+}
+.rst { animation: rst 17.5s linear infinite both; }
+.dim { animation: dim 17.5s linear infinite both; }
+#pbRing { animation: pbRing 17.5s linear infinite both; }
+#pbHot { animation: pbHot 17.5s linear infinite both; }
+#typer { animation: typer 17.5s linear infinite both; }
+#caret { animation: caret 17.5s linear infinite both; }
+#jobRun { animation: jobRun 17.5s linear infinite both; }
+#jobLine { animation: jobLine 17.5s linear infinite both; }
+#jobDone { animation: jobDone 17.5s linear infinite both; }
+#cwOn0 { animation: cwOn0 17.5s linear infinite both; }
+#cwOn1 { animation: cwOn1 17.5s linear infinite both; }
+#sub { animation: sub 17.5s linear infinite both; }
+#mkMove { animation: mkMove 17.5s linear infinite both; }
+#mkFade { animation: mkFade 17.5s linear infinite both; }
+#run0 { animation: run0 17.5s linear infinite both; }
+#pulse0 { animation: pulse0 17.5s linear infinite both; }
+#shaB0 { animation: shaB0 17.5s linear infinite both; }
+#shaR0 { animation: shaR0 17.5s linear infinite both; }
+#res0 { animation: res0 17.5s linear infinite both; }
+#run1 { animation: run1 17.5s linear infinite both; }
+#pulse1 { animation: pulse1 17.5s linear infinite both; }
+#shaB1 { animation: shaB1 17.5s linear infinite both; }
+#shaR1 { animation: shaR1 17.5s linear infinite both; }
+#res1 { animation: res1 17.5s linear infinite both; }
+#run2 { animation: run2 17.5s linear infinite both; }
+#pulse2 { animation: pulse2 17.5s linear infinite both; }
+#shaB2 { animation: shaB2 17.5s linear infinite both; }
+#shaR2 { animation: shaR2 17.5s linear infinite both; }
+#res2 { animation: res2 17.5s linear infinite both; }
+#run3 { animation: run3 17.5s linear infinite both; }
+#pulse3 { animation: pulse3 17.5s linear infinite both; }
+#shaB3 { animation: shaB3 17.5s linear infinite both; }
+#shaR3 { animation: shaR3 17.5s linear infinite both; }
+#res3 { animation: res3 17.5s linear infinite both; }
+#run4 { animation: run4 17.5s linear infinite both; }
+#pulse4 { animation: pulse4 17.5s linear infinite both; }
+#shaB4 { animation: shaB4 17.5s linear infinite both; }
+#shaR4 { animation: shaR4 17.5s linear infinite both; }
+#res4 { animation: res4 17.5s linear infinite both; }
+#run5 { animation: run5 17.5s linear infinite both; }
+#pulse5 { animation: pulse5 17.5s linear infinite both; }
+#shaB5 { animation: shaB5 17.5s linear infinite both; }
+#shaR5 { animation: shaR5 17.5s linear infinite both; }
+#res5 { animation: res5 17.5s linear infinite both; }
+#run6 { animation: run6 17.5s linear infinite both; }
+#pulse6 { animation: pulse6 17.5s linear infinite both; }
+#shaB6 { animation: shaB6 17.5s linear infinite both; }
+#shaR6 { animation: shaR6 17.5s linear infinite both; }
+#res6 { animation: res6 17.5s linear infinite both; }
+#run7 { animation: run7 17.5s linear infinite both; }
+#pulse7 { animation: pulse7 17.5s linear infinite both; }
+#shaB7 { animation: shaB7 17.5s linear infinite both; }
+#shaR7 { animation: shaR7 17.5s linear infinite both; }
+#res7 { animation: res7 17.5s linear infinite both; }
+#run8 { animation: run8 17.5s linear infinite both; }
+#pulse8 { animation: pulse8 17.5s linear infinite both; }
+#shaB8 { animation: shaB8 17.5s linear infinite both; }
+#shaR8 { animation: shaR8 17.5s linear infinite both; }
+#res8 { animation: res8 17.5s linear infinite both; }
+#run9 { animation: run9 17.5s linear infinite both; }
+#pulse9 { animation: pulse9 17.5s linear infinite both; }
+#shaB9 { animation: shaB9 17.5s linear infinite both; }
+#shaR9 { animation: shaR9 17.5s linear infinite both; }
+#res9 { animation: res9 17.5s linear infinite both; }
+#bracket { animation: bracket 17.5s linear infinite both; }
+#spotRing { animation: spotRing 17.5s linear infinite both; }
+#spotCard { animation: spotCard 17.5s linear infinite both; }
+#spl0 { animation: spl0 17.5s linear infinite both; }
+#spl1 { animation: spl1 17.5s linear infinite both; }
+#spl2 { animation: spl2 17.5s linear infinite both; }
+#sumCard { animation: sumCard 17.5s linear infinite both; }
+#seg0 { animation: seg0 17.5s linear infinite both; }
+#seg1 { animation: seg1 17.5s linear infinite both; }
+#seg2 { animation: seg2 17.5s linear infinite both; }
+#seg3 { animation: seg3 17.5s linear infinite both; }
+#seg4 { animation: seg4 17.5s linear infinite both; }
+#seg5 { animation: seg5 17.5s linear infinite both; }
+#seg6 { animation: seg6 17.5s linear infinite both; }
+#seg7 { animation: seg7 17.5s linear infinite both; }
+#seg8 { animation: seg8 17.5s linear infinite both; }
+#seg9 { animation: seg9 17.5s linear infinite both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  .hero { opacity: 1 !important; }
+  .nohero, #typer, #caret { display: none !important; }
+  #sub, #bracket, #spotCard, #sumCard { transform: none !important; }
+}
+</style>
+<rect width="1280" height="720" fill="var(--bg)"/>
+
+<!-- terminal strip -->
+<g class="dim">
+<rect x="24" y="20" width="1232" height="106" rx="12" fill="var(--term)" stroke="var(--border)"/>
+<path d="M24 50 V32 a12 12 0 0 1 12 -12 H1244 a12 12 0 0 1 12 12 V50 Z" fill="var(--panel)"/>
+<line x1="24" y1="50" x2="1256" y2="50" stroke="var(--border)"/>
+<circle cx="44" cy="35" r="6" fill="#ff5f57"/><circle cx="62" cy="35" r="6" fill="#febc2e"/><circle cx="80" cy="35" r="6" fill="#28c840"/>
+<text x="640" y="40" font-size="13" text-anchor="middle" fill="var(--muted)">satori-v2 · scan</text>
+<text x="44" y="80" class="mono" font-size="16" font-weight="700" fill="var(--blue)">$</text>
+<g class="rst"><text id="cmdText" x="64" y="80" class="mono" font-size="16" fill="var(--text)">satori-v2 scan <tspan fill="var(--green)">acme/api</tspan> <tspan fill="var(--blue)">satori://code/semgrep.yml</tspan> <tspan fill="#9fb6cf">-q 10</tspan></text></g>
+<g transform="translate(64 63)"><g id="typer">
+<rect x="0" y="0" width="542.5" height="24" fill="var(--term)"/>
+<rect id="caret" x="1" y="2" width="9" height="20" fill="var(--text)"/>
+</g></g>
+<g class="rst"><g id="jobLine" class="h hero"><text x="44" y="108" class="mono" style="white-space:pre" font-size="15" fill="var(--muted)"><tspan fill="var(--text)" font-weight="700">Job 4127</tspan>   <tspan font-weight="700">Type</tspan> <tspan fill="var(--text)">Scan</tspan>   <tspan font-weight="700">Playbook source</tspan> <tspan fill="var(--text)">satori://code/semgrep.yml</tspan>   <tspan font-weight="700">Status</tspan></text></g>
+<text id="jobRun" class="mono h nohero" x="712.2" y="108" font-size="15" font-weight="700" fill="var(--blue)">Running</text>
+<text id="jobDone" class="mono h hero" x="712.2" y="108" font-size="15" font-weight="700" fill="var(--green)">Finished</text></g>
+</g>
+
+<!-- timeline panel -->
+<rect x="24" y="142" width="1232" height="466" rx="12" fill="var(--panel)" stroke="var(--border)"/>
+<g class="dim">
+<text x="48" y="176" font-size="12" font-weight="700" letter-spacing="1.5" fill="var(--muted)">COMMIT HISTORY</text>
+<text x="200" y="176" class="mono" font-size="15" fill="var(--text)">acme/api <tspan fill="var(--muted)">· latest 10 commits</tspan></text>
+<g transform="translate(1084 170)">
+<rect id="pbRing" x="-148" y="-16" width="296" height="32" rx="16" fill="none" stroke="var(--blue)" stroke-width="2" opacity="0"/>
+<rect x="-148" y="-16" width="296" height="32" rx="16" fill="var(--chip)" stroke="var(--border)"/>
+<g class="rst"><rect id="pbHot" class="h nohero" x="-148" y="-16" width="296" height="32" rx="16" fill="rgba(6,173,238,.12)" stroke="var(--blue)"/></g>
+<text x="-132" y="4.5" font-size="11" font-weight="700" letter-spacing="1" fill="var(--muted)">PLAYBOOK</text>
+<text x="-62" y="5" class="mono" font-size="13" fill="var(--blue)">satori://code/semgrep.yml</text>
+</g>
+<line x1="90.0" y1="336" x2="1190.0" y2="336" stroke="var(--border)" stroke-width="3" stroke-linecap="round"/>
+<text x="140.0" y="432" font-size="12" text-anchor="middle" fill="var(--muted)">← older</text>
+<text x="1140.0" y="432" font-size="12" text-anchor="middle" fill="var(--muted)">newest · HEAD →</text>
+<g id="n0"><circle cx="140.0" cy="336" r="20" fill="var(--term)" stroke="#3a4d66" stroke-width="2" stroke-dasharray="4 4"/><text x="140.0" y="296" class="mono" font-size="15" text-anchor="middle" fill="var(--muted)">3f9a1c0</text><text x="140.0" y="384" class="mono" font-size="12" text-anchor="middle" fill="var(--muted)">chore:</text><text x="140.0" y="404" font-size="14" text-anchor="middle" fill="var(--text)">init api</text><g class="rst"><text id="shaB0" class="mono h nohero" x="140.0" y="296" font-size="15" font-weight="700" text-anchor="middle" fill="var(--blue)">3f9a1c0</text><text id="shaR0" class="mono h hero" x="140.0" y="296" font-size="15" text-anchor="middle" fill="var(--text)">3f9a1c0</text><g transform="translate(140.0 336)"><circle id="pulse0" class="pop h nohero" r="20" fill="none" stroke="var(--blue)" stroke-width="2"/><g id="run0" class="h nohero"><circle r="20" fill="rgba(6,173,238,.18)" stroke="var(--blue)" stroke-width="2.5"/><circle r="4" fill="var(--blue)"/></g><g id="res0" class="pop h hero"><circle r="20" fill="var(--green)"/><path d="M-7.5 0.5 l5 5 l10 -11" fill="none" stroke="#0e1620" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g></g>
+<g id="n1"><circle cx="251.1" cy="336" r="20" fill="var(--term)" stroke="#3a4d66" stroke-width="2" stroke-dasharray="4 4"/><text x="251.1" y="296" class="mono" font-size="15" text-anchor="middle" fill="var(--muted)">8b27d4e</text><text x="251.1" y="384" class="mono" font-size="12" text-anchor="middle" fill="var(--muted)">feat:</text><text x="251.1" y="404" font-size="14" text-anchor="middle" fill="var(--text)">healthcheck</text><g class="rst"><text id="shaB1" class="mono h nohero" x="251.1" y="296" font-size="15" font-weight="700" text-anchor="middle" fill="var(--blue)">8b27d4e</text><text id="shaR1" class="mono h hero" x="251.1" y="296" font-size="15" text-anchor="middle" fill="var(--text)">8b27d4e</text><g transform="translate(251.1 336)"><circle id="pulse1" class="pop h nohero" r="20" fill="none" stroke="var(--blue)" stroke-width="2"/><g id="run1" class="h nohero"><circle r="20" fill="rgba(6,173,238,.18)" stroke="var(--blue)" stroke-width="2.5"/><circle r="4" fill="var(--blue)"/></g><g id="res1" class="pop h hero"><circle r="20" fill="var(--green)"/><path d="M-7.5 0.5 l5 5 l10 -11" fill="none" stroke="#0e1620" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g></g>
+<g id="n2"><circle cx="362.2" cy="336" r="20" fill="var(--term)" stroke="#3a4d66" stroke-width="2" stroke-dasharray="4 4"/><text x="362.2" y="296" class="mono" font-size="15" text-anchor="middle" fill="var(--muted)">c1e05a9</text><text x="362.2" y="384" class="mono" font-size="12" text-anchor="middle" fill="var(--muted)">feat:</text><text x="362.2" y="404" font-size="14" text-anchor="middle" fill="var(--text)">rate limit</text><g class="rst"><text id="shaB2" class="mono h nohero" x="362.2" y="296" font-size="15" font-weight="700" text-anchor="middle" fill="var(--blue)">c1e05a9</text><text id="shaR2" class="mono h hero" x="362.2" y="296" font-size="15" text-anchor="middle" fill="var(--text)">c1e05a9</text><g transform="translate(362.2 336)"><circle id="pulse2" class="pop h nohero" r="20" fill="none" stroke="var(--blue)" stroke-width="2"/><g id="run2" class="h nohero"><circle r="20" fill="rgba(6,173,238,.18)" stroke="var(--blue)" stroke-width="2.5"/><circle r="4" fill="var(--blue)"/></g><g id="res2" class="pop h hero"><circle r="20" fill="var(--green)"/><path d="M-7.5 0.5 l5 5 l10 -11" fill="none" stroke="#0e1620" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g></g>
+<g id="n4"><circle cx="584.4" cy="336" r="20" fill="var(--term)" stroke="#3a4d66" stroke-width="2" stroke-dasharray="4 4"/><text x="584.4" y="296" class="mono" font-size="15" text-anchor="middle" fill="var(--muted)">5d73b18</text><text x="584.4" y="384" class="mono" font-size="12" text-anchor="middle" fill="var(--muted)">refactor:</text><text x="584.4" y="404" font-size="14" text-anchor="middle" fill="var(--text)">session store</text><g class="rst"><text id="shaB4" class="mono h nohero" x="584.4" y="296" font-size="15" font-weight="700" text-anchor="middle" fill="var(--blue)">5d73b18</text><text id="shaR4" class="mono h hero" x="584.4" y="296" font-size="15" text-anchor="middle" fill="var(--text)">5d73b18</text><g transform="translate(584.4 336)"><circle id="pulse4" class="pop h nohero" r="20" fill="none" stroke="var(--blue)" stroke-width="2"/><g id="run4" class="h nohero"><circle r="20" fill="rgba(6,173,238,.18)" stroke="var(--blue)" stroke-width="2.5"/><circle r="4" fill="var(--blue)"/></g><g id="res4" class="pop h hero"><circle r="20" fill="var(--red)"/><path d="M-6 -6 l12 12 M6 -6 l-12 12" fill="none" stroke="#0e1620" stroke-width="3.2" stroke-linecap="round"/></g></g></g></g>
+<g id="n5"><circle cx="695.6" cy="336" r="20" fill="var(--term)" stroke="#3a4d66" stroke-width="2" stroke-dasharray="4 4"/><text x="695.6" y="296" class="mono" font-size="15" text-anchor="middle" fill="var(--muted)">e902f6a</text><text x="695.6" y="384" class="mono" font-size="12" text-anchor="middle" fill="var(--muted)">feat:</text><text x="695.6" y="404" font-size="14" text-anchor="middle" fill="var(--text)">oauth login</text><g class="rst"><text id="shaB5" class="mono h nohero" x="695.6" y="296" font-size="15" font-weight="700" text-anchor="middle" fill="var(--blue)">e902f6a</text><text id="shaR5" class="mono h hero" x="695.6" y="296" font-size="15" text-anchor="middle" fill="var(--text)">e902f6a</text><g transform="translate(695.6 336)"><circle id="pulse5" class="pop h nohero" r="20" fill="none" stroke="var(--blue)" stroke-width="2"/><g id="run5" class="h nohero"><circle r="20" fill="rgba(6,173,238,.18)" stroke="var(--blue)" stroke-width="2.5"/><circle r="4" fill="var(--blue)"/></g><g id="res5" class="pop h hero"><circle r="20" fill="var(--red)"/><path d="M-6 -6 l12 12 M6 -6 l-12 12" fill="none" stroke="#0e1620" stroke-width="3.2" stroke-linecap="round"/></g></g></g></g>
+<g id="n6"><circle cx="806.7" cy="336" r="20" fill="var(--term)" stroke="#3a4d66" stroke-width="2" stroke-dasharray="4 4"/><text x="806.7" y="296" class="mono" font-size="15" text-anchor="middle" fill="var(--muted)">7ac4d31</text><text x="806.7" y="384" class="mono" font-size="12" text-anchor="middle" fill="var(--muted)">fix:</text><text x="806.7" y="404" font-size="14" text-anchor="middle" fill="var(--text)">XSS in auth</text><g class="rst"><text id="shaB6" class="mono h nohero" x="806.7" y="296" font-size="15" font-weight="700" text-anchor="middle" fill="var(--blue)">7ac4d31</text><text id="shaR6" class="mono h hero" x="806.7" y="296" font-size="15" text-anchor="middle" fill="var(--text)">7ac4d31</text><g transform="translate(806.7 336)"><circle id="pulse6" class="pop h nohero" r="20" fill="none" stroke="var(--blue)" stroke-width="2"/><g id="run6" class="h nohero"><circle r="20" fill="rgba(6,173,238,.18)" stroke="var(--blue)" stroke-width="2.5"/><circle r="4" fill="var(--blue)"/></g><g id="res6" class="pop h hero"><circle r="20" fill="var(--green)"/><path d="M-7.5 0.5 l5 5 l10 -11" fill="none" stroke="#0e1620" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g></g>
+<g id="n7"><circle cx="917.8" cy="336" r="20" fill="var(--term)" stroke="#3a4d66" stroke-width="2" stroke-dasharray="4 4"/><text x="917.8" y="296" class="mono" font-size="15" text-anchor="middle" fill="var(--muted)">1b6e8f7</text><text x="917.8" y="384" class="mono" font-size="12" text-anchor="middle" fill="var(--muted)">docs:</text><text x="917.8" y="404" font-size="14" text-anchor="middle" fill="var(--text)">README</text><g class="rst"><text id="shaB7" class="mono h nohero" x="917.8" y="296" font-size="15" font-weight="700" text-anchor="middle" fill="var(--blue)">1b6e8f7</text><text id="shaR7" class="mono h hero" x="917.8" y="296" font-size="15" text-anchor="middle" fill="var(--text)">1b6e8f7</text><g transform="translate(917.8 336)"><circle id="pulse7" class="pop h nohero" r="20" fill="none" stroke="var(--blue)" stroke-width="2"/><g id="run7" class="h nohero"><circle r="20" fill="rgba(6,173,238,.18)" stroke="var(--blue)" stroke-width="2.5"/><circle r="4" fill="var(--blue)"/></g><g id="res7" class="pop h hero"><circle r="20" fill="var(--green)"/><path d="M-7.5 0.5 l5 5 l10 -11" fill="none" stroke="#0e1620" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g></g>
+<g id="n8"><circle cx="1028.9" cy="336" r="20" fill="var(--term)" stroke="#3a4d66" stroke-width="2" stroke-dasharray="4 4"/><text x="1028.9" y="296" class="mono" font-size="15" text-anchor="middle" fill="var(--muted)">f03d2c5</text><text x="1028.9" y="384" class="mono" font-size="12" text-anchor="middle" fill="var(--muted)">test:</text><text x="1028.9" y="404" font-size="14" text-anchor="middle" fill="var(--text)">auth flow</text><g class="rst"><text id="shaB8" class="mono h nohero" x="1028.9" y="296" font-size="15" font-weight="700" text-anchor="middle" fill="var(--blue)">f03d2c5</text><text id="shaR8" class="mono h hero" x="1028.9" y="296" font-size="15" text-anchor="middle" fill="var(--text)">f03d2c5</text><g transform="translate(1028.9 336)"><circle id="pulse8" class="pop h nohero" r="20" fill="none" stroke="var(--blue)" stroke-width="2"/><g id="run8" class="h nohero"><circle r="20" fill="rgba(6,173,238,.18)" stroke="var(--blue)" stroke-width="2.5"/><circle r="4" fill="var(--blue)"/></g><g id="res8" class="pop h hero"><circle r="20" fill="var(--green)"/><path d="M-7.5 0.5 l5 5 l10 -11" fill="none" stroke="#0e1620" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g></g>
+<g id="n9"><circle cx="1140.0" cy="336" r="20" fill="var(--term)" stroke="#3a4d66" stroke-width="2" stroke-dasharray="4 4"/><text x="1140.0" y="296" class="mono" font-size="15" text-anchor="middle" fill="var(--muted)">9e4b6a8</text><text x="1140.0" y="384" class="mono" font-size="12" text-anchor="middle" fill="var(--muted)">chore:</text><text x="1140.0" y="404" font-size="14" text-anchor="middle" fill="var(--text)">bump deps</text><g class="rst"><text id="shaB9" class="mono h nohero" x="1140.0" y="296" font-size="15" font-weight="700" text-anchor="middle" fill="var(--blue)">9e4b6a8</text><text id="shaR9" class="mono h hero" x="1140.0" y="296" font-size="15" text-anchor="middle" fill="var(--text)">9e4b6a8</text><g transform="translate(1140.0 336)"><circle id="pulse9" class="pop h nohero" r="20" fill="none" stroke="var(--blue)" stroke-width="2"/><g id="run9" class="h nohero"><circle r="20" fill="rgba(6,173,238,.18)" stroke="var(--blue)" stroke-width="2.5"/><circle r="4" fill="var(--blue)"/></g><g id="res9" class="pop h hero"><circle r="20" fill="var(--green)"/><path d="M-7.5 0.5 l5 5 l10 -11" fill="none" stroke="#0e1620" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></g></g>
+<g class="rst"><g id="bracket" class="h hero"><path d="M443.3 272 V264 H725.6 V272" fill="none" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/><rect x="472.4" y="242" width="224" height="22" rx="11" fill="var(--panel)"/><text x="584.4" y="258" font-size="13" font-weight="700" text-anchor="middle" fill="var(--red)">regression · 3 failing commits</text></g></g>
+<!-- travelling playbook marker -->
+<g id="mkFade" class="nohero"><g transform="translate(140.0 0)"><g id="mkMove">
+<rect x="-62" y="204" width="124" height="28" rx="14" fill="rgba(6,173,238,.14)" stroke="var(--blue)"/>
+<text x="0" y="223" class="mono" font-size="13" text-anchor="middle" fill="var(--blue)">semgrep.yml</text>
+<path d="M-7 236 L0 244 L7 236" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g></g></g>
+</g>
+<g id="n3"><circle cx="473.3" cy="336" r="20" fill="var(--term)" stroke="#3a4d66" stroke-width="2" stroke-dasharray="4 4"/><text x="473.3" y="296" class="mono" font-size="15" text-anchor="middle" fill="var(--muted)">a41c9e2</text><text x="473.3" y="384" class="mono" font-size="12" text-anchor="middle" fill="var(--muted)">feat:</text><text x="473.3" y="404" font-size="14" text-anchor="middle" fill="var(--text)">auth redirect</text><g class="rst"><text id="shaB3" class="mono h nohero" x="473.3" y="296" font-size="15" font-weight="700" text-anchor="middle" fill="var(--blue)">a41c9e2</text><text id="shaR3" class="mono h hero" x="473.3" y="296" font-size="15" text-anchor="middle" fill="var(--text)">a41c9e2</text><g transform="translate(473.3 336)"><circle id="pulse3" class="pop h nohero" r="20" fill="none" stroke="var(--blue)" stroke-width="2"/><g id="run3" class="h nohero"><circle r="20" fill="rgba(6,173,238,.18)" stroke="var(--blue)" stroke-width="2.5"/><circle r="4" fill="var(--blue)"/></g><g id="res3" class="pop h hero"><circle r="20" fill="var(--red)"/><path d="M-6 -6 l12 12 M6 -6 l-12 12" fill="none" stroke="#0e1620" stroke-width="3.2" stroke-linecap="round"/></g></g></g></g>
+<g class="rst"><g transform="translate(473.3 336)"><circle id="spotRing" class="h hero" r="30" fill="none" stroke="var(--red)" stroke-width="2.5"/></g>
+<g id="spotCard" class="h hero">
+<rect x="48" y="452" width="600" height="140" rx="12" fill="#1f2b3c" stroke="var(--red)" stroke-opacity=".75"/>
+<path d="M464.3 452.5 L473.3 443 L482.3 452.5" fill="#1f2b3c" stroke="var(--red)" stroke-opacity=".75" stroke-linejoin="round"/>
+<rect x="463.3" y="452" width="20" height="2" fill="#1f2b3c"/>
+<rect x="64" y="466" width="52" height="22" rx="11" fill="var(--red)"/>
+<text x="90" y="481.5" font-size="11" font-weight="800" letter-spacing=".8" text-anchor="middle" fill="#0e1620">FAIL</text>
+<text x="128" y="483" class="mono" font-size="16" font-weight="700" fill="var(--text)">a41c9e2</text>
+<text x="204" y="483" font-size="16" fill="var(--text)">feat: auth redirect</text>
+<text x="632" y="482" font-size="13" text-anchor="end" fill="var(--muted)">commit 4 of 10 · first failure</text>
+<g id="spl0" class="h hero"><text x="64" y="518" class="mono" font-size="14" fill="var(--muted)">semgrep.high</text>
+<text x="188" y="518" class="mono" font-size="14" fill="var(--text)">assertStdoutNotContains <tspan fill="var(--green)">" ❯❯❱ "</tspan></text>
+<g transform="translate(602 513)"><rect x="-30" y="-12" width="60" height="24" rx="12" fill="rgba(246,111,129,.16)" stroke="var(--red)" stroke-opacity=".8"/><circle cx="-15" cy="0" r="7" fill="var(--red)"/><path d="M-17.6 -2.6 l5.2 5.2 M-12.4 -2.6 l-5.2 5.2" stroke="#0e1620" stroke-width="1.8" stroke-linecap="round"/><text x="9" y="4.5" font-size="12" font-weight="800" text-anchor="middle" fill="var(--red)">FAIL</text></g></g>
+<g id="spl1" class="h hero"><rect x="64" y="532" width="568" height="46" rx="8" fill="var(--term)" stroke="var(--border)"/>
+<text x="76" y="551" class="mono" font-size="13" fill="var(--text)"><tspan fill="var(--red)" font-weight="700">❯❯❱</tspan> python.flask.security.xss.audit.explicit-unescape-with-markup</text></g>
+<g id="spl2" class="h hero"><text x="76" y="569" class="mono" font-size="13" fill="var(--muted)" style="white-space:pre">auth/views.py:42  <tspan fill="#9fb6cf">return Markup(f"&lt;a href={next_url}&gt;")</tspan></text></g>
+</g></g>
+<g class="rst"><g id="sumCard" class="h hero">
+<rect x="668" y="452" width="564" height="140" rx="12" fill="var(--panel)" stroke="var(--border)"/>
+<text x="688" y="480" font-size="12" font-weight="700" letter-spacing="1.5" fill="var(--muted)">SCAN 4127 · FINISHED</text>
+<text x="1212" y="480" class="mono" font-size="13" text-anchor="end" fill="var(--blue)">satori://code/semgrep.yml</text>
+<text x="688" y="526" font-size="28" font-weight="800" fill="var(--text)">10 commits<tspan fill="var(--muted)" font-weight="400"> · </tspan><tspan fill="var(--green)">7 passed</tspan><tspan fill="var(--muted)" font-weight="400"> · </tspan><tspan fill="var(--red)">3 failed</tspan></text>
+<rect id="seg0" class="h hero" x="688" y="552" width="36" height="10" rx="3" fill="var(--green)"/><rect id="seg1" class="h hero" x="730" y="552" width="36" height="10" rx="3" fill="var(--green)"/><rect id="seg2" class="h hero" x="772" y="552" width="36" height="10" rx="3" fill="var(--green)"/><rect id="seg3" class="h hero" x="814" y="552" width="36" height="10" rx="3" fill="var(--red)"/><rect id="seg4" class="h hero" x="856" y="552" width="36" height="10" rx="3" fill="var(--red)"/><rect id="seg5" class="h hero" x="898" y="552" width="36" height="10" rx="3" fill="var(--red)"/><rect id="seg6" class="h hero" x="940" y="552" width="36" height="10" rx="3" fill="var(--green)"/><rect id="seg7" class="h hero" x="982" y="552" width="36" height="10" rx="3" fill="var(--green)"/><rect id="seg8" class="h hero" x="1024" y="552" width="36" height="10" rx="3" fill="var(--green)"/><rect id="seg9" class="h hero" x="1066" y="552" width="36" height="10" rx="3" fill="var(--green)"/>
+<text x="688" y="580" font-size="13" fill="var(--muted)">broke in <tspan class="mono" fill="var(--red)">a41c9e2</tspan> · fixed in <tspan class="mono" fill="var(--green)">7ac4d31</tspan></text>
+<text x="1212" y="580" font-size="13" text-anchor="end" fill="var(--muted)">oldest → newest</text>
+</g></g>
+
+<!-- caption -->
+<g class="dim">
+<text x="412.3" y="660" font-size="30" font-weight="800" fill="#4f6178">One playbook.</text>
+<text x="650.9" y="660" font-size="30" font-weight="800" fill="#4f6178">Every commit.</text>
+<g class="rst"><text id="cwOn0" class="h hero" x="412.3" y="660" font-size="30" font-weight="800" fill="var(--text)">One playbook.</text>
+<text id="cwOn1" class="h hero" x="650.9" y="660" font-size="30" font-weight="800" fill="var(--blue)">Every commit.</text>
+<text id="sub" class="h hero" x="640" y="692" font-size="16" text-anchor="middle" fill="var(--muted)">See where assertions started failing in history.</text></g>
+</g>
+</svg>

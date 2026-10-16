@@ -38,6 +38,8 @@ If you target a repo, the optional parameter `-q/--quantity` indicates how many 
 satori-v2 scan githubUsername/repository satori://code/semgrep.yml -q 10
 ```
 
+![One playbook scanned across commits — pass and fail light up on the timeline](/scan_loop.svg)
+
 Example:
 
 ![Scan Repo](img/scan_1.png)
