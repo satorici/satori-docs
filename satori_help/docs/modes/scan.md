@@ -18,13 +18,25 @@ The `SOURCE` can be a public `satori://` playbook or a local `.yml` file. Direct
 
 ## Scan GitHub Account Repositories
 
-::: warning On development
-Scanning every repository of an account with a `user/*` wildcard target is not confirmed to work in CLI v2 yet. The v1 syntax is kept here for reference.
-:::
+Use an `owner/*` target (or just `owner`) to scan every repository of a GitHub user or organization in a single scan job, with one execution per repository:
 
 ```sh
-satori-v2 scan githubUsername/* --playbook satori://whatever
+satori-v2 scan "githubUsername/*"
+satori-v2 scan "githubUsername/*" --playbook satori://code/trufflehog.yml
+satori-v2 run --repo githubUsername
 ```
+
+Quote `owner/*` so your shell does not expand the `*`. With `satori-v2 run`, wildcards are only accepted through `--repo`. A positional `satori-v2 run owner` or `satori-v2 run "owner/*"` is rejected, so a mistyped folder name never scans someone's GitHub account.
+
+- **HEAD only:** each repository's latest commit on its default branch is scanned. `-q` greater than 1 is rejected.
+- **Playbook per repository:** without a playbook, each repository runs its own root `.satori.yml` (or `.satori.yaml`). With a playbook (`SOURCE` or `-p`), every repository runs that one.
+- **Which repositories:** public repositories of the owner, plus the private ones covered by your [GitHub App](ci/github.md) installation. Forks and archived repositories are left out.
+- **Limit:** at most 100 repositories, the most recently pushed first. The scan reports how many were left out.
+- **Skipped repositories:** a repository is skipped with a warning, not failed, when it can't be read, is empty, has no root `.satori.yml`, or its playbook is invalid. `satori-v2 scan ID` lists the skipped repositories and why.
+
+The repositories are resolved in the background right after the scan is created (status `FETCHING_DATA`), so the executions show up once the scan is `RUNNING`. Each report records which repository it scanned.
+
+`satori-v2 local` does not support wildcards.
 
 Example:
 

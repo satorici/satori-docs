@@ -272,6 +272,13 @@ This clones the `BonJarber/SecretsTest` repository and runs the secrets scanner 
 
 Under the hood, `satori-v2 run ... --repo owner/repo` creates a [scan](scan.md) job limited to the latest commit of the repository (the same as `satori-v2 scan owner/repo SOURCE -q 1`). The job is therefore listed by `satori-v2 scans` and can be managed with `satori-v2 scan ID`. `--sync`, `--output`, `--report`, `--stdout` and `--stderr` work as with a regular run; `--count`, `--files`, `--save-files`, `--delete-report`, `--delete-output` and `--expire` do not apply to repository runs.
 
+`--repo owner` (or `--repo "owner/*"`) runs the playbook on the latest commit of every repository of `owner` in a single scan job, using each repository's own `.satori.yml` when no playbook is given. `--output`, `--report`, `--stdout`, `--stderr`, `--issues` and `--verify` then show every execution, and skipped repositories are printed as warnings. Wildcards are only accepted through `--repo`, never as the positional `SOURCE`. See [Scan GitHub Account Repositories](scan.md#scan-github-account-repositories).
+
+```sh
+satori-v2 run --repo satorici --sync
+satori-v2 run satori://code/trufflehog.yml --repo satorici --report
+```
+
 You can also combine `--repo` with additional parameters:
 
 ```sh

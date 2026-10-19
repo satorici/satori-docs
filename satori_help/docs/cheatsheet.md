@@ -302,6 +302,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 run PLAYBOOK --repo GitHubUser/Repo -d KEY=value` | Provide parameters/secrets to the repository run |
 | `satori-v2 run PLAYBOOK --repo GitHubUser/Repo --sync --output --report` | Wait for the run and display its output and report |
 | `satori-v2 scan GitHubUser/Repo PLAYBOOK -q N` | Run a playbook on the last N commits of the repository (see [Scans](#scans)) |
+| `satori-v2 run [PLAYBOOK] --repo GitHubUser` | Run on the latest commit of every repository of the account (up to 100; each repository's own `.satori.yml` without PLAYBOOK) |
 | `satori-v2 repo GitHubUser/Repo` | Shows the repository Visibility, CI, Playbook, Status and Result *(on development)* |
 | `satori-v2 repo GitHubUser/Repo --pending` | Show pending actions in repo info *(on development)* |
 | `satori-v2 repo GitHubUser/Repo run` | Run the repository's playbook on the latest commit *(on development)* |
@@ -355,6 +356,7 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 | `satori-v2 scan GitHubUser/Repo playbook.yml` | Scan the GitHub repository with a local playbook (directory sources are not allowed) |
 | `satori-v2 scan GitHubUser/Repo --playbook="satori://..."` | Scan the GitHub repository with a public playbook |
 | `satori-v2 scan GitHubUser/Repo SOURCE -q N` | Scan the last N commits of the repository (replaces v1 `-c`) |
+| `satori-v2 scan "GitHubUser/*" [SOURCE]` | Scan the latest commit of every repository of the account (up to 100) |
 | `satori-v2 scan GitHubUser/Repo SOURCE -d KEY=value` | Provide parameters and values |
 | `satori-v2 scan GitHubUser/Repo SOURCE --split KEY=DELIMITER` | Split a parameter value into several values |
 | `satori-v2 scan GitHubUser/Repo SOURCE -df KEY=PATH` | Load variable values from a file |
