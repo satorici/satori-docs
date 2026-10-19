@@ -74,6 +74,16 @@ In `.cursor/mcp.json` or global MCP settings:
 
 All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs.
 
+### `no-auto-run` directive
+
+Add this comment anywhere in a playbook (usually the first line) to keep agents from running it as an automatic baseline:
+
+```yaml
+# satori:mcp no-auto-run
+```
+
+`run_playbook`, `run_local`, and `scan_repository` refuse that playbook unless the agent passes `force=true` after the user explicitly asks. Catalog `playbook_uri` sources are not checked. The CLI (`satori-v2 local` / `run`) ignores this directive.
+
 ### `run_playbook` notes
 
 Provide exactly one of `playbook_path` (local `.yml` / `.yaml` file) or `playbook_yaml` (inline YAML). Optional `repository` is an `owner/repo` from `list_repos`. With `wait` (default true), the tool polls until the job finishes or `wait_seconds` elapses (max 600); then call `get_execution` with the returned `execution_id`.
@@ -84,7 +94,7 @@ Pass `directory` (default: the server's working directory). A new repo gets `pla
 
 Only what the repo cannot settle comes back in `questions` (for example formatter, dead-code detection). Ask the user, then call again with `prefs`, e.g. `{"formatter": "black", "dead_code": false}`. Answers are stored in the first line of the playbook, `# satori:recommended v1 python/uv prefs: formatter=black`, so later updates only ask about checks added since. The generated playbook is validated before it is returned.
 
-Suggested loop: write the file with the user's approval, run `run_local` once as a baseline before editing code, and after each change fix only the failures that were not in the baseline.
+Suggested loop: write the file with the user's approval, run `run_local` once as a baseline before editing code, and after each change fix only the failures that were not in the baseline. Skip that baseline when the playbook has `# satori:mcp no-auto-run`.
 
 The flow looks like this — an AI that only writes unit tests can miss type and security gaps outside the tested area; `recommend_playbook` builds a multi-lane playbook and closes the loop:
 
