@@ -70,19 +70,9 @@ In `.cursor/mcp.json` or global MCP settings:
 | `list_executions` | Past executions, newest first (filter by `job_id`, `status`, `report_status`, `job_type`, `from_`/`to`, `q`; paginated, max 25) |
 | `stop_execution` | Cancel a running execution (no-op if it is not running) |
 | `get_execution_playbook` | The playbook YAML an execution ran (capped) |
-| `recommend_playbook` | Inspect a repo (Python, JS/TS, Go, Java, C#) and propose a lint/format/types/unit/security playbook, or the changes to an existing `.satori.yml` |
+| `recommend_playbook` | Inspect a repo (Python, JS/TS, Go, Java, C#) and propose a lint/format/types/unit/security playbook for `.satori-llm.yml` (CI `.satori.yml` should import it) |
 
 All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs.
-
-### `no-auto-run` directive
-
-Add this comment anywhere in a playbook (usually the first line) to keep agents from running it as an automatic baseline:
-
-```yaml
-# satori:mcp no-auto-run
-```
-
-`run_playbook`, `run_local`, and `scan_repository` refuse that playbook unless the agent passes `force=true` after the user explicitly asks. Catalog `playbook_uri` sources are not checked. The CLI (`satori-v2 local` / `run`) ignores this directive.
 
 ### `run_playbook` notes
 
@@ -90,11 +80,20 @@ Provide exactly one of `playbook_path` (local `.yml` / `.yaml` file) or `playboo
 
 ### `recommend_playbook` notes
 
-Pass `directory` (default: the server's working directory). A new repo gets `playbook_yaml` plus a `checks` list explaining each check. If `.satori.yml` exists, you get `changes` (missing or different checks with `suggested_yaml`) to merge by hand. Checks for tools the repo already configures are blocking (`assertReturnCode: 0`); the rest are informational.
+Pass `directory` (default: the server's working directory). Quality checks go in **`.satori-llm.yml`**; **`.satori.yml`** is reserved for CI/manual runs and should import the LLM file:
 
-Only what the repo cannot settle comes back in `questions` (for example formatter, dead-code detection). Ask the user, then call again with `prefs`, e.g. `{"formatter": "black", "dead_code": false}`. Answers are stored in the first line of the playbook, `# satori:recommended v1 python/uv prefs: formatter=black`, so later updates only ask about checks added since. The generated playbook is validated before it is returned.
+```yaml
+import:
+  - file://.satori-llm.yml
+```
 
-Suggested loop: write the file with the user's approval, run `run_local` once as a baseline before editing code, and after each change fix only the failures that were not in the baseline. Skip that baseline when the playbook has `# satori:mcp no-auto-run`.
+A new repo gets `playbook_yaml` (write to `.satori-llm.yml`) plus `ci_playbook_yaml` (thin importer for `.satori.yml`) and a `checks` list explaining each check. If `.satori-llm.yml` already exists, you get `changes` (missing or different checks with `suggested_yaml`) to merge by hand. If only a hand-written CI `.satori.yml` exists, you still get a full LLM playbook plus `needs_ci_import` / `ci_import_yaml` — add the import without overwriting CI checks. A legacy `.satori.yml` that already has `# satori:recommended` is treated as migrate-from-CI: merge into `.satori-llm.yml` and leave CI as the importer.
+
+Checks for tools the repo already configures are blocking (`assertReturnCode: 0`); the rest are informational.
+
+Only what the repo cannot settle comes back in `questions` (for example formatter, dead-code detection). Ask the user, then call again with `prefs`, e.g. `{"formatter": "black", "dead_code": false}`. Answers are stored in the first line of `.satori-llm.yml`, `# satori:recommended v1 python/uv prefs: formatter=black`, so later updates only ask about checks added since. The generated playbook is validated before it is returned.
+
+Suggested loop: write `.satori-llm.yml` (and the CI importer if needed) with the user's approval, `run_local` with `playbook_path=.satori-llm.yml` once as a baseline before editing code, and after each change fix only the failures that were not in the baseline. Prefer `.satori-llm.yml` over a heavy CI `.satori.yml` for that baseline.
 
 The flow looks like this — an AI that only writes unit tests can miss type and security gaps outside the tested area; `recommend_playbook` builds a multi-lane playbook and closes the loop:
 
