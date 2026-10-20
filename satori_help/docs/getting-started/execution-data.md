@@ -48,7 +48,7 @@ You can filter your reports using various parameters to narrow down the results 
 | `--from DATETIME` | Executions created after this ISO datetime (e.g. `2026-01-31` or `2026-01-31T10:00:00`) |
 | `--to DATETIME` | Executions created before this ISO datetime |
 | `--report-status {PASS\|FAIL}` | Filter by report result |
-| `--severity {0-5}` | Filter by output severity |
+| `--severity {0-5}` | Filter by output severity (`0` Blocker … `5` Info) |
 | `--playbook URI` | Filter by playbook |
 | `--q TEXT` | Free text search |
 | `-t, --tag TAG` | Filter by tag (repeatable) |

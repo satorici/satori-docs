@@ -26,7 +26,7 @@ Within **settings**, all these words are reserved:
 
 Within a **test**, you may define:
 - **`assert*`**: a category of keywords used for asserting conditions. Examples include `assertStdoutEqual`, `assertStdoutNotEquals`, etc.
-- **`setSeverity`**: Defines the severity level of the test.
+- **`setSeverity`**: Defines the severity level of the test as a number from `0` (most severe) to `5`: `0` Blocker, `1` Critical, `2` High, `3` Medium, `4` Low, `5` Info.
 
 ## [Execution](execution.md)
 

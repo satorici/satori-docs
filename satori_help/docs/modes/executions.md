@@ -122,7 +122,7 @@ To stop everything matching a filter use `satori-v2 search ... --stop` (below). 
 | `--from DATETIME` | Created after this ISO datetime (`2026-01-31`, `2026-01-31T10:00:00`) |
 | `--to DATETIME` | Created before this ISO datetime |
 | `--report-status {PASS\|FAIL}` | Report result |
-| `--severity {0-5}` | Output severity |
+| `--severity {0-5}` | Output severity (`0` Blocker … `5` Info) |
 | `--playbook URI` | Playbook used |
 | `--q TEXT` | Free text search |
 | `-t, --tag TAG` | Tag (repeatable) |

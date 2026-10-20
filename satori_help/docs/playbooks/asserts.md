@@ -38,7 +38,7 @@ HelloWorld:
   - echo Hello World
 ```
 
-And they can have a severity associated, especially useful when working with ticketing systems:
+And they can have a severity associated, especially useful when working with ticketing systems. Severity is a number where lower is more severe: `0` Blocker, `1` Critical, `2` High, `3` Medium, `4` Low, `5` Info.
 
 ```yml
 HelloWorld:

@@ -233,7 +233,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `--visibility {PUBLIC\|PRIVATE\|UNLISTED}` | Filter by visibility |
 | `--from DATETIME` / `--to DATETIME` | Filter by date (ISO 8601) |
 | `--report-status {PASS\|FAIL}` | Filter by report result |
-| `--severity N` | Filter by severity (0 to 5) |
+| `--severity N` | Filter by severity (`0` Blocker, `1` Critical, `2` High, `3` Medium, `4` Low, `5` Info) |
 | `--playbook URI` | Filter by playbook |
 | `--q TEXT` | Free text search |
 | `-t, --tag TAG` | Filter by tag (repeatable) |
@@ -267,7 +267,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 issues --execution-id ID` | Same as the positional `EXECUTION-ID` |
 | `satori-v2 issues --status {OPEN\|INVESTIGATING\|TP\|FIXED\|FP\|ACCEPTED}` | Filter issues by status |
 | `satori-v2 issues --source {ASSERT\|TOOL}` | Filter issues by source |
-| `satori-v2 issues --severity LEVELS` | Filter by severity (`INFO`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`, `BLOCKER`; comma-separated) |
+| `satori-v2 issues --severity LEVELS` | Filter by severity (`BLOCKER`, `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`; comma-separated) |
 | `satori-v2 issues --order {ASC\|DESC}` | Order the issues (disables the default severity sort) |
 | `satori-v2 issues --page N -q N --json` | Pagination and JSON output |
 | `satori-v2 report ID issues` | List the issues of the report ID |

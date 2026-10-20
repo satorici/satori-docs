@@ -43,7 +43,7 @@ satori-v2 report 5678 issues
 | `--execution-id ID` | Same as the positional `EXECUTION-ID` (cannot conflict with it) |
 | `--status STATUS` | One of `OPEN`, `INVESTIGATING`, `TP`, `FIXED`, `FP`, `ACCEPTED` |
 | `--source {ASSERT\|TOOL}` | `ASSERT` for failed playbook asserts, `TOOL` for hits reported by a tool |
-| `--severity LEVELS` | Comma-separated severities: `INFO`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`, `BLOCKER` (e.g. `high,critical`) |
+| `--severity LEVELS` | Comma-separated severities: `BLOCKER`, `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO` (e.g. `high,critical`) |
 | `--order {ASC\|DESC}` | Sort order (disables the default severity sort) |
 | `--json` | Print the list as JSON |
 | `--page N` | Page number (default 1) |
