@@ -8,7 +8,7 @@ next:
 
 `satori-v2 mcp` starts a local [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server over stdio. AI agents such as Claude Code, Codex, and Cursor can use it to run playbooks, inspect executions, and read findings through your existing Satori credentials.
 
-The server uses the token from `satori-v2 config token` (or `SATORI_TOKEN` / `SATORI_PROFILE`). Configure a token first — see [Installation](/getting-started/install.md).
+The server uses the token from `satori-v2 config token`, or from `SATORI_TOKEN` / `SATORI_PROFILE` in the environment (`SATORI_TOKEN` overrides the credentials file). Configure a token first — see [Installation](/getting-started/install.md).
 
 ## Configure your agent
 
@@ -54,6 +54,46 @@ In `.cursor/mcp.json` or global MCP settings:
     "satori": { "command": "satori-v2", "args": ["mcp"] }
   }
 }
+```
+
+### Alternative: run without installing (`uvx`)
+
+If you have [uv](https://docs.astral.sh/uv/) and prefer not to install the CLI globally, you can run the MCP server from the GitHub repo. This is ideal for CI environments, where you typically want an ephemeral install and a token from the environment rather than a credentials file. Pass `SATORI_TOKEN` in the agent `env` block (or rely on a token already stored via `satori-v2 config token`).
+Cursor, Claude Code (`.mcp.json`), and similar JSON configs:
+
+```json
+{
+  "mcpServers": {
+    "satori": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/satorici/cli-v2",
+        "satori-v2",
+        "mcp"
+      ],
+      "env": {
+        "SATORI_TOKEN": "YOUR_TOKEN"
+      }
+    }
+  }
+}
+```
+
+Codex (`~/.codex/config.toml` or a trusted project's `.codex/config.toml`):
+
+```toml
+[mcp_servers.satori]
+command = "uvx"
+args = [
+  "--from",
+  "git+https://github.com/satorici/cli-v2",
+  "satori-v2",
+  "mcp",
+]
+
+[mcp_servers.satori.env]
+SATORI_TOKEN = "YOUR_TOKEN"
 ```
 
 ## Tools
