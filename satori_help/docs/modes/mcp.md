@@ -6,18 +6,22 @@ next:
 
 # MCP server
 
-`satori-v2 mcp` starts a local [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server over stdio. AI agents such as Claude Code, Codex, and Cursor can use it to run playbooks, inspect executions, and read findings through your existing Satori credentials.
+[`satori-mcp`](https://github.com/satorici/satori-mcp) is a local [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server over stdio. AI agents such as Claude Code, Codex, and Cursor can use it to run playbooks, inspect executions, and read findings through your existing Satori credentials. It runs straight from GitHub with `npx` (Node.js 22 or later), so there is nothing to install:
 
-The server uses the token from `satori-v2 config token`, or from `SATORI_TOKEN` / `SATORI_PROFILE` in the environment (`SATORI_TOKEN` overrides the credentials file). Configure a token first — see [Installation](/getting-started/install.md).
+```console
+npx -y github:satorici/satori-mcp
+```
+
+The server shares credentials with the CLI: it uses the token saved by `satori-v2 config token` (`~/.satori_credentials.yml`), or `SATORI_TOKEN` / `SATORI_PROFILE` from its environment (`SATORI_TOKEN` overrides the credentials file). Configure a token first — see [Installation](/getting-started/install.md) — or pass `SATORI_TOKEN` in the agent config (see [below](#ci-or-no-credentials-file)).
 
 ## Configure your agent
 
-Add the server to your agent's MCP config. The agent launches `satori-v2 mcp` itself — stdout is the protocol channel, so do not pipe or redirect it.
+Add the server to your agent's MCP config. The agent launches it itself — stdout is the protocol channel, so do not pipe or redirect it. The first start builds the package from GitHub (about 20 seconds); later starts use the npm cache.
 
 ### Claude Code
 
 ```console
-claude mcp add --scope user satori -- satori-v2 mcp
+claude mcp add --scope user satori -- npx -y github:satorici/satori-mcp
 ```
 
 Or write a project `.mcp.json` (and commit it for the team):
@@ -25,7 +29,7 @@ Or write a project `.mcp.json` (and commit it for the team):
 ```json
 {
   "mcpServers": {
-    "satori": { "command": "satori-v2", "args": ["mcp"] }
+    "satori": { "command": "npx", "args": ["-y", "github:satorici/satori-mcp"] }
   }
 }
 ```
@@ -33,15 +37,15 @@ Or write a project `.mcp.json` (and commit it for the team):
 ### Codex
 
 ```console
-codex mcp add satori -- satori-v2 mcp
+codex mcp add satori -- npx -y github:satorici/satori-mcp
 ```
 
 Or add to `~/.codex/config.toml` (or a trusted project's `.codex/config.toml`):
 
 ```toml
 [mcp_servers.satori]
-command = "satori-v2"
-args = ["mcp"]
+command = "npx"
+args = ["-y", "github:satorici/satori-mcp"]
 ```
 
 ### Cursor
@@ -51,27 +55,22 @@ In `.cursor/mcp.json` or global MCP settings:
 ```json
 {
   "mcpServers": {
-    "satori": { "command": "satori-v2", "args": ["mcp"] }
+    "satori": { "command": "npx", "args": ["-y", "github:satorici/satori-mcp"] }
   }
 }
 ```
 
-### Alternative: run without installing (`uvx`)
+### CI or no credentials file
 
-If you have [uv](https://docs.astral.sh/uv/) and prefer not to install the CLI globally, you can run the MCP server from the GitHub repo. This is ideal for CI environments, where you typically want an ephemeral install and a token from the environment rather than a credentials file. Pass `SATORI_TOKEN` in the agent `env` block (or rely on a token already stored via `satori-v2 config token`).
+In CI, or on machines without the CLI, pass the token in the agent's `env` block.
 Cursor, Claude Code (`.mcp.json`), and similar JSON configs:
 
 ```json
 {
   "mcpServers": {
     "satori": {
-      "command": "uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/satorici/cli-v2",
-        "satori-v2",
-        "mcp"
-      ],
+      "command": "npx",
+      "args": ["-y", "github:satorici/satori-mcp"],
       "env": {
         "SATORI_TOKEN": "YOUR_TOKEN"
       }
@@ -84,43 +83,59 @@ Codex (`~/.codex/config.toml` or a trusted project's `.codex/config.toml`):
 
 ```toml
 [mcp_servers.satori]
-command = "uvx"
-args = [
-  "--from",
-  "git+https://github.com/satorici/cli-v2",
-  "satori-v2",
-  "mcp",
-]
+command = "npx"
+args = ["-y", "github:satorici/satori-mcp"]
 
 [mcp_servers.satori.env]
 SATORI_TOKEN = "YOUR_TOKEN"
 ```
+
+### Versions and updates
+
+`npx` caches git installs, so a config keeps running the version it first downloaded. Pin a release or commit with `github:satorici/satori-mcp#<tag-or-sha>`, and to pick up the latest `main` clear the cache (`npm cache clean --force`).
 
 ## Tools
 
 | Tool | Description |
 | --- | --- |
 | `whoami` | Active profile, API endpoint, notify email, and whether a GitHub PAT is configured |
-| `run_playbook` | Submit a playbook (`playbook_path` or `playbook_yaml`) and optionally wait for the result |
+| `run_playbook` | Run a playbook on Satori (`playbook_path`, `playbook_yaml` or catalog `playbook_uri`) and optionally wait for the result |
+| `run_local` | Run a playbook's commands on this machine, upload the results and return the execution |
+| `scan_repository` | Start a scan of a GitHub repository (`owner/repo`, or `owner/*` for every repository of an owner) |
 | `get_execution` | Status and assertion summary for an execution (no logs) |
 | `get_execution_output` | Capped logs: without `test`, an index of tests; with `test`, the last lines of a stream |
-| `list_findings` | List findings (optional `execution_id`, severity, status) |
-| `get_finding` | Details of one finding |
-| `list_repos` | Repositories Satori can target, with their last execution |
-| `list_executions` | Past executions, newest first (filter by `job_id`, `status`, `report_status`, `job_type`, `from_`/`to`, `q`; paginated, max 25) |
-| `stop_execution` | Cancel a running execution (no-op if it is not running) |
 | `get_execution_playbook` | The playbook YAML an execution ran (capped) |
-| `recommend_playbook` | Inspect a repo (Python, JS/TS, Go, Java, C#) and propose a lint/format/types/unit/security playbook for `.satori-llm.yml` (CI `.satori.yml` should import it) |
+| `list_executions` | Past executions (reports), newest first: filter by `job_id`, `status`, `report_status`, `job_type`, `from_`/`to`, `q`, `visibility`, `severity`, `playbook`, `tags`; paginated, max 25 |
+| `list_reports` | Alias of `list_executions` (in Satori, reports = executions) |
+| `stop_execution` | Cancel a running execution (no-op if it is not running) |
+| `list_jobs` | Jobs, newest first (`type`: RUN, SCAN or MONITOR), to recover a `job_id` |
+| `get_job` | A job and its 5 most recent executions |
+| `list_scans` | Scan jobs (same as `list_jobs` with `type=SCAN`) |
+| `list_monitors` | Monitor jobs with their schedule `expression` |
+| `list_findings` | Findings, filtered by `execution_id`, severity (0-5 or names), `status`, `source` (ASSERT or TOOL) |
+| `get_finding` | Details of one finding plus its recent timeline |
+| `get_finding_timeline` | Status changes and comments for a finding |
+| `update_finding_status` | Triage a finding (OPEN, INVESTIGATING, TP, FIXED, FP, ACCEPTED), optionally with a comment |
+| `add_finding_comment` | Comment on a finding without changing its status |
+| `list_advisories` | External issues and security advisories already created from findings |
+| `list_playbooks` | Search the catalog of ready-made `satori://` playbooks |
+| `get_playbook` | Details and YAML of a catalog playbook |
+| `list_repos` | Repositories Satori can target, with their last execution |
+| `recommend_playbook` | Inspect a repo and propose a lint/format/types/unit/security playbook for `.satori-llm.yml` (CI `.satori.yml` should import it) |
 
-All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs.
+All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `add_finding_comment`) are meant to be used only when you ask for them.
 
 ### `run_playbook` notes
 
-Provide exactly one of `playbook_path` (local `.yml` / `.yaml` file) or `playbook_yaml` (inline YAML). Optional `repository` is an `owner/repo` from `list_repos`. With `wait` (default true), the tool polls until the job finishes or `wait_seconds` elapses (max 600); then call `get_execution` with the returned `execution_id`.
+Provide exactly one of `playbook_path` (local `.yml` / `.yaml` file), `playbook_yaml` (inline YAML) or `playbook_uri` (a catalog playbook such as `satori://code/python/pyspector_v2.yml`, see `list_playbooks`). Optional `repository` is an `owner/repo` from `list_repos`. With `wait` (default true), the tool polls until the job finishes or `wait_seconds` elapses (max 600); then call `get_execution` with the returned `execution_id`.
+
+### `run_local` notes
+
+`run_local` executes the playbook's commands on the machine running the MCP server, with your user's privileges, and uploads the results to Satori, so the agent should only run playbooks you asked for or that it wrote for you. The working directory is `directory` (an existing local directory), or `repository` (`owner/repo`, shallow-cloned to a temporary directory), defaulting to the server's working directory. `run` limits execution to test paths with those prefixes, and `timeout_seconds` (default 300, max 3600) cancels the run when it elapses. It returns the same shape as `run_playbook`; read logs with `get_execution_output` and findings with `list_findings`.
 
 ### `recommend_playbook` notes
 
-Pass `directory` (default: the server's working directory). Quality checks go in **`.satori-llm.yml`**; **`.satori.yml`** is reserved for CI/manual runs and should import the LLM file:
+Pass `directory` (default: the server's working directory). Supported stacks: Python, JS/TS, Go, Java, C#, Rust, Ruby, PHP, Swift, C/C++ (CMake) and Solidity (Foundry). Quality checks go in **`.satori-llm.yml`**; **`.satori.yml`** is reserved for CI/manual runs and should import the LLM file:
 
 ```yaml
 import:
@@ -131,7 +146,7 @@ A new repo gets `playbook_yaml` (write to `.satori-llm.yml`) plus `ci_playbook_y
 
 Checks for tools the repo already configures are blocking (`assertReturnCode: 0`); the rest are informational.
 
-Only what the repo cannot settle comes back in `questions` (for example formatter, dead-code detection). Ask the user, then call again with `prefs`, e.g. `{"formatter": "black", "dead_code": false}`. Answers are stored in the first line of `.satori-llm.yml`, `# satori:recommended v1 python/uv prefs: formatter=black`, so later updates only ask about checks added since. The generated playbook is validated before it is returned.
+Only what the repo cannot settle comes back in `questions` (for example formatter, dead-code detection). Ask the user, then call again with `prefs`, e.g. `{"formatter": "black", "dead_code": false}`. Answers are stored in the first line of `.satori-llm.yml`, `# satori:recommended v2 python/uv prefs: formatter=black`, so later updates only ask about checks added since.
 
 Suggested loop: write `.satori-llm.yml` (and the CI importer if needed) with the user's approval, `run_local` with `playbook_path=.satori-llm.yml` once as a baseline before editing code, and after each change fix only the failures that were not in the baseline. Prefer `.satori-llm.yml` over a heavy CI `.satori.yml` for that baseline.
 
@@ -220,7 +235,7 @@ Agents should read `satori-docs://playbooks/language` before writing or running 
 
 ## Errors
 
-Auth and API failures return small error objects instead of crashing the protocol. If you are not logged in, the response points you to `satori-v2 config token <token>`. A `403` includes a hint that the action may need a PRO or ENTERPRISE plan.
+Auth and API failures return small error objects instead of crashing the protocol. If you are not logged in, the response points you to `satori-v2 config token <token>`; alternatively set `SATORI_TOKEN` in the server's environment. A `403` includes a hint that the action may need a PRO or ENTERPRISE plan.
 
 ---
 
