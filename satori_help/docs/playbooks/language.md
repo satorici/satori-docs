@@ -106,6 +106,8 @@ Hello_World_Test:
   - HelloWorld.exe ${{who}}
 ```
 
+`file://` paths are relative to the playbook's directory (the repository root for a repository's `.satori.yml`) and cannot leave it. Imported files may import other `file://` files; they are bundled along with the playbook, both from the CLI and when a scan reads the playbook from GitHub.
+
 The `import` keyword is not mandatory. You can place the import section anywhere in your YAML file, as long as it adheres to valid YAML syntax.
 
 ## Errors
