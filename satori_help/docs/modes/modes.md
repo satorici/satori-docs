@@ -16,7 +16,7 @@ Run a local MCP server so AI agents can write playbooks, run them, and inspect r
 npx -y github:satorici/satori-mcp
 ```
 
-See [MCP server](mcp.md) for agent config, tools, and playbook doc resources.
+See [MCP server](mcp.md) for agent config, tools, and playbook doc resources. Agents can also open [remote sandboxes](mcp.md#remote-sandbox-ssh-notes) and debug running executions via SSH MCP tools.
 
 ## [Run](run.md)
 

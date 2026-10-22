@@ -75,3 +75,13 @@ satori-v2 shells
 satori-v2 shells -q 20
 satori-v2 shells -p 2
 ```
+
+## AI agents
+
+`satori-v2 shell` is for interactive use in a terminal. AI agents connected through the [MCP server](/modes/mcp) should use the remote-sandbox tools instead — see [Remote sandbox (SSH) notes](/modes/mcp#remote-sandbox-ssh-notes).
+
+| CLI | MCP equivalent |
+| --- | --- |
+| `satori-v2 shell` | `create_ssh_session` then `exec_in_session` (no TTY; always `stop_ssh_session` when done) |
+| `satori-v2 shell EXECUTION-ID` | `ssh_into_execution` (credentials for the user; the MCP cannot host an interactive shell) |
+| `satori-v2 shell sessions` | `list_ssh_sessions` / `get_ssh_session` |

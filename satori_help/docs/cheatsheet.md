@@ -400,6 +400,7 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 | `satori-v2 shell sessions` | List your shell sessions (replaces v1 `shells`) |
 | `satori-v2 shell sessions --page N -q N --json` | Pagination and JSON output |
 | `satori-v2 shell --timeout SECONDS` | Set session duration limit *(on development)* |
+| MCP SSH tools | `create_ssh_session`, `get_ssh_session`, `list_ssh_sessions`, `exec_in_session`, `stop_ssh_session`, `ssh_into_execution` — see [Remote sandbox (SSH)](/modes/mcp#remote-sandbox-ssh-notes) |
 
 ## Shards
 
