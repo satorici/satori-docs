@@ -8,7 +8,7 @@ Satori is an automated testing platform that offers multiple ways to execute tes
   - **Scheduled (also known as monitors):** set up tests to run at specific intervals, allowing continuous monitoring of your environments.
   - **On Your Repositories:** run tests directly on the code within your repositories.
 
-## [MCP](mcp.md)
+## [MCP](mcp/setup.md)
 
 Run a local MCP server so AI agents can write playbooks, run them, and inspect results with your Satori token:
 
@@ -16,7 +16,7 @@ Run a local MCP server so AI agents can write playbooks, run them, and inspect r
 npx -y github:satorici/satori-mcp
 ```
 
-See [MCP server](mcp.md) for agent config, tools, and playbook doc resources. Agents can also open [remote sandboxes](mcp.md#remote-sandbox-ssh-notes) and debug running executions via SSH MCP tools.
+See [Setup](mcp/setup.md) for agent config, [Tools](mcp/tools.md) for the catalog and playbook runners, and [Reference](mcp/reference.md) for playbook doc resources. Agents can also open [remote sandboxes](mcp/tools.md#remote-sandbox-ssh-notes) and debug running executions via SSH MCP tools.
 
 ## [Run](run.md)
 

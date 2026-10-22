@@ -10,7 +10,12 @@
   * [Settings](/playbooks/settings.md)
   * [Tool output](/playbooks/tool-output.md)
 * [Execution modes](/modes/modes.md)
-  * [MCP](/modes/mcp.md)
+  * MCP
+    * [Setup](/modes/mcp/setup.md)
+    * [Tools](/modes/mcp/tools.md)
+    * [Agent rules](/modes/mcp/agent-rules.md)
+    * [Subagents](/modes/mcp/subagents.md)
+    * [Reference](/modes/mcp/reference.md)
   * CI
     * [GitHub Application](/modes/ci/github.md)
     * [GitLab](/modes/ci/gitlab.md)

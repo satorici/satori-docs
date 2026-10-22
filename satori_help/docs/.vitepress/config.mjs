@@ -59,7 +59,16 @@ export default defineConfig({
                 text: "Execution modes",
                 link: "/modes/modes",
                 items: [
-                    { text: "MCP", link: "/modes/mcp" },
+                    {
+                        text: "MCP",
+                        items: [
+                            { text: "Setup", link: "/modes/mcp/setup" },
+                            { text: "Tools", link: "/modes/mcp/tools" },
+                            { text: "Agent rules", link: "/modes/mcp/agent-rules" },
+                            { text: "Subagents", link: "/modes/mcp/subagents" },
+                            { text: "Reference", link: "/modes/mcp/reference" },
+                        ],
+                    },
                     { text: "Run", link: "/modes/run" },
                     { text: "Executions & Output", link: "/modes/executions" },
                     { text: "Shell", link: "/modes/shell" },

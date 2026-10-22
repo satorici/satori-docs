@@ -78,7 +78,7 @@ satori-v2 shells -p 2
 
 ## AI agents
 
-`satori-v2 shell` is for interactive use in a terminal. AI agents connected through the [MCP server](/modes/mcp) should use the remote-sandbox tools instead — see [Remote sandbox (SSH) notes](/modes/mcp#remote-sandbox-ssh-notes).
+`satori-v2 shell` is for interactive use in a terminal. AI agents connected through the [MCP server](/modes/mcp/setup) should use the remote-sandbox tools instead — see [Remote sandbox (SSH) notes](/modes/mcp/tools#remote-sandbox-ssh-notes).
 
 | CLI | MCP equivalent |
 | --- | --- |
