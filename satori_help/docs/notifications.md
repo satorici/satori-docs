@@ -111,6 +111,28 @@ satori-v2 settings ai.anthropic --clear
 
 Setting `ai.provider` picks a default model from the provider’s allowed list when the current model is not valid for that provider. Clear `ai.model_id` by clearing `ai.provider` instead.
 
+## Saved parameters and secrets
+
+Save parameters and secrets once to apply them to every job you create (`run`, `scan`, monitors).
+
+```sh
+satori-v2 parameters set HOST example.com
+satori-v2 parameters set PORTS 80 443     # several values, like -d PORTS=80 -d PORTS=443
+satori-v2 parameters list
+satori-v2 parameters unset HOST
+
+satori-v2 secrets set API_TOKEN           # prompts for the value without echoing it
+echo "$API_TOKEN" | satori-v2 secrets set API_TOKEN
+satori-v2 secrets list                    # names only, values are never shown
+satori-v2 secrets unset API_TOKEN
+```
+
+- **Precedence:** a value passed with the job wins, so `-d HOST=other` replaces the saved `HOST`. A secret sent with a job request replaces the saved secret with the same name.
+- **Parameters** work like `-d`: playbooks read them as `${{HOST}}`. They are stored with the job and shown in its details, so don't use them for secrets. `local` runs also get them.
+- **Secrets** are set as environment variables (`$API_TOKEN`) for the playbook's commands. `local` runs don't get them. Every playbook you run sees them, including public `satori://` playbooks, and their values are not scrubbed from the output.
+- Secrets are encrypted at rest. A job can hold about 15 secrets in total, saved ones included; past that, the job is rejected with "Secrets are too large".
+- Saved values are copied when the job is created. Changes don't reach monitors that are already running: recreate the monitor to pick them up.
+
 ## Playbook Settings
 
 Define when and where to notify with a `settings.notify` list. Each rule has:
