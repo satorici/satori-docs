@@ -125,12 +125,18 @@ satori-v2 secrets set API_TOKEN           # prompts for the value without echoin
 echo "$API_TOKEN" | satori-v2 secrets set API_TOKEN
 satori-v2 secrets list                    # names only, values are never shown
 satori-v2 secrets unset API_TOKEN
+
+# Values for one repository, over yours
+satori-v2 parameters set HOST staging.example.com --repo acme/app
+satori-v2 secrets set API_TOKEN --repo acme/app
+satori-v2 secrets list --repo acme/app
 ```
 
-- **Precedence:** a value passed with the job wins, so `-d HOST=other` replaces the saved `HOST`. A secret sent with a job request replaces the saved secret with the same name.
+- **Precedence:** yours < the repository's < the job's. A value passed with the job wins, so `-d HOST=other` replaces any saved `HOST`. A secret sent with a job request replaces the saved secret with the same name.
+- **Repository values** (`--repo owner/repo`) apply to runs and scans of that repository. A wildcard scan (`satori-v2 scan acme/*`) gives each repository's execution its own values. Values can only be saved for a single `owner/repo`, never for a wildcard. Monitors only get your own values.
 - **Parameters** work like `-d`: playbooks read them as `${{HOST}}`. They are stored with the job and shown in its details, so don't use them for secrets. `local` runs also get them.
 - **Secrets** are set as environment variables (`$API_TOKEN`) for the playbook's commands. `local` runs don't get them. Every playbook you run sees them, including public `satori://` playbooks, and their values are not scrubbed from the output.
-- Secrets are encrypted at rest. A job can hold about 15 secrets in total, saved ones included; past that, the job is rejected with "Secrets are too large".
+- Secrets are encrypted at rest. A job can hold about 15 secrets in total, saved ones included; past that, the job is rejected with "Secrets are too large". In a wildcard scan, a repository whose secrets don't fit is skipped with that reason.
 - Saved values are copied when the job is created. Changes don't reach monitors that are already running: recreate the monitor to pick them up.
 
 ## Playbook Settings
