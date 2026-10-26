@@ -33,7 +33,12 @@ next:
 | `get_finding_ai_analysis` | Latest AI analysis for a finding (PENDING, COMPLETED or FAILED); 404 if none yet |
 | `analyze_finding` | Queue AI analysis for one finding (account AI key; only when asked); optional `wait` |
 | `analyze_execution` | Queue AI analysis for an execution's findings in one call (max 20); optional `finding_ids` / `wait` |
-| `list_advisories` | External issues and security advisories already created from findings |
+| `list_advisories` | External issues and security advisories already created from findings (optional `finding_id` / `execution_id`) |
+| `get_advisory` | Details of one advisory (description capped) with `advisory_url` |
+| `create_security_advisory` | Create a local security-advisory draft from a finding (PRO; only when asked); does not contact GitHub |
+| `publish_security_advisory` | Publish an existing draft to GitHub by `finding_id` (needs GitHub PAT; only when asked) |
+| `get_advisory_status` | Live remote GitHub advisory status for an `advisory_id` |
+| `update_advisory_visibility` | Set advisory visibility (`PUBLIC` / `PRIVATE` / `UNLISTED`); only when asked |
 | `list_playbooks` | Search the catalog of ready-made `satori://` playbooks |
 | `get_playbook` | Details and YAML of a catalog playbook |
 | `list_repos` | Repositories Satori can target, with their last execution |
@@ -45,11 +50,15 @@ next:
 | `stop_ssh_session` | Stop a session and release its container (async; poll with `get_ssh_session` until `FINISHED`) |
 | `ssh_into_execution` | Short-lived (5 min) SSH credentials for a **RUNNING** execution; MCP cannot host a TTY — give them to the user (`satori-v2 shell <id>`) |
 
-All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `add_finding_comment`, `analyze_finding`, `analyze_execution`) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
+All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `add_finding_comment`, `analyze_finding`, `analyze_execution`, `create_security_advisory`, `publish_security_advisory`, `update_advisory_visibility`) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
 
 ### AI analysis notes
 
 `analyze_finding` and `analyze_execution` queue analysis on Satori using the **account's configured AI provider and API key** (set in the dashboard Settings); they incur provider cost. With `wait` (default true), the tool polls until each queued row is `COMPLETED` or `FAILED`, or until `wait_seconds` (max 600). Read an existing row with `get_finding_ai_analysis`. `suggested_status` is **advisory only** — the agent must not call `update_finding_status` unless you asked to triage. A `409` usually means no provider or API key is configured.
+
+### Security advisory notes
+
+`create_security_advisory` builds a **local draft** from a finding (title/description/severity derived server-side; completed AI analysis may enrich the text). It requires a PRO or ENTERPRISE plan and does **not** call GitHub. Creating a draft can promote a `PRIVATE` execution to `UNLISTED`. If a draft already exists for that finding, the existing row is returned. `publish_security_advisory` submits that draft to GitHub using the account's GitHub PAT from Settings (`finding_id`, not advisory id). `get_advisory_status` is a live remote lookup. There is no delete tool in MCP.
 
 ### `run_playbook` notes
 
