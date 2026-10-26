@@ -70,7 +70,7 @@ Provide exactly one of `playbook_path` (local `.yml` / `.yaml` file), `playbook_
 
 ### `recommend_playbook` notes
 
-Pass `directory` (default: the server's working directory). Supported stacks: Python, JS/TS, Go, Java, C#, Rust, Ruby, PHP, Swift, C/C++ (CMake) and Solidity (Foundry). Quality checks go in **`.satori-llm.yml`**; **`.satori.yml`** is reserved for CI/manual runs and should import the LLM file:
+Pass `directory` (default: the server's working directory). Supported stacks: Python, JS/TS, Go, Java, C#, Rust, Ruby, PHP, Swift, C/C++ (CMake), Solidity (Foundry) and Dart/Flutter. Quality checks go in **`.satori-llm.yml`**; **`.satori.yml`** is reserved for CI/manual runs and should import the LLM file:
 
 ```yaml
 import:
