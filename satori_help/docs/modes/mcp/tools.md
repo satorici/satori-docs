@@ -30,6 +30,9 @@ next:
 | `get_finding_timeline` | Status changes and comments for a finding |
 | `update_finding_status` | Triage a finding (OPEN, INVESTIGATING, TP, FIXED, FP, ACCEPTED), optionally with a comment |
 | `add_finding_comment` | Comment on a finding without changing its status |
+| `get_finding_ai_analysis` | Latest AI analysis for a finding (PENDING, COMPLETED or FAILED); 404 if none yet |
+| `analyze_finding` | Queue AI analysis for one finding (account AI key; only when asked); optional `wait` |
+| `analyze_execution` | Queue AI analysis for an execution's findings in one call (max 20); optional `finding_ids` / `wait` |
 | `list_advisories` | External issues and security advisories already created from findings |
 | `list_playbooks` | Search the catalog of ready-made `satori://` playbooks |
 | `get_playbook` | Details and YAML of a catalog playbook |
@@ -42,7 +45,11 @@ next:
 | `stop_ssh_session` | Stop a session and release its container (async; poll with `get_ssh_session` until `FINISHED`) |
 | `ssh_into_execution` | Short-lived (5 min) SSH credentials for a **RUNNING** execution; MCP cannot host a TTY — give them to the user (`satori-v2 shell <id>`) |
 
-All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `add_finding_comment`) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
+All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `add_finding_comment`, `analyze_finding`, `analyze_execution`) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
+
+### AI analysis notes
+
+`analyze_finding` and `analyze_execution` queue analysis on Satori using the **account's configured AI provider and API key** (set in the dashboard Settings); they incur provider cost. With `wait` (default true), the tool polls until each queued row is `COMPLETED` or `FAILED`, or until `wait_seconds` (max 600). Read an existing row with `get_finding_ai_analysis`. `suggested_status` is **advisory only** — the agent must not call `update_finding_status` unless you asked to triage. A `409` usually means no provider or API key is configured.
 
 ### `run_playbook` notes
 
