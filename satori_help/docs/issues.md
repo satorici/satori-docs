@@ -49,6 +49,8 @@ satori-v2 report 5678 issues
 | `--page N` | Page number (default 1) |
 | `-q, --quantity N` | Results per page (default 10, alias `-l/--limit`) |
 
+`report EXECUTION-ID issues` accepts the same flags except `--execution-id`.
+
 Each row shows the issue ID, which you then pass to `issue`.
 
 ### Issue statuses
@@ -112,6 +114,12 @@ To verify every finding after a run finishes, use `--verify` on `run` or `local`
 ```sh
 satori-v2 run PLAYBOOK --repo owner/repo --verify
 satori-v2 local PLAYBOOK --repo owner/repo --verify
+```
+
+Add `--min-severity LEVEL` (`Blocker`, `Critical`, `High`, `Medium`, `Low`, `Info`) to verify only the findings at or above that severity:
+
+```sh
+satori-v2 run PLAYBOOK --repo owner/repo --verify --min-severity High
 ```
 
 ## GitHub security advisories
