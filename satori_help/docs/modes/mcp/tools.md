@@ -24,6 +24,10 @@ next:
 | `list_jobs` | Jobs, newest first (`type`: RUN, SCAN or MONITOR), to recover a `job_id` |
 | `get_job` | A job and its 5 most recent executions |
 | `list_scans` | Scan jobs (same as `list_jobs` with `type=SCAN`) |
+| `stop_scan` | Cancel a scan job so it stops launching new executions (in-flight RUNNING ones keep going) |
+| `pause_scan` | Pause a `RUNNING` scan (no new executions until `resume_scan`) |
+| `resume_scan` | Resume a `PAUSED` scan |
+| `clean_scan` | Delete a scan's non-RUNNING reports; does not delete the scan job |
 | `list_monitors` | Monitor jobs with their schedule `expression` |
 | `list_findings` | Findings, filtered by `execution_id`, severity (0-5 or names), `status`, `source` (ASSERT or TOOL) |
 | `get_finding` | Details of one finding plus its recent timeline |
@@ -50,7 +54,7 @@ next:
 | `stop_ssh_session` | Stop a session and release its container (async; poll with `get_ssh_session` until `FINISHED`) |
 | `ssh_into_execution` | Short-lived (5 min) SSH credentials for a **RUNNING** execution; MCP cannot host a TTY — give them to the user (`satori-v2 shell <id>`) |
 
-All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `add_finding_comment`, `analyze_finding`, `analyze_execution`, `create_security_advisory`, `publish_security_advisory`, `update_advisory_visibility`) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
+All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `add_finding_comment`, `analyze_finding`, `analyze_execution`, `create_security_advisory`, `publish_security_advisory`, `update_advisory_visibility`, `stop_scan`, `pause_scan`, `resume_scan`, `clean_scan`) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
 
 ### AI analysis notes
 
