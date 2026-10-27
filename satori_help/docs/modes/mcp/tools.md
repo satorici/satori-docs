@@ -33,7 +33,10 @@ next:
 | `get_finding` | Details of one finding plus its recent timeline |
 | `get_finding_timeline` | Status changes and comments for a finding |
 | `update_finding_status` | Triage a finding (OPEN, INVESTIGATING, TP, FIXED, FP, ACCEPTED), optionally with a comment |
+| `update_finding` | Update status, severity (0–5 or null to clear) and/or assignee_id (null to clear); no comment |
+| `list_finding_events` | Event feed for an execution's findings (no comments; use `get_finding_timeline` for those) |
 | `add_finding_comment` | Comment on a finding without changing its status |
+| `edit_finding_comment` | Edit one of your own comments (author-only; no delete tool) |
 | `get_finding_ai_analysis` | Latest AI analysis for a finding (PENDING, COMPLETED or FAILED); 404 if none yet |
 | `analyze_finding` | Queue AI analysis for one finding (account AI key; only when asked); optional `wait` |
 | `analyze_execution` | Queue AI analysis for an execution's findings in one call (max 20); optional `finding_ids` / `wait` |
@@ -54,7 +57,7 @@ next:
 | `stop_ssh_session` | Stop a session and release its container (async; poll with `get_ssh_session` until `FINISHED`) |
 | `ssh_into_execution` | Short-lived (5 min) SSH credentials for a **RUNNING** execution; MCP cannot host a TTY — give them to the user (`satori-v2 shell <id>`) |
 
-All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `add_finding_comment`, `analyze_finding`, `analyze_execution`, `create_security_advisory`, `publish_security_advisory`, `update_advisory_visibility`, `stop_scan`, `pause_scan`, `resume_scan`, `clean_scan`) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
+All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `update_finding`, `add_finding_comment`, `edit_finding_comment`, `analyze_finding`, `analyze_execution`, `create_security_advisory`, `publish_security_advisory`, `update_advisory_visibility`, `stop_scan`, `pause_scan`, `resume_scan`, `clean_scan`) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
 
 ### AI analysis notes
 
