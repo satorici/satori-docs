@@ -21,14 +21,18 @@ next:
 | `list_executions` | Past executions (reports), newest first: filter by `job_id`, `status`, `report_status`, `job_type`, `from_`/`to`, `q`, `visibility`, `severity`, `playbook`, `tags`; paginated, max 25 |
 | `list_reports` | Alias of `list_executions` (in Satori, reports = executions) |
 | `stop_execution` | Cancel a running execution (no-op if it is not running) |
+| `delete_execution` | Permanently delete one execution/report (not while `RUNNING`) |
+| `delete_executions` | Bulk-delete executions by id (max 100; `RUNNING` skipped) |
 | `list_jobs` | Jobs, newest first (`type`: RUN, SCAN or MONITOR), to recover a `job_id` |
 | `get_job` | A job and its 5 most recent executions |
+| `delete_job` | Permanently delete a job (`CANCELED` or `FINISHED` only) |
 | `list_scans` | Scan jobs (same as `list_jobs` with `type=SCAN`) |
 | `stop_scan` | Cancel a scan job so it stops launching new executions (in-flight RUNNING ones keep going) |
 | `pause_scan` | Pause a `RUNNING` scan (no new executions until `resume_scan`) |
 | `resume_scan` | Resume a `PAUSED` scan |
 | `clean_scan` | Delete a scan's non-RUNNING reports; does not delete the scan job |
 | `list_monitors` | Monitor jobs with their schedule `expression` |
+| `clean_monitor` | Delete a monitor's non-RUNNING reports; does not delete the monitor job |
 | `list_findings` | Findings, filtered by `execution_id`, severity (0-5 or names), `status`, `source` (ASSERT or TOOL) |
 | `get_finding` | Details of one finding plus its recent timeline |
 | `get_finding_timeline` | Status changes and comments for a finding |
@@ -36,7 +40,8 @@ next:
 | `update_finding` | Update status, severity (0–5 or null to clear) and/or assignee_id (null to clear); no comment |
 | `list_finding_events` | Event feed for an execution's findings (no comments; use `get_finding_timeline` for those) |
 | `add_finding_comment` | Comment on a finding without changing its status |
-| `edit_finding_comment` | Edit one of your own comments (author-only; no delete tool) |
+| `edit_finding_comment` | Edit one of your own comments (author-only) |
+| `delete_finding_comment` | Soft-delete one of your own comments (author-only) |
 | `get_finding_ai_analysis` | Latest AI analysis for a finding (PENDING, COMPLETED or FAILED); 404 if none yet |
 | `analyze_finding` | Queue AI analysis for one finding (account AI key; only when asked); optional `wait` |
 | `analyze_execution` | Queue AI analysis for an execution's findings in one call (max 20); optional `finding_ids` / `wait` |
@@ -46,6 +51,7 @@ next:
 | `publish_security_advisory` | Publish an existing draft to GitHub by `finding_id` (needs GitHub PAT; only when asked) |
 | `get_advisory_status` | Live remote GitHub advisory status for an `advisory_id` |
 | `update_advisory_visibility` | Set advisory visibility (`PUBLIC` / `PRIVATE` / `UNLISTED`); only when asked |
+| `delete_security_advisory` | Delete the security advisory for a finding (`finding_id`); only when asked |
 | `list_playbooks` | Search the catalog of ready-made `satori://` playbooks |
 | `get_playbook` | Details and YAML of a catalog playbook |
 | `list_repos` | Repositories Satori can target, with their last execution |
@@ -57,7 +63,7 @@ next:
 | `stop_ssh_session` | Stop a session and release its container (async; poll with `get_ssh_session` until `FINISHED`) |
 | `ssh_into_execution` | Short-lived (5 min) SSH credentials for a **RUNNING** execution; MCP cannot host a TTY — give them to the user (`satori-v2 shell <id>`) |
 
-All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `update_finding`, `add_finding_comment`, `edit_finding_comment`, `analyze_finding`, `analyze_execution`, `create_security_advisory`, `publish_security_advisory`, `update_advisory_visibility`, `stop_scan`, `pause_scan`, `resume_scan`, `clean_scan`) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
+All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `update_finding`, `add_finding_comment`, `edit_finding_comment`, `delete_finding_comment`, `analyze_finding`, `analyze_execution`, `create_security_advisory`, `publish_security_advisory`, `update_advisory_visibility`, `delete_security_advisory`, `stop_scan`, `pause_scan`, `resume_scan`, `clean_scan`, `clean_monitor`, `delete_job`, `delete_execution`, `delete_executions`, `delete_parameter`, `delete_secret`) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
 
 ### AI analysis notes
 
@@ -65,7 +71,7 @@ All responses are size-capped. Prefer `get_execution_output` with a `test` filte
 
 ### Security advisory notes
 
-`create_security_advisory` builds a **local draft** from a finding (title/description/severity derived server-side; completed AI analysis may enrich the text). It requires a PRO or ENTERPRISE plan and does **not** call GitHub. Creating a draft can promote a `PRIVATE` execution to `UNLISTED`. If a draft already exists for that finding, the existing row is returned. `publish_security_advisory` submits that draft to GitHub using the account's GitHub PAT from Settings (`finding_id`, not advisory id). `get_advisory_status` is a live remote lookup. There is no delete tool in MCP.
+`create_security_advisory` builds a **local draft** from a finding (title/description/severity derived server-side; completed AI analysis may enrich the text). It requires a PRO or ENTERPRISE plan and does **not** call GitHub. Creating a draft can promote a `PRIVATE` execution to `UNLISTED`. If a draft already exists for that finding, the existing row is returned. `publish_security_advisory` submits that draft to GitHub using the account's GitHub PAT from Settings (`finding_id`, not advisory id). `get_advisory_status` is a live remote lookup. `delete_security_advisory` removes the local row by `finding_id` and best-effort closes the GitHub advisory (may return a `warning`).
 
 ### `run_playbook` notes
 
