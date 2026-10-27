@@ -91,6 +91,8 @@ Since normally repositories have a lot of commits, you may want to check what th
 satori-v2 scan ScanID status
 ```
 
+Add `--json` to print the raw status response.
+
 ![Scan Repo](img/scan_2.png)
 
 It shows the current status, the amount of commits found, which ones were scanned, which ones are being scanned and which ones are scheduled to be scanned. Since no scan is being run at the time of executing this command, there is no progress but in other cases it would be a percentage.
