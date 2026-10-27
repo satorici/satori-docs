@@ -22,7 +22,8 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | Option / Variable | Description |
 | --- | --- |
 | `--json` | Print the raw JSON response (available on the root and most commands) |
-| `--format {json\|md}` | Set the output format on the root command, `run`, `report ID output`, `output` and `execution output` |
+| `--format {json\|md}` | Set the output format on the root command, `report ID output`, `output` and `execution output` |
+| `--debug` | Enable debug logging (root command only: `satori-v2 --debug COMMAND ...`) |
 | `--page N` | Page number on list commands (default: 1) |
 | `-q N, --quantity N` (aliases `-l`, `--limit`) | Number of results per page on list commands (default: 10) |
 | `--public` | List public items instead of yours on the root, `jobs`, `reports`, `monitors` and `scans` |
@@ -40,7 +41,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `satori-v2 run playbook.yml` | Upload the playbook and run it |
 | `satori-v2 run ./ --playbook="satori://..."` | Upload the current dir and run the specified playbook |
 | `satori-v2 run semgrep` | Alias: run `satori://code/semgrep.yml` on the current dir |
-| `satori-v2 run pyspector` | Alias: run `satori://code/python/pyspector.yml` on the current dir |
+| `satori-v2 run pyspector` | Alias: run `satori://code/python/pyspector_v2.yml` on the current dir |
 | `satori-v2 run PLAYBOOK --repo GitHubUser/Repo` | Run the playbook on the latest commit of a GitHub repository (creates a 1-commit scan) |
 
 ## Run locally
@@ -60,6 +61,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `--report` | Display test assertions and results |
 | `--issues` | After the run, list issues for the execution |
 | `--verify` | After the run, verify every finding with Claude Code (comment + TP/FP; requires `--repo`) |
+| `--min-severity LEVEL` | With `--verify`, only verify findings at or above this severity (`Blocker`, `Critical`, `High`, `Medium`, `Low`, `Info`) |
 | `--repo GitHubUser/Repo` | Clone the GitHub repository and run the playbook against that checkout |
 | `-o, --output` | Display command output |
 | `-p, --playbook` | Playbook to execute instead of the source's `.satori.yml` |
@@ -85,6 +87,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `--report` | Show the report |
 | `--issues` | After the run, list issues for the execution (only when `--count` is 1) |
 | `--verify` | After the run, verify every finding with Claude Code (comment + TP/FP; requires `--repo` / scan) |
+| `--min-severity LEVEL` | With `--verify`, only verify findings at or above this severity (`Blocker`, `Critical`, `High`, `Medium`, `Low`, `Info`) |
 | `-o, --output` | Show the output |
 | `--live-output` | Stream the output while the execution is running |
 | `--stdout` | Show only the raw stdout of the execution |
@@ -100,6 +103,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `--visibility` | Set the visibility dynamically (public/private/unlisted) |
 | `--timeout` | Change the timeout dynamically (in seconds) |
 | `--expire` | Expiration for the run |
+| `--notify SPEC` | Notification rule for this run (repeatable, replaces playbook `settings.notify`). See [Notifications](/notifications.md) |
 | `--cpu` | Change the cpu dynamically (run only) |
 | `--memory` | Change the memory dynamically (run only) |
 | `--image` | Specify a custom Docker image (run only) |
@@ -199,7 +203,7 @@ Every job (run, scan, monitor, CI or local) produces one or more executions. `re
 | `satori-v2 reports --public` | List public reports |
 | `satori-v2 reports --page N -q N` | Paginate the report list |
 | `satori-v2 reports search [FILTERS]` | Search reports using the filters below |
-| `satori-v2 reports download [FILTERS] -n PATH` | Download the outputs of the FINISHED reports that match the filters |
+| `satori-v2 reports download [FILTERS] -n, --path PATH` | Download the outputs of the FINISHED reports that match the filters to PATH (default: current dir) |
 | `satori-v2 reports stop [FILTERS]` | Stop the RUNNING reports that match the filters |
 | `satori-v2 reports delete [FILTERS]` | Delete the FINISHED and CANCELED reports that match the filters |
 | `satori-v2 report ID` | Show the report ID |
@@ -210,7 +214,7 @@ Every job (run, scan, monitor, CI or local) produces one or more executions. `re
 | `satori-v2 report ID output --test TEST_NAME` | Filter specific test output (repeatable) |
 | `satori-v2 report ID files` | Download the files created (if Files was set to True in settings) |
 | `satori-v2 report ID visibility {public, private, unlisted}` | Toggles the report's visibility |
-| `satori-v2 report ID issues` | List the issues of the report ID |
+| `satori-v2 report ID issues` | List the issues of the report ID (accepts the `issues` filters `--status`, `--source`, `--severity`, `--order`, `--page`, `-q`, `--json`) |
 | `satori-v2 report ID stop` | Stop the report ID while it is running |
 | `satori-v2 report ID delete` | Delete the report ID |
 | `satori-v2 report ID --unredacted` | Show unredacted parameters and secrets *(on development)* |
@@ -272,8 +276,8 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 issues --page N -q N --json` | Pagination and JSON output |
 | `satori-v2 report ID issues` | List the issues of the report ID |
 | `satori-v2 issue ISSUE-ID` | Show the issue ISSUE-ID (includes History timeline) |
-| `satori-v2 issue ISSUE-ID status {OPEN\|INVESTIGATING\|TP\|FIXED\|FP\|ACCEPTED}` | Set the issue status |
-| `satori-v2 issue ISSUE-ID comment BODY` | Add a comment to the issue |
+| `satori-v2 issue ISSUE-ID status {OPEN\|INVESTIGATING\|TP\|FIXED\|FP\|ACCEPTED}` | Set the issue status (`--json` prints the updated issue) |
+| `satori-v2 issue ISSUE-ID comment BODY` | Add a comment to the issue (`--json` prints the created comment) |
 | `satori-v2 issue ISSUE-ID verify` | Verify the issue with Claude Code (comment + TP/FP) |
 | `satori-v2 run PLAYBOOK --repo GitHubUser/Repo --verify` | After the run, verify every finding the same way |
 | `satori-v2 local PLAYBOOK --repo GitHubUser/Repo --verify` | After a local run against a cloned repo, verify every finding |
@@ -376,7 +380,7 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 | `satori-v2 scan GitHubUser/Repo check-commits` | Get the repository commits before scanning *(on development)* |
 | `satori-v2 scan GitHubUser/Repo check-forks` | Get the repository forks before scanning *(on development)* |
 | `satori-v2 scan ID` | Show scan information |
-| `satori-v2 scan ID status` | Show the status of a scan |
+| `satori-v2 scan ID status` | Show the status of a scan (`--json` for the raw response) |
 | `satori-v2 scan ID stop` | Stop the scan |
 | `satori-v2 scan ID clean` | Delete the reports associated to the scan |
 | `satori-v2 scan ID delete` | Delete the scan |
@@ -412,6 +416,20 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 | `--exclude PATH or ENTRY` | Exclusion file path or direct IP/CIDR/range/domain/URL to exclude |
 | `--seed N` | Seed for deterministic pseudorandom distribution (default: 1) |
 | `--results PATH` | Output file path (writes to stdout if omitted) |
+
+## Saved parameters and secrets
+
+Saved values are applied to every new job (`run`, `scan`, monitors). Precedence: yours < the repository's < the job's. See [Saved parameters and secrets](/notifications.md#saved-parameters-and-secrets).
+
+| Command | Description |
+| --- | --- |
+| `satori-v2 parameters list` | List your saved parameters |
+| `satori-v2 parameters set NAME VALUE...` | Save a parameter (several values, like repeating `-d NAME=VALUE`) |
+| `satori-v2 parameters unset NAME` | Delete a saved parameter |
+| `satori-v2 secrets list` | List your saved secrets (names only, values are never shown) |
+| `satori-v2 secrets set NAME` | Save a secret (prompts for the value without echoing it, or reads it from stdin) |
+| `satori-v2 secrets unset NAME` | Delete a saved secret |
+| `--repo owner/repo` | On any of the above: the values of one repository instead of yours |
 
 ## Settings
 
