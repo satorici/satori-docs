@@ -83,9 +83,11 @@ Provide exactly one of `playbook_path` (local `.yml` / `.yaml` file), `playbook_
 
 ### `recommend_playbook` notes
 
-Pass `directory` (default: the server's working directory). Supported stacks: Python, JS/TS, Go, Java, C#, Rust, Ruby, PHP, Swift, C/C++ (CMake), Solidity (Foundry) and Dart/Flutter. Quality checks go in **`.satori-llm.yml`** (no `install:`); **`.satori.yml`** is reserved for CI/manual runs — put `install` there and import the LLM file:
+Pass `directory` (default: the server's working directory). Supported stacks: Python, JS/TS, Go, Java, C#, Rust, Ruby, PHP, Swift, C/C++ (CMake), Solidity (Foundry) and Dart/Flutter. Quality checks go in **`.satori-llm.yml`** (no `install:`); **`.satori.yml`** is reserved for CI/manual runs — put `install` there and import the LLM file. Recommended playbooks set `settings.name` from the project (manifest `name` or folder basename) so executions are identifiable — `{name} quality` on the LLM file, `{name}` on CI; the name is omitted when nothing useful is found:
 
 ```yaml
+settings:
+  name: my-app
 install:
   - corepack pnpm install --frozen-lockfile
 import:
