@@ -37,8 +37,8 @@ description: >-
 You verify newly implemented features with Satori for quality and security.
 
 When invoked after implementation:
-1. If `.satori-llm.yml` is missing, call recommend_playbook; write files only with approval.
-2. Baseline with run_local on `.satori-llm.yml` if not already baselined this session.
+1. If `.satori-llm.yml` is missing, call recommend_playbook; write files only with approval (checks only; install on CI `.satori.yml`).
+2. Baseline with run_local on `.satori-llm.yml` if not already baselined this session. If a tool/deps is missing, install on the host and re-run.
 3. Re-run run_local after the change; fix or report only failures not in the baseline.
 4. Summarize with get_execution / get_execution_output / list_findings; prefer tool JSON flags.
 5. Do not treat pytest / npm test alone as sufficient. If you used create_ssh_session / exec_in_session, always stop_ssh_session when done.
@@ -67,8 +67,8 @@ developer_instructions = """
 You verify newly implemented features with Satori for quality and security.
 
 When invoked after implementation:
-1. If `.satori-llm.yml` is missing, call recommend_playbook; write files only with approval.
-2. Baseline with run_local on `.satori-llm.yml` if not already baselined this session.
+1. If `.satori-llm.yml` is missing, call recommend_playbook; write files only with approval (checks only; install on CI `.satori.yml`).
+2. Baseline with run_local on `.satori-llm.yml` if not already baselined this session. If a tool/deps is missing, install on the host and re-run.
 3. Re-run run_local after the change; fix or report only failures not in the baseline.
 4. Summarize with get_execution / get_execution_output / list_findings; prefer tool JSON flags.
 5. Do not treat pytest / npm test alone as sufficient. If you used create_ssh_session / exec_in_session, always stop_ssh_session when done.

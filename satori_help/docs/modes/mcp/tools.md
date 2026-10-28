@@ -55,7 +55,7 @@ next:
 | `list_playbooks` | Search the catalog of ready-made `satori://` playbooks |
 | `get_playbook` | Details and YAML of a catalog playbook |
 | `list_repos` | Repositories Satori can target, with their last execution |
-| `recommend_playbook` | Inspect a repo and propose a lint/format/types/unit/security playbook for `.satori-llm.yml` (CI `.satori.yml` should import it) |
+| `recommend_playbook` | Inspect a repo and propose checks for `.satori-llm.yml` (no install); CI `.satori.yml` gets install + import |
 | `create_ssh_session` | Start a remote sandbox container (optional cpu/memory/image/regions/`timeout`/`save_files`); waits until READY with a host by default |
 | `get_ssh_session` | Status (`PREPARING`, `READY` or `FINISHED`), region, host and settings of an SSH session |
 | `list_ssh_sessions` | SSH sessions, newest first (paginated) |
@@ -83,20 +83,22 @@ Provide exactly one of `playbook_path` (local `.yml` / `.yaml` file), `playbook_
 
 ### `recommend_playbook` notes
 
-Pass `directory` (default: the server's working directory). Supported stacks: Python, JS/TS, Go, Java, C#, Rust, Ruby, PHP, Swift, C/C++ (CMake), Solidity (Foundry) and Dart/Flutter. Quality checks go in **`.satori-llm.yml`**; **`.satori.yml`** is reserved for CI/manual runs and should import the LLM file:
+Pass `directory` (default: the server's working directory). Supported stacks: Python, JS/TS, Go, Java, C#, Rust, Ruby, PHP, Swift, C/C++ (CMake), Solidity (Foundry) and Dart/Flutter. Quality checks go in **`.satori-llm.yml`** (no `install:`); **`.satori.yml`** is reserved for CI/manual runs — put `install` there and import the LLM file:
 
 ```yaml
+install:
+  - corepack pnpm install --frozen-lockfile
 import:
   - file://.satori-llm.yml
 ```
 
-A new repo gets `playbook_yaml` (write to `.satori-llm.yml`) plus `ci_playbook_yaml` (thin importer for `.satori.yml`) and a `checks` list explaining each check. If `.satori-llm.yml` already exists, you get `changes` (missing or different checks with `suggested_yaml`) to merge by hand. If only a hand-written CI `.satori.yml` exists, you still get a full LLM playbook plus `needs_ci_import` / `ci_import_yaml` — add the import without overwriting CI checks. A legacy `.satori.yml` that already has `# satori:recommended` is treated as migrate-from-CI: merge into `.satori-llm.yml` and leave CI as the importer.
+A new repo gets `playbook_yaml` (write to `.satori-llm.yml`) plus `ci_playbook_yaml` (install + importer for `.satori.yml`) and a `checks` list explaining each check. If `.satori-llm.yml` already exists, you get `changes` (missing or different checks with `suggested_yaml`; `move_install_to_ci` if the LLM file still has a top-level `install`) to merge by hand. If only a hand-written CI `.satori.yml` exists, you still get a full LLM playbook plus `needs_ci_import` / `ci_import_yaml` (import only) and optionally `ci_install_missing` — add the import without overwriting CI checks, and merge install carefully. A legacy `.satori.yml` that already has `# satori:recommended` is treated as migrate-from-CI: merge into `.satori-llm.yml` (checks only) and leave CI as the importer with install.
 
 Checks for tools the repo already configures are blocking (`assertReturnCode: 0`); the rest are informational.
 
 Only what the repo cannot settle comes back in `questions` (for example formatter, dead-code detection). Ask the user, then call again with `prefs`, e.g. `{"formatter": "black", "dead_code": false}`. Answers are stored in the first line of `.satori-llm.yml`, `# satori:recommended v2 python/uv prefs: formatter=black`, so later updates only ask about checks added since.
 
-Suggested loop: write `.satori-llm.yml` (and the CI importer if needed) with the user's approval, `run_local` with `playbook_path=.satori-llm.yml` once as a baseline before editing code, and after each change fix only the failures that were not in the baseline. Prefer `.satori-llm.yml` over a heavy CI `.satori.yml` for that baseline.
+Suggested loop: write `.satori-llm.yml` (and the CI file if needed) with the user's approval, `run_local` with `playbook_path=.satori-llm.yml` once as a baseline before editing code. If a check fails because a tool or deps are missing, install on the host and re-run — do not add `install:` to `.satori-llm.yml`. After each change fix only the failures that were not in the baseline. Prefer `.satori-llm.yml` over a heavy CI `.satori.yml` for that baseline.
 
 The flow looks like this — an AI that only writes unit tests can miss type and security gaps outside the tested area; `recommend_playbook` builds a multi-lane playbook and closes the loop:
 
