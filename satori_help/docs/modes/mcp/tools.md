@@ -18,6 +18,7 @@ next:
 | `get_execution` | Status and assertion summary for an execution (no logs) |
 | `get_execution_output` | Capped logs: without `test`, an index of tests; with `test`, the last lines of a stream |
 | `get_execution_playbook` | The playbook YAML an execution ran (capped) |
+| `update_execution_visibility` | Change an execution/report's visibility (`PUBLIC`, `PRIVATE` or `UNLISTED`); only when asked |
 | `list_executions` | Past executions (reports), newest first: filter by `job_id`, `status`, `report_status`, `job_type`, `from_`/`to`, `q`, `visibility`, `severity`, `playbook`, `tags`; paginated, max 25 |
 | `list_reports` | Alias of `list_executions` (in Satori, reports = executions) |
 | `stop_execution` | Cancel a running execution (no-op if it is not running) |
@@ -25,6 +26,8 @@ next:
 | `delete_executions` | Bulk-delete executions by id (max 100; `RUNNING` skipped) |
 | `list_jobs` | Jobs, newest first (`type`: RUN, SCAN or MONITOR), to recover a `job_id` |
 | `get_job` | A job and its 5 most recent executions |
+| `stop_run` | Cancel a RUN job and its in-flight executions (soft-fails if already `CANCELED` or `FINISHED`); only when asked |
+| `stop_all_runs` | Cancel every active RUN job among the newest 100 (scans and monitors untouched); only when asked |
 | `delete_job` | Permanently delete a job (`CANCELED` or `FINISHED` only) |
 | `list_scans` | Scan jobs (same as `list_jobs` with `type=SCAN`) |
 | `stop_scan` | Cancel a scan job so it stops launching new executions (in-flight RUNNING ones keep going) |
@@ -32,6 +35,7 @@ next:
 | `resume_scan` | Resume a `PAUSED` scan |
 | `clean_scan` | Delete a scan's non-RUNNING reports; does not delete the scan job |
 | `list_monitors` | Monitor jobs with their schedule `expression` |
+| `create_monitor` | Schedule a playbook (`playbook_path`, `playbook_yaml` or `playbook_uri`) with `expression` `rate(...)` or `cron(...)` (UTC), else the playbook's `settings.monitor`/`rate`/`cron`; only when asked |
 | `clean_monitor` | Delete a monitor's non-RUNNING reports; does not delete the monitor job |
 | `list_findings` | Findings, filtered by `execution_id`, severity (0-5 or names), `status`, `source` (ASSERT or TOOL) |
 | `get_finding` | Details of one finding plus its recent timeline |
@@ -47,6 +51,7 @@ next:
 | `analyze_execution` | Queue AI analysis for an execution's findings in one call (max 20); optional `finding_ids` / `wait` |
 | `list_advisories` | External issues and security advisories already created from findings (optional `finding_id` / `execution_id`) |
 | `get_advisory` | Details of one advisory (description capped) with `advisory_url` |
+| `update_advisory` | Edit a draft advisory's title and/or description (Markdown) before publishing; drafts only, only when asked |
 | `create_security_advisory` | Create a local security-advisory draft from a finding (PRO; only when asked); does not contact GitHub |
 | `publish_security_advisory` | Publish an existing draft to GitHub by `finding_id` (needs GitHub PAT; only when asked) |
 | `get_advisory_status` | Live remote GitHub advisory status for an `advisory_id` |
@@ -55,6 +60,22 @@ next:
 | `list_playbooks` | Search the catalog of ready-made `satori://` playbooks |
 | `get_playbook` | Details and YAML of a catalog playbook |
 | `list_repos` | Repositories Satori can target, with their last execution |
+| `list_saved_inputs` | Saved parameters (with values) and secrets (names only); `repository` for one repository's |
+| `save_parameter` | Save a parameter added to every new job (`repository` scopes it); only when asked |
+| `save_secret` | Save an encrypted secret added to every new job, read as `${{NAME}}` (not sent to `run_local`); only when asked |
+| `delete_parameter` | Delete a saved parameter (`repository` selects the scope); only when asked |
+| `delete_secret` | Delete a saved secret (`repository` selects the scope); only when asked |
+| `list_organizations` | Organizations you belong to (id, name, plan, your role) and the active one |
+| `get_organization` | Name, plan and your role in an organization |
+| `use_organization` | Make every tool act on an organization (saved to the CLI config, like `satori-v2 organization ID use`) |
+| `use_personal_account` | Act on your own account again instead of an organization |
+| `create_organization` | Create an organization you own (your account must be ENTERPRISE); does not switch to it; only when asked |
+| `rename_organization` | Rename an organization (OWNER or ADMIN); only when asked |
+| `delete_organization` | Permanently delete an organization and its jobs, reports and findings (OWNER; `confirm_name` must match); only when asked |
+| `list_organization_members` | An organization's members (user_id, name, email, role) |
+| `add_organization_member` | Add a user by email as OWNER, ADMIN or MEMBER (OWNER or ADMIN; the user must have logged in before); only when asked |
+| `update_organization_member_role` | Change a member's role (only an OWNER grants or revokes OWNER); only when asked |
+| `remove_organization_member` | Remove a member, or leave with your own `user_id` (keeps at least one OWNER); only when asked |
 | `recommend_playbook` | Inspect a repo and propose checks for `.satori-llm.yml` (no install); CI `.satori.yml` gets install + import |
 | `create_ssh_session` | Start a remote sandbox container (optional cpu/memory/image/regions/`timeout`/`save_files`); waits until READY with a host by default |
 | `get_ssh_session` | Status (`PREPARING`, `READY` or `FINISHED`), region, host and settings of an SSH session |
@@ -63,7 +84,7 @@ next:
 | `stop_ssh_session` | Stop a session and release its container (async; poll with `get_ssh_session` until `FINISHED`) |
 | `ssh_into_execution` | Short-lived (5 min) SSH credentials for a **RUNNING** execution; MCP cannot host a TTY — give them to the user (`satori-v2 shell <id>`) |
 
-All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `update_finding`, `add_finding_comment`, `edit_finding_comment`, `delete_finding_comment`, `analyze_finding`, `analyze_execution`, `create_security_advisory`, `publish_security_advisory`, `update_advisory_visibility`, `delete_security_advisory`, `stop_scan`, `pause_scan`, `resume_scan`, `clean_scan`, `clean_monitor`, `delete_job`, `delete_execution`, `delete_executions`, `delete_parameter`, `delete_secret`) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
+All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `update_finding`, `add_finding_comment`, `edit_finding_comment`, `delete_finding_comment`, `analyze_finding`, `analyze_execution`, `create_security_advisory`, `publish_security_advisory`, `update_advisory_visibility`, `delete_security_advisory`, `stop_scan`, `pause_scan`, `resume_scan`, `clean_scan`, `clean_monitor`, `delete_job`, `delete_execution`, `delete_executions`, `update_execution_visibility`, `stop_run`, `stop_all_runs`, `create_monitor`, `update_advisory`, `save_parameter`, `save_secret`, `delete_parameter`, `delete_secret`, and the organization tools that create, rename, delete or change members) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
 
 ### AI analysis notes
 
