@@ -12,6 +12,10 @@ next:
 npx -y github:satorici/satori-mcp
 ```
 
+Your agent reports "tests pass"; Satori shows you which tests it ran — every command, assertion and output — live in the web report:
+
+![An AI agent says tests pass; the Satori report shows every test it ran](/mcp_visibility_loop.svg)
+
 The server shares credentials with the CLI: it uses the token saved by `satori-v2 config token` (`~/.satori_credentials.yml`), or `SATORI_TOKEN` / `SATORI_PROFILE` from its environment (`SATORI_TOKEN` overrides the credentials file). Configure a token first — see [Installation](/getting-started/install.md) — or pass `SATORI_TOKEN` in the agent config (see [below](#ci-or-no-credentials-file)).
 
 ## Configure your agent

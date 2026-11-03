@@ -1,0 +1,681 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-labelledby="title desc">
+<title id="title">Why Satori: see every test your AI agent ran</title>
+<desc id="desc">A 14-second loop in two panes. Left, an AI agent terminal: the user asks "add rate limiting to /login and test it"; the agent calls satori run_local with .satori-llm.yml, shows a spinner, then only "8 passed, 0 failed" and "Done. Rate limiting is on /login and all 8 tests pass." A callout asks: Which tests ran? What commands? What did they actually print? Right, the Satori web report #4821 (type Local, repository acme/api, playbook .satori-llm.yml) fills in live as each of the 8 tests lands: lint, format, types, unit tests, two rate-limit tests, semgrep and pip-audit, each with duration and Exit 0. The status turns to Finished and "All 8 tests passed". A cursor opens the test ratelimit &gt; login_429, revealing its command (six curl POSTs to /login), its assertions (assertStdoutContains 429 Pass, assertReturnCode 0 Pass) and its stdout "200 200 200 200 200 429". Caption: and you see every command, assertion and output it ran.</desc>
+<style>
+svg {
+  --bg:#151f2c; --panel:#182433; --term:#111a26; --chip:#1d2b3d; --border:#2a3a50;
+  --text:#e3e8ef; --muted:#8fa0b5; --blue:#06adee; --green:#a6ce39; --red:#f66f81;
+  --w-bg:#edf1ee; --w-card:#fcfefd; --w-fg:#14202d; --w-muted:#636d77; --w-border:#e0e4e1;
+  --navy:#183a5b; --lime:#a2cd42; --w-accent:#e5f0d4; --success:#3f842e;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+text { font-family: var(--sans); white-space: pre; }
+.mono, .mono text { font-family: var(--mono); }
+.t { fill: var(--text); } .m { fill: var(--muted); } .g { fill: var(--green); } .b { fill: var(--blue); }
+.w-fg { fill: var(--w-fg); } .w-muted { fill: var(--w-muted); }
+.wcard { fill: var(--w-card); stroke: var(--w-border); }
+.lbl { fill: var(--w-muted); font-size: 10.5px; letter-spacing: .06em; }
+.plbl { fill: var(--muted); font-size: 12px; letter-spacing: .14em; }
+.stat { font-size: 20px; }
+.tick { fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.clock { fill: none; stroke: var(--w-muted); stroke-width: 1.2; stroke-linecap: round; }
+.term-bg { fill: var(--term); }
+#bar { transform-box: fill-box; transform-origin: left center; }
+#cursor-press { transform-box: fill-box; transform-origin: 0 0; }
+#ripple { transform-box: fill-box; transform-origin: center; }
+/* start state */
+#l2, #l3, #l4a, #l4b, #reply, #callout, #dim, #link, #report, #badge-done, #banner-done,
+#p1, #p2, #p3, #p4, #p5, #p6, #p7, #p8, #cap2, #hl5, #panel, #ring, #cursor-pos, #ripple,
+#r1, #r2, #r3, #r4, #r5, #r6, #r7, #r8 { opacity: 0; }
+/* sub-loops: spinner + MCP link flow (0.4s divides the 14.4s master loop) */
+.spin { opacity: 0; animation: spin .4s steps(1, end) infinite; }
+.spin:nth-child(2) { animation-delay: -.3s; } .spin:nth-child(3) { animation-delay: -.2s; } .spin:nth-child(4) { animation-delay: -.1s; }
+@keyframes spin { 0% { opacity: 1; } 25% { opacity: 0; } 100% { opacity: 0; } }
+#flow { animation: flow .4s linear infinite; }
+@keyframes flow { from { stroke-dashoffset: 14; } to { stroke-dashoffset: 0; } }
+@keyframes fade {
+  0% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  2.431% { opacity: 0; }
+  93.75% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,1,1); }
+  96.528% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes typer {
+  0% { transform: translateX(0px); }
+  2.431% { transform: translateX(0px); animation-timing-function: steps(39, end); }
+  13.264% { transform: translateX(375.65px); }
+  97.222% { transform: translateX(375.65px); }
+  97.292% { transform: translateX(0px); }
+  100% { transform: translateX(0px); }
+}
+@keyframes caret {
+  0% { opacity: 1; }
+  15.278% { opacity: 1; }
+  15.347% { opacity: 0; }
+  97.222% { opacity: 0; }
+  97.292% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes l2 {
+  0% { opacity: 0; }
+  15.278% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  16.319% { opacity: 1; }
+  97.222% { opacity: 1; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes l3 {
+  0% { opacity: 0; }
+  18.056% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  19.097% { opacity: 1; }
+  97.222% { opacity: 1; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes l4a {
+  0% { opacity: 0; }
+  19.097% { opacity: 0; }
+  19.167% { opacity: 1; }
+  46.528% { opacity: 1; }
+  46.597% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes l4b {
+  0% { opacity: 0; }
+  46.528% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  46.597% { opacity: 1; }
+  97.222% { opacity: 1; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes reply {
+  0% { opacity: 0; }
+  49.306% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  50.347% { opacity: 1; }
+  97.222% { opacity: 1; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes callout {
+  0% { opacity: 0; transform: translateY(8px); }
+  52.778% { opacity: 0; transform: translateY(8px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  54.861% { opacity: 1; transform: translateY(0px); }
+  97.222% { opacity: 1; transform: translateY(0px); }
+  97.292% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+@keyframes dim {
+  0% { opacity: 0; }
+  59.722% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  61.806% { opacity: 0.6; }
+  97.222% { opacity: 0.6; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes link {
+  0% { opacity: 0; }
+  18.056% { opacity: 0; }
+  19.444% { opacity: 1; }
+  46.528% { opacity: 1; }
+  48.611% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes web-empty {
+  0% { opacity: 1; }
+  18.75% { opacity: 1; }
+  20.139% { opacity: 0; }
+  97.222% { opacity: 0; }
+  97.292% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes report {
+  0% { opacity: 0; }
+  19.097% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  21.181% { opacity: 1; }
+  97.222% { opacity: 1; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes badge-run {
+  0% { opacity: 1; }
+  46.528% { opacity: 1; }
+  46.597% { opacity: 0; }
+  97.222% { opacity: 0; }
+  97.292% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes badge-done {
+  0% { opacity: 0; }
+  46.528% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  46.597% { opacity: 1; }
+  97.222% { opacity: 1; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes banner-run {
+  0% { opacity: 1; }
+  46.528% { opacity: 1; }
+  46.597% { opacity: 0; }
+  97.222% { opacity: 0; }
+  97.292% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes banner-done {
+  0% { opacity: 0; }
+  46.528% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  48.264% { opacity: 1; }
+  97.222% { opacity: 1; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes r1 {
+  0% { opacity: 0; transform: translateY(-6px); }
+  22.917% { opacity: 0; transform: translateY(-6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.306% { opacity: 1; transform: translateY(0px); }
+  97.222% { opacity: 1; transform: translateY(0px); }
+  97.292% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes r2 {
+  0% { opacity: 0; transform: translateY(-6px); }
+  25.833% { opacity: 0; transform: translateY(-6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  27.222% { opacity: 1; transform: translateY(0px); }
+  97.222% { opacity: 1; transform: translateY(0px); }
+  97.292% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes r3 {
+  0% { opacity: 0; transform: translateY(-6px); }
+  28.75% { opacity: 0; transform: translateY(-6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  30.139% { opacity: 1; transform: translateY(0px); }
+  97.222% { opacity: 1; transform: translateY(0px); }
+  97.292% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes r4 {
+  0% { opacity: 0; transform: translateY(-6px); }
+  31.667% { opacity: 0; transform: translateY(-6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  33.056% { opacity: 1; transform: translateY(0px); }
+  97.222% { opacity: 1; transform: translateY(0px); }
+  97.292% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes r5 {
+  0% { opacity: 0; transform: translateY(-6px); }
+  34.583% { opacity: 0; transform: translateY(-6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  35.972% { opacity: 1; transform: translateY(0px); }
+  97.222% { opacity: 1; transform: translateY(0px); }
+  97.292% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes r6 {
+  0% { opacity: 0; transform: translateY(-6px); }
+  37.5% { opacity: 0; transform: translateY(-6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  38.889% { opacity: 1; transform: translateY(0px); }
+  97.222% { opacity: 1; transform: translateY(0px); }
+  97.292% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes r7 {
+  0% { opacity: 0; transform: translateY(-6px); }
+  40.417% { opacity: 0; transform: translateY(-6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  41.806% { opacity: 1; transform: translateY(0px); }
+  97.222% { opacity: 1; transform: translateY(0px); }
+  97.292% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes r8 {
+  0% { opacity: 0; transform: translateY(-6px); }
+  43.333% { opacity: 0; transform: translateY(-6px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  44.722% { opacity: 1; transform: translateY(0px); }
+  97.222% { opacity: 1; transform: translateY(0px); }
+  97.292% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes p0 {
+  0% { opacity: 1; }
+  22.917% { opacity: 1; }
+  22.986% { opacity: 0; }
+  97.222% { opacity: 0; }
+  97.292% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes p1 {
+  0% { opacity: 0; }
+  22.917% { opacity: 0; }
+  22.986% { opacity: 1; }
+  25.833% { opacity: 1; }
+  25.903% { opacity: 0; }
+  97.222% { opacity: 0; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes p2 {
+  0% { opacity: 0; }
+  25.833% { opacity: 0; }
+  25.903% { opacity: 1; }
+  28.75% { opacity: 1; }
+  28.819% { opacity: 0; }
+  97.222% { opacity: 0; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes p3 {
+  0% { opacity: 0; }
+  28.75% { opacity: 0; }
+  28.819% { opacity: 1; }
+  31.667% { opacity: 1; }
+  31.736% { opacity: 0; }
+  97.222% { opacity: 0; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes p4 {
+  0% { opacity: 0; }
+  31.667% { opacity: 0; }
+  31.736% { opacity: 1; }
+  34.583% { opacity: 1; }
+  34.653% { opacity: 0; }
+  97.222% { opacity: 0; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes p5 {
+  0% { opacity: 0; }
+  34.583% { opacity: 0; }
+  34.653% { opacity: 1; }
+  37.5% { opacity: 1; }
+  37.569% { opacity: 0; }
+  97.222% { opacity: 0; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes p6 {
+  0% { opacity: 0; }
+  37.5% { opacity: 0; }
+  37.569% { opacity: 1; }
+  40.417% { opacity: 1; }
+  40.486% { opacity: 0; }
+  97.222% { opacity: 0; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes p7 {
+  0% { opacity: 0; }
+  40.417% { opacity: 0; }
+  40.486% { opacity: 1; }
+  43.333% { opacity: 1; }
+  43.403% { opacity: 0; }
+  97.222% { opacity: 0; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes p8 {
+  0% { opacity: 0; }
+  43.333% { opacity: 0; }
+  43.403% { opacity: 1; }
+  97.222% { opacity: 1; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes bar {
+  0% { transform: scaleX(0); }
+  22.917% { transform: scaleX(0.0); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.306% { transform: scaleX(0.125); }
+  25.833% { transform: scaleX(0.125); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  27.222% { transform: scaleX(0.25); }
+  28.75% { transform: scaleX(0.25); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  30.139% { transform: scaleX(0.375); }
+  31.667% { transform: scaleX(0.375); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  33.056% { transform: scaleX(0.5); }
+  34.583% { transform: scaleX(0.5); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  35.972% { transform: scaleX(0.625); }
+  37.5% { transform: scaleX(0.625); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  38.889% { transform: scaleX(0.75); }
+  40.417% { transform: scaleX(0.75); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  41.806% { transform: scaleX(0.875); }
+  43.333% { transform: scaleX(0.875); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  44.722% { transform: scaleX(1.0); }
+  97.222% { transform: scaleX(1); }
+  97.292% { transform: scaleX(0); }
+  100% { transform: scaleX(0); }
+}
+@keyframes cap1 {
+  0% { opacity: 1; }
+  57.639% { opacity: 1; }
+  59.375% { opacity: 0; }
+  97.222% { opacity: 0; }
+  97.292% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes cap2 {
+  0% { opacity: 0; }
+  59.722% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  61.806% { opacity: 1; }
+  97.222% { opacity: 1; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes cursor-pos {
+  0% { transform: translate(1060px,612px); opacity: 0; }
+  59.722% { transform: translate(1060px,612px); opacity: 0; }
+  61.111% { transform: translate(1060px,612px); opacity: 1; animation-timing-function: cubic-bezier(.45,0,.25,1); }
+  65.972% { transform: translate(700px,441px); opacity: 1; }
+  69.097% { transform: translate(700px,441px); opacity: 1; animation-timing-function: cubic-bezier(.45,0,.25,1); }
+  73.264% { transform: translate(1160px,292px); opacity: 1; }
+  74.653% { transform: translate(1160px,292px); opacity: 1; }
+  76.736% { transform: translate(1160px,292px); opacity: 0; }
+  97.222% { transform: translate(1160px,292px); opacity: 0; }
+  97.292% { transform: translate(1060px,612px); opacity: 0; }
+  100% { transform: translate(1060px,612px); opacity: 0; }
+}
+@keyframes cursor-press {
+  0% { transform: scale(1); }
+  66.667% { transform: scale(1); }
+  67.292% { transform: scale(.85); }
+  68.125% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+@keyframes ripple {
+  0% { transform: scale(.2); opacity: 0; }
+  67.014% { transform: scale(.2); opacity: 0; }
+  67.083% { transform: scale(.2); opacity: 0.45; animation-timing-function: cubic-bezier(0,0,.2,1); }
+  70.139% { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+@keyframes hl5 {
+  0% { opacity: 0; }
+  67.153% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  67.222% { opacity: 1; }
+  97.222% { opacity: 1; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes below {
+  0% { transform: translateY(0px); }
+  67.708% { transform: translateY(0px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  69.792% { transform: translateY(204px); }
+  97.222% { transform: translateY(204px); }
+  97.292% { transform: translateY(0px); }
+  100% { transform: translateY(0px); }
+}
+@keyframes panel {
+  0% { opacity: 0; transform: translateY(-8px); }
+  68.056% { opacity: 0; transform: translateY(-8px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  70.139% { opacity: 1; transform: translateY(0px); }
+  97.222% { opacity: 1; transform: translateY(0px); }
+  97.292% { opacity: 0; transform: translateY(-8px); }
+  100% { opacity: 0; transform: translateY(-8px); }
+}
+@keyframes ring {
+  0% { opacity: 0; }
+  71.181% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  73.264% { opacity: 1; }
+  97.222% { opacity: 1; }
+  97.292% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+#fade { animation: fade 14.4s linear infinite both; }
+#typer { animation: typer 14.4s linear infinite both; }
+#caret { animation: caret 14.4s linear infinite both; }
+#l2 { animation: l2 14.4s linear infinite both; }
+#l3 { animation: l3 14.4s linear infinite both; }
+#l4a { animation: l4a 14.4s linear infinite both; }
+#l4b { animation: l4b 14.4s linear infinite both; }
+#reply { animation: reply 14.4s linear infinite both; }
+#callout { animation: callout 14.4s linear infinite both; }
+#dim { animation: dim 14.4s linear infinite both; }
+#link { animation: link 14.4s linear infinite both; }
+#web-empty { animation: web-empty 14.4s linear infinite both; }
+#report { animation: report 14.4s linear infinite both; }
+#badge-run { animation: badge-run 14.4s linear infinite both; }
+#badge-done { animation: badge-done 14.4s linear infinite both; }
+#banner-run { animation: banner-run 14.4s linear infinite both; }
+#banner-done { animation: banner-done 14.4s linear infinite both; }
+#r1 { animation: r1 14.4s linear infinite both; }
+#r2 { animation: r2 14.4s linear infinite both; }
+#r3 { animation: r3 14.4s linear infinite both; }
+#r4 { animation: r4 14.4s linear infinite both; }
+#r5 { animation: r5 14.4s linear infinite both; }
+#r6 { animation: r6 14.4s linear infinite both; }
+#r7 { animation: r7 14.4s linear infinite both; }
+#r8 { animation: r8 14.4s linear infinite both; }
+#p0 { animation: p0 14.4s linear infinite both; }
+#p1 { animation: p1 14.4s linear infinite both; }
+#p2 { animation: p2 14.4s linear infinite both; }
+#p3 { animation: p3 14.4s linear infinite both; }
+#p4 { animation: p4 14.4s linear infinite both; }
+#p5 { animation: p5 14.4s linear infinite both; }
+#p6 { animation: p6 14.4s linear infinite both; }
+#p7 { animation: p7 14.4s linear infinite both; }
+#p8 { animation: p8 14.4s linear infinite both; }
+#bar { animation: bar 14.4s linear infinite both; }
+#cap1 { animation: cap1 14.4s linear infinite both; }
+#cap2 { animation: cap2 14.4s linear infinite both; }
+#cursor-pos { animation: cursor-pos 14.4s linear infinite both; }
+#cursor-press { animation: cursor-press 14.4s linear infinite both; }
+#ripple { animation: ripple 14.4s linear infinite both; }
+#hl5 { animation: hl5 14.4s linear infinite both; }
+#below { animation: below 14.4s linear infinite both; }
+#panel { animation: panel 14.4s linear infinite both; }
+#ring { animation: ring 14.4s linear infinite both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  #l2, #l3, #l4b, #reply, #callout, #report, #badge-done, #banner-done, #p8, #cap2, #hl5, #panel, #ring,
+  #r1, #r2, #r3, #r4, #r5, #r6, #r7, #r8 { opacity: 1 !important; transform: none !important; }
+  #dim { opacity: .6 !important; }
+  #below { transform: translateY(204px) !important; }
+  #bar { transform: scaleX(1) !important; }
+  #web-empty, #badge-run, #banner-run, #p0, #cap1, #l4a, #caret, #link, #fade { opacity: 0 !important; }
+  #typer, #cursor-pos, #ripple, .spin { display: none !important; }
+}
+</style>
+<defs>
+<symbol id="logo" viewBox="0 0 512 512">
+<polygon fill="#05a551" fill-rule="evenodd" transform="matrix(0.88341396,0,0,0.88341396,-277.63857,-17.517773)" points="716.393,503.724 604.254,568.468 492.119,503.724 379.98,438.982 379.98,309.489 379.98,278.234 624.661,419.501 603.079,431.963 423.302,328.179 423.302,413.967 513.779,466.206 604.254,518.442 694.732,466.206 776.511,418.982 379.98,190.037 358.614,177.707 358.614,265.905 358.614,309.489 358.614,451.313 481.431,522.221 604.254,593.137 727.07,522.221 841.211,456.33 819.845,444"/>
+<polygon fill="#06aeef" fill-rule="evenodd" transform="matrix(0.88341396,0,0,0.88341396,-277.63857,-17.517773)" points="491.735,115.507 603.874,50.77 716.009,115.507 828.147,180.248 828.147,309.73 828.147,340.994 583.466,199.729 605.05,187.265 784.828,291.051 784.828,205.262 694.349,153.024 603.874,100.786 513.395,153.024 431.618,200.248 828.147,429.192 849.514,441.522 849.514,353.325 849.514,309.73 849.514,167.917 726.697,97.008 603.874,26.092 481.058,97.008 366.919,162.898 388.285,175.229"/>
+<path fill="#a6ce39" fill-rule="evenodd" d="m 256.16784,342.66424 18.0296,10.41545 -18.0296,10.4075 v 76.99306 l 79.92777,-46.14955 72.24647,-41.71569 h 0.006 L 256.16784,264.75066 Z m 0,163.8035 v -21.79559 l 99.06516,-57.19929 91.39094,-52.7566 18.87503,10.89338 -100.82757,58.21521 z"/>
+<path fill="#0076bf" fill-rule="evenodd" d="m 453.95805,283.72286 -123.10109,-71.07065 -67.47604,38.95237 190.57713,110.03186 18.87502,10.89249 V 294.61447 256.10204 130.82245 l -0.12191,-0.0689 -18.87414,10.89426 0.12103,0.0689 v 114.38533 z m -104.02907,-82.08418 65.63589,-37.88962 0.12103,0.0671 v 75.78455 z"/>
+</symbol>
+<clipPath id="term-clip"><rect x="33" y="108" width="498" height="551"/></clipPath>
+<clipPath id="list-clip"><rect x="586" y="300" width="648" height="356"/></clipPath>
+<radialGradient id="glow" cx="1" cy="1" r=".75"><stop offset="0" stop-color="#a2cd42" stop-opacity=".22"/><stop offset="1" stop-color="#a2cd42" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1280" height="720" fill="#151f2c"/>
+
+<text x="32" y="54" class="plbl">YOUR AI AGENT</text>
+<text x="572" y="54" class="plbl">SATORI · LIVE REPORT</text>
+
+<!-- ============ terminal ============ -->
+<rect x="32" y="72" width="500" height="588" rx="12" fill="#111a26" stroke="#2a3a50"/>
+<path d="M44 72h476a12 12 0 0 1 12 12v24H32V84a12 12 0 0 1 12-12z" fill="#182433"/>
+<circle cx="54" cy="90" r="6" fill="#ff5f57"/><circle cx="74" cy="90" r="6" fill="#febc2e"/><circle cx="94" cy="90" r="6" fill="#28c840"/>
+<text x="282" y="95" text-anchor="middle" class="m" font-size="13">agent — acme/api</text>
+<g class="mono" font-size="16">
+ <text x="56" y="144"><tspan class="g">&gt;</tspan><tspan class="t"> add rate limiting to /login and test it</tspan></text>
+ <g clip-path="url(#term-clip)"><g transform="translate(75.3 124)"><g id="typer">
+  <rect x="0" y="0" width="389.6" height="28" class="term-bg"/>
+  <rect id="caret" x="0" y="3" width="9" height="21" fill="#e3e8ef"/>
+ </g></g></g>
+ <text id="l2" x="56" y="188"><tspan class="t">● I'll add a limiter and verify it with Satori.</tspan></text>
+ <text id="l3" x="56" y="226"><tspan class="g">● </tspan><tspan class="b">satori</tspan><tspan class="t"> · run_local(.satori-llm.yml)</tspan></text>
+ <g id="l4a"><text x="56" y="252" class="m">  └ </text>
+  <g class="g"><text class="spin" x="94.5" y="252">⠋</text><text class="spin" x="94.5" y="252">⠙</text><text class="spin" x="94.5" y="252">⠹</text><text class="spin" x="94.5" y="252">⠸</text></g>
+  <text x="113.8" y="252" class="m">Running 8 tests…</text></g>
+ <text id="l4b" x="56" y="252"><tspan class="m">  └ </tspan><tspan class="g">✓ 8 passed, 0 failed</tspan><tspan class="m"> (18.4s)</tspan></text>
+ <g id="reply"><text x="56" y="298" class="t">● Done. Rate limiting is on /login</text>
+  <text x="56" y="322" class="t">  and all 8 tests pass.</text></g>
+</g>
+<rect id="dim" x="33" y="108" width="498" height="551" fill="#111a26"/>
+<g id="callout">
+ <rect x="56" y="358" width="412" height="76" rx="10" fill="#f66f81" fill-opacity=".08" stroke="#f66f81" stroke-dasharray="5 4"/>
+ <text x="76" y="389" class="t" font-size="17">Which tests ran? What commands?</text>
+ <text x="76" y="416" fill="#f66f81" font-size="17">What did they actually print?</text>
+</g>
+<rect x="48" y="602" width="468" height="40" rx="8" fill="none" stroke="#2a3a50"/>
+<text x="64" y="627" class="mono m" font-size="15">&gt; <tspan font-family="var(--sans)">Ask the agent…</tspan></text>
+
+<!-- MCP link -->
+<g id="link">
+ <rect x="535" y="188" width="34" height="18" rx="9" fill="#1d2b3d" stroke="#a6ce39" stroke-opacity=".6"/>
+ <text x="552" y="201" text-anchor="middle" class="g" font-size="10" letter-spacing=".04em">MCP</text>
+ <path id="flow" d="M536 220h28" stroke="#a6ce39" stroke-width="3" stroke-dasharray="8 6" stroke-linecap="round"/>
+ <path d="M562 214l7 6-7 6" fill="none" stroke="#a6ce39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+
+<!-- ============ web ============ -->
+<rect x="572" y="72" width="676" height="588" rx="12" fill="#edf1ee"/>
+<path d="M584 72h652a12 12 0 0 1 12 12v24H572V84a12 12 0 0 1 12-12z" fill="#dde3df"/>
+<circle cx="594" cy="90" r="6" fill="#c9d1cc"/><circle cx="614" cy="90" r="6" fill="#c9d1cc"/><circle cx="634" cy="90" r="6" fill="#c9d1cc"/>
+<text x="910" y="95" text-anchor="middle" class="w-muted" font-size="13">Satori · Report #4821</text>
+<rect x="572" y="108" width="676" height="552" fill="url(#glow)" clip-path="inset(0 round 0 0 12px 12px)"/>
+
+<g id="web-empty">
+ <use href="#logo" x="886" y="320" width="48" height="48" opacity=".5"/>
+ <text x="910" y="398" text-anchor="middle" class="w-muted" font-size="15">No runs yet</text>
+</g>
+
+<g id="report">
+ <use href="#logo" x="592" y="120" width="28" height="28"/>
+ <text x="630" y="142" class="w-fg" font-size="20">Report #4821</text>
+ <g id="badge-run"><rect x="1132" y="121" width="96" height="26" rx="13" fill="#dbeafe"/>
+  <path d="M1153 134a6 6 0 1 1-3-5.2" fill="none" stroke="#1d4ed8" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="1164" y="138.5" fill="#1d4ed8" font-size="12">Running</text></g>
+ <g id="badge-done"><rect x="1132" y="121" width="96" height="26" rx="13" fill="#dcfce7"/>
+  <circle cx="1150" cy="134" r="6.5" fill="none" stroke="#15803d" stroke-width="1.6"/><path d="M1147 134.2l2 2 3.4-3.6" fill="none" stroke="#15803d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1164" y="138.5" fill="#15803d" font-size="12">Finished</text></g>
+ <text x="592" y="172" font-size="13"><tspan class="w-muted">Type </tspan><tspan class="w-fg">Local</tspan><tspan class="w-muted">   ·   Repository </tspan><tspan class="w-fg">acme/api</tspan><tspan class="w-muted">   ·   Playbook </tspan><tspan class="w-fg mono">.satori-llm.yml</tspan></text>
+ <g id="banner-run"><rect x="592" y="184" width="636" height="30" rx="9" fill="#e0f2fe" stroke="#bae6fd"/>
+  <text x="608" y="204" fill="#0369a1" font-size="13">Running. This page updates automatically.</text></g>
+ <g id="banner-done"><rect x="592" y="184" width="636" height="30" rx="9" fill="#e5f0d4" stroke="#c5dea0"/>
+  <text x="608" y="204" fill="#2f6b22" font-size="13">✓  All 8 tests passed</text></g>
+ <rect x="592" y="222" width="636" height="56" rx="12" class="wcard"/>
+ <g class="lbl"><text x="612" y="242">TESTS</text><text x="760" y="242">PASSED</text><text x="908" y="242">FAILED</text><text x="1056" y="242">FAILURE RATE</text></g>
+ <text x="612" y="264" class="w-fg stat">8</text><text id="p0" x="760" y="264" class="w-fg stat" fill="#3f842e" style="fill:#3f842e">0</text>
+<text id="p1" x="760" y="264" class="w-fg stat" fill="#3f842e" style="fill:#3f842e">1</text>
+<text id="p2" x="760" y="264" class="w-fg stat" fill="#3f842e" style="fill:#3f842e">2</text>
+<text id="p3" x="760" y="264" class="w-fg stat" fill="#3f842e" style="fill:#3f842e">3</text>
+<text id="p4" x="760" y="264" class="w-fg stat" fill="#3f842e" style="fill:#3f842e">4</text>
+<text id="p5" x="760" y="264" class="w-fg stat" fill="#3f842e" style="fill:#3f842e">5</text>
+<text id="p6" x="760" y="264" class="w-fg stat" fill="#3f842e" style="fill:#3f842e">6</text>
+<text id="p7" x="760" y="264" class="w-fg stat" fill="#3f842e" style="fill:#3f842e">7</text>
+<text id="p8" x="760" y="264" class="w-fg stat" fill="#3f842e" style="fill:#3f842e">8</text>
+ <text x="908" y="264" class="w-fg stat">0</text><text x="1056" y="264" class="w-fg stat">0%</text>
+ <rect x="604" y="270" width="612" height="3" rx="1.5" fill="#e0e4e1"/>
+ <rect id="bar" x="604" y="270" width="612" height="3" rx="1.5" fill="#3f842e"/>
+ <text x="592" y="296" class="w-fg" font-size="13">Satori Tests</text>
+ <rect x="592" y="300" width="74" height="2" fill="#a2cd42"/>
+ <text x="1228" y="296" text-anchor="end" class="w-muted" font-size="12">Showing 8 of 8 tests</text>
+ <g clip-path="url(#list-clip)">
+<g id="r1">
+ <rect x="592" y="306" width="636" height="27" rx="8" class="wcard"/>
+ <circle cx="609" cy="319.5" r="7" fill="#22c55e"/><path d="M605.6 319.7l2.3 2.3 4-4.4" class="tick"/>
+ <text x="626" y="324" class="mono w-fg" font-size="13">lint &gt; ruff</text>
+ <circle cx="1105" cy="319.5" r="5" class="clock"/><path d="M1105 316.5v3l2 1.4" class="clock"/>
+ <text x="1115" y="324" class="w-muted" font-size="12">0.6s</text>
+ <rect x="1166" y="311.5" width="52" height="16" rx="8" fill="#d1fae5"/>
+ <text x="1192" y="323.5" text-anchor="middle" fill="#047857" font-size="11">Exit 0</text>
+</g>
+<g id="r2">
+ <rect x="592" y="336" width="636" height="27" rx="8" class="wcard"/>
+ <circle cx="609" cy="349.5" r="7" fill="#22c55e"/><path d="M605.6 349.7l2.3 2.3 4-4.4" class="tick"/>
+ <text x="626" y="354" class="mono w-fg" font-size="13">format &gt; ruff format --check</text>
+ <circle cx="1105" cy="349.5" r="5" class="clock"/><path d="M1105 346.5v3l2 1.4" class="clock"/>
+ <text x="1115" y="354" class="w-muted" font-size="12">0.3s</text>
+ <rect x="1166" y="341.5" width="52" height="16" rx="8" fill="#d1fae5"/>
+ <text x="1192" y="353.5" text-anchor="middle" fill="#047857" font-size="11">Exit 0</text>
+</g>
+<g id="r3">
+ <rect x="592" y="366" width="636" height="27" rx="8" class="wcard"/>
+ <circle cx="609" cy="379.5" r="7" fill="#22c55e"/><path d="M605.6 379.7l2.3 2.3 4-4.4" class="tick"/>
+ <text x="626" y="384" class="mono w-fg" font-size="13">types &gt; mypy src</text>
+ <circle cx="1105" cy="379.5" r="5" class="clock"/><path d="M1105 376.5v3l2 1.4" class="clock"/>
+ <text x="1115" y="384" class="w-muted" font-size="12">3.1s</text>
+ <rect x="1166" y="371.5" width="52" height="16" rx="8" fill="#d1fae5"/>
+ <text x="1192" y="383.5" text-anchor="middle" fill="#047857" font-size="11">Exit 0</text>
+</g>
+<g id="r4">
+ <rect x="592" y="396" width="636" height="27" rx="8" class="wcard"/>
+ <circle cx="609" cy="409.5" r="7" fill="#22c55e"/><path d="M605.6 409.7l2.3 2.3 4-4.4" class="tick"/>
+ <text x="626" y="414" class="mono w-fg" font-size="13">unit &gt; pytest tests/auth</text>
+ <circle cx="1105" cy="409.5" r="5" class="clock"/><path d="M1105 406.5v3l2 1.4" class="clock"/>
+ <text x="1115" y="414" class="w-muted" font-size="12">4.2s</text>
+ <rect x="1166" y="401.5" width="52" height="16" rx="8" fill="#d1fae5"/>
+ <text x="1192" y="413.5" text-anchor="middle" fill="#047857" font-size="11">Exit 0</text>
+</g>
+<g id="r5">
+ <rect x="592" y="426" width="636" height="27" rx="8" class="wcard"/>
+ <circle cx="609" cy="439.5" r="7" fill="#22c55e"/><path d="M605.6 439.7l2.3 2.3 4-4.4" class="tick"/>
+ <text x="626" y="444" class="mono w-fg" font-size="13">ratelimit &gt; login_429</text>
+ <circle cx="1105" cy="439.5" r="5" class="clock"/><path d="M1105 436.5v3l2 1.4" class="clock"/>
+ <text x="1115" y="444" class="w-muted" font-size="12">0.9s</text>
+ <rect x="1166" y="431.5" width="52" height="16" rx="8" fill="#d1fae5"/>
+ <text x="1192" y="443.5" text-anchor="middle" fill="#047857" font-size="11">Exit 0</text>
+</g>
+  <rect id="hl5" x="592" y="426" width="636" height="27" rx="8" fill="#a2cd42" fill-opacity=".16" stroke="#a2cd42"/>
+  <g id="below">
+<g id="r6">
+ <rect x="592" y="456" width="636" height="27" rx="8" class="wcard"/>
+ <circle cx="609" cy="469.5" r="7" fill="#22c55e"/><path d="M605.6 469.7l2.3 2.3 4-4.4" class="tick"/>
+ <text x="626" y="474" class="mono w-fg" font-size="13">ratelimit &gt; reset_after_window</text>
+ <circle cx="1105" cy="469.5" r="5" class="clock"/><path d="M1105 466.5v3l2 1.4" class="clock"/>
+ <text x="1115" y="474" class="w-muted" font-size="12">2.1s</text>
+ <rect x="1166" y="461.5" width="52" height="16" rx="8" fill="#d1fae5"/>
+ <text x="1192" y="473.5" text-anchor="middle" fill="#047857" font-size="11">Exit 0</text>
+</g>
+<g id="r7">
+ <rect x="592" y="486" width="636" height="27" rx="8" class="wcard"/>
+ <circle cx="609" cy="499.5" r="7" fill="#22c55e"/><path d="M605.6 499.7l2.3 2.3 4-4.4" class="tick"/>
+ <text x="626" y="504" class="mono w-fg" font-size="13">security &gt; semgrep</text>
+ <circle cx="1105" cy="499.5" r="5" class="clock"/><path d="M1105 496.5v3l2 1.4" class="clock"/>
+ <text x="1115" y="504" class="w-muted" font-size="12">5.8s</text>
+ <rect x="1166" y="491.5" width="52" height="16" rx="8" fill="#d1fae5"/>
+ <text x="1192" y="503.5" text-anchor="middle" fill="#047857" font-size="11">Exit 0</text>
+</g>
+<g id="r8">
+ <rect x="592" y="516" width="636" height="27" rx="8" class="wcard"/>
+ <circle cx="609" cy="529.5" r="7" fill="#22c55e"/><path d="M605.6 529.7l2.3 2.3 4-4.4" class="tick"/>
+ <text x="626" y="534" class="mono w-fg" font-size="13">deps &gt; pip-audit</text>
+ <circle cx="1105" cy="529.5" r="5" class="clock"/><path d="M1105 526.5v3l2 1.4" class="clock"/>
+ <text x="1115" y="534" class="w-muted" font-size="12">1.4s</text>
+ <rect x="1166" y="521.5" width="52" height="16" rx="8" fill="#d1fae5"/>
+ <text x="1192" y="533.5" text-anchor="middle" fill="#047857" font-size="11">Exit 0</text>
+</g>
+  </g>
+  <g id="panel">
+   <rect x="592" y="457" width="636" height="198" rx="10" class="wcard"/>
+   <text x="608" y="478" class="lbl">COMMAND</text>
+   <rect x="604" y="485" width="612" height="40" rx="6" fill="#f1f4f2"/>
+   <text x="614" y="501" class="mono w-fg" font-size="12">for i in $(seq 6); do</text>
+   <text x="614" y="518" class="mono w-fg" font-size="12">  curl -s -o /dev/null -w '%{http_code} ' -X POST localhost:8000/login; done</text>
+   <text x="608" y="546" class="lbl">ASSERTIONS</text>
+   <g class="lbl"><text x="614" y="566">ASSERT</text><text x="860" y="566">EXPECTED</text><text x="1000" y="566">STATUS</text></g>
+   <rect x="604" y="572" width="612" height="1" fill="#e0e4e1"/>
+   <text x="614" y="590" class="mono w-fg" font-size="12">assertStdoutContains</text><text x="860" y="590" class="mono w-fg" font-size="12">"429"</text>
+   <rect x="1000" y="578" width="40" height="16" rx="8" fill="#22c55e"/><text x="1020" y="590" text-anchor="middle" fill="#fff" font-size="11">Pass</text>
+   <text x="614" y="612" class="mono w-fg" font-size="12">assertReturnCode</text><text x="860" y="612" class="mono w-fg" font-size="12">0</text>
+   <rect x="1000" y="600" width="40" height="16" rx="8" fill="#22c55e"/><text x="1020" y="612" text-anchor="middle" fill="#fff" font-size="11">Pass</text>
+   <text x="608" y="640" class="lbl">OUTPUT</text>
+   <rect x="664" y="627" width="50" height="17" rx="5" fill="#e0e4e1"/>
+   <text x="689" y="639.5" text-anchor="middle" class="mono w-muted" font-size="9.5">STDOUT</text>
+   <text x="726" y="640" class="mono w-fg" font-size="13">200 200 200 200 200 <tspan fill="#2f6b22" style="fill:#2f6b22" font-weight="700">429</tspan></text>
+  </g>
+ </g>
+ <rect id="ring" x="588.5" y="422.5" width="643" height="236" rx="12" fill="none" stroke="#a2cd42" stroke-width="3"/>
+</g>
+
+<!-- captions -->
+<text id="cap1" x="640" y="698" text-anchor="middle" class="t" font-size="20">Your AI agent runs its tests through Satori…</text>
+<text id="cap2" x="640" y="698" text-anchor="middle" class="t" font-size="20">…and you see <tspan class="g">every command, assertion and output</tspan> it ran.</text>
+
+<!-- cursor -->
+<g transform="translate(700 441)"><circle id="ripple" r="22" fill="#a2cd42"/></g>
+<g id="cursor-pos"><g id="cursor-press">
+ <path d="M0 0 L0 22 L6 16.5 L10 26 L14 24.3 L10 15 L17.5 15 Z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
+</g></g>
+
+<rect id="fade" width="1280" height="720" fill="#151f2c" opacity="0"/>
+</svg>
