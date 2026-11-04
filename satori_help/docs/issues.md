@@ -13,6 +13,7 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 | `satori-v2 report EXECUTION-ID issues` | Same as `issues EXECUTION-ID` |
 | `satori-v2 issue ISSUE-ID` | Show one issue |
 | `satori-v2 issue ISSUE-ID status STATUS` | Set the issue status |
+| `satori-v2 issue ISSUE-ID exploitability VALUE --reason TEXT` | Set whether the issue is exploitable |
 | `satori-v2 issue ISSUE-ID comment BODY` | Add a comment to the issue |
 | `satori-v2 issue ISSUE-ID verify` | Verify the issue with Claude Code (TP/FP) |
 | `satori-v2 run PLAYBOOK --repo owner/repo --verify` | After a run finishes, verify every finding the same way |
@@ -23,6 +24,7 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 | `satori-v2 issue ISSUE-ID advisory --delete` | Delete the advisory |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 | `satori-v2 advisory ADVISORY-ID` | Show one external issue |
+| `satori-v2 advisory ADVISORY-ID edit` | Edit a draft advisory's title or description |
 | `satori-v2 advisory ADVISORY-ID visibility VISIBILITY` | Set the external issue visibility |
 
 ## Listing issues
@@ -30,6 +32,7 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 ```sh
 satori-v2 issues
 satori-v2 issues --status OPEN --severity high,critical
+satori-v2 issues --exploitability EXPLOITABLE
 satori-v2 issues --execution-id V1StGXR8Z5jdHi6BmyT2k --source TOOL --json
 satori-v2 issues V1StGXR8Z5jdHi6BmyT2k
 satori-v2 report V1StGXR8Z5jdHi6BmyT2k issues
@@ -42,6 +45,7 @@ satori-v2 report V1StGXR8Z5jdHi6BmyT2k issues
 | `EXECUTION-ID` | Optional positional argument; only issues of this execution |
 | `--execution-id ID` | Same as the positional `EXECUTION-ID` (cannot conflict with it) |
 | `--status STATUS` | One of `OPEN`, `INVESTIGATING`, `TP`, `FIXED`, `FP`, `ACCEPTED` |
+| `--exploitability VALUE` | One of `UNKNOWN`, `EXPLOITABLE`, `NOT_EXPLOITABLE`, `INCONCLUSIVE` |
 | `--source {ASSERT\|TOOL}` | `ASSERT` for failed playbook asserts, `TOOL` for hits reported by a tool |
 | `--severity LEVELS` | Comma-separated severities: `BLOCKER`, `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO` (e.g. `high,critical`) |
 | `--order {ASC\|DESC}` | Sort order (disables the default severity sort) |
@@ -49,7 +53,7 @@ satori-v2 report V1StGXR8Z5jdHi6BmyT2k issues
 | `--page N` | Page number (default 1) |
 | `-q, --quantity N` | Results per page (default 10, alias `-l/--limit`) |
 
-`report EXECUTION-ID issues` accepts the same flags except `--execution-id`.
+`report EXECUTION-ID issues` accepts the same flags except `--execution-id` and `--exploitability`.
 
 Each row shows the issue ID, which you then pass to `issue`.
 
@@ -73,6 +77,27 @@ satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j status fp --json
 ```
 
 There is no fixed transition order.
+
+### Exploitability
+
+Independently of its status, an issue records whether it can actually be exploited:
+
+| Value | Meaning |
+| --- | --- |
+| `UNKNOWN` | Not assessed yet (default) |
+| `EXPLOITABLE` | It can be exploited |
+| `NOT_EXPLOITABLE` | It cannot be exploited (for example, the code is unreachable) |
+| `INCONCLUSIVE` | It was assessed, but the result is not clear |
+
+Set it with `issue ISSUE-ID exploitability`. `--reason` is required for every value except `UNKNOWN`, and is recorded in the issue's timeline:
+
+```sh
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j exploitability EXPLOITABLE --reason "User input reaches os.system"
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j exploitability NOT_EXPLOITABLE --reason "Only called from tests" --json
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j exploitability UNKNOWN
+```
+
+Without `--json`, the CLI prints `Issue {ISSUE-ID} exploitability set to {VALUE}`. With `--json`, it prints the updated issue. Filter the list with `satori-v2 issues --exploitability VALUE`.
 
 ## Inspecting an issue
 
@@ -102,14 +127,16 @@ Without `--json`, the CLI prints `Comment {id} added to issue {ISSUE-ID}`. With 
 satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j verify
 ```
 
-The command clones the repository tied to the issue's execution, runs three independent Claude Code agents, takes a majority vote, then posts a short conclusion comment and sets the issue status to `TP` or `FP`.
+The command clones the repository tied to the issue's execution and judges the issue with two Claude Code agents that read the code: an analyst and an adversary that argues the issue is a false positive. If they disagree, a third agent breaks the tie. The command then sets the issue status to `TP` or `FP`.
+
+The agents can only read files (`Read`, `Grep`, `Glob`). Before they start, the clone's own agent configuration (`.claude`, `.mcp.json`, `CLAUDE.md`, `AGENTS.md`, `.cursorrules`) is renamed to `*.bak`, so a repository cannot run commands or change the instructions of the review.
 
 Requirements:
 
 - `git` and `claude` must be available on your `PATH`.
 - The execution must belong to a `run --repo owner/repo`, a `local --repo owner/repo`, or to a scan of a single `owner/repo` repository (same repository constraint as advisories).
 
-To verify every finding after a run finishes, use `--verify` on `run` or `local` (same Claude majority-vote flow, one clone for the whole batch):
+To verify every finding after a run finishes, use `--verify` on `run` or `local` (same Claude flow, one clone for the whole batch):
 
 ```sh
 satori-v2 run PLAYBOOK --repo owner/repo --verify
@@ -201,6 +228,15 @@ satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW --json
 ```
 
 Shows the advisory details: title, kind, provider, severity, visibility, the related execution and issue, and the external ID/URL on GitHub.
+
+To edit a draft before you publish it (for example, to rewrite the generated text), use `edit`. Pass `--title`, the description (`--body` or `--description`, in Markdown), or both. `--body-file FILE` reads the description from a file and takes precedence over `--body`:
+
+```sh
+satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW edit --title "SQL injection in the search endpoint"
+satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW edit --body-file advisory.md
+```
+
+The CLI prints `Advisory updated`. You can only edit a draft: after the advisory is published to GitHub, its text cannot change.
 
 To change who can see the advisory in Satori, set its visibility:
 

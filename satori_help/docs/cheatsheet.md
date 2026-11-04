@@ -8,7 +8,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | --- | --- |
 | `pip install git+https://github.com/satorici/cli-v2` | Install the latest version. The console script is named `satori-v2` so it can coexist with the v1 `satori` CLI |
 | `satori-v2 install` | Guided onboarding: opens browser, saves token, installs CLI v2 *(on development)* |
-| `satori-v2 update` | Update to the latest version (reinstalls from git with pip) |
+| `satori-v2 update` | Update to the latest version (reinstalls from git with pip; adds `--break-system-packages` on externally-managed Pythons) |
 | `satori-v2 config` | Show the current configuration |
 | `satori-v2 config token "USERTOKEN"` | Configure your user token as your default profile |
 | `satori-v2 config token "TOKEN" --profile NAME` | Configure a token on a separate profile |
@@ -60,7 +60,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `-s, --sync` | Show summary when execution completes |
 | `--report` | Display test assertions and results |
 | `--issues` | After the run, list issues for the execution |
-| `--verify` | After the run, verify every finding with Claude Code (comment + TP/FP; requires `--repo`) |
+| `--verify` | After the run, verify every finding with Claude Code (TP/FP; requires `--repo`) |
 | `--min-severity LEVEL` | With `--verify`, only verify findings at or above this severity (`Blocker`, `Critical`, `High`, `Medium`, `Low`, `Info`) |
 | `--repo GitHubUser/Repo` | Clone the GitHub repository and run the playbook against that checkout |
 | `-o, --output` | Display command output |
@@ -86,7 +86,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `-s, --sync` | Show the result |
 | `--report` | Show the report |
 | `--issues` | After the run, list issues for the execution (only when `--count` is 1) |
-| `--verify` | After the run, verify every finding with Claude Code (comment + TP/FP; requires `--repo` / scan) |
+| `--verify` | After the run, verify every finding with Claude Code (TP/FP; requires `--repo` / scan) |
 | `--min-severity LEVEL` | With `--verify`, only verify findings at or above this severity (`Blocker`, `Critical`, `High`, `Medium`, `Low`, `Info`) |
 | `-o, --output` | Show the output |
 | `--live-output` | Stream the output while the execution is running |
@@ -270,6 +270,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 issues EXECUTION-ID` | List the issues of an execution |
 | `satori-v2 issues --execution-id ID` | Same as the positional `EXECUTION-ID` |
 | `satori-v2 issues --status {OPEN\|INVESTIGATING\|TP\|FIXED\|FP\|ACCEPTED}` | Filter issues by status |
+| `satori-v2 issues --exploitability {UNKNOWN\|EXPLOITABLE\|NOT_EXPLOITABLE\|INCONCLUSIVE}` | Filter issues by exploitability |
 | `satori-v2 issues --source {ASSERT\|TOOL}` | Filter issues by source |
 | `satori-v2 issues --severity LEVELS` | Filter by severity (`BLOCKER`, `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`; comma-separated) |
 | `satori-v2 issues --order {ASC\|DESC}` | Order the issues (disables the default severity sort) |
@@ -277,8 +278,9 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 report ID issues` | List the issues of the report ID |
 | `satori-v2 issue ISSUE-ID` | Show the issue ISSUE-ID (includes History timeline) |
 | `satori-v2 issue ISSUE-ID status {OPEN\|INVESTIGATING\|TP\|FIXED\|FP\|ACCEPTED}` | Set the issue status (`--json` prints the updated issue) |
+| `satori-v2 issue ISSUE-ID exploitability {UNKNOWN\|EXPLOITABLE\|NOT_EXPLOITABLE\|INCONCLUSIVE} --reason TEXT` | Set the issue exploitability (`--reason` required except for `UNKNOWN`) |
 | `satori-v2 issue ISSUE-ID comment BODY` | Add a comment to the issue (`--json` prints the created comment) |
-| `satori-v2 issue ISSUE-ID verify` | Verify the issue with Claude Code (comment + TP/FP) |
+| `satori-v2 issue ISSUE-ID verify` | Verify the issue with Claude Code (TP/FP) |
 | `satori-v2 run PLAYBOOK --repo GitHubUser/Repo --verify` | After the run, verify every finding the same way |
 | `satori-v2 local PLAYBOOK --repo GitHubUser/Repo --verify` | After a local run against a cloned repo, verify every finding |
 | `satori-v2 issue ISSUE-ID advisory` | Create a draft external advisory for the issue |
@@ -293,6 +295,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 advisories --page N -q N --json` | Pagination and JSON output |
 | `satori-v2 advisory ADVISORY-ID` | Show the external issue ADVISORY-ID |
 | `satori-v2 advisory ADVISORY-ID --json` | Show the external issue as JSON |
+| `satori-v2 advisory ADVISORY-ID edit --title T --body-file F` | Edit a draft advisory's title or description (`--body TEXT` also works) |
 | `satori-v2 advisory ADVISORY-ID visibility {PUBLIC\|PRIVATE\|UNLISTED}` | Set the external issue visibility |
 
 ## Repos
