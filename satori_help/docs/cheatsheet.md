@@ -231,7 +231,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | --- | --- |
 | `--job-type {RUN\|SCAN\|MONITOR\|GITHUB\|LOCAL}` | Filter by job type |
 | `--job-id ID` | Filter by job |
-| `--id-gt ID` / `--id-lt ID` | Filter by execution id range (exclusive) |
+| `--id-gt ID` / `--id-lt ID` | Executions created after / before the given execution ID |
 | `--global` | Search across all reports, not only yours |
 | `--status {FINISHED\|CANCELED\|RUNNING\|QUEUED}` | Filter by execution status (repeatable) |
 | `--visibility {PUBLIC\|PRIVATE\|UNLISTED}` | Filter by visibility |

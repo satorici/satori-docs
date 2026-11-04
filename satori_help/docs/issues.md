@@ -30,9 +30,9 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 ```sh
 satori-v2 issues
 satori-v2 issues --status OPEN --severity high,critical
-satori-v2 issues --execution-id 5678 --source TOOL --json
-satori-v2 issues 5678
-satori-v2 report 5678 issues
+satori-v2 issues --execution-id V1StGXR8Z5jdHi6BmyT2k --source TOOL --json
+satori-v2 issues V1StGXR8Z5jdHi6BmyT2k
+satori-v2 report V1StGXR8Z5jdHi6BmyT2k issues
 ```
 
 `issues` without an execution ID lists issues across all your executions. Pass an optional `EXECUTION-ID` argument (or `--execution-id`) to limit the list to one report. By default the list is sorted from highest severity to lowest; use `--order` to override that.
@@ -67,9 +67,9 @@ Each row shows the issue ID, which you then pass to `issue`.
 Statuses can be changed from the dashboard or from the CLI with `issue ISSUE-ID status`:
 
 ```sh
-satori-v2 issue 42 status investigating
-satori-v2 issue 42 status fixed
-satori-v2 issue 42 status fp --json
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j status investigating
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j status fixed
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j status fp --json
 ```
 
 There is no fixed transition order.
@@ -77,8 +77,8 @@ There is no fixed transition order.
 ## Inspecting an issue
 
 ```sh
-satori-v2 issue 42
-satori-v2 issue 42 --json
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j --json
 ```
 
 Shows the issue details: source, title, severity, status, the execution it belongs to and the identity of the assert or tool hit (test path and assert name, or tool, check ID, file and line). Without `--json`, it also prints a **History** timeline of status changes, comments and other events, with actor display names when available.
@@ -88,8 +88,8 @@ Shows the issue details: source, title, severity, status, the execution it belon
 Add a comment to an issue's timeline:
 
 ```sh
-satori-v2 issue 42 comment "Investigating this further"
-satori-v2 issue 42 comment "Looks like a false positive" --json
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j comment "Investigating this further"
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j comment "Looks like a false positive" --json
 ```
 
 Without `--json`, the CLI prints `Comment {id} added to issue {ISSUE-ID}`. With `--json`, it prints the created comment object.
@@ -99,7 +99,7 @@ Without `--json`, the CLI prints `Comment {id} added to issue {ISSUE-ID}`. With 
 `issue ISSUE-ID verify` uses [Claude Code](https://docs.anthropic.com/en/docs/claude-code) to decide whether the issue is a true positive (`TP`) or a false positive (`FP`):
 
 ```sh
-satori-v2 issue 42 verify
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j verify
 ```
 
 The command clones the repository tied to the issue's execution, runs three independent Claude Code agents, takes a majority vote, then posts a short conclusion comment and sets the issue status to `TP` or `FP`.
@@ -129,28 +129,28 @@ satori-v2 run PLAYBOOK --repo owner/repo --verify --min-severity High
 If the issue's execution is `PRIVATE`, creating the draft promotes it to `UNLISTED` so the report link embedded in the advisory is reachable by anyone who can open the advisory.
 
 ```sh
-satori-v2 issue 42 advisory
-satori-v2 issue 42 advisory --json
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --json
 ```
 
 To publish the draft to GitHub as a security advisory in the repository of the execution, use `--publish`. The command prints the advisory URL (the `GHSA-...` identifier if no URL is available):
 
 ```sh
-satori-v2 issue 42 advisory --publish
-satori-v2 issue 42 advisory --publish --json
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --publish
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --publish --json
 ```
 
 To delete the advisory (draft or published), use `--delete`:
 
 ```sh
-satori-v2 issue 42 advisory --delete
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --delete
 ```
 
 To check the advisory's current state on GitHub (for example `triage`, `draft`, or `published`), use `--status`. This is a live lookup against GitHub; the advisory must already be published (have a remote `GHSA-…` id), and you need a GitHub personal access token configured via settings:
 
 ```sh
-satori-v2 issue 42 advisory --status
-satori-v2 issue 42 advisory --status --json
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --status
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --status --json
 ```
 
 Without `--json`, the CLI prints the status string. With `--json`, it prints `{"status": "…"}`.
@@ -165,9 +165,9 @@ Requirements:
 
 ```sh
 satori-v2 run satori://code/trufflehog.yml --repo satorici/satori-cli --sync --report
-satori-v2 issues 5678
-satori-v2 issue 42 advisory
-satori-v2 issue 42 advisory --publish
+satori-v2 issues V1StGXR8Z5jdHi6BmyT2k
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --publish
 ```
 
 ### Listing advisories
@@ -176,7 +176,7 @@ satori-v2 issue 42 advisory --publish
 
 ```sh
 satori-v2 advisories
-satori-v2 advisories --execution-id 5678
+satori-v2 advisories --execution-id V1StGXR8Z5jdHi6BmyT2k
 satori-v2 advisories --kind SECURITY_ADVISORY --provider GITHUB --order DESC
 satori-v2 advisories --json
 ```
@@ -196,8 +196,8 @@ Each row shows the advisory ID, which you then pass to `advisory`.
 ### Inspecting and updating an advisory
 
 ```sh
-satori-v2 advisory 1
-satori-v2 advisory 1 --json
+satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW
+satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW --json
 ```
 
 Shows the advisory details: title, kind, provider, severity, visibility, the related execution and issue, and the external ID/URL on GitHub.
@@ -205,9 +205,9 @@ Shows the advisory details: title, kind, provider, severity, visibility, the rel
 To change who can see the advisory in Satori, set its visibility:
 
 ```sh
-satori-v2 advisory 1 visibility public
-satori-v2 advisory 1 visibility private
-satori-v2 advisory 1 visibility unlisted
+satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW visibility public
+satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW visibility private
+satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW visibility unlisted
 ```
 
 | Visibility | Meaning |
@@ -215,5 +215,7 @@ satori-v2 advisory 1 visibility unlisted
 | `PUBLIC` | Visible to everyone |
 | `PRIVATE` | Visible only to you |
 | `UNLISTED` | Accessible by link after login, not listed publicly |
+
+An unlisted advisory's link contains its random 21-character ID, so it can't be guessed or found by trying IDs in sequence. Share it only with the people who should see the advisory.
 
 See [Results](getting-started/execution-data.md) for the report commands and [Jobs, Executions & Output](modes/executions.md) for the job and execution model.

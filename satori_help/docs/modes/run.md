@@ -196,7 +196,7 @@ The following file/data flags are not available yet in CLI v2. The v1 syntax is 
 | Flag | Description | Example |
 | --- | --- | --- |
 | `-i, --include FILE` | Include additional files in the execution context (repeatable) *(on development)* | `satori-v2 run ./ -i config.yaml -i data.json` |
-| `--clone REPORT_ID` | Clone settings from an existing report *(on development)* | `satori-v2 run ./ --clone AOQxDWDkXpZp` |
+| `--clone REPORT_ID` | Clone settings from an existing report *(on development)* | `satori-v2 run ./ --clone V1StGXR8Z5jdHi6BmyT2k` |
 
 ### Execution Environment
 

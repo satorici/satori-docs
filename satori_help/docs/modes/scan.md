@@ -143,7 +143,7 @@ Example:
 ![Clean Scan Repo](img/scan_4.png)
 
 ::: warning On development
-In CLI v2 `clean` takes the numeric scan ID rather than the `user/repository` name, and the `--delete-commits` flag is not available yet. The v1 syntax is kept here for reference.
+In CLI v2 `clean` takes the scan ID rather than the `user/repository` name, and the `--delete-commits` flag is not available yet. The v1 syntax is kept here for reference.
 :::
 
 ```sh

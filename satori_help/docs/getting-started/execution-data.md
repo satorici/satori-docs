@@ -40,8 +40,8 @@ You can filter your reports using various parameters to narrow down the results 
 | --- | --- |
 | `--job-type {RUN\|SCAN\|MONITOR\|GITHUB\|LOCAL}` | Filter by the type of job that produced the execution |
 | `--job-id ID` | Filter by job ID |
-| `--id-gt ID` | Execution id greater than ID (exclusive) |
-| `--id-lt ID` | Execution id less than ID (exclusive) |
+| `--id-gt ID` | Executions created after execution ID |
+| `--id-lt ID` | Executions created before execution ID |
 | `--global` | Include public executions from other accounts |
 | `--status {FINISHED\|CANCELED\|RUNNING\|QUEUED}` | Filter by execution status (repeatable) |
 | `--visibility {PUBLIC\|PRIVATE\|UNLISTED}` | Filter by report visibility |
@@ -67,10 +67,10 @@ satori-v2 reports search --job-type SCAN --report-status FAIL
 satori-v2 reports search --playbook satori://code/trufflehog
 ```
 
-- Example: *"I want to see the running executions of the job 1234"*
+- Example: *"I want to see the running executions of the job 4f9Kq2LmZ8xRt1VbN7cYd"*
 
 ```sh
-satori-v2 reports search --job-id 1234 --status RUNNING
+satori-v2 reports search --job-id 4f9Kq2LmZ8xRt1VbN7cYd --status RUNNING
 ```
 
 The same filters are accepted by `satori-v2 reports download`, `satori-v2 reports stop`, `satori-v2 reports delete` and by the top-level `satori-v2 search` command, which lets you act on everything that matches (download outputs, download reports, stop or delete). On `satori-v2 search` you can also pass `--notify slack://WORKSPACE:CHANNEL`, `--notify email://user@example.com`, `--notify discord://CHANNEL`, or `--notify telegram://CHAT_ID` to send the current page of results. See [Jobs, Executions & Output](../modes/executions.md#search) and [Search notify](../notifications.md#search-notify).
@@ -136,7 +136,7 @@ satori-v2 report REPORT_ID issues
 You can configure the visibility of your results report with three distinct settings to manage who can view it:
 
 - **`private`**: accessible only to the owner or specifically permitted users.
-- **`unlisted`**: accessible only to individuals with a direct link to the report. This visibility is useful for sharing specific results without making them publicly.
+- **`unlisted`**: not listed anywhere, but any logged-in user with the direct link can open the report. This visibility is useful for sharing specific results without making them public.
 - **`public`**: open access, visible to all users without restrictions.
 
 To set the visibility of a report, use the following command and specify the visibility level:
@@ -145,6 +145,15 @@ To set the visibility of a report, use the following command and specify the vis
 satori-v2 report REPORT_ID visibility [private|unlisted|public]
 ```
 These configurations provide flexible control over report access, allowing you to choose the visibility level that best suits your sharing needs.
+
+An unlisted link can't be guessed. Report, job, issue and advisory IDs are
+random 21-character strings of letters and digits (for example
+`V1StGXR8Z5jdHi6BmyT2k`), so nobody can reach an unlisted report by trying IDs
+in sequence. Treat the link like a password: anyone logged in who has it can
+open the report. To revoke access, set the report back to `private`.
+
+The IDs are opaque: they carry no order, so don't sort or compare them. Old
+links with numeric IDs (such as `/reports/42`) no longer work.
 
 ## Downloading Files
 
@@ -219,19 +228,19 @@ To stop a running report, use `satori-v2 report ID stop`. Stopping is asynchrono
 **View report output in Markdown format:**
 
 ```sh
-satori-v2 report AOQxDWDkXpZp output --format md
+satori-v2 report V1StGXR8Z5jdHi6BmyT2k output --format md
 ```
 
 **View specific test output with unredacted secrets** *(on development)*:
 
 ```sh
-satori-v2 report AOQxDWDkXpZp output --test integration_test --unredacted
+satori-v2 report V1StGXR8Z5jdHi6BmyT2k output --test integration_test --unredacted
 ```
 
 **List the issues of a report and create a GitHub advisory from one of them:**
 
 ```sh
-satori-v2 report AOQxDWDkXpZp issues
+satori-v2 report V1StGXR8Z5jdHi6BmyT2k issues
 satori-v2 issue ISSUE_ID advisory
 satori-v2 issue ISSUE_ID advisory --publish
 satori-v2 advisories
@@ -242,7 +251,7 @@ satori-v2 advisory ADVISORY_ID visibility private
 **Create GitHub issue from report** *(on development)*:
 
 ```sh
-satori-v2 report AOQxDWDkXpZp issue template_123 \
+satori-v2 report V1StGXR8Z5jdHi6BmyT2k issue template_123 \
   --query "severity:critical" \
   --title "Critical Security Vulnerability Found"
 ```
@@ -250,7 +259,7 @@ satori-v2 report AOQxDWDkXpZp issue template_123 \
 **Filter multiple tests:**
 
 ```sh
-satori-v2 report AOQxDWDkXpZp output \
+satori-v2 report V1StGXR8Z5jdHi6BmyT2k output \
   --test unit_tests \
   --test integration_tests \
   --format md
