@@ -103,6 +103,10 @@
 | Command | Description |
 | --- | --- |
 | `satori reports` | List reports |
+| `satori reports search -l 50 -p 2` | Search reports (max 50 per page) |
+| `satori reports search --query TEXT` | Search reports by output text (regex, case-insensitive) |
+| `satori reports search --params REGEX` | Search reports by run parameters |
+| `satori reports search --from 2026-10-20 --to 2026-10-27 -j` | Search reports by date, as JSON |
 | `satori report ID` | Show the report ID |
 | `satori report ID --json` | Show the JSON of the report ID |
 | `satori report ID output` | Show the output of the report ID |

@@ -29,14 +29,18 @@ You can filter your reports using various parameters to narrow down the results 
 - **`playbook-type`**: filter by playbook type {public,private}
 - **`visibility`**: filter by report visibility {public-global,public,unlisted,private}
 - **`result`**: filter by report result {pass,fail,unknown}
-- **`query`**: filter by output string (supports regex)      
+- **`query`**: filter by text in the report outputs (see [Searching outputs](#searching-outputs))
+- **`case-sensitive`**: make `query` case-sensitive
+- **`params`**: filter by run parameters (regex), for example `HARNESS=codec`
+- **`repo`**: filter by repository name (use `owner/*` to match all the repositories of an account)
 - **`monitor`**: filter by monitor ID
 - **`playbook`**: filter by playbook
 - **`status`**: filter by status {provisioning,pending,running,completed,stopped,timeout}
-- **`from`**: filter by from date
-- **`to`**: filter by to date
+- **`from`**: filter by from date (ISO format: `2026-10-20` or `2026-10-20T14:00`)
+- **`to`**: filter by to date (a date without time includes the whole day)
 - **`severity`**: filter by output severity
 - **`execution`**: filter by execution type {local,run,ci,scan,monitor}
+- **`from-report`**: start listing after this report ID
 
 These parameters can be used to check and filter specific reports that you are looking for.
 
@@ -52,12 +56,43 @@ satori reports search --repo "satorici/*" --result fail
 satori reports search --playbook satori://code/trufflehog
 ```
 
+- Example: *"I want to see the reports run between October 20 and October 27 with the parameter `HARNESS=codec`"*
+
+```sh
+satori reports search --from 2026-10-20 --to 2026-10-27 --params HARNESS=codec
+```
+
+To get the results as JSON instead of a table, add `-j`:
+
+```sh
+satori reports search --result fail -j
+```
+
+### Searching outputs
+
+`--query` searches the text that your tests wrote to stdout and stderr. It does not search the run parameters: use `--params` for those.
+
+- The query matches any part of an output line, so `--query codec` finds lines that contain `codec`.
+- The query is a regular expression. Escape special characters such as `.` or `*` with `\` to match them literally.
+- The search is case-insensitive. Add `--case-sensitive` to change this.
+
+```sh
+satori reports search --query "segmentation fault"
+satori reports search --query "error: .*timeout" --case-sensitive
+```
+
 ## Pagination
 
 When dealing with a large number of results, such as reports, repositories, or monitors, we provide a pagination system to help you navigate through the data more efficiently. To access additional pages, use the `-p X` option, where `X` represents the page number you want to view.
 
 ```sh
 satori reports -p 2
+```
+
+Use `-l` to set the number of results per page. `satori reports search` returns at most 50 results per page:
+
+```sh
+satori reports search -l 50 -p 2
 ```
 
 ## Viewing a Single Report
