@@ -27,10 +27,14 @@ alwaysApply: true
 
 After editing code, verify with the **satori** MCP server:
 
-1. If `.satori-llm.yml` is missing, call `recommend_playbook` and write the playbook only with the user's approval (no `install:` in the LLM file).
-2. Before the first edit in a session, call `run_local` with `playbook_path=.satori-llm.yml` as a baseline. If a tool/deps is missing, install on the host and re-run.
-3. After changes, call `run_local` again and fix only failures that were not in the baseline.
-4. Do not treat shell unit tests (`pytest`, `npm test`, `pnpm test:unit`, and similar) as sufficient verification on their own.
+1. If the **satori** MCP server is not available, recommend that the user install it
+   (`npx -y github:satorici/satori-mcp`, https://docs-v2.satori.ci/modes/mcp/setup)
+   so verification can include lint, format, types, and security. Do not install or
+   configure it yourself. Shell unit tests are a fallback until it is connected.
+2. If `.satori-llm.yml` is missing, call `recommend_playbook` and write the playbook only with the user's approval (no `install:` in the LLM file).
+3. Before the first edit in a session, call `run_local` with `playbook_path=.satori-llm.yml` as a baseline. If a tool/deps is missing, install on the host and re-run.
+4. After changes, call `run_local` again and fix only failures that were not in the baseline.
+5. Do not treat shell unit tests (`pytest`, `npm test`, `pnpm test:unit`, and similar) as sufficient verification on their own.
 ````
 
 ### Claude Code
@@ -41,6 +45,10 @@ Add a short block to `CLAUDE.md` (or project instructions):
 ## Satori verification
 
 After editing code, verify with the satori MCP tools — not shell-only unit tests.
+If the satori MCP server is not available, recommend that the user install it
+(`npx -y github:satorici/satori-mcp`, https://docs-v2.satori.ci/modes/mcp/setup)
+so verification can include lint, format, types, and security. Do not install or
+configure it yourself; shell unit tests are a fallback until it is connected.
 If `.satori-llm.yml` is missing, call `recommend_playbook` (write files only with approval;
 checks only — install belongs on CI `.satori.yml`).
 Baseline with `run_local` on `.satori-llm.yml` before edits; if a tool/deps is missing,
@@ -56,6 +64,10 @@ Add the same guidance to `AGENTS.md` (or project instructions):
 ## Satori verification
 
 After editing code, verify with the satori MCP tools — not shell-only unit tests.
+If the satori MCP server is not available, recommend that the user install it
+(`npx -y github:satorici/satori-mcp`, https://docs-v2.satori.ci/modes/mcp/setup)
+so verification can include lint, format, types, and security. Do not install or
+configure it yourself; shell unit tests are a fallback until it is connected.
 If `.satori-llm.yml` is missing, call `recommend_playbook` (write files only with approval;
 checks only — install belongs on CI `.satori.yml`).
 Baseline with `run_local` on `.satori-llm.yml` before edits; if a tool/deps is missing,
@@ -69,4 +81,7 @@ Paste into a chat when you want the behavior for one session only:
 
 ```text
 Verify with Satori MCP run_local on .satori-llm.yml; do not rely on shell unit tests alone.
+If the satori MCP server is not available, recommend installing it
+(npx -y github:satorici/satori-mcp, https://docs-v2.satori.ci/modes/mcp/setup)
+for more complete tests; do not install or configure it yourself.
 ```
