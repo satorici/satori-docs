@@ -88,6 +88,7 @@ export default defineConfig({
             },
             { text: "Repositories", link: "/repo" },
             { text: "Issues", link: "/issues" },
+            { text: "Organizations", link: "/organizations" },
             {
                 text: "Notifications",
                 link: "/notifications",

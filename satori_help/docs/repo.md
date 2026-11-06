@@ -25,6 +25,27 @@ The list is paginated and can be sorted and printed as JSON:
 | `--page N` | Page number | `satori-v2 repos --page 2` |
 | `-q, --quantity N` | Results per page (default 10, alias `-l/--limit`) | `satori-v2 repos -q 50` |
 
+## Add playbooks from the dashboard
+
+The **Repos** page of the dashboard can add a `.satori.yml` to a repository that doesn't have one yet:
+
+1. Click **Add playbook** on the repository row.
+2. Satori reads the repository's languages from GitHub and recommends ready-made playbooks from the [catalog](https://satori.ci/playbooks) for them (for example `code/python/...` for a Python repository), plus generic ones. Only playbooks that don't need parameters are recommended.
+3. Select the playbooks and confirm. Satori opens a pull request on the branch `satori/add-playbooks` (with a random suffix if that branch already exists) that adds a root `.satori.yml` importing them:
+
+```yaml
+import:
+  - satori://code/trufflehog.yml
+  - satori://code/python/pyspector.yml
+```
+
+Once merged, the [GitHub Application](modes/ci/github.md) runs it on every push.
+
+Requirements:
+
+- The Satori GitHub Application must be installed on the repository and have **Contents** and **Pull requests** write permissions. Installations that haven't accepted these permissions get an error; accept them in the App's settings on GitHub.
+- The repository must not have a `.satori.yml` yet. If it has one, edit it instead (see [Satori Playbooks](getting-started/playbooks.md)).
+
 ## CLI v2 equivalents
 
 The `satori-v2 repo` command group described below is not available yet in CLI v2. The same use cases are covered by `run --repo` and `scan`:

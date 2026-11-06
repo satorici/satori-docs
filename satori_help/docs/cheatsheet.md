@@ -13,7 +13,9 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `satori-v2 config token "USERTOKEN"` | Configure your user token as your default profile |
 | `satori-v2 config token "TOKEN" --profile NAME` | Configure a token on a separate profile |
 | `satori-v2 config pat "GITHUB_PAT"` | Set your GitHub personal access token (alias of `satori-v2 settings github`) |
-| `satori-v2 whoami` | Show the active profile and whether a GitHub PAT is configured |
+| `satori-v2 config organization ORG` | Act on the organization ORG (ID or name) by default in this profile. See [Organizations](/organizations.md) |
+| `satori-v2 config organization none` | Act on your own account again |
+| `satori-v2 whoami` | Show the active profile, the selected organization and whether a GitHub PAT is configured |
 | `npx -y github:satorici/satori-mcp` | Run the Satori MCP server over stdio for AI agents (Cursor, Claude Code, Codex). See [MCP Setup](/modes/mcp/setup.md) |
 | `satori-v2 width` | Show console width configuration for current profile *(on development)* |
 
@@ -32,6 +34,8 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `SATORI_TOKEN` | Token read directly from the environment (overrides the credentials file) |
 | `SATORI_PROFILE` | Profile to use (overrides `--profile`) |
 | `SATORI_ENDPOINT` | API endpoint (default: `https://api-v2.satori.ci`) |
+| `--org ORG` | Act on the organization ORG (ID or name) for this command only. Goes at the end of any command: `satori-v2 run ./ --org 7` |
+| `SATORI_ORGANIZATION` | Organization ID to act on (overrides the one saved in the profile) |
 
 ## Run in the cloud
 
@@ -283,8 +287,9 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 issue ISSUE-ID verify` | Verify the issue with Claude Code (TP/FP) |
 | `satori-v2 run PLAYBOOK --repo GitHubUser/Repo --verify` | After the run, verify every finding the same way |
 | `satori-v2 local PLAYBOOK --repo GitHubUser/Repo --verify` | After a local run against a cloned repo, verify every finding |
-| `satori-v2 issue ISSUE-ID advisory` | Create a draft external advisory for the issue |
-| `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub |
+| `satori-v2 issue ISSUE-ID advisory` | Create a draft external advisory for the issue (it must be `TP` and `EXPLOITABLE`) |
+| `satori-v2 issue ISSUE-ID advisory --improve` | Rewrite the draft into a full report with Claude Code, including a CVSS 4.0 vector |
+| `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub (needs a severity and a matching CVSS 4.0 vector) |
 | `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |
 | `satori-v2 issue ISSUE-ID advisory --delete` | Delete the advisory |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
@@ -296,6 +301,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 advisory ADVISORY-ID` | Show the external issue ADVISORY-ID |
 | `satori-v2 advisory ADVISORY-ID --json` | Show the external issue as JSON |
 | `satori-v2 advisory ADVISORY-ID edit --title T --body-file F` | Edit a draft advisory's title or description (`--body TEXT` also works) |
+| `satori-v2 advisory ADVISORY-ID edit --severity HIGH --cvss-vector VECTOR` | Set a draft advisory's severity and CVSS 4.0 Base vector (they must match) |
 | `satori-v2 advisory ADVISORY-ID visibility {PUBLIC\|PRIVATE\|UNLISTED}` | Set the external issue visibility |
 
 ## Repos
@@ -419,6 +425,25 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 | `--exclude PATH or ENTRY` | Exclusion file path or direct IP/CIDR/range/domain/URL to exclude |
 | `--seed N` | Seed for deterministic pseudorandom distribution (default: 1) |
 | `--results PATH` | Output file path (writes to stdout if omitted) |
+
+## Organizations
+
+Organizations are accounts shared by their members. Commands act on your own account unless you select an organization. See [Organizations](/organizations.md).
+
+| Command | Description |
+| --- | --- |
+| `satori-v2 organizations` | List your organizations (ID, name, plan, your role) |
+| `satori-v2 organizations create NAME` | Create an organization you own (ENTERPRISE plan only) |
+| `satori-v2 organizations personal` | Act on your own account again |
+| `satori-v2 organization ORG-ID` | Show the organization and your role |
+| `satori-v2 organization ORG-ID use` | Act on it in the following commands (saved per `--profile`) |
+| `satori-v2 organization ORG-ID rename NAME` | Rename it (OWNER/ADMIN) |
+| `satori-v2 organization ORG-ID delete` | Delete it with all of its jobs, reports and findings (OWNER) |
+| `satori-v2 organization ORG-ID members` | List members and roles |
+| `satori-v2 organization ORG-ID add EMAIL [--role {OWNER\|ADMIN\|MEMBER}]` | Add a user who has logged in to Satori (default `MEMBER`) |
+| `satori-v2 organization ORG-ID role USER-ID ROLE` | Change a member's role |
+| `satori-v2 organization ORG-ID remove USER-ID` | Remove a member, or leave with your own user ID |
+| `COMMAND ... --org ORG` | Run one command on the organization ORG (ID or name) |
 
 ## Saved parameters and secrets
 

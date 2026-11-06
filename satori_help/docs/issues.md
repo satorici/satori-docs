@@ -19,12 +19,13 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 | `satori-v2 run PLAYBOOK --repo owner/repo --verify` | After a run finishes, verify every finding the same way |
 | `satori-v2 local PLAYBOOK --repo owner/repo --verify` | Run locally against a cloned repo, then verify every finding |
 | `satori-v2 issue ISSUE-ID advisory` | Create a draft GitHub security advisory from an issue |
+| `satori-v2 issue ISSUE-ID advisory --improve` | Rewrite the draft into a full report with Claude Code |
 | `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub |
 | `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |
 | `satori-v2 issue ISSUE-ID advisory --delete` | Delete the advisory |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 | `satori-v2 advisory ADVISORY-ID` | Show one external issue |
-| `satori-v2 advisory ADVISORY-ID edit` | Edit a draft advisory's title or description |
+| `satori-v2 advisory ADVISORY-ID edit` | Edit a draft advisory's title, description, severity or CVSS vector |
 | `satori-v2 advisory ADVISORY-ID visibility VISIBILITY` | Set the external issue visibility |
 
 ## Listing issues
@@ -99,6 +100,8 @@ satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j exploitability UNKNOWN
 
 Without `--json`, the CLI prints `Issue {ISSUE-ID} exploitability set to {VALUE}`. With `--json`, it prints the updated issue. Filter the list with `satori-v2 issues --exploitability VALUE`.
 
+[`verify`](#verifying-an-issue) also sets it: when the verdict is `TP`, the issue is marked `EXPLOITABLE` with the agents' evidence as the reason.
+
 ## Inspecting an issue
 
 ```sh
@@ -127,7 +130,7 @@ Without `--json`, the CLI prints `Comment {id} added to issue {ISSUE-ID}`. With 
 satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j verify
 ```
 
-The command clones the repository tied to the issue's execution and judges the issue with two Claude Code agents that read the code: an analyst and an adversary that argues the issue is a false positive. If they disagree, a third agent breaks the tie. The command then sets the issue status to `TP` or `FP`.
+The command clones the repository tied to the issue's execution and judges the issue with two Claude Code agents that read the code: an analyst and an adversary that argues the issue is a false positive. If they disagree, a third agent breaks the tie. The command then sets the issue status to `TP` or `FP`. A `TP` is also marked `EXPLOITABLE`, with the agents' evidence (the input source, the path to the sink and why it is reachable) as the exploitability reason, so it is ready for an [advisory](#github-security-advisories).
 
 The agents can only read files (`Read`, `Grep`, `Glob`). Before they start, the clone's own agent configuration (`.claude`, `.mcp.json`, `CLAUDE.md`, `AGENTS.md`, `.cursorrules`) is renamed to `*.bak`, so a repository cannot run commands or change the instructions of the review.
 
@@ -182,18 +185,52 @@ satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --status --json
 
 Without `--json`, the CLI prints the status string. With `--json`, it prints `{"status": "…"}`.
 
-`--publish`, `--status`, and `--delete` are mutually exclusive.
+`--publish`, `--status`, `--delete` and `--improve` are mutually exclusive.
 
 Requirements:
 
+- The issue must have status `TP` and exploitability `EXPLOITABLE`, both to create the draft and to publish it. [`verify`](#verifying-an-issue) sets both for a true positive.
 - The execution must belong to a `run --repo owner/repo`, a `local --repo owner/repo`, or to a scan of a single `owner/repo` repository. Executions that span several repositories are rejected.
 - The Satori GitHub Application must be installed and active on that repository.
 - Only one external issue can exist per finding. Running `advisory` again for an issue that already has a draft or published advisory returns the existing one instead of creating a second one.
+- To publish, the draft needs a severity and a [CVSS 4.0 vector](#cvss) whose severity matches it, and you need a GitHub personal access token configured (`satori-v2 config pat TOKEN`).
+
+### Improving the draft with Claude Code
+
+The generated draft is a technical summary of the tool hit. `--improve` rewrites its title and description into a full report with Claude Code:
+
+```sh
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --improve
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --improve --json
+```
+
+The report has the sections Summary, Proof of Concept (or Reachability, when no live reproduction was recorded), Impact, CVSS and Remediation. It is based only on what was actually confirmed: the issue, its recorded exploitability evidence and the current draft. The agent also computes a CVSS 4.0 vector, and the CLI derives the matching severity from the vector, so the improved draft is ready to publish.
+
+It uses the same trust model as [`verify`](#verifying-an-issue): your local `claude`, a clone of the repository with its agent configuration disabled, and read-only tools. It needs `git` and `claude` on your `PATH`. Without `--json`, it prints `Advisory improved` and the new title. If Claude's usage limit is reached, run it again later.
+
+Review the result with `satori-v2 advisory ADVISORY-ID` and adjust it with [`edit`](#inspecting-and-updating-an-advisory) before publishing.
+
+### CVSS
+
+GitHub security advisories carry a [CVSS 4.0](https://www.first.org/cvss/v4-0/) Base vector. Before `--publish`, the draft must have one, and the severity it yields (`LOW`, `MEDIUM`, `HIGH` or `CRITICAL`) must match the advisory's severity. Otherwise publishing fails with `Security advisory is missing a CVSS vector` or `Security advisory severity does not match its CVSS vector`.
+
+Set both with `--improve`, with [`advisory ADVISORY-ID edit`](#inspecting-and-updating-an-advisory), or from the advisory page in the dashboard:
+
+```sh
+satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW edit --severity HIGH \
+  --cvss-vector "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N"
+```
+
+`satori-v2 advisory ADVISORY-ID --json` includes `cvss_vector` and the computed `cvss_score`.
+
+### End-to-end example
 
 ```sh
 satori-v2 run satori://code/trufflehog.yml --repo satorici/satori-cli --sync --report
 satori-v2 issues V1StGXR8Z5jdHi6BmyT2k
-satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j verify            # TP + EXPLOITABLE
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory          # create the draft
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --improve
 satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --publish
 ```
 
@@ -229,14 +266,15 @@ satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW --json
 
 Shows the advisory details: title, kind, provider, severity, visibility, the related execution and issue, and the external ID/URL on GitHub.
 
-To edit a draft before you publish it (for example, to rewrite the generated text), use `edit`. Pass `--title`, the description (`--body` or `--description`, in Markdown), or both. `--body-file FILE` reads the description from a file and takes precedence over `--body`:
+To edit a draft before you publish it (for example, to rewrite the generated text), use `edit`. Pass any of `--title`, the description (`--body` or `--description`, in Markdown), `--severity` and `--cvss-vector` (a CVSS 4.0 Base vector, see [CVSS](#cvss)). `--body-file FILE` reads the description from a file and takes precedence over `--body`:
 
 ```sh
 satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW edit --title "SQL injection in the search endpoint"
 satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW edit --body-file advisory.md
+satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW edit --severity HIGH --cvss-vector "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N"
 ```
 
-The CLI prints `Advisory updated`. You can only edit a draft: after the advisory is published to GitHub, its text cannot change.
+The CLI prints `Advisory updated`. If the severity and the vector don't match, the update is rejected. You can only edit a draft: after the advisory is published to GitHub, its text cannot change.
 
 To change who can see the advisory in Satori, set its visibility:
 

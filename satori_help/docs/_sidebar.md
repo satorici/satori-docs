@@ -39,4 +39,5 @@
   * [Datadog](/notifications.md#datadog)
 * [Repositories](/repo.md)
 * [Issues](/issues.md)
+* [Organizations](/organizations.md)
 * [Cheatsheet](/cheatsheet.md)
