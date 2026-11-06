@@ -44,7 +44,7 @@ Once merged, the [GitHub Application](modes/ci/github.md) runs it on every push.
 Requirements:
 
 - The Satori GitHub Application must be installed on the repository and have **Contents** and **Pull requests** write permissions. Installations that haven't accepted these permissions get an error; accept them in the App's settings on GitHub.
-- The repository must not have a `.satori.yml` yet. If it has one, edit it instead (see [Satori Playbooks](getting-started/playbooks.md)).
+- The repository must not have a `.satori.yml` or `.satori.yaml` yet. If it has one, edit it instead (see [Satori Playbooks](getting-started/playbooks.md)).
 
 ## CLI v2 equivalents
 

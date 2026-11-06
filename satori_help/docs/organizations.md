@@ -25,7 +25,7 @@ You can select the organization to act on in three ways. From highest to lowest 
 
 | How | Scope | Example |
 | --- | --- | --- |
-| `--org ORG` at the end of a command | That command only | `satori-v2 run ./ --org 7`, `satori-v2 report 5 --org Acme` |
+| `--org ORG` at the end of a command | That command only | `satori-v2 run ./ --org 7`, `satori-v2 report V1StGXR8Z5jdHi6BmyT2k --org Acme` |
 | `SATORI_ORGANIZATION` environment variable | Every command in that environment | `SATORI_ORGANIZATION=7 satori-v2 jobs` |
 | Saved in the profile | Every following command of that `--profile` | `satori-v2 config organization Acme` or `satori-v2 organization 7 use` |
 
@@ -34,7 +34,7 @@ You can select the organization to act on in three ways. From highest to lowest 
 To show the organization saved in the profile, or to go back to your own account:
 
 ```sh
-satori-v2 config organization          # prints "Acme (7)"
+satori-v2 config organization          # prints "7 (Acme)"
 satori-v2 config organization none     # or: satori-v2 organizations personal
 ```
 
