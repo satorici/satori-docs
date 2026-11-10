@@ -127,7 +127,7 @@ To stop everything matching a filter use `satori-v2 search ... --stop` (below). 
 | `--q TEXT` | Free text search |
 | `-t, --tag TAG` | Tag (repeatable) |
 | `--page N`, `-q, --quantity N` | Pagination of the listing |
-| `--notify slack://…`, `email://…`, `discord://CHANNEL`, or `telegram://CHAT_ID` | Send this page of results to Slack, email, Discord, or Telegram (repeatable). Not a job rule — immediate notify of the listing. See [Search notify](../notifications.md#search-notify) |
+| `--notify slack://…`, `email://…`, `discord://CHANNEL`, or `telegram://CHAT_ID` | Send this page of results to Slack, email, Discord, or Telegram (repeatable). A bare `slack`, `email`, `discord`, `telegram` or `default` uses your saved defaults. Not a job rule — immediate notify of the listing. See [Search notify](../notifications.md#search-notify) |
 
 ```sh
 satori-v2 search --job-type MONITOR --report-status FAIL --from 2026-01-01
@@ -165,7 +165,7 @@ CLI v2 is designed to be piped into other tools:
 
 - **stdout / stderr split**: data (listings, reports, outputs, JSON) is written to **stdout**; the version banner, progress spinners, prompts and error messages are written to **stderr**. `satori-v2 jobs --json | jq '.items[].id'` works without any filtering.
 - **`--json`** is available on the root command and on most list/detail commands; `--format json|md` selects the rendering of outputs and reports.
-- **Exit codes**: `0` on success, `1` when the API returns an error (the response body is printed to stderr as JSON) or the CLI raises a Satori error, `2` on usage errors (unknown option, missing argument). There is no exit code that reflects a failed report yet; read the report with `--json` if you need to fail a pipeline on findings.
+- **Exit codes**: `0` on success, `1` when the API returns an error (the response body is printed to stderr as JSON), the request times out or cannot connect (`ERROR: request to Satori timed out` or `failed to connect`), or the CLI raises a Satori error, `2` on usage errors (unknown option, missing argument). There is no exit code that reflects a failed report yet; read the report with `--json` if you need to fail a pipeline on findings.
 
 `satori-v2 report ID --json` prints the execution object: `status` and `visibility` at the top level, and a `report` object holding `total_fails` (the number of failed asserts) plus the `detail` of each test. To fail a pipeline when a report has any failure:
 

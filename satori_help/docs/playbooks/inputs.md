@@ -25,6 +25,11 @@ satori-v2 run .satori.yml  -d WHAT="Bye World" --report --output
 
 ![Parametrized inputs](img/inputs_0.png)
 
+You don't have to pass every value on each run:
+
+- `satori-v2 run` and `satori-v2 scan` read a variable from the environment variable with the same name when the playbook is a local file (`WHAT="Bye World" satori-v2 run .satori.yml`). `-d` wins over the environment.
+- Parameters and secrets that you save with `satori-v2 parameters` and `satori-v2 secrets` are applied to every new job, for your account or for one repository. See [Saved parameters and secrets](../notifications.md#saved-parameters-and-secrets).
+
 ## Defined within the playbook
 
 Inputs can be specified directly in the playbook and named accordingly for the software being tested. In the example below, the `echo` command will iterate through each value defined under `input`:

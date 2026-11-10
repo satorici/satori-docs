@@ -285,7 +285,7 @@ See also [Run command options](modes/run.md#execution-environment).
 
 ### Search: `--notify`
 
-On `satori-v2 search`, `--notify` is repeatable and takes a bare Slack, email, Discord, or Telegram URI (`slack://workspace:channel`, `email://user@example.com`, `discord://CHANNEL_ID`, or `telegram://CHAT_ID`). It is **not** a job rule: the API sends the **current page** of search results as a monospace table (Id, Playbook source, Status, Result, Created at), and still prints the table in the terminal.
+On `satori-v2 search`, `--notify` is repeatable and takes a bare Slack, email, Discord, or Telegram URI (`slack://workspace:channel`, `email://user@example.com`, `discord://CHANNEL_ID`, or `telegram://CHAT_ID`), or one of the keywords `slack`, `email`, `discord`, `telegram` and `default` to use your [saved defaults](#satori-v2-settings). It is **not** a job rule: the API sends the **current page** of search results as a monospace table (Id, Playbook source, Status, Result, Created at), and still prints the table in the terminal.
 
 ```sh
 satori-v2 search --playbook satori://code/python/pyspector.yml \

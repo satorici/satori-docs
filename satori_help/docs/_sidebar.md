@@ -32,6 +32,7 @@
   * [CLI --notify](/notifications.md#cli-override-notify)
   * [Search --notify](/notifications.md#search-notify)
   * [Settings Command](/notifications.md#satori-v2-settings)
+  * [Saved parameters and secrets](/notifications.md#saved-parameters-and-secrets)
   * [Slack](/notifications.md#slack)
   * [Discord](/notifications.md#discord)
   * [Email](/notifications.md#email)

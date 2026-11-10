@@ -28,6 +28,8 @@ When executing this playbook, you have several options:
 
 **- Synchronously with `--output`:** execute the playbook synchronously, showing the output in real-time as it completes.
 
+In every case, the CLI prints `Report ID: ID` and `Report: https://dashboard.satori.ci/reports/ID` as soon as the execution exists, before a synchronous run finishes, so you can open the report while it is still running. With `--json` these lines are not printed.
+
 ![Run remotely sync and async](img/run_1.png)
 
 ## Run Remotely with Parameters
@@ -190,6 +192,16 @@ The `satori-v2 run` command provides extensive options for controlling execution
 | `-df, --data-file KEY=PATH` | Load variable values from a file (repeatable). Each non-blank line becomes a value for `KEY` | `satori-v2 run ./ -df PAYLOAD=/path/to/data.txt` |
 | `-e, --env KEY VALUE` | Set an environment variable inside the execution container (repeatable) | `satori-v2 run ./ -e DEBUG 1 -e LANG C.UTF-8` |
 | `-t, --tag KEY VALUE` | Attach a tag to the job for later filtering (repeatable) | `satori-v2 run ./ -t team backend -t env staging` |
+
+**Parameters from the environment:** when the playbook is a local file or directory, `satori-v2 run` and `satori-v2 scan` fill each `${{NAME}}` variable of the playbook from the environment variable with the same name, if it is set. A value passed with `-d` wins. `satori-v2 local` does not do this.
+
+```sh
+export HOST=example.com
+satori-v2 run playbook.yml          # ${{HOST}} is example.com
+satori-v2 run playbook.yml -d HOST=other.com
+```
+
+**Sources:** besides a playbook file, a directory or a `satori://` URI, `SOURCE` can be a `.sh` script, which is uploaded and run with `sh`. When `SOURCE` is a directory, a `.satorignore` file in it lists the paths to leave out of the upload, one path prefix per line.
 
 ::: warning On development
 The following file/data flags are not available yet in CLI v2. The v1 syntax is kept here for reference.

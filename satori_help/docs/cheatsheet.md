@@ -9,12 +9,13 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `pip install git+https://github.com/satorici/cli-v2` | Install the latest version. The console script is named `satori-v2` so it can coexist with the v1 `satori` CLI |
 | `satori-v2 install` | Guided onboarding: opens browser, saves token, installs CLI v2 *(on development)* |
 | `satori-v2 update` | Update to the latest version (reinstalls from git with pip; adds `--break-system-packages` on externally-managed Pythons) |
-| `satori-v2 config` | Show the current configuration |
+| `satori-v2 config` | Show the current configuration (the token is masked) |
+| `satori-v2 config KEY` | Show one configuration value |
 | `satori-v2 config token "USERTOKEN"` | Configure your user token as your default profile |
 | `satori-v2 config token "TOKEN" --profile NAME` | Configure a token on a separate profile |
 | `satori-v2 config pat "GITHUB_PAT"` | Set your GitHub personal access token (alias of `satori-v2 settings github`) |
 | `satori-v2 config organization ORG` | Act on the organization ORG (ID or name) by default in this profile. See [Organizations](/organizations.md) |
-| `satori-v2 config organization none` | Act on your own account again |
+| `satori-v2 config organization none` | Act on your own account again (`personal` works too) |
 | `satori-v2 whoami` | Show the active profile, the selected organization and whether a GitHub PAT is configured |
 | `npx -y github:satorici/satori-mcp` | Run the Satori MCP server over stdio for AI agents (Cursor, Claude Code, Codex). See [MCP Setup](/modes/mcp/setup.md) |
 | `satori-v2 width` | Show console width configuration for current profile *(on development)* |
@@ -336,9 +337,9 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 repo GitHubUser/Repo playbook add URI` | Add playbook to repository *(on development)* |
 | `satori-v2 repo GitHubUser/Repo playbook del URI` | Remove playbook from repository *(on development)* |
 | `satori-v2 repo GitHubUser/Repo visibility {public, private, unlisted}` | Toggles the repo's visibility *(on development)* |
-| `satori-v2 repo GitHubUser/Repo params` | List parameters/secrets for the repository *(on development)* |
-| `satori-v2 repo GitHubUser/Repo params add 'NAME=VALUE'` | Add a parameter/secret to the repository *(on development)* |
-| `satori-v2 repo GitHubUser/Repo params del NAME` | Delete a parameter/secret from the repository *(on development)* |
+| `satori-v2 repo GitHubUser/Repo params` | List parameters/secrets for the repository *(on development; in v2 use `satori-v2 parameters list --repo GitHubUser/Repo` and `satori-v2 secrets list --repo GitHubUser/Repo`)* |
+| `satori-v2 repo GitHubUser/Repo params add 'NAME=VALUE'` | Add a parameter/secret to the repository *(on development; in v2 use `satori-v2 parameters set NAME VALUE --repo GitHubUser/Repo` or `satori-v2 secrets set NAME --repo GitHubUser/Repo`)* |
+| `satori-v2 repo GitHubUser/Repo params del NAME` | Delete a parameter/secret from the repository *(on development; in v2 use `satori-v2 parameters unset NAME --repo GitHubUser/Repo` or `satori-v2 secrets unset NAME --repo GitHubUser/Repo`)* |
 
 ## Monitors
 
@@ -440,7 +441,7 @@ Organizations are accounts shared by their members. Commands act on your own acc
 | `satori-v2 organization ORG-ID` | Show the organization and your role |
 | `satori-v2 organization ORG-ID use` | Act on it in the following commands (saved per `--profile`) |
 | `satori-v2 organization ORG-ID rename NAME` | Rename it (OWNER/ADMIN) |
-| `satori-v2 organization ORG-ID delete` | Delete it with all of its jobs, reports and findings (OWNER) |
+| `satori-v2 organization ORG-ID delete [--yes]` | Delete it with all of its jobs, reports and findings (OWNER). `--yes` skips the confirmation |
 | `satori-v2 organization ORG-ID members` | List members and roles |
 | `satori-v2 organization ORG-ID add EMAIL [--role {OWNER\|ADMIN\|MEMBER}]` | Add a user who has logged in to Satori (default `MEMBER`) |
 | `satori-v2 organization ORG-ID role USER-ID ROLE` | Change a member's role |

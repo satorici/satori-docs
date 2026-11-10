@@ -35,7 +35,7 @@ To show the organization saved in the profile, or to go back to your own account
 
 ```sh
 satori-v2 config organization          # prints "7 (Acme)"
-satori-v2 config organization none     # or: satori-v2 organizations personal
+satori-v2 config organization none     # or: config organization personal, or: satori-v2 organizations personal
 ```
 
 `satori-v2 whoami` also shows the selected organization.
@@ -53,7 +53,7 @@ In CI, set `SATORI_ORGANIZATION` next to `SATORI_TOKEN` so the pipeline's jobs b
 | `satori-v2 organization ORG-ID add EMAIL [--role ROLE]` | OWNER, ADMIN | Add a user who has already logged in to Satori (default `MEMBER`) |
 | `satori-v2 organization ORG-ID role USER-ID ROLE` | OWNER, ADMIN | Change a member's role |
 | `satori-v2 organization ORG-ID remove USER-ID` | OWNER, ADMIN; anyone for themselves | Remove a member, or leave the organization with your own user ID |
-| `satori-v2 organization ORG-ID delete` | OWNER | Delete it with all of its jobs, reports and findings (asks for confirmation) |
+| `satori-v2 organization ORG-ID delete` | OWNER | Delete it with all of its jobs, reports and findings (asks for confirmation; add `--yes` to skip the prompt in scripts) |
 
 Roles are `OWNER`, `ADMIN` and `MEMBER`. Only an `OWNER` can grant or revoke the `OWNER` role, and an organization always keeps at least one `OWNER`: to get rid of the last one, delete the organization instead.
 

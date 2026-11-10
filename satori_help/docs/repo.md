@@ -52,10 +52,11 @@ The `satori-v2 repo` command group described below is not available yet in CLI v
 
 | v1 command | CLI v2 equivalent |
 | --- | --- |
-| `satori-v2 repo owner/repo run` | `satori-v2 run ./.satori.yml --repo owner/repo` (or any playbook source) |
+| `satori-v2 repo owner/repo run` | `satori-v2 run owner/repo` (the repository's own `.satori.yml`), or `satori-v2 run SRC --repo owner/repo` with any playbook source |
 | `satori-v2 repo owner/repo run --playbook satori://code/trufflehog.yml --report --output` | `satori-v2 run satori://code/trufflehog.yml --repo owner/repo --report --output` |
 | `satori-v2 repo "owner/*" run --playbook SRC` | `satori-v2 run SRC --repo owner` or `satori-v2 scan "owner/*" SRC` (the latest commit of up to 100 repositories) |
 | `satori-v2 repo owner/repo commits` | `satori-v2 scan owner/repo SRC` or `satori-v2 scan owner/repo --playbook SRC` |
+| `satori-v2 repo owner/repo params`, `params add 'NAME=VALUE'`, `params del NAME` | `satori-v2 parameters list\|set NAME VALUE\|unset NAME --repo owner/repo`, and `satori-v2 secrets ...` for sensitive values. See [Saved parameters and secrets](notifications.md#saved-parameters-and-secrets) |
 
 Running a playbook against a repository with `--repo` creates a one-commit scan job on the latest commit of that repository:
 
