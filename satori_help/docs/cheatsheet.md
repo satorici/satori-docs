@@ -154,7 +154,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | Command | Description |
 | --- | --- |
 | `satori-v2` | Show your general dashboard (latest jobs) |
-| `satori-v2 --public` | Show the latest public jobs |
+| `satori-v2 --public` | Show your latest public jobs |
 | `satori-v2 jobs` | List your jobs (runs, scans, monitors, CI and local executions) |
 | `satori-v2 job ID` | Show a job and its last 5 executions |
 
@@ -163,7 +163,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | Command | Description |
 | --- | --- |
 | `satori-v2 jobs` | List your jobs |
-| `satori-v2 jobs --public` | List public jobs |
+| `satori-v2 jobs --public` | List your public jobs |
 | `satori-v2 jobs --page N -q N` | Paginate the job list |
 | `satori-v2 jobs --json` | List your jobs as JSON |
 | `satori-v2 job ID` | Show the job ID and its last 5 executions |
