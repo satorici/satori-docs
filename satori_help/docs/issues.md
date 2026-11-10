@@ -109,7 +109,7 @@ satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j
 satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j --json
 ```
 
-Shows the issue details: source, title, severity, status, the execution it belongs to and the identity of the assert or tool hit (test path and assert name, or tool, check ID, file and line). Without `--json`, it also prints a **History** timeline of status changes, comments and other events, with actor display names when available.
+Shows the issue details: title, status, exploitability, severity, source, the execution it belongs to and, when set, the assignee. A **Snapshot** panel shows the assert or tool hit behind the issue (test path and assert name, or tool, check ID, file and line), and a **History** panel shows the timeline of status changes, comments and other events, with actor display names when available. With `--json`, the timeline is the `history` key of the issue object.
 
 ## Comments
 
@@ -136,8 +136,13 @@ The agents can only read files (`Read`, `Grep`, `Glob`). Before they start, the 
 
 Requirements:
 
-- `git` and `claude` must be available on your `PATH`.
-- The execution must belong to a `run --repo owner/repo`, a `local --repo owner/repo`, or to a scan of a single `owner/repo` repository (same repository constraint as advisories).
+- `git` and `claude` must be available on your `PATH`. If `claude` is missing, install it with `npm install -g @anthropic-ai/claude-code`.
+- The execution must have a repository recorded: a `run` or `local` on a repository, or a scan. Each execution of a wildcard scan (`owner/*`) records the repository it ran on, so its issues can be verified too.
+- The repository is cloned from `https://github.com/owner/repo.git` without prompting for credentials. For a private repository, set up `git` credentials for github.com first.
+
+The agents always use your local Claude Code login. The command ignores `ANTHROPIC_API_KEY`, `ANTHROPIC_BASE_URL` and `ANTHROPIC_MODEL`, so it never bills an API key or switches model.
+
+The command prints one line per issue: `finding ISSUE-ID: TP`, `FP` or `undecided`. When the agents reach no verdict (`undecided`), the issue status does not change. If Claude's usage limit is reached, run the command again to continue. To see which repository is cloned and where, add the root `--debug` flag: `satori-v2 --debug issue ISSUE-ID verify`.
 
 To verify every finding after a run finishes, use `--verify` on `run` or `local` (same Claude flow, one clone for the whole batch):
 
@@ -176,6 +181,8 @@ To delete the advisory (draft or published), use `--delete`:
 satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --delete
 ```
 
+The CLI prints `Advisory deleted`. If the advisory could not be closed on GitHub, it also prints a `WARNING` with the reason.
+
 To check the advisory's current state on GitHub (for example `triage`, `draft`, or `published`), use `--status`. This is a live lookup against GitHub; the advisory must already be published (have a remote `GHSA-…` id), and you need a GitHub personal access token configured via settings:
 
 ```sh
@@ -204,9 +211,19 @@ satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --improve
 satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --improve --json
 ```
 
-The report has the sections Summary, Proof of Concept (or Reachability, when no live reproduction was recorded), Impact, CVSS and Remediation. It is based only on what was actually confirmed: the issue, its recorded exploitability evidence and the current draft. The agent also computes a CVSS 4.0 vector, and the CLI derives the matching severity from the vector, so the improved draft is ready to publish.
+The improved draft has:
+
+- A title in the form `<vulnerability class> in <component> leads to <consequence>`.
+- A description with three sections: **Summary**, **Vulnerable Code** (the file, the line numbers and the code itself, with the data flow that reaches it) and **Impact**.
+- A CVSS 4.0 vector computed by the agent, and the matching severity, which the CLI derives from the vector. Both are saved as advisory fields, not as text in the description, so the improved draft is ready to publish.
+
+The remediation advice is not part of the advisory. The CLI posts it as a comment on the issue, starting with `Remediation:`.
+
+The report is based only on what was actually confirmed: the issue, its recorded exploitability evidence, the current draft and the repository's code.
 
 It uses the same trust model as [`verify`](#verifying-an-issue): your local `claude`, a clone of the repository with its agent configuration disabled, and read-only tools. It needs `git` and `claude` on your `PATH`. Without `--json`, it prints `Advisory improved` and the new title. If Claude's usage limit is reached, run it again later.
+
+`--improve` only works on a draft. It fails with `Could not improve this advisory` when the issue has no draft yet or the advisory is already published. If the API rejects the CVSS vector, the CLI saves the new title and description only and prints a warning: set the vector with [`edit`](#inspecting-and-updating-an-advisory) before publishing.
 
 Review the result with `satori-v2 advisory ADVISORY-ID` and adjust it with [`edit`](#inspecting-and-updating-an-advisory) before publishing.
 
@@ -264,7 +281,7 @@ satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW
 satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW --json
 ```
 
-Shows the advisory details: title, kind, provider, severity, visibility, the related execution and issue, and the external ID/URL on GitHub.
+Shows the advisory details: title, kind, provider, severity, visibility, the related execution and issue, and the external ID/URL on GitHub. It also prints the **Description** and a **History** timeline. With `--json`, the timeline is the `history` key.
 
 To edit a draft before you publish it (for example, to rewrite the generated text), use `edit`. Pass any of `--title`, the description (`--body` or `--description`, in Markdown), `--severity` and `--cvss-vector` (a CVSS 4.0 Base vector, see [CVSS](#cvss)). `--body-file FILE` reads the description from a file and takes precedence over `--body`:
 
