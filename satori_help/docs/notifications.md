@@ -275,9 +275,11 @@ Each value is a comma-separated `key=value` string:
 Notify only when a blocker, critical or high issue is marked True Positive:
 
 ```sh
-satori-v2 run ./ --repo owner/repo \
+satori-v2 run ./ \
   --notify 'watch=issue-status,severity=blocker,critical,high,result=fail,to=slack://T00000000:C00000000'
 ```
+
+`--notify` is not sent for a repository run (`--repo`, or an `owner/repo` source) or when the playbook creates a monitor. In those cases the flag is ignored without an error and the playbook's `settings.notify` rules are not replaced.
 
 See also [Run command options](modes/run.md#execution-environment).
 

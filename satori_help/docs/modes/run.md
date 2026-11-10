@@ -246,7 +246,7 @@ test:
 satori-v2 run monitor.yml    # creates a monitor that runs every 10 minutes
 ```
 
-Options such as `-d`, `-e`, `-t`, `-r`, `--cpu`, `--memory`, `--image`, `--timeout` and `--visibility` are applied to the monitor as well. See [Monitor](monitor.md) for how to manage it afterwards.
+Options such as `-d`, `-e`, `-t`, `-r`, `--cpu`, `--memory`, `--image`, `--timeout` and `--visibility` are applied to the monitor as well. The other `run` options, such as `--repo`, `--notify`, `--count`, `--expire`, `--sync`, `--files`, `--delete-report` and `--delete-output`, are ignored without an error. See [Monitor](monitor.md) for how to manage it afterwards.
 
 ::: warning On development
 The `--rate` and `--cron` flags of `satori-v2 run` are not available yet in CLI v2; use the playbook settings shown above. The v1 syntax is kept here for reference.
@@ -272,7 +272,17 @@ satori-v2 run satori://secrets/all.yml --repo BonJarber/SecretsTest --report --o
 
 This clones the `BonJarber/SecretsTest` repository and runs the secrets scanner against it.
 
-Under the hood, `satori-v2 run ... --repo owner/repo` creates a [scan](scan.md) job limited to the latest commit of the repository (the same as `satori-v2 scan owner/repo SOURCE -q 1`). The job is therefore listed by `satori-v2 scans` and can be managed with `satori-v2 scan ID`. `--sync`, `--output`, `--report`, `--stdout` and `--stderr` work as with a regular run; `--count`, `--files`, `--save-files`, `--delete-report`, `--delete-output` and `--expire` do not apply to repository runs.
+The playbook is optional. Without one, the run uses the root `.satori.yml` of the repository. You can give the repository with `--repo`, or as the `SOURCE` itself when no local path has that name:
+
+```sh
+satori-v2 run --repo satorici/satori-cli --report      # the repository's own .satori.yml
+satori-v2 run satorici/satori-cli --report             # the same
+satori-v2 run satorici/satori-cli -p satori://code/semgrep.yml --report
+```
+
+A directory `SOURCE` such as `./` is a playbook source, not the repository's: `satori-v2 run ./ --repo owner/repo` runs the `.satori.yml` of your current directory against the repository. If `SOURCE` and `--repo` name two different repositories, the CLI fails with `Conflicting repositories`.
+
+Under the hood, `satori-v2 run ... --repo owner/repo` creates a [scan](scan.md) job limited to the latest commit of the repository (the same as `satori-v2 scan owner/repo SOURCE -q 1`). The job is therefore listed by `satori-v2 scans` and can be managed with `satori-v2 scan ID`. `--sync`, `--output`, `--report`, `--stdout` and `--stderr` work as with a regular run; `--count`, `--files`, `--save-files`, `--delete-report`, `--delete-output`, `--expire`, `--notify` and `--live-output` do not apply to repository runs.
 
 `--repo owner` (or `--repo "owner/*"`) runs the playbook on the latest commit of every repository of `owner` in a single scan job, using each repository's own `.satori.yml` when no playbook is given. `--output`, `--report`, `--stdout`, `--stderr`, `--issues` and `--verify` then show every execution, and skipped repositories are printed as warnings. Wildcards are only accepted through `--repo`, never as the positional `SOURCE`. See [Scan GitHub Account Repositories](scan.md#scan-github-account-repositories).
 
@@ -293,7 +303,7 @@ Pass secrets such as `GITHUB_PAT` from an environment variable (for example, `ex
 
 | Flag | Description | Example |
 | --- | --- | --- |
-| `--repo, --repository REPO` | Clone a GitHub repository and run the playbook against its latest commit | `satori-v2 run satori://code/semgrep.yml --repo user/repo --report --output` |
+| `--repo, --repository REPO` | Clone a GitHub repository and run the playbook (by default, the repository's root `.satori.yml`) against its latest commit | `satori-v2 run satori://code/semgrep.yml --repo user/repo --report --output` |
 
 ### Output and Report Control
 
@@ -322,9 +332,9 @@ The following output flags are not available yet in CLI v2. The v1 syntax is kep
 
 | Flag | Description | Example |
 | --- | --- | --- |
-| `--format {plain\|md}` | Set output format (plain text or Markdown) *(on development, `--format` is currently only available on `report ID output`)* | `satori-v2 run ./ --sync --output --format md` |
+| `--format {plain\|md}` | Set output format (plain text or Markdown) *(on development as a `run` flag; `--format {json\|md}` is available on the root command, `report ID output`, `output` and `execution output`)* | `satori-v2 run ./ --sync --output --format md` |
 | `--redacted PARAM` | Mark parameters as redacted in logs (repeatable) *(on development, use the `redacted` playbook setting)* | `satori-v2 run ./ --redacted API_KEY --redacted PASSWORD` |
-| `--test TEST_NAME` | Show only the output of a given test *(on development, available on `report ID output --test`)* | `satori-v2 run ./ --output --test hello` |
+| `--test TEST_NAME` | Show only the output of a given test *(on development as a `run` flag; available on `report ID output --test`, `output --test` and `execution output ID --test`)* | `satori-v2 run ./ --output --test hello` |
 | `--name NAME` | Override the playbook name *(on development)* | `satori-v2 run ./ --name "Nightly build"` |
 | `--save-report {true\|false\|PATH}` | Save report to file or default location *(deprecated, see above)* | `satori-v2 run ./ --save-report true` |
 | `--save-output {true\|false\|PATH}` | Save command output to file *(deprecated, see above)* | `satori-v2 run ./ --save-output ./output.log` |

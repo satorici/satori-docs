@@ -6,9 +6,10 @@ Whenever you want to run an execution on each of the individual commits of a rep
 
 ## Create a Scan
 
-In CLI v2 a scan always needs a repository **and** a playbook. The playbook can be given as the second positional argument or with `-p/--playbook`:
+A scan needs a repository. The playbook is optional: without one, the scan uses the root `.satori.yml` of the repository. To use another playbook, give it as the second positional argument or with `-p/--playbook`:
 
 ```sh
+satori-v2 scan githubUsername/repository
 satori-v2 scan githubUsername/repository satori://code/semgrep.yml
 satori-v2 scan githubUsername/repository --playbook satori://code/semgrep.yml
 satori-v2 scan githubUsername/repository .satori.yml
@@ -60,16 +61,15 @@ If you omit `-q`, the scan covers the repository commits without limit.
 
 ::: warning On development
 The v1 `-c PERCENTAGE` flag (percentage of commits to scan) has been replaced by `-q/--quantity N` (number of commits) in CLI v2. The v1 syntax is kept here for reference.
-:::
 
-```sh
-satori-v2 scan githubUsername/repository
-satori-v2 scan githubUsername/repository -c 100
-```
+`satori-v2 scan githubUsername/repository -c 100`
+:::
 
 You can see how the results of your playbook affect different commits and forks of your repository.
 
 ## Scan Information
+
+The CLI treats the first argument as a scan ID only when it is 21 letters and digits. Anything else creates a scan. If a GitHub owner's name happens to have that form, write `owner/*` to scan its repositories.
 
 If need to get the status of a scan, you can reference its id with:
 

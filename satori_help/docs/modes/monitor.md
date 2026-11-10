@@ -121,7 +121,7 @@ satori-v2 run monitor.yml
 
 ![Run Monitor](img/monitor_1.png)
 
-There is no separate "create monitor" command: whenever the playbook file passed to `satori-v2 run` contains a `cron`, `rate` or `monitor` entry under `settings`, the CLI creates a monitor instead of a one-off run and prints its ID. The usual `run` options (`-d`, `-e`, `-t`, `-r/--region-filter`, `--cpu`, `--memory`, `--image`, `--timeout`, `--visibility`) are applied to the monitor. See [Run](run.md#scheduling-and-monitoring) for details.
+There is no separate "create monitor" command: whenever the playbook file passed to `satori-v2 run` contains a `cron`, `rate` or `monitor` entry under `settings`, the CLI creates a monitor instead of a one-off run and prints its ID. The usual `run` options (`-d`, `-e`, `-t`, `-r/--region-filter`, `--cpu`, `--memory`, `--image`, `--timeout`, `--visibility`) are applied to the monitor. The other `run` options, such as `--repo`, `--notify`, `--count` and `--sync`, are ignored. See [Run](run.md#scheduling-and-monitoring) for details.
 
 ## When Monitors Run
 
