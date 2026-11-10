@@ -144,6 +144,8 @@ satori-v2 local hello.yml --sync
 
 `satori-v2 local` accepts a subset of the `run` options: `-p/--playbook`, `-d/--data`, `--split`, `-df/--data-file`, `--timeout`, `--run`, `--visibility`, `-t/--tag`, `-o/--output`, `--report`, `--issues`, `--repo`, `--verify`, `--min-severity` and `-s/--sync`.
 
+A local run is linked to a GitHub repository, so it gets that repository's [saved parameters](../notifications.md) and its findings can open GitHub issues. Without `--repo`, the repository is the `origin` remote of the git checkout the commands run in: the directory you pass (`satori-v2 local ./`), or the current directory when you pass a playbook file. Only `github.com` remotes count; outside a checkout the run has no repository. `--repo owner/repo` sets it explicitly, and also clones that repository and runs the playbook in the clone.
+
 ::: warning On development
 The `local` flags `--test`, `--name`, `--format`, `--redacted`, `--save-report` and `--save-output` are not available yet in CLI v2.
 :::

@@ -52,7 +52,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 
 | Command | Description |
 | --- | --- |
-| `satori-v2 local ./` | Execute the playbook .satori.yml locally |
+| `satori-v2 local ./` | Execute the playbook .satori.yml locally (linked to the GitHub repo of the directory's git `origin`) |
 | `satori-v2 local playbook.yml` | Execute the playbook locally |
 | `satori-v2 local ./ --playbook="satori://..."` | Execute the specified playbook locally |
 | `satori-v2 local PLAYBOOK --repo GitHubUser/Repo` | Clone the repo and run the playbook locally against it |
@@ -66,7 +66,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `--issues` | After the run, list issues for the execution |
 | `--verify` | After the run, verify every finding with Claude Code (TP/FP; requires `--repo`) |
 | `--min-severity LEVEL` | With `--verify`, only verify findings at or above this severity (`Blocker`, `Critical`, `High`, `Medium`, `Low`, `Info`) |
-| `--repo GitHubUser/Repo` | Clone the GitHub repository and run the playbook against that checkout |
+| `--repo GitHubUser/Repo` | Clone the GitHub repository and run the playbook against that checkout. Without it, the run is linked to the working directory's git `origin` repository, with no clone |
 | `-o, --output` | Display command output |
 | `-p, --playbook` | Playbook to execute instead of the source's `.satori.yml` |
 | `-d, --data KEY=VALUE` | Provide values for the playbook variables (repeatable) |
