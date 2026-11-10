@@ -29,7 +29,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `--page N` | Page number on list commands (default: 1) |
 | `-q N, --quantity N` (aliases `-l`, `--limit`) | Number of results per page on list commands (default: 10) |
 | `--public` | List public items instead of yours on the root, `jobs`, `reports`, `monitors` and `scans` |
-| `--profile PROFILE` | Select the credentials profile. Only valid on `satori-v2 config` |
+| `--profile PROFILE` | Select the credentials profile. Valid on `satori-v2 config`, `organization ORG-ID use` and `organizations personal`; elsewhere use `SATORI_PROFILE` |
 | `~/.satori_credentials.yml` | Credentials file, one section per profile (`default`, ...) |
 | `SATORI_TOKEN` | Token read directly from the environment (overrides the credentials file) |
 | `SATORI_PROFILE` | Profile to use (overrides `--profile`) |
@@ -47,6 +47,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `satori-v2 run semgrep` | Alias: run `satori://code/semgrep.yml` on the current dir |
 | `satori-v2 run pyspector` | Alias: run `satori://code/python/pyspector_v2.yml` on the current dir |
 | `satori-v2 run PLAYBOOK --repo GitHubUser/Repo` | Run the playbook on the latest commit of a GitHub repository (creates a 1-commit scan) |
+| `satori-v2 run GitHubUser/Repo` | Run the repository's own `.satori.yml` on its latest commit (same as `satori-v2 run --repo GitHubUser/Repo`) |
 
 ## Run locally
 
@@ -366,6 +367,7 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 | `satori-v2 scans` | List scans |
 | `satori-v2 scans --public` | List public scans |
 | `satori-v2 scans --page N -q N --json` | Pagination and JSON output |
+| `satori-v2 scan GitHubUser/Repo` | Scan the GitHub repository with its own root `.satori.yml` |
 | `satori-v2 scan GitHubUser/Repo playbook.yml` | Scan the GitHub repository with a local playbook (directory sources are not allowed) |
 | `satori-v2 scan GitHubUser/Repo --playbook="satori://..."` | Scan the GitHub repository with a public playbook |
 | `satori-v2 scan GitHubUser/Repo SOURCE -q N` | Scan the last N commits of the repository (replaces v1 `-c`) |
@@ -379,7 +381,7 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 | `satori-v2 scan GitHubUser/Repo SOURCE --cpu N --memory N --image IMAGE` | Override the container settings |
 | `satori-v2 scan GitHubUser/Repo SOURCE --visibility {public\|private\|unlisted}` | Set scan visibility |
 | `satori-v2 scan GitHubUser/Repo SOURCE --json` | Print the raw JSON response |
-| `satori-v2 scan GitHubUser/Repo [-c N]` | Scan with the repository's playbook a coverage of 1 to 100 *(on development)*. Use `-q N` with an explicit playbook |
+| `satori-v2 scan GitHubUser/Repo -c N` | Scan a coverage of 1 to 100 of the commits *(on development)*. Use `-q N` (number of commits) |
 | `satori-v2 scan GitHubUser/Repo -b BRANCH` | Scan specific branch (default: main) *(on development)* |
 | `satori-v2 scan GitHubUser/Repo --from YYYY-MM-DD` | Start date for scanning *(on development)* |
 | `satori-v2 scan GitHubUser/Repo --to YYYY-MM-DD` | End date for scanning *(on development)* |
@@ -422,7 +424,7 @@ Monitors are created with `satori-v2 run` when the playbook has `cron`, `rate` o
 | `satori-v2 shards --shard X/Y --input INPUT` | Divide massive datasets into smaller chunks for distributed processing |
 | `--shard X/Y` | Shard index X out of Y total shards (required) |
 | `--input INPUT` | Input file path or direct IP/CIDR/range/domain/URL (required) |
-| `--exclude PATH or ENTRY` | Exclusion file path or direct IP/CIDR/range/domain/URL to exclude |
+| `--exclude PATH or ENTRY` | Exclusion file path, or one direct IP, CIDR or IP range to exclude (IP addresses only; use a file for several ranges) |
 | `--seed N` | Seed for deterministic pseudorandom distribution (default: 1) |
 | `--results PATH` | Output file path (writes to stdout if omitted) |
 

@@ -17,8 +17,8 @@ It supports IPv4 address ranges, domains, and HTTP/S URLs, and offers high-perfo
   Seed for deterministic pseudorandom distribution.
 
 - **--exclude PATH or ENTRY**  
-  Exclusion file path **or** direct IP/CIDR/range/domain/URL to exclude  
-  (e.g., `192.168.1.0/24`, `10.0.0.1-10.0.0.255`, `example.com`, `https://example.com`).
+  Exclusion file path **or** one direct IP, CIDR or IP range to exclude  
+  (e.g., `192.168.1.0/24`, `10.0.0.1-10.0.0.255`). Only IP addresses are excluded: domains and URLs are never filtered out.
 
 - **--results PATH**  
   Output file path (writes to stdout if omitted). Must have a `.txt` extension or no extension (`.txt` is appended by default).
@@ -42,9 +42,11 @@ The shards command accepts input in two ways:
 
 The `--exclude` flag also supports both file-based and direct input:
 
-- **Direct exclusion**: CIDR ranges, IP ranges, single IPs, domains, URLs.
+- **Direct exclusion**: one CIDR range, one IP range or one single IP. A comma-separated list is not accepted and excludes nothing.
 
-- **Files**: Text files `--exclude file.txt` with IP addresses, CIDR or IP ranges, domains, or URLs to exclude (one per line).
+- **Files**: Text files `--exclude file.txt` with IP addresses, CIDR ranges or IP ranges to exclude (one per line). Use a file to exclude more than one range. Lines that start with `#` are ignored.
+
+Exclusions apply to IP addresses only. A domain or URL in `--exclude` has no effect, and domains or URLs in the input are never excluded.
 
 
 ## Usage Examples
@@ -69,5 +71,6 @@ satori-v2 shards --shard 1/10 --input 10.0.0.1-10.0.0.255 --exclude 10.0.0.1 --r
 To divide the entire IPv4 range (4.3 billion addresses) into 500 parts and process only the first slice while excluding private networks:
 
 ```sh
-satori-v2 shards --shard 1/500 --input 0.0.0.0/0 --exclude 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 --results output.txt
+printf '10.0.0.0/8\n172.16.0.0/12\n192.168.0.0/16\n' > private.txt
+satori-v2 shards --shard 1/500 --input 0.0.0.0/0 --exclude private.txt --results output.txt
 ```
