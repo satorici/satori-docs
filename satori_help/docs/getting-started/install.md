@@ -73,7 +73,7 @@ satori-v2 config token YOUR_TOKEN
 
 The token is stored in `~/.satori_credentials.yml`, one section per profile. `satori-v2 config token YOUR_TOKEN` writes to the `default` profile; use `--profile NAME` (e.g. `satori-v2 config token OTHERTOKEN --profile work`) to keep another token on a separate profile. `--profile` is accepted by `satori-v2 config` and by the commands that save the default organization (`organization ORG-ID use` and `organizations personal`); for any other command, select the profile with the `SATORI_PROFILE` environment variable. Run `satori-v2 config` to print the current configuration (the token is shown as `***`), or `satori-v2 config KEY` to print one value.
 
-To set a GitHub personal access token used by the platform (for example for advisory workflows), run `satori-v2 settings github YOUR_GITHUB_PAT` (or the alias `satori-v2 config pat YOUR_GITHUB_PAT`). Check the active profile and whether a PAT is configured with `satori-v2 whoami` or `satori-v2 settings github`.
+To set a GitHub personal access token used by the platform (for example for advisory workflows), run `satori-v2 settings github YOUR_GITHUB_PAT` (or the alias `satori-v2 config pat YOUR_GITHUB_PAT`). Check the active profile, your name and email, and whether a PAT is configured with `satori-v2 whoami` or `satori-v2 settings github`.
 
 The following environment variables are read directly and take precedence over the credentials file:
 

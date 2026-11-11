@@ -38,7 +38,7 @@ satori-v2 config organization          # prints "7 (Acme)"
 satori-v2 config organization none     # or: config organization personal, or: satori-v2 organizations personal
 ```
 
-`satori-v2 whoami` also shows the selected organization.
+`satori-v2 whoami` also shows the selected organization, with its name and ID.
 
 In CI, set `SATORI_ORGANIZATION` next to `SATORI_TOKEN` so the pipeline's jobs belong to the organization.
 
