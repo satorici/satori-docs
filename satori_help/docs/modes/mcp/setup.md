@@ -6,6 +6,16 @@ next:
 
 # MCP server
 
+## Let your agent install it
+
+Paste this into Claude Code, Codex or Cursor. The agent adds the server and the [verification rule](/modes/mcp/agent-rules) for you, following [Setup (Agents)](/modes/mcp/setup-agents):
+
+```text
+Install the Satori MCP server by following https://docs-v2.satori.ci/modes/mcp/setup-agents.md
+```
+
+## About the server
+
 [`satori-mcp`](https://github.com/satorici/satori-mcp) is a local [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server over stdio. AI agents such as Claude Code, Codex, and Cursor can use it to run playbooks, inspect executions, and read findings through your existing Satori credentials. It runs straight from GitHub with `npx` (Node.js 22 or later), so there is nothing to install:
 
 ```console
@@ -17,14 +27,6 @@ Your agent reports "tests pass"; Satori shows you which tests it ran — every c
 ![An AI agent says tests pass; the Satori report shows every test it ran](/mcp_visibility_loop.svg)
 
 The server shares credentials with the CLI: it uses the token saved by `satori-v2 config token` (`~/.satori_credentials.yml`), or `SATORI_TOKEN` / `SATORI_PROFILE` from its environment (`SATORI_TOKEN` overrides the credentials file). Configure a token first — see [Installation](/getting-started/install.md) — or pass `SATORI_TOKEN` in the agent config (see [below](#ci-or-no-credentials-file)).
-
-## Let your agent install it
-
-Paste this into Claude Code, Codex or Cursor. The agent adds the server and the [verification rule](/modes/mcp/agent-rules) for you, following [Setup (Agents)](/modes/mcp/setup-agents):
-
-```text
-Install the Satori MCP server by following https://docs-v2.satori.ci/modes/mcp/setup-agents.md
-```
 
 ## Configure your agent
 
