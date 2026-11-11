@@ -22,6 +22,10 @@ The server shares credentials with the CLI: it uses the token saved by `satori-v
 
 Add the server to your agent's MCP config. The agent launches it itself — stdout is the protocol channel, so do not pipe or redirect it. The first start builds the package from GitHub (about 20 seconds); later starts use the npm cache.
 
+::: warning Your agent may skip the Satori tests
+Connecting the MCP server does not make the agent use it. Agents often fall back to a familiar shell command (`pytest`, `npm test`) and skip the Satori checks. If that happens, add a project rule that tells the agent to verify through Satori: see [Agent rules](/modes/mcp/agent-rules).
+:::
+
 ### Claude Code
 
 ```console
@@ -38,6 +42,8 @@ Or write a project `.mcp.json` (and commit it for the team):
 }
 ```
 
+Next: add the [Claude Code rule](/modes/mcp/agent-rules#claude-code) so the agent does not skip the Satori tests.
+
 ### Codex
 
 ```console
@@ -52,6 +58,8 @@ command = "npx"
 args = ["-y", "github:satorici/satori-mcp"]
 ```
 
+Next: add the [Codex rule](/modes/mcp/agent-rules#codex) so the agent does not skip the Satori tests.
+
 ### Cursor
 
 In `.cursor/mcp.json` or global MCP settings:
@@ -63,6 +71,8 @@ In `.cursor/mcp.json` or global MCP settings:
   }
 }
 ```
+
+Next: add the [Cursor rule](/modes/mcp/agent-rules#cursor) so the agent does not skip the Satori tests.
 
 ### CI or no credentials file
 

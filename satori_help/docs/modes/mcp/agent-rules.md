@@ -7,7 +7,7 @@ next:
   link: '/modes/mcp/subagents'
 ---
 
-# Optional: keep agents on the full playbook
+# Recommended: keep agents on the full playbook
 
 MCP server `instructions` are soft guidance. Agents often fall back to a familiar shell command (`pytest`, `npm test`, and similar) and skip lint, format, types, and security from `.satori-llm.yml`. Connecting the Satori MCP server is enough for many workflows; use the patterns below only if you want stronger, project-level pressure to verify through Satori.
 
