@@ -12,6 +12,7 @@
 * [Execution modes](/modes/modes.md)
   * MCP
     * [Setup](/modes/mcp/setup.md)
+    * [Setup (Agents)](/modes/mcp/setup-agents.md)
     * [Tools](/modes/mcp/tools.md)
     * [Agent rules](/modes/mcp/agent-rules.md)
     * [Subagents](/modes/mcp/subagents.md)

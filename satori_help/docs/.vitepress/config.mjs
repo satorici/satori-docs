@@ -63,6 +63,7 @@ export default defineConfig({
                         text: "MCP",
                         items: [
                             { text: "Setup", link: "/modes/mcp/setup" },
+                            { text: "Setup (Agents)", link: "/modes/mcp/setup-agents" },
                             { text: "Tools", link: "/modes/mcp/tools" },
                             { text: "Agent rules", link: "/modes/mcp/agent-rules" },
                             { text: "Subagents", link: "/modes/mcp/subagents" },

@@ -17,6 +17,7 @@ Prerequisite: a committed `.satori-llm.yml` (create or refresh it with `recommen
 
 Add `.cursor/rules/satori-verify.mdc`:
 
+<!-- #region cursor-rule -->
 ````markdown
 ---
 description: Verify code changes with Satori MCP, not shell-only unit tests
@@ -36,11 +37,13 @@ After editing code, verify with the **satori** MCP server:
 4. After changes, call `run_local` again and fix only failures that were not in the baseline.
 5. Do not treat shell unit tests (`pytest`, `npm test`, `pnpm test:unit`, and similar) as sufficient verification on their own.
 ````
+<!-- #endregion cursor-rule -->
 
 ### Claude Code
 
 Add a short block to `CLAUDE.md` (or project instructions):
 
+<!-- #region markdown-rule -->
 ```markdown
 ## Satori verification
 
@@ -55,6 +58,7 @@ Baseline with `run_local` on `.satori-llm.yml` before edits; if a tool/deps is m
 install on the host and re-run. After changes, fix only failures that were not in the
 baseline. Do not treat `pytest` / `npm test` alone as enough.
 ```
+<!-- #endregion markdown-rule -->
 
 ### Codex
 

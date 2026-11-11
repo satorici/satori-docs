@@ -18,9 +18,17 @@ Your agent reports "tests pass"; Satori shows you which tests it ran — every c
 
 The server shares credentials with the CLI: it uses the token saved by `satori-v2 config token` (`~/.satori_credentials.yml`), or `SATORI_TOKEN` / `SATORI_PROFILE` from its environment (`SATORI_TOKEN` overrides the credentials file). Configure a token first — see [Installation](/getting-started/install.md) — or pass `SATORI_TOKEN` in the agent config (see [below](#ci-or-no-credentials-file)).
 
+## Let your agent install it
+
+Paste this into Claude Code, Codex or Cursor. The agent adds the server and the [verification rule](/modes/mcp/agent-rules) for you, following [Setup (Agents)](/modes/mcp/setup-agents):
+
+```text
+Install the Satori MCP server by following https://docs-v2.satori.ci/modes/mcp/setup-agents.md
+```
+
 ## Configure your agent
 
-Add the server to your agent's MCP config. The agent launches it itself — stdout is the protocol channel, so do not pipe or redirect it. The first start builds the package from GitHub (about 20 seconds); later starts use the npm cache.
+To set it up by hand instead, add the server to your agent's MCP config. The agent launches it itself — stdout is the protocol channel, so do not pipe or redirect it. The first start builds the package from GitHub (about 20 seconds); later starts use the npm cache.
 
 ::: warning Your agent may skip the Satori tests
 Connecting the MCP server does not make the agent use it. Agents often fall back to a familiar shell command (`pytest`, `npm test`) and skip the Satori checks. If that happens, add a project rule that tells the agent to verify through Satori: see [Agent rules](/modes/mcp/agent-rules).
