@@ -26,7 +26,13 @@ Your agent reports "tests pass"; Satori shows you which tests it ran — every c
 
 ![An AI agent says tests pass; the Satori report shows every test it ran](/mcp_visibility_loop.svg)
 
-The server shares credentials with the CLI: it uses the token saved by `satori-v2 config token` (`~/.satori_credentials.yml`), or `SATORI_TOKEN` / `SATORI_PROFILE` from its environment (`SATORI_TOKEN` overrides the credentials file). Configure a token first — see [Installation](/getting-started/install.md) — or pass `SATORI_TOKEN` in the agent config (see [below](#ci-or-no-credentials-file)).
+The server needs your Satori API token, which you copy from your profile at [satori.ci](https://satori.ci). Save it once with `login`. It asks for the token without showing it, checks it, and stores it in `~/.satori_credentials.yml`:
+
+```console
+npx -y github:satorici/satori-mcp login
+```
+
+You do not need the Satori CLI. If you use it, both share that file, so a token saved with `satori-v2 config token` works too. Add `--profile NAME` to `login` to save the token on another profile. `SATORI_TOKEN` and `SATORI_PROFILE` in the server's environment override the file (see [below](#ci-or-no-credentials-file)).
 
 ## Configure your agent
 
@@ -86,7 +92,7 @@ Next: add the [Cursor rule](/modes/mcp/agent-rules#cursor) so the agent does not
 
 ### CI or no credentials file
 
-In CI, or on machines without the CLI, pass the token in the agent's `env` block.
+In CI, or on machines where you cannot run `login`, pass the token in the agent's `env` block.
 Cursor, Claude Code (`.mcp.json`), and similar JSON configs:
 
 ```json

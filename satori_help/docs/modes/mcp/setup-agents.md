@@ -21,14 +21,13 @@ Agent: do the steps in order. Use only the section for the agent you are.
 
 1. Run `node --version`. The server needs Node.js 22 or later. If it is older or missing, stop and tell the user.
 2. Check that Satori credentials exist: the `SATORI_TOKEN` environment variable is set, or the file `~/.satori_credentials.yml` exists. Check only that they exist. Do not print the token or the file.
-3. If there are no credentials, stop and ask the user to run this themselves, with the API token from their profile at <https://satori.ci>:
+3. If there are no credentials, stop and ask the user to run this in their own terminal. It asks for the API token from their profile at <https://satori.ci> and saves it:
 
    ```console
-   pip install git+https://github.com/satorici/cli-v2
-   satori-v2 config token YOUR_TOKEN
+   npx -y github:satorici/satori-mcp login
    ```
 
-   Do not ask the user to paste the token in the chat, and do not write a token to any file in the project.
+   Do not run `login` yourself, do not ask the user to paste the token in the chat, and do not write a token to any file in the project.
 
 ## 2. Add the MCP server
 
