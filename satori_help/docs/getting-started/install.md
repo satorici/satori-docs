@@ -81,6 +81,11 @@ The following environment variables are read directly and take precedence over t
 - `SATORI_PROFILE`: the profile to use (overrides `--profile`).
 - `SATORI_ENDPOINT`: the API endpoint (default: `https://api-v2.satori.ci`).
 
+Two more variables change where the CLI points, and are only needed for a non-default deployment:
+
+- `SATORI_DASHBOARD_URL`: the base URL of the dashboard links the CLI prints, such as report and advisory links (default: `https://dashboard.satori.ci`).
+- `SATORI_PLAYBOOKS_ENDPOINT`: the endpoint of the public playbooks catalog used by `satori-v2 playbooks` and `satori-v2 playbook satori://...` (default: the Satori catalog).
+
 ### Next Steps
 
 Learn how to automatically test "[Hello World](../getting-started/hello_world.md)".

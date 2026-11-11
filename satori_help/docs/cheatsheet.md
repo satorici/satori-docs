@@ -35,6 +35,8 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `SATORI_TOKEN` | Token read directly from the environment (overrides the credentials file) |
 | `SATORI_PROFILE` | Profile to use (overrides `--profile`) |
 | `SATORI_ENDPOINT` | API endpoint (default: `https://api-v2.satori.ci`) |
+| `SATORI_DASHBOARD_URL` | Base URL of the dashboard links the CLI prints, such as report and advisory links (default: `https://dashboard.satori.ci`) |
+| `SATORI_PLAYBOOKS_ENDPOINT` | Endpoint of the public playbooks catalog used by `playbooks` and `playbook satori://...` (default: the Satori catalog) |
 | `--org ORG` | Act on the organization ORG (ID or name) for this command only. Goes at the end of any command: `satori-v2 run ./ --org 7` |
 | `SATORI_ORGANIZATION` | Organization ID to act on (overrides the one saved in the profile) |
 
@@ -148,6 +150,7 @@ Commands marked *(on development)* are not available yet in CLI v2. Their v1 syn
 | `satori-v2 playbooks --json` | List the playbooks as JSON |
 | `satori-v2 playbooks --public` | List the public playbooks *(on development)* |
 | `satori-v2 playbook satori://...` | Show a certain public playbook |
+| `satori-v2 playbook satori://... --json` | Show the public playbook's details as JSON |
 | `satori-v2 playbook EXECUTION_ID` | Show the persisted playbook YAML for that execution's job (subject to the execution's visibility: `PUBLIC`, or `UNLISTED` after login, or `PRIVATE` for your tenant) |
 | `satori-v2 playbook ID visibility {public, private, unlisted}` | Toggles the playbook's visibility *(on development)* |
 
@@ -238,7 +241,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `--job-type {RUN\|SCAN\|MONITOR\|GITHUB\|LOCAL}` | Filter by job type |
 | `--job-id ID` | Filter by job |
 | `--id-gt ID` / `--id-lt ID` | Executions created after / before the given execution ID |
-| `--global` | Search across all reports, not only yours |
+| `--global` | Include public executions from other accounts |
 | `--status {FINISHED\|CANCELED\|RUNNING\|QUEUED}` | Filter by execution status (repeatable) |
 | `--visibility {PUBLIC\|PRIVATE\|UNLISTED}` | Filter by visibility |
 | `--from DATETIME` / `--to DATETIME` | Filter by date (ISO 8601) |
