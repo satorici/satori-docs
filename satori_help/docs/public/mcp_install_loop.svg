@@ -1,0 +1,560 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-labelledby="title desc">
+<title id="title">Install the Satori MCP server in three steps</title>
+<desc id="desc">A 21-second loop. Left, an AI agent terminal; right, three numbered steps that light up in turn. Step 1, Ask your agent: the user types "install https://docs-v2.satori.ci/modes/mcp/setup.html"; the agent fetches the page, runs "claude mcp add --scope user satori -- npx -y github:satorici/satori-mcp" and the satori server shows as connected. Step 2, Get a recommended playbook: the agent calls satori recommend_playbook, which detects python/uv and proposes five checks (lint: ruff check, format: ruff format --check, types: pyrefly check, unit: pytest -q, security: pyspector scan); the user answers yes, the agent writes .satori-llm.yml, adds a Satori verification section to CLAUDE.md and runs run_local once as a baseline: 5 checks ran, 0 findings. Step 3, Every change is verified: the user asks "add a backup endpoint"; the agent writes src/api/backup.py and runs run_local again, which reports 1 new finding not in the baseline: HIGH, PY106, CWE-78, src/api/backup.py line 14, use of subprocess.run with shell=True is a command injection risk. The agent replaces the shell command with an argument list, re-runs the playbook and gets 5 checks ran, 0 new findings.</desc>
+<style>
+svg {
+  --bg:#151f2c; --panel:#182433; --term:#111a26; --chip:#1d2b3d; --border:#2a3a50;
+  --text:#e3e8ef; --muted:#8fa0b5; --blue:#06adee; --green:#a6ce39; --red:#f66f81;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+text { font-family: var(--sans); white-space: pre; }
+.mono, .mono text { font-family: var(--mono); }
+.t { fill: var(--text); } .m { fill: var(--muted); } .g { fill: var(--green); } .b { fill: var(--blue); } .r { fill: var(--red); }
+.plbl { fill: var(--muted); font-size: 12px; letter-spacing: .14em; }
+.term-bg { fill: var(--term); }
+/* start state */
+.ln, #b2, #b3, .chk, #ring2, #ring3 { opacity: 0; }
+.dimmed { opacity: .45; }
+/* spinner sub-loop (0.4s divides the 20.8s master loop) */
+.spin { opacity: 0; animation: spin .4s steps(1, end) infinite; }
+.spin:nth-child(2) { animation-delay: -.3s; } .spin:nth-child(3) { animation-delay: -.2s; } .spin:nth-child(4) { animation-delay: -.1s; }
+@keyframes spin { 0% { opacity: 1; } 25% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes p1-ty {
+  0% { transform: translateX(0px); }
+  1.923% { transform: translateX(0px); animation-timing-function: steps(54, end); }
+  12.308% { transform: translateX(520.13px); }
+  98.269% { transform: translateX(520.13px); }
+  98.317% { transform: translateX(0px); }
+  100% { transform: translateX(0px); }
+}
+@keyframes p1-ca {
+  0% { opacity: 1; }
+  14.135% { opacity: 1; }
+  14.183% { opacity: 0; }
+  98.269% { opacity: 0; }
+  98.317% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes a1 {
+  0% { opacity: 0; }
+  14.375% { opacity: 0; }
+  14.423% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes a2 {
+  0% { opacity: 0; }
+  16.058% { opacity: 0; }
+  16.106% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes a3 {
+  0% { opacity: 0; }
+  18.221% { opacity: 0; }
+  18.269% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes a4 {
+  0% { opacity: 0; }
+  18.221% { opacity: 0; }
+  18.269% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes a5 {
+  0% { opacity: 0; }
+  21.346% { opacity: 0; }
+  21.394% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes a6 {
+  0% { opacity: 0; }
+  23.51% { opacity: 0; }
+  23.558% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes c1 {
+  0% { opacity: 0; }
+  29.519% { opacity: 0; }
+  29.567% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes c2 {
+  0% { opacity: 0; }
+  31.683% { opacity: 0; }
+  31.731% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes k0 {
+  0% { opacity: 0; }
+  32.644% { opacity: 0; }
+  32.692% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes k1 {
+  0% { opacity: 0; }
+  33.365% { opacity: 0; }
+  33.413% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes k2 {
+  0% { opacity: 0; }
+  34.087% { opacity: 0; }
+  34.135% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes k3 {
+  0% { opacity: 0; }
+  34.808% { opacity: 0; }
+  34.856% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes k4 {
+  0% { opacity: 0; }
+  35.529% { opacity: 0; }
+  35.577% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes c3 {
+  0% { opacity: 0; }
+  37.212% { opacity: 0; }
+  37.26% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes c4 {
+  0% { opacity: 0; }
+  40.096% { opacity: 0; }
+  40.144% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes c5 {
+  0% { opacity: 0; }
+  41.779% { opacity: 0; }
+  41.827% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes c6 {
+  0% { opacity: 0; }
+  43.221% { opacity: 0; }
+  43.269% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes c7 {
+  0% { opacity: 0; }
+  43.221% { opacity: 0; }
+  43.269% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes c8 {
+  0% { opacity: 0; }
+  44.904% { opacity: 0; }
+  44.952% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes c9s {
+  0% { opacity: 0; }
+  44.904% { opacity: 0; }
+  44.952% { opacity: 1; }
+  49.471% { opacity: 1; }
+  49.519% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes c9 {
+  0% { opacity: 0; }
+  49.471% { opacity: 0; }
+  49.519% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes p3-ty {
+  0% { transform: translateX(0px); }
+  55.288% { transform: translateX(0px); animation-timing-function: steps(21, end); }
+  59.327% { transform: translateX(202.27px); }
+  98.269% { transform: translateX(202.27px); }
+  98.317% { transform: translateX(0px); }
+  100% { transform: translateX(0px); }
+}
+@keyframes p3-ca {
+  0% { opacity: 1; }
+  60.288% { opacity: 1; }
+  60.337% { opacity: 0; }
+  98.269% { opacity: 0; }
+  98.317% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes d1 {
+  0% { opacity: 0; }
+  60.529% { opacity: 0; }
+  60.577% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes d2 {
+  0% { opacity: 0; }
+  62.212% { opacity: 0; }
+  62.26% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes d3s {
+  0% { opacity: 0; }
+  62.212% { opacity: 0; }
+  62.26% { opacity: 1; }
+  66.779% { opacity: 1; }
+  66.827% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes d3 {
+  0% { opacity: 0; }
+  66.779% { opacity: 0; }
+  66.827% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes find {
+  0% { opacity: 0; }
+  67.5% { opacity: 0; }
+  67.548% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes diff {
+  0% { opacity: 0; }
+  75.673% { opacity: 0; }
+  75.721% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes d4 {
+  0% { opacity: 0; }
+  73.99% { opacity: 0; }
+  74.038% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes d5 {
+  0% { opacity: 0; }
+  78.798% { opacity: 0; }
+  78.846% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes d6s {
+  0% { opacity: 0; }
+  78.798% { opacity: 0; }
+  78.846% { opacity: 1; }
+  83.125% { opacity: 1; }
+  83.173% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes d6 {
+  0% { opacity: 0; }
+  83.125% { opacity: 0; }
+  83.173% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes d7 {
+  0% { opacity: 0; }
+  85.048% { opacity: 0; }
+  85.096% { opacity: 1; }
+  98.269% { opacity: 1; }
+  98.317% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes b1 {
+  0% { opacity: 1; transform: translateY(0px); }
+  27.404% { opacity: 1; transform: translateY(0px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  28.846% { opacity: 0; transform: translateY(-16px); }
+  98.269% { opacity: 0; transform: translateY(-16px); }
+  98.317% { opacity: 1; transform: translateY(0px); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
+@keyframes b2 {
+  0% { opacity: 0; transform: translateY(16px); }
+  27.644% { opacity: 0; transform: translateY(16px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  29.087% { opacity: 1; transform: translateY(0px); }
+  52.885% { opacity: 1; transform: translateY(0px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  54.327% { opacity: 0; transform: translateY(-16px); }
+  98.269% { opacity: 0; transform: translateY(-16px); }
+  98.317% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 0; transform: translateY(16px); }
+}
+@keyframes b3 {
+  0% { opacity: 0; transform: translateY(16px); }
+  53.125% { opacity: 0; transform: translateY(16px); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  54.567% { opacity: 1; transform: translateY(0px); }
+  98.269% { opacity: 1; transform: translateY(0px); }
+  98.317% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 0; transform: translateY(16px); }
+}
+@keyframes tscene {
+  0% { opacity: 1; }
+  96.154% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,1,1); }
+  98.077% { opacity: 0; }
+  98.558% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  100% { opacity: 1; }
+}
+@keyframes ring1 {
+  0% { opacity: 1; }
+  23.558% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  25% { opacity: 0; }
+  96.635% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.558% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes num1 {
+  0% { opacity: 1; }
+  23.558% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.76% { opacity: 0; }
+  96.154% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.077% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes chk1 {
+  0% { opacity: 0; }
+  23.558% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  24.76% { opacity: 1; }
+  96.154% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.077% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes card2 {
+  0% { opacity: 0.45; }
+  27.644% { opacity: 0.45; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  29.087% { opacity: 1; }
+  96.154% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.077% { opacity: 0.45; }
+  100% { opacity: 0.45; }
+}
+@keyframes ring2 {
+  0% { opacity: 0; }
+  27.644% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  29.087% { opacity: 1; }
+  49.519% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  50.962% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes num2 {
+  0% { opacity: 1; }
+  49.519% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  50.721% { opacity: 0; }
+  96.154% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.077% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes chk2 {
+  0% { opacity: 0; }
+  49.519% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  50.721% { opacity: 1; }
+  96.154% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.077% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes card3 {
+  0% { opacity: 0.45; }
+  53.125% { opacity: 0.45; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  54.567% { opacity: 1; }
+  96.154% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.077% { opacity: 0.45; }
+  100% { opacity: 0.45; }
+}
+@keyframes ring3 {
+  0% { opacity: 0; }
+  53.125% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  54.567% { opacity: 1; }
+  83.173% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  84.615% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes num3 {
+  0% { opacity: 1; }
+  83.173% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  84.375% { opacity: 0; }
+  96.154% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.077% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes chk3 {
+  0% { opacity: 0; }
+  83.173% { opacity: 0; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  84.375% { opacity: 1; }
+  96.154% { opacity: 1; animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  98.077% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+#p1-ty { animation: p1-ty 20.8s linear infinite both; }
+#p1-ca { animation: p1-ca 20.8s linear infinite both; }
+#a1 { animation: a1 20.8s linear infinite both; }
+#a2 { animation: a2 20.8s linear infinite both; }
+#a3 { animation: a3 20.8s linear infinite both; }
+#a4 { animation: a4 20.8s linear infinite both; }
+#a5 { animation: a5 20.8s linear infinite both; }
+#a6 { animation: a6 20.8s linear infinite both; }
+#c1 { animation: c1 20.8s linear infinite both; }
+#c2 { animation: c2 20.8s linear infinite both; }
+#k0 { animation: k0 20.8s linear infinite both; }
+#k1 { animation: k1 20.8s linear infinite both; }
+#k2 { animation: k2 20.8s linear infinite both; }
+#k3 { animation: k3 20.8s linear infinite both; }
+#k4 { animation: k4 20.8s linear infinite both; }
+#c3 { animation: c3 20.8s linear infinite both; }
+#c4 { animation: c4 20.8s linear infinite both; }
+#c5 { animation: c5 20.8s linear infinite both; }
+#c6 { animation: c6 20.8s linear infinite both; }
+#c7 { animation: c7 20.8s linear infinite both; }
+#c8 { animation: c8 20.8s linear infinite both; }
+#c9s { animation: c9s 20.8s linear infinite both; }
+#c9 { animation: c9 20.8s linear infinite both; }
+#p3-ty { animation: p3-ty 20.8s linear infinite both; }
+#p3-ca { animation: p3-ca 20.8s linear infinite both; }
+#d1 { animation: d1 20.8s linear infinite both; }
+#d2 { animation: d2 20.8s linear infinite both; }
+#d3s { animation: d3s 20.8s linear infinite both; }
+#d3 { animation: d3 20.8s linear infinite both; }
+#find { animation: find 20.8s linear infinite both; }
+#diff { animation: diff 20.8s linear infinite both; }
+#d4 { animation: d4 20.8s linear infinite both; }
+#d5 { animation: d5 20.8s linear infinite both; }
+#d6s { animation: d6s 20.8s linear infinite both; }
+#d6 { animation: d6 20.8s linear infinite both; }
+#d7 { animation: d7 20.8s linear infinite both; }
+#b1 { animation: b1 20.8s linear infinite both; }
+#b2 { animation: b2 20.8s linear infinite both; }
+#b3 { animation: b3 20.8s linear infinite both; }
+#tscene { animation: tscene 20.8s linear infinite both; }
+#ring1 { animation: ring1 20.8s linear infinite both; }
+#num1 { animation: num1 20.8s linear infinite both; }
+#chk1 { animation: chk1 20.8s linear infinite both; }
+#card2 { animation: card2 20.8s linear infinite both; }
+#ring2 { animation: ring2 20.8s linear infinite both; }
+#num2 { animation: num2 20.8s linear infinite both; }
+#chk2 { animation: chk2 20.8s linear infinite both; }
+#card3 { animation: card3 20.8s linear infinite both; }
+#ring3 { animation: ring3 20.8s linear infinite both; }
+#num3 { animation: num3 20.8s linear infinite both; }
+#chk3 { animation: chk3 20.8s linear infinite both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  #b3, #b3 .ln, .chk, .card { opacity: 1 !important; }
+  #b1, #b2, .typer, .sp, .ring, #num1, #num2, #num3 { display: none !important; }
+}
+</style>
+<defs>
+<symbol id="logo" viewBox="0 0 512 512">
+<polygon fill="#05a551" fill-rule="evenodd" transform="matrix(0.88341396,0,0,0.88341396,-277.63857,-17.517773)" points="716.393,503.724 604.254,568.468 492.119,503.724 379.98,438.982 379.98,309.489 379.98,278.234 624.661,419.501 603.079,431.963 423.302,328.179 423.302,413.967 513.779,466.206 604.254,518.442 694.732,466.206 776.511,418.982 379.98,190.037 358.614,177.707 358.614,265.905 358.614,309.489 358.614,451.313 481.431,522.221 604.254,593.137 727.07,522.221 841.211,456.33 819.845,444"/>
+<polygon fill="#06aeef" fill-rule="evenodd" transform="matrix(0.88341396,0,0,0.88341396,-277.63857,-17.517773)" points="491.735,115.507 603.874,50.77 716.009,115.507 828.147,180.248 828.147,309.73 828.147,340.994 583.466,199.729 605.05,187.265 784.828,291.051 784.828,205.262 694.349,153.024 603.874,100.786 513.395,153.024 431.618,200.248 828.147,429.192 849.514,441.522 849.514,353.325 849.514,309.73 849.514,167.917 726.697,97.008 603.874,26.092 481.058,97.008 366.919,162.898 388.285,175.229"/>
+<path fill="#a6ce39" fill-rule="evenodd" d="m 256.16784,342.66424 18.0296,10.41545 -18.0296,10.4075 v 76.99306 l 79.92777,-46.14955 72.24647,-41.71569 h 0.006 L 256.16784,264.75066 Z m 0,163.8035 v -21.79559 l 99.06516,-57.19929 91.39094,-52.7566 18.87503,10.89338 -100.82757,58.21521 z"/>
+<path fill="#0076bf" fill-rule="evenodd" d="m 453.95805,283.72286 -123.10109,-71.07065 -67.47604,38.95237 190.57713,110.03186 18.87502,10.89249 V 294.61447 256.10204 130.82245 l -0.12191,-0.0689 -18.87414,10.89426 0.12103,0.0689 v 114.38533 z m -104.02907,-82.08418 65.63589,-37.88962 0.12103,0.0671 v 75.78455 z"/>
+</symbol>
+<clipPath id="term-clip"><rect x="33" y="108" width="798" height="579"/></clipPath>
+</defs>
+<rect width="1280" height="720" fill="#151f2c"/>
+
+<text x="32" y="54" class="plbl">YOUR AI AGENT</text>
+<use href="#logo" x="864" y="35" width="26" height="26"/>
+<text x="898" y="54" class="plbl">SATORI MCP · SETUP IN 3 STEPS</text>
+
+<!-- ============ terminal ============ -->
+<rect x="32" y="72" width="800" height="616" rx="12" fill="#111a26" stroke="#2a3a50"/>
+<path d="M44 72h776a12 12 0 0 1 12 12v24H32V84a12 12 0 0 1 12-12z" fill="#182433"/>
+<circle cx="54" cy="90" r="6" fill="#ff5f57"/><circle cx="74" cy="90" r="6" fill="#febc2e"/><circle cx="94" cy="90" r="6" fill="#28c840"/>
+<text x="432" y="95" text-anchor="middle" class="m" font-size="13">agent — acme/api</text>
+<g id="tscene" class="mono" font-size="16" clip-path="url(#term-clip)">
+<g id="b1">
+ <text x="56" y="146"><tspan class="g">&gt;</tspan><tspan class="t"> install https://docs-v2.satori.ci/modes/mcp/setup.html</tspan></text>
+ <g clip-path="url(#term-clip)"><g transform="translate(75.3 126)"><g id="p1-ty" class="typer"><rect x="0" y="0" width="534.1" height="28" class="term-bg"/><rect id="p1-ca" x="0" y="3" width="9" height="21" fill="#e3e8ef"/></g></g></g>
+ <text id="a1" class="ln" x="56" y="194.0"><tspan class="g">● </tspan><tspan class="t">Fetch</tspan><tspan class="m">(</tspan><tspan class="t">docs-v2.satori.ci/modes/mcp/setup.html</tspan><tspan class="m">)</tspan></text>
+ <text id="a2" class="ln" x="56" y="224.0"><tspan class="m">  └ MCP server · Configure your agent · Claude Code</tspan></text>
+ <text id="a3" class="ln" x="56" y="272.0"><tspan class="g">● </tspan><tspan class="t">Bash</tspan></text>
+ <text id="a4" class="ln" x="56" y="302.0"><tspan class="m">  $ </tspan><tspan class="t">claude mcp add --scope user satori -- npx -y github:satorici/satori-mcp</tspan></text>
+ <text id="a5" class="ln" x="56" y="332.0"><tspan class="m">  └ Added stdio MCP server satori to user config</tspan></text>
+ <text id="a6" class="ln" x="56" y="380.0"><tspan class="g">✓ </tspan><tspan class="b">satori</tspan><tspan class="t"> · connected</tspan></text>
+</g>
+<g id="b2">
+ <text id="c1" class="ln" x="56" y="146"><tspan class="g">● </tspan><tspan class="b">satori</tspan><tspan class="t"> · recommend_playbook</tspan></text>
+ <text id="c2" class="ln" x="56" y="176"><tspan class="m">  └ </tspan><tspan class="t">python/uv</tspan><tspan class="m"> · 5 checks</tspan></text>
+ <text id="k0" class="ln" x="56" y="206"><tspan class="b">      lint      </tspan><tspan class="t">ruff check --output-format=json .</tspan></text>
+ <text id="k1" class="ln" x="56" y="236"><tspan class="b">      format    </tspan><tspan class="t">ruff format --check .</tspan></text>
+ <text id="k2" class="ln" x="56" y="266"><tspan class="b">      types     </tspan><tspan class="t">pyrefly check</tspan></text>
+ <text id="k3" class="ln" x="56" y="296"><tspan class="b">      unit      </tspan><tspan class="t">pytest -q</tspan></text>
+ <text id="k4" class="ln" x="56" y="326"><tspan class="b">      security  </tspan><tspan class="t">pyspector scan . -f json</tspan></text>
+ <text id="c3" class="ln" x="56" y="374.0"><tspan class="t">● Write .satori-llm.yml with these 5 checks?</tspan></text>
+ <text id="c4" class="ln" x="56" y="404.0"><tspan class="g">&gt;</tspan><tspan class="t"> yes</tspan></text>
+ <text id="c5" class="ln" x="56" y="452.0"><tspan class="g">● </tspan><tspan class="t">Write</tspan><tspan class="m">(</tspan><tspan class="t">.satori-llm.yml</tspan><tspan class="m">)</tspan></text>
+ <text id="c6" class="ln" x="56" y="482.0"><tspan class="g">● </tspan><tspan class="t">Update</tspan><tspan class="m">(</tspan><tspan class="t">CLAUDE.md</tspan><tspan class="m">)</tspan></text>
+ <text id="c7" class="ln" x="56" y="512.0"><tspan class="m">  └ </tspan><tspan class="g">+ ## Satori verification</tspan></text>
+ <text id="c8" class="ln" x="56" y="560.0"><tspan class="g">● </tspan><tspan class="b">satori</tspan><tspan class="t"> · run_local(.satori-llm.yml)</tspan></text>
+ <g id="c9s" class="ln sp"><text x="56" y="590.0" class="m">  └ </text><g class="g"><text class="spin" x="94.5" y="590.0">⠋</text><text class="spin" x="94.5" y="590.0">⠙</text><text class="spin" x="94.5" y="590.0">⠹</text><text class="spin" x="94.5" y="590.0">⠸</text></g><text x="113.8" y="590.0" class="m">Running 5 checks…</text></g>
+ <text id="c9" class="ln" x="56" y="590.0"><tspan class="m">  └ </tspan><tspan class="g">✓ Baseline: 5 checks ran · 0 findings</tspan></text>
+</g>
+<g id="b3">
+ <text x="56" y="146"><tspan class="g">&gt;</tspan><tspan class="t"> add a backup endpoint</tspan></text>
+ <g clip-path="url(#term-clip)"><g transform="translate(75.3 126)"><g id="p3-ty" class="typer"><rect x="0" y="0" width="216.3" height="28" class="term-bg"/><rect id="p3-ca" x="0" y="3" width="9" height="21" fill="#e3e8ef"/></g></g></g>
+ <text id="d1" class="ln" x="56" y="194.0"><tspan class="g">● </tspan><tspan class="t">Write</tspan><tspan class="m">(</tspan><tspan class="t">src/api/backup.py</tspan><tspan class="m">)</tspan></text>
+ <text id="d2" class="ln" x="56" y="242.0"><tspan class="g">● </tspan><tspan class="b">satori</tspan><tspan class="t"> · run_local(.satori-llm.yml)</tspan></text>
+ <g id="d3s" class="ln sp"><text x="56" y="272.0" class="m">  └ </text><g class="g"><text class="spin" x="94.5" y="272.0">⠋</text><text class="spin" x="94.5" y="272.0">⠙</text><text class="spin" x="94.5" y="272.0">⠹</text><text class="spin" x="94.5" y="272.0">⠸</text></g><text x="113.8" y="272.0" class="m">Running 5 checks…</text></g>
+ <text id="d3" class="ln" x="56" y="272.0"><tspan class="m">  └ </tspan><tspan class="r">✗ 1 new finding · not in the baseline</tspan></text>
+ <g id="find" class="ln"><rect x="76" y="284.5" width="716" height="68" rx="8" fill="#f66f81" fill-opacity=".08" stroke="#f66f81" stroke-opacity=".7" stroke-dasharray="5 4"/><rect x="92" y="293.5" width="50" height="21" rx="5" fill="#f66f81"/><text x="117" y="309.0" text-anchor="middle" font-size="13" font-weight="700" fill="#111a26">HIGH</text><text x="154" y="309.5"><tspan class="t">PY106 · CWE-78</tspan><tspan class="m">  security › pyspector  </tspan><tspan class="b">src/api/backup.py:14</tspan></text><text x="92" y="337.5" class="t">Use of subprocess.run with shell=True is a command injection risk.</text></g>
+ <text id="d4" class="ln" x="56" y="395.0"><tspan class="g">● </tspan><tspan class="t">Update</tspan><tspan class="m">(</tspan><tspan class="t">src/api/backup.py</tspan><tspan class="m">)</tspan></text>
+ <g id="diff" class="ln"><rect x="76" y="405.0" width="716" height="30" fill="#f66f81" fill-opacity=".12"/><rect x="76" y="435.0" width="716" height="30" fill="#a6ce39" fill-opacity=".12"/><text x="92" y="425.0" class="r">- subprocess.run(f&quot;tar czf {out} {src}&quot;, shell=True)</text><text x="92" y="455.0" class="g">+ subprocess.run([&quot;tar&quot;, &quot;czf&quot;, out, src])</text></g>
+ <text id="d5" class="ln" x="56" y="503.0"><tspan class="g">● </tspan><tspan class="b">satori</tspan><tspan class="t"> · run_local(.satori-llm.yml)</tspan></text>
+ <g id="d6s" class="ln sp"><text x="56" y="533.0" class="m">  └ </text><g class="g"><text class="spin" x="94.5" y="533.0">⠋</text><text class="spin" x="94.5" y="533.0">⠙</text><text class="spin" x="94.5" y="533.0">⠹</text><text class="spin" x="94.5" y="533.0">⠸</text></g><text x="113.8" y="533.0" class="m">Running 5 checks…</text></g>
+ <text id="d6" class="ln" x="56" y="533.0"><tspan class="m">  └ </tspan><tspan class="g">✓ 5 checks ran · 0 new findings</tspan></text>
+ <text id="d7" class="ln" x="56" y="581.0"><tspan class="t">● Done. POST /projects/{name}/backup is in, verified by Satori.</tspan></text>
+</g>
+</g>
+
+<!-- ============ steps ============ -->
+<g id="card1" class="card"><rect x="864" y="72" width="384" height="188" rx="12" fill="#182433" stroke="#2a3a50"/><rect id="ring1" class="ring" x="864" y="72" width="384" height="188" rx="12" fill="#06adee" fill-opacity=".05" stroke="#06adee" stroke-width="1.5"/><g id="num1"><circle cx="902" cy="112" r="16" fill="#1d2b3d" stroke="#2a3a50"/><text x="902" y="117.5" text-anchor="middle" class="t" font-size="15" font-weight="600">1</text></g><g id="chk1" class="chk"><rect x="864" y="72" width="384" height="188" rx="12" fill="none" stroke="#a6ce39" stroke-opacity=".45"/><circle cx="902" cy="112" r="16" fill="#a6ce39"/><path d="M894.5 112.5l5 5 9.5-10.5" fill="none" stroke="#111a26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g><text x="932" y="118.5" class="t" font-size="19" font-weight="600">Ask your agent</text><text x="888" y="160" class="m" font-size="15">Paste the setup link. Your agent adds</text><text x="888" y="182" class="m" font-size="15">the Satori MCP server by itself.</text><rect x="888" y="204" width="336" height="34" rx="8" fill="#111a26" stroke="#2a3a50"/><text x="902" y="226" class="mono b" font-size="13.5">npx -y github:satorici/satori-mcp</text></g>
+<g id="card2" class="card dimmed"><rect x="864" y="286" width="384" height="188" rx="12" fill="#182433" stroke="#2a3a50"/><rect id="ring2" class="ring" x="864" y="286" width="384" height="188" rx="12" fill="#06adee" fill-opacity=".05" stroke="#06adee" stroke-width="1.5"/><g id="num2"><circle cx="902" cy="326" r="16" fill="#1d2b3d" stroke="#2a3a50"/><text x="902" y="331.5" text-anchor="middle" class="t" font-size="15" font-weight="600">2</text></g><g id="chk2" class="chk"><rect x="864" y="286" width="384" height="188" rx="12" fill="none" stroke="#a6ce39" stroke-opacity=".45"/><circle cx="902" cy="326" r="16" fill="#a6ce39"/><path d="M894.5 326.5l5 5 9.5-10.5" fill="none" stroke="#111a26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g><text x="932" y="332.5" class="t" font-size="19" font-weight="600">Get a recommended playbook</text><text x="888" y="374" class="m" font-size="15">It detects your stack and proposes lint,</text><text x="888" y="396" class="m" font-size="15">format, type, unit and security checks.</text><rect x="888" y="418" width="336" height="34" rx="8" fill="#111a26" stroke="#2a3a50"/><text x="902" y="440" class="mono b" font-size="13.5">recommend_playbook → .satori-llm.yml</text></g>
+<g id="card3" class="card dimmed"><rect x="864" y="500" width="384" height="188" rx="12" fill="#182433" stroke="#2a3a50"/><rect id="ring3" class="ring" x="864" y="500" width="384" height="188" rx="12" fill="#06adee" fill-opacity=".05" stroke="#06adee" stroke-width="1.5"/><g id="num3"><circle cx="902" cy="540" r="16" fill="#1d2b3d" stroke="#2a3a50"/><text x="902" y="545.5" text-anchor="middle" class="t" font-size="15" font-weight="600">3</text></g><g id="chk3" class="chk"><rect x="864" y="500" width="384" height="188" rx="12" fill="none" stroke="#a6ce39" stroke-opacity=".45"/><circle cx="902" cy="540" r="16" fill="#a6ce39"/><path d="M894.5 540.5l5 5 9.5-10.5" fill="none" stroke="#111a26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g><text x="932" y="546.5" class="t" font-size="19" font-weight="600">Every change is verified</text><text x="888" y="588" class="m" font-size="15">After each edit the agent re-runs it and</text><text x="888" y="610" class="m" font-size="15">fixes what was not in the baseline.</text><rect x="888" y="632" width="336" height="34" rx="8" fill="#111a26" stroke="#2a3a50"/><text x="902" y="654" class="mono b" font-size="13.5">run_local(.satori-llm.yml)</text></g>
+</svg>
