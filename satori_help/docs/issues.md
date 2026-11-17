@@ -23,6 +23,7 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 | `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub |
 | `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |
 | `satori-v2 issue ISSUE-ID advisory --delete` | Delete the advisory |
+| `satori-v2 issue ISSUE-ID publish-issue` | Report the issue through a public GitHub issue that links to Satori |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 | `satori-v2 advisory ADVISORY-ID` | Show one external issue |
 | `satori-v2 advisory ADVISORY-ID edit` | Edit a draft advisory's title, description, severity or CVSS vector |
@@ -272,7 +273,7 @@ satori-v2 advisories --json
 | `--page N` | Page number (default 1) |
 | `-q, --quantity N` | Results per page (default 10, alias `-l/--limit`) |
 
-Each row shows the advisory ID, which you then pass to `advisory`.
+Each row shows the advisory ID, which you then pass to `advisory`, the kind (advisory or issue), the state on GitHub and the last comment. See [Tracking reports](#tracking-reports) for the options that filter on the GitHub state and on who commented last.
 
 ### Inspecting and updating an advisory
 
@@ -310,3 +311,51 @@ satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW visibility unlisted
 An unlisted advisory's link contains its random 21-character ID, so it can't be guessed or found by trying IDs in sequence. Share it only with the people who should see the advisory.
 
 See [Results](getting-started/execution-data.md) for the report commands and [Jobs, Executions & Output](modes/executions.md) for the job and execution model.
+
+### Reporting through a public issue
+
+Some repositories do not accept private vulnerability reports, so a security advisory cannot be published to them. For those, `publish-issue` reports the issue through a regular GitHub issue instead:
+
+```sh
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j publish-issue
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j publish-issue --json
+```
+
+The command creates the draft if the issue has none, opens the GitHub issue and prints its URL.
+
+A GitHub issue is public, so it carries no detail. Its title is `Security issue report` and its body only says that Satori CI found a security issue and links to the report at `https://dashboard.satori.ci/advisories/{id}`. Keep the following in mind:
+
+- A `PRIVATE` report becomes `UNLISTED` when it is published this way, so that the link opens. The maintainer needs to be signed in to Satori to read it.
+- An issue is reported once, either as a security advisory or as a public issue. Publishing a report that is already on GitHub fails.
+- The draft does not need a severity or a CVSS vector, because the GitHub issue does not carry them.
+- `advisory --status` and `advisory --delete` work on a report published as an issue too. Deleting it closes the GitHub issue.
+
+The dashboard offers the same action as *Publish as issue*, on the report page and on the [issues page](#tracking-reports).
+
+### Tracking reports
+
+Satori keeps GitHub's side of every published report: its state on GitHub (for example `triage`, `closed` or `open`), when it was reported, and who commented last and when.
+
+The dashboard's issues page, `https://dashboard.satori.ci/issues`, is built on this data:
+
+- *To report* lists the issues in public repositories that have no published report yet. It shows the exploitable ones by default.
+- *Reported* lists the published advisories and issues with their GitHub state and the last comment. *They replied* means that someone other than you commented last, so the report is waiting on you.
+
+Opening the issues page syncs your reports with GitHub. The sync uses your own GitHub personal access token, so it covers the reports that you published, and it skips the ones synced in the last 10 minutes. The CLI has no sync command: it shows what the last sync stored. `advisory --status` refreshes a single report.
+
+From the CLI, `advisories` filters and orders on the same data:
+
+```sh
+satori-v2 advisories --reported --last-word OTHER
+satori-v2 advisories --reported --state triage --order-by last_comment_at
+satori-v2 advisories --unreported
+```
+
+| Flag | Description |
+| --- | --- |
+| `--reported` / `--unreported` | Only the reports published to GitHub, or only the drafts |
+| `--state STATE` | GitHub state, for example `triage`, `closed` or `open` |
+| `--last-word {REPORTER\|OTHER\|NONE}` | Who commented last: you, someone else, or nobody |
+| `--order-by {created_at\|reported_at\|last_comment_at}` | The date to order the list by |
+
+The *Status* column shows the GitHub state. It shows `Published` for a report that has never been synced and `Unpublished` for a draft.

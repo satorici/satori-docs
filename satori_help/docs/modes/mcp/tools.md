@@ -49,12 +49,13 @@ next:
 | `get_finding_ai_analysis` | Latest AI analysis for a finding (PENDING, COMPLETED or FAILED); 404 if none yet |
 | `analyze_finding` | Queue AI analysis for one finding (account AI key; only when asked); optional `wait` |
 | `analyze_execution` | Queue AI analysis for an execution's findings in one call (max 20); optional `finding_ids` / `wait` |
-| `list_advisories` | External issues and security advisories already created from findings (optional `finding_id` / `execution_id`) |
+| `list_advisories` | External issues and security advisories already created from findings, with their GitHub state and last comment (optional `finding_id` / `execution_id` / `reported` / `remote_state` / `last_word` / `order_by`) |
 | `get_advisory` | Details of one advisory (description capped) with `advisory_url` |
 | `update_advisory` | Edit a draft advisory's title and/or description (Markdown) before publishing; drafts only, only when asked |
 | `create_security_advisory` | Create a local security-advisory draft from a finding (PRO; only when asked); does not contact GitHub |
 | `publish_security_advisory` | Publish an existing draft to GitHub by `finding_id` (needs GitHub PAT; only when asked) |
-| `get_advisory_status` | Live remote GitHub advisory status for an `advisory_id` |
+| `publish_issue` | Report a finding through a public GitHub issue that only links to the report on Satori, by `finding_id` (needs GitHub PAT; only when asked) |
+| `get_advisory_status` | Live GitHub state of a published advisory or issue for an `advisory_id`; also stores it |
 | `update_advisory_visibility` | Set advisory visibility (`PUBLIC` / `PRIVATE` / `UNLISTED`); only when asked |
 | `delete_security_advisory` | Delete the security advisory for a finding (`finding_id`); only when asked |
 | `list_playbooks` | Search the catalog of ready-made `satori://` playbooks |
@@ -84,7 +85,7 @@ next:
 | `stop_ssh_session` | Stop a session and release its container (async; poll with `get_ssh_session` until `FINISHED`) |
 | `ssh_into_execution` | Short-lived (5 min) SSH credentials for a **RUNNING** execution; MCP cannot host a TTY — give them to the user (`satori-v2 shell <id>`) |
 
-All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `update_finding`, `add_finding_comment`, `edit_finding_comment`, `delete_finding_comment`, `analyze_finding`, `analyze_execution`, `create_security_advisory`, `publish_security_advisory`, `update_advisory_visibility`, `delete_security_advisory`, `stop_scan`, `pause_scan`, `resume_scan`, `clean_scan`, `clean_monitor`, `delete_job`, `delete_execution`, `delete_executions`, `update_execution_visibility`, `stop_run`, `stop_all_runs`, `create_monitor`, `update_advisory`, `save_parameter`, `save_secret`, `delete_parameter`, `delete_secret`, and the organization tools that create, rename, delete or change members) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
+All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `update_finding`, `add_finding_comment`, `edit_finding_comment`, `delete_finding_comment`, `analyze_finding`, `analyze_execution`, `create_security_advisory`, `publish_security_advisory`, `publish_issue`, `update_advisory_visibility`, `delete_security_advisory`, `stop_scan`, `pause_scan`, `resume_scan`, `clean_scan`, `clean_monitor`, `delete_job`, `delete_execution`, `delete_executions`, `update_execution_visibility`, `stop_run`, `stop_all_runs`, `create_monitor`, `update_advisory`, `save_parameter`, `save_secret`, `delete_parameter`, `delete_secret`, and the organization tools that create, rename, delete or change members) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
 
 ### AI analysis notes
 
@@ -92,7 +93,7 @@ All responses are size-capped. Prefer `get_execution_output` with a `test` filte
 
 ### Security advisory notes
 
-`create_security_advisory` builds a **local draft** from a finding (title/description/severity derived server-side; completed AI analysis may enrich the text). It requires a PRO or ENTERPRISE plan and does **not** call GitHub. Creating a draft can promote a `PRIVATE` execution to `UNLISTED`. If a draft already exists for that finding, the existing row is returned. `publish_security_advisory` submits that draft to GitHub using the account's GitHub PAT from Settings (`finding_id`, not advisory id). `get_advisory_status` is a live remote lookup. `delete_security_advisory` removes the local row by `finding_id` and best-effort closes the GitHub advisory (may return a `warning`).
+`create_security_advisory` builds a **local draft** from a finding (title/description/severity derived server-side; completed AI analysis may enrich the text). It requires a PRO or ENTERPRISE plan and does **not** call GitHub. Creating a draft can promote a `PRIVATE` execution to `UNLISTED`. If a draft already exists for that finding, the existing row is returned. `publish_security_advisory` submits that draft to GitHub using the account's GitHub PAT from Settings (`finding_id`, not advisory id). `publish_issue` is for repositories without private vulnerability reporting: it opens a **public** GitHub issue that only says there is a security problem and links to the report on Satori, creating the draft when there is none and making a `PRIVATE` report `UNLISTED`. A finding is published once, as an advisory or as an issue. `get_advisory_status` is a live remote lookup that also stores the state and the last comment. `list_advisories` and `get_advisory` return that stored data (`remote_state`, `reported_at`, `last_comment_at`, `last_comment_by`, `last_word`), which is refreshed when the dashboard's issues page is opened; `reported=true` with `last_word=OTHER` lists the reports where someone else commented last. `delete_security_advisory` removes the local row by `finding_id` and best-effort closes the GitHub advisory (may return a `warning`).
 
 ### `run_playbook` notes
 

@@ -297,11 +297,16 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 issue ISSUE-ID advisory --publish` | Publish the draft advisory to GitHub (needs a severity and a matching CVSS 4.0 vector) |
 | `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |
 | `satori-v2 issue ISSUE-ID advisory --delete` | Delete the advisory |
+| `satori-v2 issue ISSUE-ID publish-issue` | Report the issue through a public GitHub issue that only links to the report on Satori |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 | `satori-v2 advisories --execution-id ID` | List external issues for an execution |
 | `satori-v2 advisories --kind {SECURITY_ADVISORY\|ISSUE}` | Filter by kind |
 | `satori-v2 advisories --provider GITHUB` | Filter by provider |
 | `satori-v2 advisories --order {ASC\|DESC}` | Order the list |
+| `satori-v2 advisories --reported` | Only the reports published to GitHub (`--unreported` for the drafts) |
+| `satori-v2 advisories --state STATE` | Filter by GitHub state, for example `triage`, `closed` or `open` |
+| `satori-v2 advisories --last-word {REPORTER\|OTHER\|NONE}` | Filter by who commented last (`OTHER`: the report is waiting on you) |
+| `satori-v2 advisories --order-by {created_at\|reported_at\|last_comment_at}` | The date to order the list by |
 | `satori-v2 advisories --page N -q N --json` | Pagination and JSON output |
 | `satori-v2 advisory ADVISORY-ID` | Show the external issue ADVISORY-ID |
 | `satori-v2 advisory ADVISORY-ID --json` | Show the external issue as JSON |
