@@ -361,9 +361,11 @@ satori-v2 issues --exploitability EXPLOITABLE --unreported --public-repo
 | Option | Description |
 | --- | --- |
 | `--reported` / `--unreported` | Only the issues with a report published to GitHub, or only the ones without. A draft counts as unreported |
-| `--public-repo` / `--private-repo` | Only the issues in a public repository, or only the ones in a known private one. Satori knows a repository is private only when the GitHub App is installed on it |
+| `--public-repo` / `--private-repo` | Only the issues in a public repository, or only the ones in a known private one. Satori knows a repository is private only when the GitHub App is installed on it. An issue with no repository, such as one from a cloud scan, is in neither list |
 
-This is the same list as the **To report** tab of the dashboard's issues page. To report a batch, list the issue IDs with `--json` and run `publish` for each one:
+`satori-v2 issues` lists the issues of the active organization. On your personal account it lists only the issues you created, even when other users share the account's tenant.
+
+This is the same list as the **To report** tab of the dashboard's issues page, which also filters by the `TP` status by default. The tab shows the name of the active organization above the list; to change it, use the organization selector in the sidebar. To report a batch, list the issue IDs with `--json` and run `publish` for each one:
 
 ```sh
 satori-v2 issues --exploitability EXPLOITABLE --unreported --public-repo -q 25 --json \

@@ -37,7 +37,7 @@ next:
 | `list_monitors` | Monitor jobs with their schedule `expression` |
 | `create_monitor` | Schedule a playbook (`playbook_path`, `playbook_yaml` or `playbook_uri`) with `expression` `rate(...)` or `cron(...)` (UTC), else the playbook's `settings.monitor`/`rate`/`cron`; only when asked |
 | `clean_monitor` | Delete a monitor's non-RUNNING reports; does not delete the monitor job |
-| `list_findings` | Findings, filtered by `execution_id`, severity (0-5 or names), `status`, `exploitability`, `source` (ASSERT or TOOL), `reported` (a report published to GitHub or not) and `public_repository`. Each row carries its `repository` and `reported` |
+| `list_findings` | Findings, filtered by `execution_id`, severity (0-5 or names), `status`, `exploitability`, `source` (ASSERT or TOOL), `reported` (a report published to GitHub or not) and `public_repository` (`true` leaves out findings with no repository). Lists the active organization's findings, or only your own on a personal account. Each row carries its `repository` and `reported` |
 | `get_finding` | Details of one finding plus its recent timeline |
 | `get_finding_timeline` | Status changes and comments for a finding |
 | `update_finding_status` | Triage a finding (OPEN, INVESTIGATING, TP, FIXED, FP, ACCEPTED), optionally with a comment |

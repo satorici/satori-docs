@@ -283,7 +283,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 issues --source {ASSERT\|TOOL}` | Filter issues by source |
 | `satori-v2 issues --severity LEVELS` | Filter by severity (`BLOCKER`, `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`; comma-separated) |
 | `satori-v2 issues --reported` | Only the issues with a report published to GitHub (`--unreported` for the ones without) |
-| `satori-v2 issues --public-repo` | Only the issues in a public repository (`--private-repo` for the known private ones) |
+| `satori-v2 issues --public-repo` | Only the issues in a public repository (`--private-repo` for the known private ones; issues with no repository are in neither) |
 | `satori-v2 issues --exploitability EXPLOITABLE --unreported --public-repo` | The issues left to report |
 | `satori-v2 issues --order {ASC\|DESC}` | Order the issues (disables the default severity sort) |
 | `satori-v2 issues --page N -q N --json` | Pagination and JSON output |
