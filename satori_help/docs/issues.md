@@ -24,6 +24,8 @@ Issues are created from the web dashboard (the *Triage* button of a report) and 
 | `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |
 | `satori-v2 issue ISSUE-ID advisory --delete` | Delete the advisory |
 | `satori-v2 issue ISSUE-ID publish-issue` | Report the issue through a public GitHub issue that links to Satori |
+| `satori-v2 issue ISSUE-ID publish` | Report the issue as an advisory or as a public issue, whichever the repository takes |
+| `satori-v2 issue ISSUE-ID channel` | Print which of the two the repository takes |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 | `satori-v2 advisory ADVISORY-ID` | Show one external issue |
 | `satori-v2 advisory ADVISORY-ID edit` | Edit a draft advisory's title, description, severity or CVSS vector |
@@ -331,6 +333,45 @@ A GitHub issue is public, so it carries no detail. Its title is `Security issue 
 - `advisory --status` and `advisory --delete` work on a report published as an issue too. Deleting it closes the GitHub issue.
 
 The dashboard offers the same action as *Publish as issue*, on the report page and on the [issues page](#tracking-reports).
+
+### Choosing the channel automatically
+
+`publish` asks GitHub whether the repository accepts private vulnerability reports, and then reports the issue the way the repository takes it:
+
+```sh
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j publish
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j channel
+```
+
+- If the repository accepts private reports, `publish` sends the security advisory, as `advisory --publish` does. The draft needs its severity and a matching CVSS 4.0 vector. If the draft is not ready the command fails. It does not open a public issue instead.
+- Otherwise, `publish` opens the public issue, as `publish-issue` does.
+
+The output starts with the channel that was used (`advisory:` or `issue:`), followed by the GitHub URL. With `--json`, the `kind` field is `SECURITY_ADVISORY` or `ISSUE`.
+
+`channel` prints `advisory` or `issue` without publishing anything. Satori asks GitHub on every call with your GitHub token and does not store the answer.
+
+### Listing the issues left to report
+
+`satori-v2 issues` filters on whether an issue has a report on GitHub and on whether its repository is public:
+
+```sh
+satori-v2 issues --exploitability EXPLOITABLE --unreported --public-repo
+```
+
+| Option | Description |
+| --- | --- |
+| `--reported` / `--unreported` | Only the issues with a report published to GitHub, or only the ones without. A draft counts as unreported |
+| `--public-repo` / `--private-repo` | Only the issues in a public repository, or only the ones in a known private one. Satori knows a repository is private only when the GitHub App is installed on it |
+
+This is the same list as the **To report** tab of the dashboard's issues page. To report a batch, list the issue IDs with `--json` and run `publish` for each one:
+
+```sh
+satori-v2 issues --exploitability EXPLOITABLE --unreported --public-repo -q 25 --json \
+  | jq -r '.items[].id' \
+  | while read -r id; do satori-v2 issue "$id" publish; done
+```
+
+An issue has to be `TP` and `EXPLOITABLE` to be published, so the loop reports a failure for each issue that is not confirmed yet.
 
 ### Tracking reports
 

@@ -282,6 +282,9 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 issues --exploitability {UNKNOWN\|EXPLOITABLE\|NOT_EXPLOITABLE\|INCONCLUSIVE}` | Filter issues by exploitability |
 | `satori-v2 issues --source {ASSERT\|TOOL}` | Filter issues by source |
 | `satori-v2 issues --severity LEVELS` | Filter by severity (`BLOCKER`, `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`; comma-separated) |
+| `satori-v2 issues --reported` | Only the issues with a report published to GitHub (`--unreported` for the ones without) |
+| `satori-v2 issues --public-repo` | Only the issues in a public repository (`--private-repo` for the known private ones) |
+| `satori-v2 issues --exploitability EXPLOITABLE --unreported --public-repo` | The issues left to report |
 | `satori-v2 issues --order {ASC\|DESC}` | Order the issues (disables the default severity sort) |
 | `satori-v2 issues --page N -q N --json` | Pagination and JSON output |
 | `satori-v2 report ID issues` | List the issues of the report ID |
@@ -298,6 +301,8 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 issue ISSUE-ID advisory --status` | Fetch the live GitHub advisory status |
 | `satori-v2 issue ISSUE-ID advisory --delete` | Delete the advisory |
 | `satori-v2 issue ISSUE-ID publish-issue` | Report the issue through a public GitHub issue that only links to the report on Satori |
+| `satori-v2 issue ISSUE-ID publish` | Report the issue as a security advisory or as a public issue, whichever the repository takes |
+| `satori-v2 issue ISSUE-ID channel` | Print which of the two the repository takes (`advisory` or `issue`) without publishing |
 | `satori-v2 advisories` | List external issues (e.g. GitHub security advisories) you created |
 | `satori-v2 advisories --execution-id ID` | List external issues for an execution |
 | `satori-v2 advisories --kind {SECURITY_ADVISORY\|ISSUE}` | Filter by kind |
