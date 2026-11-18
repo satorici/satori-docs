@@ -222,7 +222,7 @@ Every job (run, scan, monitor, CI or local) produces one or more executions. `re
 | `satori-v2 report ID output --format {json\|md}` | Show output in specified format |
 | `satori-v2 report ID output --test TEST_NAME` | Filter specific test output (repeatable) |
 | `satori-v2 report ID files` | Download the files created (if Files was set to True in settings) |
-| `satori-v2 report ID visibility {public, private, unlisted}` | Toggles the report's visibility |
+| `satori-v2 report ID visibility {public, private, unlisted, contributors}` | Sets the report's visibility (`contributors`: the GitHub contributors of its public repository) |
 | `satori-v2 report ID issues` | List the issues of the report ID (accepts the `issues` filters `--status`, `--source`, `--severity`, `--order`, `--page`, `-q`, `--json`) |
 | `satori-v2 report ID stop` | Stop the report ID while it is running |
 | `satori-v2 report ID delete` | Delete the report ID |

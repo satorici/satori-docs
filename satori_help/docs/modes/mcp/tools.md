@@ -18,7 +18,7 @@ next:
 | `get_execution` | Status and assertion summary for an execution (no logs) |
 | `get_execution_output` | Capped logs: without `test`, an index of tests; with `test`, the last lines of a stream |
 | `get_execution_playbook` | The playbook YAML an execution ran (capped) |
-| `update_execution_visibility` | Change an execution/report's visibility (`PUBLIC`, `PRIVATE` or `UNLISTED`); only when asked |
+| `update_execution_visibility` | Change an execution/report's visibility (`PUBLIC`, `PRIVATE`, `UNLISTED`, or `CONTRIBUTORS` for the GitHub contributors of its public repository); only when asked |
 | `list_executions` | Past executions (reports), newest first: filter by `job_id`, `status`, `report_status`, `job_type`, `from_`/`to`, `q`, `visibility`, `severity`, `playbook`, `tags`; paginated, max 25 |
 | `list_reports` | Alias of `list_executions` (in Satori, reports = executions) |
 | `stop_execution` | Cancel a running execution (no-op if it is not running) |

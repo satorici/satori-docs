@@ -133,18 +133,28 @@ satori-v2 report REPORT_ID issues
 
 ## Configuring Report Visibility
 
-You can configure the visibility of your results report with three distinct settings to manage who can view it:
+You can configure the visibility of your results report with four settings to manage who can view it:
 
 - **`private`**: accessible only to the owner or specifically permitted users.
+- **`contributors`**: accessible to the owner and to the GitHub contributors of the repository the report ran on. See [Sharing with contributors](#sharing-with-contributors).
 - **`unlisted`**: not listed anywhere, but any logged-in user with the direct link can open the report. This visibility is useful for sharing specific results without making them public.
 - **`public`**: open access, visible to all users without restrictions.
 
 To set the visibility of a report, use the following command and specify the visibility level:
 
 ```sh
-satori-v2 report REPORT_ID visibility [private|unlisted|public]
+satori-v2 report REPORT_ID visibility [private|contributors|unlisted|public]
 ```
 These configurations provide flexible control over report access, allowing you to choose the visibility level that best suits your sharing needs.
+
+### Sharing with contributors
+
+`contributors` is for a report you want the people who work on a repository to see, and nobody else.
+
+- A contributor is an account GitHub lists as a contributor of the repository, that is, someone with commits in it. Satori reads GitHub's public list and refreshes it about once an hour, so a new contributor can take up to an hour to get access.
+- The contributor opens the report's link while logged in to Satori with that GitHub account. Without a login the link asks them to log in; to anyone else the report doesn't exist.
+- A contributor reads the report, its output, files and playbook. They don't see it in their own listings or its issues, and can't change, stop or delete it.
+- It only applies to reports, not to jobs or advisories, and the report must have run on a single **public** GitHub repository. For a private repository, or a report without one (a monitor, for example), the command fails.
 
 An unlisted link can't be guessed. Report, job, issue and advisory IDs are
 random 21-character strings of letters and digits (for example
