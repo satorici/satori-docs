@@ -328,6 +328,7 @@ The command creates the draft if the issue has none, opens the GitHub issue and 
 A GitHub issue is public, so it carries no detail. Its title is `Security issue report` and its body only says that Satori CI found a security issue and links to the report at `https://dashboard.satori.ci/advisories/{id}`. Keep the following in mind:
 
 - A `PRIVATE` report becomes `UNLISTED` when it is published this way, so that the link opens. The maintainer needs to be signed in to Satori to read it.
+- The execution behind the report becomes visible to the repository's [contributors](getting-started/execution-data.md#sharing-with-contributors) only: a `PRIVATE` or `UNLISTED` execution changes to `CONTRIBUTORS`, and a `PUBLIC` one stays public. When GitHub does not list the contributors (a private repository, for example), the execution keeps the visibility it had.
 - An issue is reported once, either as a security advisory or as a public issue. Publishing a report that is already on GitHub fails.
 - The draft does not need a severity or a CVSS vector, because the GitHub issue does not carry them.
 - `advisory --status` and `advisory --delete` work on a report published as an issue too. Deleting it closes the GitHub issue.
