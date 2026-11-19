@@ -51,6 +51,7 @@ In CI, set `SATORI_ORGANIZATION` next to `SATORI_TOKEN` so the pipeline's jobs b
 | `satori-v2 organization ORG-ID members` | Members | List members (user ID, name, email, role) |
 | `satori-v2 organization ORG-ID rename NAME` | OWNER, ADMIN | Rename it |
 | `satori-v2 organization ORG-ID add EMAIL [--role ROLE]` | OWNER, ADMIN | Add a user who has already logged in to Satori (default `MEMBER`) |
+| `satori-v2 organization ORG-ID add --github USERNAME [--role ROLE]` | OWNER, ADMIN | The same, finding the user by their GitHub account |
 | `satori-v2 organization ORG-ID role USER-ID ROLE` | OWNER, ADMIN | Change a member's role |
 | `satori-v2 organization ORG-ID remove USER-ID` | OWNER, ADMIN; anyone for themselves | Remove a member, or leave the organization with your own user ID |
 | `satori-v2 organization ORG-ID delete` | OWNER | Delete it with all of its jobs, reports and findings (asks for confirmation; add `--yes` to skip the prompt in scripts) |
@@ -59,6 +60,7 @@ Roles are `OWNER`, `ADMIN` and `MEMBER`. Only an `OWNER` can grant or revoke the
 
 ```sh
 satori-v2 organization 7 add alice@example.com --role ADMIN
+satori-v2 organization 7 add --github octocat
 satori-v2 organization 7 members
 satori-v2 organization 7 role 42 MEMBER
 satori-v2 organization 7 remove 42

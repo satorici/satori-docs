@@ -76,7 +76,7 @@ next:
 | `rename_organization` | Rename an organization (OWNER or ADMIN); only when asked |
 | `delete_organization` | Permanently delete an organization and its jobs, reports and findings (OWNER; `confirm_name` must match); only when asked |
 | `list_organization_members` | An organization's members (user_id, name, email, role) |
-| `add_organization_member` | Add a user by email as OWNER, ADMIN or MEMBER (OWNER or ADMIN; the user must have logged in before); only when asked |
+| `add_organization_member` | Add a user by email or GitHub username as OWNER, ADMIN or MEMBER (OWNER or ADMIN; the user must have logged in before); only when asked |
 | `update_organization_member_role` | Change a member's role (only an OWNER grants or revokes OWNER); only when asked |
 | `remove_organization_member` | Remove a member, or leave with your own `user_id` (keeps at least one OWNER); only when asked |
 | `recommend_playbook` | Inspect a repo and propose checks for `.satori-llm.yml` (no install); CI `.satori.yml` gets install + import |

@@ -457,6 +457,7 @@ Organizations are accounts shared by their members. Commands act on your own acc
 | `satori-v2 organization ORG-ID delete [--yes]` | Delete it with all of its jobs, reports and findings (OWNER). `--yes` skips the confirmation |
 | `satori-v2 organization ORG-ID members` | List members and roles |
 | `satori-v2 organization ORG-ID add EMAIL [--role {OWNER\|ADMIN\|MEMBER}]` | Add a user who has logged in to Satori (default `MEMBER`) |
+| `satori-v2 organization ORG-ID add --github USERNAME [--role {OWNER\|ADMIN\|MEMBER}]` | The same, by GitHub username |
 | `satori-v2 organization ORG-ID role USER-ID ROLE` | Change a member's role |
 | `satori-v2 organization ORG-ID remove USER-ID` | Remove a member, or leave with your own user ID |
 | `COMMAND ... --org ORG` | Run one command on the organization ORG (ID or name) |
