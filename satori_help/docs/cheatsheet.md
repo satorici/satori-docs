@@ -317,7 +317,7 @@ Available on `reports search`, `reports download`, `reports stop`, `reports dele
 | `satori-v2 advisory ADVISORY-ID --json` | Show the external issue as JSON |
 | `satori-v2 advisory ADVISORY-ID edit --title T --body-file F` | Edit a draft advisory's title or description (`--body TEXT` also works) |
 | `satori-v2 advisory ADVISORY-ID edit --severity HIGH --cvss-vector VECTOR` | Set a draft advisory's severity and CVSS 4.0 Base vector (they must match) |
-| `satori-v2 advisory ADVISORY-ID visibility {PUBLIC\|PRIVATE\|UNLISTED}` | Set the external issue visibility |
+| `satori-v2 advisory ADVISORY-ID visibility {PUBLIC\|PRIVATE\|UNLISTED\|CONTRIBUTORS}` | Set the external issue visibility |
 
 ## Repos
 

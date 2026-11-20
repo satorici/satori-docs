@@ -302,6 +302,7 @@ To change who can see the advisory in Satori, set its visibility:
 satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW visibility public
 satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW visibility private
 satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW visibility unlisted
+satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW visibility contributors
 ```
 
 | Visibility | Meaning |
@@ -309,6 +310,17 @@ satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW visibility unlisted
 | `PUBLIC` | Visible to everyone |
 | `PRIVATE` | Visible only to you |
 | `UNLISTED` | Accessible by link after login, not listed publicly |
+| `CONTRIBUTORS` | Accessible by link to you and to the GitHub contributors of the repository, after login |
+
+#### Sharing an advisory with contributors
+
+`contributors` shows the advisory to the people who work on the repository, and to nobody else. It follows the same rules as a report shared with [contributors](getting-started/execution-data.md#sharing-with-contributors):
+
+- A contributor opens the advisory's link while logged in to Satori with their GitHub account. Without a login the link asks them to log in. To anyone else the advisory doesn't exist.
+- A contributor reads the advisory, its issue and the issue's timeline. They don't see it in their listings, don't see its GitHub tracking, and can't change it.
+- The repository must be a **public** GitHub repository. For a private repository, or an advisory without one, the command fails.
+
+Publishing sets this visibility for you. When you publish a `PRIVATE` or `UNLISTED` advisory to GitHub, it becomes `CONTRIBUTORS`, and a `PUBLIC` one stays public. When GitHub does not list the contributors (a private repository, for example), the advisory keeps the visibility it had.
 
 An unlisted advisory's link contains its random 21-character ID, so it can't be guessed or found by trying IDs in sequence. Share it only with the people who should see the advisory.
 
@@ -327,8 +339,8 @@ The command creates the draft if the issue has none, opens the GitHub issue and 
 
 A GitHub issue is public, so it carries no detail. Its title is `Security issue report` and its body only says that Satori CI found a security issue and links to the report at `https://dashboard.satori.ci/advisories/{id}`. Keep the following in mind:
 
-- A `PRIVATE` report becomes `UNLISTED` when it is published this way, so that the link opens. The maintainer needs to be signed in to Satori to read it.
-- The execution behind the report becomes visible to the repository's [contributors](getting-started/execution-data.md#sharing-with-contributors) only: a `PRIVATE` or `UNLISTED` execution changes to `CONTRIBUTORS`, and a `PUBLIC` one stays public. When GitHub does not list the contributors (a private repository, for example), the execution keeps the visibility it had.
+- The report becomes visible to the repository's contributors only: a `PRIVATE` or `UNLISTED` report changes to `CONTRIBUTORS`, and a `PUBLIC` one stays public. The maintainer needs to be signed in to Satori with their GitHub account to read it. When GitHub does not list the contributors (a private repository, for example), a `PRIVATE` report becomes `UNLISTED` instead, so that the link opens.
+- The execution behind the report follows the same rule: a `PRIVATE` or `UNLISTED` execution changes to [`CONTRIBUTORS`](getting-started/execution-data.md#sharing-with-contributors), and a `PUBLIC` one stays public. When GitHub does not list the contributors, the execution keeps the visibility it had.
 - An issue is reported once, either as a security advisory or as a public issue. Publishing a report that is already on GitHub fails.
 - The draft does not need a severity or a CVSS vector, because the GitHub issue does not carry them.
 - `advisory --status` and `advisory --delete` work on a report published as an issue too. Deleting it closes the GitHub issue.
