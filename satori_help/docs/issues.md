@@ -103,7 +103,7 @@ satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j exploitability UNKNOWN
 
 Without `--json`, the CLI prints `Issue {ISSUE-ID} exploitability set to {VALUE}`. With `--json`, it prints the updated issue. Filter the list with `satori-v2 issues --exploitability VALUE`.
 
-[`verify`](#verifying-an-issue) also sets it: when the verdict is `TP`, the issue is marked `EXPLOITABLE` with the agents' evidence as the reason.
+[`verify`](#verifying-an-issue) also sets it, but never to `EXPLOITABLE`: its agents read the code and execute nothing. When the verdict is `TP` and the exploitability is still `UNKNOWN`, the issue is marked `INCONCLUSIVE` with the agents' evidence as the reason. A value already set, by a tool that reproduced the issue or by a person, is left as it is.
 
 ## Inspecting an issue
 
@@ -133,7 +133,7 @@ Without `--json`, the CLI prints `Comment {id} added to issue {ISSUE-ID}`. With 
 satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j verify
 ```
 
-The command clones the repository tied to the issue's execution and judges the issue with two Claude Code agents that read the code: an analyst and an adversary that argues the issue is a false positive. If they disagree, a third agent breaks the tie. The command then sets the issue status to `TP` or `FP`. A `TP` is also marked `EXPLOITABLE`, with the agents' evidence (the input source, the path to the sink and why it is reachable) as the exploitability reason, so it is ready for an [advisory](#github-security-advisories).
+The command clones the repository tied to the issue's execution and judges the issue with two Claude Code agents that read the code: an analyst and an adversary that argues the issue is a false positive. If they disagree, a third agent breaks the tie. The command then sets the issue status to `TP` or `FP`. The agents only read the code, so a `TP` is not proof of exploitation: when the exploitability is still `UNKNOWN`, it is marked `INCONCLUSIVE`, with the reason `Static review, not executed:` followed by the agents' evidence (the input source, the path to the sink and why it is reachable). An exploitability already set is not changed. An [advisory](#github-security-advisories) needs `EXPLOITABLE`: that comes from a tool that reproduced the issue, or from [`issue ISSUE-ID exploitability`](#exploitability) once you have confirmed it.
 
 The agents can only read files (`Read`, `Grep`, `Glob`). Before they start, the clone's own agent configuration (`.claude`, `.mcp.json`, `CLAUDE.md`, `AGENTS.md`, `.cursorrules`) is renamed to `*.bak`, so a repository cannot run commands or change the instructions of the review.
 
@@ -199,7 +199,7 @@ Without `--json`, the CLI prints the status string. With `--json`, it prints `{"
 
 Requirements:
 
-- The issue must have status `TP` and exploitability `EXPLOITABLE`, both to create the draft and to publish it. [`verify`](#verifying-an-issue) sets both for a true positive.
+- The issue must have status `TP` and exploitability `EXPLOITABLE`, both to create the draft and to publish it. [`verify`](#verifying-an-issue) sets the status; the exploitability comes from a tool that reproduced the issue or from [`issue ISSUE-ID exploitability`](#exploitability).
 - The execution must belong to a `run --repo owner/repo`, a `local --repo owner/repo`, or to a scan of a single `owner/repo` repository. Executions that span several repositories are rejected.
 - The Satori GitHub Application must be installed and active on that repository.
 - Only one external issue can exist per finding. Running `advisory` again for an issue that already has a draft or published advisory returns the existing one instead of creating a second one.
@@ -248,7 +248,8 @@ satori-v2 advisory 9aJ2kL5mN8pQ3rS6tU1vW edit --severity HIGH \
 ```sh
 satori-v2 run satori://code/trufflehog.yml --repo satorici/satori-cli --sync --report
 satori-v2 issues V1StGXR8Z5jdHi6BmyT2k
-satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j verify            # TP + EXPLOITABLE
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j verify            # TP (static review)
+satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j exploitability EXPLOITABLE --reason "Reproduced: the key authenticates"
 satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory          # create the draft
 satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --improve
 satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --publish
