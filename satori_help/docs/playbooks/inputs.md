@@ -29,6 +29,7 @@ You don't have to pass every value on each run:
 
 - `satori-v2 run` and `satori-v2 scan` read a variable from the environment variable with the same name when the playbook is a local file (`WHAT="Bye World" satori-v2 run .satori.yml`). `-d` wins over the environment.
 - Parameters and secrets that you save with `satori-v2 parameters` and `satori-v2 secrets` are applied to every new job, for your account or for one repository. See [Saved parameters and secrets](../notifications.md#saved-parameters-and-secrets).
+- An imported public playbook (`satori://...`) can define a default for one of its variables, even an empty one, so that it also runs when you pass nothing. A parameter or secret that the job receives with that name replaces the default.
 
 ## Defined within the playbook
 

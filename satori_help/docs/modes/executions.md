@@ -167,7 +167,7 @@ CLI v2 is designed to be piped into other tools:
 - **`--json`** is available on the root command and on most list/detail commands; `--format json|md` selects the rendering of outputs and reports.
 - **Exit codes**: `0` on success, `1` when the API returns an error (the response body is printed to stderr as JSON), the request times out or cannot connect (`ERROR: request to Satori timed out` or `failed to connect`), or the CLI raises a Satori error, `2` on usage errors (unknown option, missing argument). There is no exit code that reflects a failed report yet; read the report with `--json` if you need to fail a pipeline on findings.
 
-`satori-v2 report ID --json` prints the execution object: `status` and `visibility` at the top level, and a `report` object holding `total_fails` (the number of failed asserts) plus the `detail` of each test. To fail a pipeline when a report has any failure:
+`satori-v2 report ID --json` prints the execution object: `status`, `visibility` and `repository` (the `owner/repo` of the execution or of its job, `null` when it has none) at the top level, and a `report` object holding `total_fails` (the number of failed asserts) plus the `detail` of each test. To fail a pipeline when a report has any failure:
 
 ```sh
 fails=$(satori-v2 report V1StGXR8Z5jdHi6BmyT2k --json | jq -r '.report.total_fails')

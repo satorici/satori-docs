@@ -160,6 +160,24 @@ Add `--min-severity LEVEL` (`Blocker`, `Critical`, `High`, `Medium`, `Low`, `Inf
 satori-v2 run PLAYBOOK --repo owner/repo --verify --min-severity High
 ```
 
+## Automatic fix pull requests
+
+Satori can open a pull request with the fix of an issue as soon as a scan finds it. It is off by default: turn on **Automatically open fix PRs when possible** in the **Fix pull requests** card of the dashboard's Settings page (`automation.automatically_open_fix_prs` in `PATCH /settings`). The setting is per user and applies to the scans that user owns, including the ones a [push](modes/ci/github.md#what-a-push-runs) starts.
+
+A pull request is opened only when all of this is true:
+
+- The issue was found by the public playbook `satori://code/javascript/jsspector.yml`, imported as is.
+- The tool reproduced the issue (the issue is `EXPLOITABLE`) and proved that its fix removes it.
+- The repository's default branch is still at the commit that was scanned.
+- The Satori GitHub Application covers the repository with **Contents** and **Pull requests** write permissions. For a scan of an [organization](organizations.md), that is the organization's installation or your own.
+
+The pull request is opened on a branch that starts with `satori/fix-ISSUE-ID`, and the issue's history records it. Satori never merges it.
+
+- Issues are saved while the execution is still running, so the pull request can appear before the scan finishes.
+- A later scan that finds the same issue with the same fix keeps the pull request that is already open instead of opening another one.
+- When a later scan with that playbook reproduces the issue but no longer proposes the fix, the issue stops offering it. A pull request that is already open is not closed.
+- When the pull request cannot be opened (for example, the App lacks the permissions), the issue is saved without it and no error is shown.
+
 ## GitHub security advisories
 
 `issue ISSUE-ID advisory` creates a **draft** external issue for the issue, through the Satori [GitHub Application](https://github.com/apps/satorici). It does **not** publish to GitHub yet. The command prints the draft details, a dashboard link (`View on web: …/advisories/{id}`), and a warning with the publish recipe.

@@ -108,6 +108,8 @@ Hello_World_Test:
 
 `file://` paths are relative to the playbook's directory (the repository root for a repository's `.satori.yml`) and cannot leave it. Imported files may import other `file://` files; they are bundled along with the playbook, both from the CLI and when a scan reads the playbook from GitHub.
 
+A playbook also inherits the settings of the `satori://` playbooks it imports, such as the image and the redacted parameters. See [Settings of imported playbooks](settings.md#settings-of-imported-playbooks).
+
 The `import` keyword is not mandatory. You can place the import section anywhere in your YAML file, as long as it adheres to valid YAML syntax.
 
 ## Errors

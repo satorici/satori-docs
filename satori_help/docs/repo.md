@@ -39,7 +39,7 @@ import:
   - satori://code/python/pyspector.yml
 ```
 
-Once merged, the [GitHub Application](modes/ci/github.md) runs it on every push.
+Once merged, the [GitHub Application](modes/ci/github.md) runs it on every push to the default branch. The reports go to the account or organization that you had selected when you opened the pull request; see [What a push runs](modes/ci/github.md#what-a-push-runs).
 
 Requirements:
 

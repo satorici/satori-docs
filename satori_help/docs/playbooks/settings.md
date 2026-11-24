@@ -237,4 +237,19 @@ satori-v2 run playbook.yml -d API_KEY=secret --redacted API_KEY --sync
 
 The playbook-level setting and the CLI flag serve the same purpose. Use the playbook setting when the parameters are always sensitive, and the CLI flag when you want to redact on a case-by-case basis.
 
+## Settings of imported playbooks
+
+A playbook that [imports](language.md#imports) a public playbook (`satori://...`) also gets that playbook's settings, as defaults. A repository's `.satori.yml` that only has an `import` therefore runs with the image and the resources its imported playbook asks for:
+
+```yml
+import:
+  - satori://code/javascript/jsspector.yml
+```
+
+- The inherited settings are `image`, `cpu`, `memory`, `storage`, `expire`, `notify` and `redacted`.
+- A setting in your own playbook wins over the imported one. With several imports, a later import wins over an earlier one.
+- `redacted` is the exception: the names add up. Your playbook can redact more parameters, but it cannot stop the redaction that an imported playbook asks for.
+- Settings of the public playbooks that an imported playbook imports are inherited in the same way.
+- Settings of `file://` imports are not inherited.
+
 If you need any help, please reach out to us on [Discord](https://discord.gg/NJHQ4MwYtt) or via [Email](mailto:support@satori.ci)

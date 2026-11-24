@@ -105,6 +105,8 @@ If at any point you want to cancel the scan, you use the `stop` action:
 satori-v2 scan ScanID stop
 ```
 
+Stopping a scan also cancels its executions that are still running. The reports of the executions that already finished are kept.
+
 Example:
 
 ![Stop Scan Repo](img/scan_3.png)
