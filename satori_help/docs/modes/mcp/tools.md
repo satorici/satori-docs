@@ -15,7 +15,7 @@ next:
 | `run_playbook` | Run a playbook on Satori (`playbook_path`, `playbook_yaml` or catalog `playbook_uri`) and optionally wait for the result |
 | `run_local` | Run a playbook's commands on this machine, upload the results and return the execution |
 | `scan_repository` | Start a scan of a GitHub repository (`owner/repo`, or `owner/*` for every repository of an owner) |
-| `get_execution` | Status and assertion summary for an execution (no logs) |
+| `get_execution` | Status and assertion summary for an execution, with its `repository` and owning `organization` (no logs) |
 | `get_execution_output` | Capped logs: without `test`, an index of tests; with `test`, the last lines of a stream |
 | `get_execution_playbook` | The playbook YAML an execution ran (capped) |
 | `update_execution_visibility` | Change an execution/report's visibility (`PUBLIC`, `PRIVATE`, `UNLISTED`, or `CONTRIBUTORS` for the GitHub contributors of its public repository); only when asked |
@@ -30,7 +30,7 @@ next:
 | `stop_all_runs` | Cancel every active RUN job among the newest 100 (scans and monitors untouched); only when asked |
 | `delete_job` | Permanently delete a job (`CANCELED` or `FINISHED` only) |
 | `list_scans` | Scan jobs (same as `list_jobs` with `type=SCAN`) |
-| `stop_scan` | Cancel a scan job so it stops launching new executions (in-flight RUNNING ones keep going) |
+| `stop_scan` | Cancel a scan job and its RUNNING executions; finished reports are kept |
 | `pause_scan` | Pause a `RUNNING` scan (no new executions until `resume_scan`) |
 | `resume_scan` | Resume a `PAUSED` scan |
 | `clean_scan` | Delete a scan's non-RUNNING reports; does not delete the scan job |
@@ -49,6 +49,9 @@ next:
 | `get_finding_ai_analysis` | Latest AI analysis for a finding (PENDING, COMPLETED or FAILED); 404 if none yet |
 | `analyze_finding` | Queue AI analysis for one finding (account AI key; only when asked); optional `wait` |
 | `analyze_execution` | Queue AI analysis for an execution's findings in one call (max 20); optional `finding_ids` / `wait` |
+| `get_finding_fix` | Latest fix written for a finding (PENDING, COMPLETED or FAILED), with its diff and its pull request; 404 if none yet |
+| `generate_finding_fix` | Write a fix for the file a confirmed (`TP`) finding points at: the one its tool proved, else the account's AI provider (only when asked); optional `force` / `wait` |
+| `open_finding_fix_pull_request` | Open a pull request on GitHub with the latest completed fix, through the Satori GitHub App (only when asked) |
 | `list_advisories` | External issues and security advisories already created from findings, with their GitHub state and last comment (optional `finding_id` / `execution_id` / `reported` / `remote_state` / `last_word` / `order_by`) |
 | `get_advisory` | Details of one advisory (description capped) with `advisory_url` |
 | `update_advisory` | Edit a draft advisory's title and/or description (Markdown) before publishing; drafts only, only when asked |
@@ -87,7 +90,7 @@ next:
 | `stop_ssh_session` | Stop a session and release its container (async; poll with `get_ssh_session` until `FINISHED`) |
 | `ssh_into_execution` | Short-lived (5 min) SSH credentials for a **RUNNING** execution; MCP cannot host a TTY — give them to the user (`satori-v2 shell <id>`) |
 
-All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `update_finding`, `add_finding_comment`, `edit_finding_comment`, `delete_finding_comment`, `analyze_finding`, `analyze_execution`, `create_security_advisory`, `publish_security_advisory`, `publish_issue`, `update_advisory_visibility`, `delete_security_advisory`, `stop_scan`, `pause_scan`, `resume_scan`, `clean_scan`, `clean_monitor`, `delete_job`, `delete_execution`, `delete_executions`, `update_execution_visibility`, `stop_run`, `stop_all_runs`, `create_monitor`, `update_advisory`, `save_parameter`, `save_secret`, `delete_parameter`, `delete_secret`, and the organization tools that create, rename, delete or change members) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
+All responses are size-capped. Prefer `get_execution_output` with a `test` filter (for example `cmd.0`) instead of requesting full logs. Tools that change shared state (`update_finding_status`, `update_finding`, `add_finding_comment`, `edit_finding_comment`, `delete_finding_comment`, `analyze_finding`, `analyze_execution`, `generate_finding_fix`, `open_finding_fix_pull_request`, `create_security_advisory`, `publish_security_advisory`, `publish_issue`, `update_advisory_visibility`, `delete_security_advisory`, `stop_scan`, `pause_scan`, `resume_scan`, `clean_scan`, `clean_monitor`, `delete_job`, `delete_execution`, `delete_executions`, `update_execution_visibility`, `stop_run`, `stop_all_runs`, `create_monitor`, `update_advisory`, `save_parameter`, `save_secret`, `delete_parameter`, `delete_secret`, and the organization tools that create, rename, delete or change members) are meant to be used only when you ask for them. Always call `stop_ssh_session` when a sandbox is no longer needed.
 
 ### AI analysis notes
 
