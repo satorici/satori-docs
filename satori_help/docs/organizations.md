@@ -66,6 +66,10 @@ satori-v2 organization 7 role 42 MEMBER
 satori-v2 organization 7 remove 42
 ```
 
+## GitHub App installations
+
+A [GitHub App](modes/ci/github.md) installation belongs to the personal account of the user who installed it, not to an organization. That user can still use it while acting on an organization: to scan the private repositories it covers, to open the [Add playbook](repo.md#add-playbooks-from-the-dashboard) pull request and to open [fix pull requests](issues.md#automatic-fix-pull-requests). Other members of the organization cannot use that installation.
+
 ## API and MCP
 
 The CLI sends the selected organization in the `X-Satori-Organization` header. Send the same header (with the organization ID) to act on an organization through the API:

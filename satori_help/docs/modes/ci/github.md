@@ -56,5 +56,18 @@ tests:
 ```
 ---
 
-With this configuration and the .satori.yml file within your project, automated tests defined in your playbook will be triggered each time you push code to your GitHub repository. These tests will run on every pipeline execution, ensuring continuous validation of your code.
+With this configuration and the .satori.yml file within your project, automated tests defined in your playbook will be triggered each time you push code to the default branch of your GitHub repository. These tests will run on every pipeline execution, ensuring continuous validation of your code.
+
+## What a push runs
+
+Each push to the repository's **default branch** starts one [scan](../scan.md) of the pushed commit, with the repository's root `.satori.yml`. Pushes to other branches, and branch deletions, start nothing.
+
+The scan belongs to the user who installed the GitHub App, and runs in one of that user's accounts:
+
+- The account or [organization](../../organizations.md) that was selected when the user opened the [Add playbook](../../repo.md#add-playbooks-from-the-dashboard) pull request for the repository.
+- Otherwise, the one where the user last scanned the repository.
+
+A repository that has neither is not scanned on push: scan it once (`satori-v2 scan owner/repo`), or add its playbook from the dashboard, to choose where its reports go.
+
+The scan gets the [saved parameters and secrets](../../notifications.md#saved-parameters-and-secrets) of that user and of the repository, like any other scan. When GitHub delivers the same push more than once, only one scan is created.
 
