@@ -30,7 +30,7 @@ Agents should read `satori-docs://playbooks/language` before writing or running 
 
 ## Errors
 
-Auth and API failures return small error objects instead of crashing the protocol. If you are not logged in, the response points you to `npx -y github:satorici/satori-mcp login`; alternatively set `SATORI_TOKEN` in the server's environment. A `403` includes a hint that the action may need a PRO or ENTERPRISE plan.
+Auth and API failures return small error objects instead of crashing the protocol. If you are not logged in, the response points you to `npx -y github:satorici/satori-mcp login`; alternatively set `SATORI_TOKEN` in the server's environment. A `401` means the token is invalid, expired or revoked, and the response points you to `login` again. A `403` includes a hint: the action may need a PRO or ENTERPRISE plan, or the token is not allowed to do it. A token cannot change saved parameters, secrets or organizations, which you change in the dashboard.
 
 ---
 

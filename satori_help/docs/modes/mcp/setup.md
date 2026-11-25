@@ -26,11 +26,17 @@ Your agent reports "tests pass"; Satori shows you which tests it ran — every c
 
 ![An AI agent says tests pass; the Satori report shows every test it ran](/mcp_visibility_loop.svg)
 
-The server needs your Satori API token, which you copy from your profile at [satori.ci](https://satori.ci). Save it once with `login`. It asks for the token without showing it, checks it, and stores it in `~/.satori_credentials.yml`:
+The server needs a Satori API token. Get one with `login`. It opens the [dashboard](https://dashboard.satori.ci), where you approve a token for this computer. The dashboard sends the token to `login`, which checks it and stores it in `~/.satori_credentials.yml`. You never copy the token:
 
 ```console
 npx -y github:satorici/satori-mcp login
 ```
+
+The token is named `MCP (<hostname>)` and expires after 90 days unless you choose otherwise when you approve it. Run `login` again to replace it. You can revoke it in the dashboard under **API tokens**.
+
+The token can run and read jobs, reports, findings, advisories and SSH sessions. It cannot change saved parameters, secrets or organizations. Do those in the dashboard.
+
+On a machine without a browser, create a token under **API tokens** and run `login --paste`. It asks for the token without showing it. You can also pipe the token on stdin.
 
 You do not need the Satori CLI. If you use it, both share that file, so a token saved with `satori-v2 config token` works too. Add `--profile NAME` to `login` to save the token on another profile. `SATORI_TOKEN` and `SATORI_PROFILE` in the server's environment override the file (see [below](#ci-or-no-credentials-file)).
 
