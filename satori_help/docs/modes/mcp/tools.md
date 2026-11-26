@@ -104,6 +104,21 @@ All responses are size-capped. Prefer `get_execution_output` with a `test` filte
 
 Provide exactly one of `playbook_path` (local `.yml` / `.yaml` file), `playbook_yaml` (inline YAML) or `playbook_uri` (a catalog playbook such as `satori://code/python/pyspector_v2.yml`, see `list_playbooks`). Optional `repository` is an `owner/repo` from `list_repos`. With `wait` (default true), the tool polls until the job finishes or `wait_seconds` elapses (max 600); then call `get_execution` with the returned `execution_id`.
 
+The options of `satori-v2 run` are arguments too:
+
+| Argument | What it does |
+|---|---|
+| `parameter_files` | `NAME` to a local file path. Each non-empty line is one more value of that parameter, like `--data-file`. `parameters` already takes a list of values per name, so there is no `--split`. |
+| `cpu`, `memory`, `environment_variables` | Container resources and environment variables. They need a PRO or ENTERPRISE plan. `memory` is in MiB and must be a valid pair with `cpu`. |
+| `image` | The container image (default `ubuntu:noble`), on any plan. |
+| `tags` | `key` to `value` words, to find the run later with `list_executions` and `tags: ["key:value"]`. |
+| `timeout` | The execution's limit in seconds. Defaults to the playbook's `settings.timeout`. |
+| `expire` | Deletes the report after `N hours`, `N days` or `N weeks`. |
+| `notify` | Rules that replace the playbook's `settings.notify`. Each has `to` (`slack://WORKSPACE:CHANNEL`, `email://user@example.com`, `discord://CHANNEL` or `telegram://CHAT_ID`) and optionally `result` (`pass` or `fail`), `severity` (a list of `info` to `blocker`) and `watch` (`finish`, the default, and/or `issue-status`). |
+| `visibility` | `PUBLIC`, `PRIVATE` (default) or `UNLISTED`. |
+| `count` | How many times to run the playbook. More than 1 needs an ENTERPRISE plan; the result lists `execution_ids` and waits on the first. |
+| `delete_report`, `delete_output` | Drop the report or the output when the run ends, so `get_execution` or `get_execution_output` have nothing to show for it. |
+
 ### `run_local` notes
 
 `run_local` executes the playbook's commands on the machine running the MCP server, with your user's privileges, and uploads the results to Satori, so the agent should only run playbooks you asked for or that it wrote for you. The working directory is `directory` (an existing local directory), or `repository` (`owner/repo`, shallow-cloned to a temporary directory), defaulting to the server's working directory. Without `repository`, the run is linked to the GitHub repository of that directory's git `origin` remote, if it has one, so it gets the repository's saved parameters. `run` limits execution to test paths with those prefixes, and `timeout_seconds` (default 300, max 3600) cancels the run when it elapses. It returns the same shape as `run_playbook`; read logs with `get_execution_output` and findings with `list_findings`.
