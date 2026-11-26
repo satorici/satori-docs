@@ -482,7 +482,7 @@ Personal account settings via `GET` / `PATCH /settings` (GitHub PAT, AI, notific
 
 | Command | Description |
 | --- | --- |
-| `satori-v2 settings` | List github, AI, and notify settings |
+| `satori-v2 settings` | List profile, github, AI, notify and automation settings |
 | `satori-v2 settings KEY` | View one key (secrets show `configured` / `(not set)`) |
 | `satori-v2 settings KEY VALUE` | Set a key |
 | `satori-v2 settings KEY --clear` | Clear a key |
@@ -491,3 +491,5 @@ Personal account settings via `GET` / `PATCH /settings` (GitHub PAT, AI, notific
 | `satori-v2 settings ai.provider anthropic` | Select AI provider (picks a default model) |
 | `satori-v2 settings ai.model_id MODEL` | Set model for the current provider |
 | `satori-v2 settings email user@example.com` | Notify keys: `default`, `email`, `slack_workspace`, `slack_channel`, `discord`, `telegram` |
+| `satori-v2 settings name "Ada Lovelace"` | Set the name shown on your profile |
+| `satori-v2 settings fix_prs true` | Open a pull request for each fix without asking (`false` or `--clear` turns it off) |

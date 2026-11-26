@@ -12,7 +12,8 @@ next:
 | Tool | Description |
 | --- | --- |
 | `whoami` | Active profile, API endpoint, notify email, and whether a GitHub PAT is configured |
-| `get_settings` | Read-only settings: whether a GitHub PAT is stored, the AI provider and model, which providers have an API key, and the notification destinations. Settings are changed in the [dashboard](https://dashboard.satori.ci/settings) or with `satori-v2 settings`, not from the MCP |
+| `get_settings` | Read-only settings: whether a GitHub PAT is stored, the AI provider and model, which providers have an API key, and the notification destinations |
+| `update_settings` | Change settings, only when you ask and with the values you give: the GitHub PAT (`github_token`), `ai_provider`, `ai_model_id`, `ai_api_keys`, the `notify` destinations, the profile `name` and `automatically_open_fix_prs`. `null` clears a setting. Stored secrets are never returned. Needs a token with `settings:write` (log in again if yours is older) |
 | `run_playbook` | Run a playbook on Satori (`playbook_path`, `playbook_yaml` or catalog `playbook_uri`) and optionally wait for the result |
 | `run_local` | Run a playbook's commands on this machine, upload the results and return the execution |
 | `scan_repository` | Start a scan of a GitHub repository (`owner/repo`, or `owner/*` for every repository of an owner) |
