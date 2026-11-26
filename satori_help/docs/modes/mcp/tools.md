@@ -125,9 +125,13 @@ The options of `satori-v2 run` are arguments too:
 
 `scan_repository` takes the same container arguments as `run_playbook`: `cpu`, `memory` and `environment_variables` need a PRO or ENTERPRISE plan, and `image` works on any plan. `visibility` is `PUBLIC`, `PRIVATE` (default) or `UNLISTED`.
 
+### `create_monitor` notes
+
+`create_monitor` takes the container arguments of `run_playbook` (`cpu`, `memory` and `environment_variables` need a PRO or ENTERPRISE plan; `image` works on any plan), `tags` for every report of the monitor, and `timeout`, each execution's limit in seconds, which defaults to the playbook's `settings.timeout`.
+
 ### `run_local` notes
 
-`run_local` executes the playbook's commands on the machine running the MCP server, with your user's privileges, and uploads the results to Satori, so the agent should only run playbooks you asked for or that it wrote for you. The working directory is `directory` (an existing local directory), or `repository` (`owner/repo`, shallow-cloned to a temporary directory), defaulting to the server's working directory. Without `repository`, the run is linked to the GitHub repository of that directory's git `origin` remote, if it has one, so it gets the repository's saved parameters. `run` limits execution to test paths with those prefixes, and `timeout_seconds` (default 300, max 3600) cancels the run when it elapses. It returns the same shape as `run_playbook`; read logs with `get_execution_output` and findings with `list_findings`.
+`run_local` executes the playbook's commands on the machine running the MCP server, with your user's privileges, and uploads the results to Satori, so the agent should only run playbooks you asked for or that it wrote for you. The working directory is `directory` (an existing local directory), or `repository` (`owner/repo`, shallow-cloned to a temporary directory), defaulting to the server's working directory. Without `repository`, the run is linked to the GitHub repository of that directory's git `origin` remote, if it has one, so it gets the repository's saved parameters. `run` limits execution to test paths with those prefixes, and `timeout_seconds` (default 300, max 3600) cancels the run when it elapses. It returns the same shape as `run_playbook`; read logs with `get_execution_output` and findings with `list_findings`. `tags` (key to value words) and `visibility` (`PUBLIC`, `PRIVATE` by default, or `UNLISTED`) work as in `run_playbook`.
 
 ### `recommend_playbook` notes
 
