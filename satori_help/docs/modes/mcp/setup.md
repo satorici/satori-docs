@@ -34,7 +34,7 @@ npx -y github:satorici/satori-mcp login
 
 The token is named `MCP (<hostname>)` and expires after 90 days unless you choose otherwise when you approve it. Run `login` again to replace it. You can revoke it in the dashboard under **API tokens**.
 
-The token can run and read jobs, reports, findings, advisories and SSH sessions. It cannot change saved parameters, secrets or organizations. Do those in the dashboard.
+The token can run and read jobs, reports, findings, advisories and SSH sessions, and change settings, saved parameters, secrets and organizations. It cannot create or revoke API tokens. Do that in the dashboard. A token created before settings and organizations had write access is refused there: run `login` again.
 
 On a machine without a browser, create a token under **API tokens** and run `login --paste`. It asks for the token without showing it. You can also pipe the token on stdin.
 
