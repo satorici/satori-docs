@@ -55,11 +55,11 @@ satori-v2 report V1StGXR8Z5jdHi6BmyT2k issues
 | `--order {ASC\|DESC}` | Sort order (disables the default severity sort) |
 | `--json` | Print the list as JSON |
 | `--page N` | Page number (default 1) |
-| `-q, --quantity N` | Results per page (default 10, alias `-l/--limit`) |
+| `-q, --quantity N` | Results per page (default 200, alias `-l/--limit`) |
 
 `report EXECUTION-ID issues` accepts the same flags except `--execution-id` and `--exploitability`.
 
-Each row shows the issue ID, which you then pass to `issue`.
+Each row shows the issue ID, which you then pass to `issue`, and the issue's [exploitability](#exploitability).
 
 ### Issue statuses
 
@@ -195,6 +195,8 @@ To publish the draft to GitHub as a security advisory in the repository of the e
 satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --publish
 satori-v2 issue Xk3pR9sT2vWq7LmN4bH8j advisory --publish --json
 ```
+
+A repository that does not accept private vulnerability reports has no advisories, so `--publish` fails there and tells you to run [`issue ISSUE-ID publish`](#choosing-the-channel-automatically) instead. Nothing is sent to GitHub.
 
 To delete the advisory (draft or published), use `--delete`:
 
@@ -413,7 +415,8 @@ Satori keeps GitHub's side of every published report: its state on GitHub (for e
 
 The dashboard's issues page, `https://dashboard.satori.ci/issues`, is built on this data:
 
-- *To report* lists the issues in public repositories that have no published report yet. It shows the exploitable ones by default.
+- *To report* lists the issues in public repositories that have no published report yet. It shows the exploitable ones by default. The **Fix** column says whether the tool that found the issue also proved a fix for it (`has_fix=true` or `false` in `GET /findings` filters on it).
+- Both tabs show the **Forks** and **Stars** of each issue's repository, as they were when it was scanned, to help you decide what to report first.
 - *Reported* lists the published advisories and issues with their GitHub state and the last comment. *They replied* means that someone other than you commented last, so the report is waiting on you.
 
 Opening the issues page syncs your reports with GitHub. The sync uses your own GitHub personal access token, so it covers the reports that you published, and it skips the ones synced in the last 10 minutes. The CLI has no sync command: it shows what the last sync stored. `advisory --status` refreshes a single report.

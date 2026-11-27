@@ -61,6 +61,8 @@ settings:
   cpu: 16384
   memory: 122880
 ```
+`cpu`, `memory` and `storage` apply on the PRO and ENTERPRISE plans. On the COMMUNITY plan they are ignored and the playbook runs with the default resources; `image` works on any plan.
+
 These are the possible combinations of CPU and memory configurations and the compatible operating systems. Select the values that best suit your playbook's requirements.
 
 | CPU value      | Memory value                                                                                                                                                                                              | Operating systems supported |

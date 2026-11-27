@@ -185,7 +185,7 @@ The `satori-v2 scan` command provides extensive options for controlling scanning
 | `--image IMAGE` | Custom Docker image | `satori-v2 scan user/repo pb.yml --image python:3.12` |
 | `-r, --region-filter REGION` | Restrict executions to the given region(s) (repeatable) | `satori-v2 scan user/repo pb.yml -r us-east-1` |
 
-CLI flags take precedence over the `cpu`, `memory` and `image` values of the playbook `settings`.
+CLI flags take precedence over the `cpu`, `memory` and `image` values of the playbook `settings`. `--cpu` and `--memory` need a PRO or ENTERPRISE plan; `--image` works on any plan. On the COMMUNITY plan the flags are rejected, and the `cpu`, `memory` and `storage` of the playbook `settings` are ignored, so the playbook still runs with the default resources.
 
 ### Execution Control
 

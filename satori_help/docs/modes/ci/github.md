@@ -71,3 +71,10 @@ A repository that has neither is not scanned on push: scan it once (`satori-v2 s
 
 The scan gets the [saved parameters and secrets](../../notifications.md#saved-parameters-and-secrets) of that user and of the repository, like any other scan. When GitHub delivers the same push more than once, only one scan is created.
 
+### Report link on a merged pull request
+
+When the push is the merge of a pull request, Satori comments on that pull request with a link to the live output of the scan, as soon as the scan starts running. This includes the pull request that adds the repository's `.satori.yml`.
+
+- The report becomes visible to the repository's contributors only ([`CONTRIBUTORS`](../../getting-started/execution-data.md#sharing-with-contributors)), whatever visibility it had. A contributor opens the link while logged in to Satori with their GitHub account.
+- The comment is posted once per report.
+- Nothing is posted, and the visibility does not change, when GitHub cannot tell which single pull request the commit came from, when it cannot list the repository's contributors, or when the GitHub App lacks the **Pull requests** write permission. The scan still runs.

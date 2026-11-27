@@ -34,10 +34,16 @@ The **Repos** page of the dashboard can add a `.satori.yml` to a repository that
 3. Select the playbooks and confirm. Satori opens a pull request on the branch `satori/add-playbooks` (with a random suffix if that branch already exists) that adds a root `.satori.yml` importing them:
 
 ```yaml
+settings:
+  cpu: 8192
+  memory: 16384
+
 import:
   - satori://code/trufflehog.yml
   - satori://code/python/pyspector.yml
 ```
+
+The `cpu` and `memory` settings apply on the PRO and ENTERPRISE plans. On the COMMUNITY plan they are ignored and the scan runs with the default resources.
 
 Once merged, the [GitHub Application](modes/ci/github.md) runs it on every push to the default branch. The reports go to the account or organization that you had selected when you opened the pull request; see [What a push runs](modes/ci/github.md#what-a-push-runs).
 

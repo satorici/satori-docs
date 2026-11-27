@@ -18,7 +18,7 @@ You can also open a shell **inside the container of an execution that is current
 satori-v2 shell EXECUTION-ID
 ```
 
-The execution ID is the one shown by `satori-v2 run`, `satori-v2 reports` or `satori-v2 report ID`. The container options below do not apply in this case, since the container already exists.
+The execution ID is the one shown by `satori-v2 run`, `satori-v2 reports` or `satori-v2 report ID`. The container options below do not apply in this case, since the container already exists. The execution must belong to the account or organization you are acting on: another account's execution is refused even when its report is public.
 
 ## Options
 

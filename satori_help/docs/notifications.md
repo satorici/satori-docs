@@ -70,7 +70,7 @@ satori-v2 settings KEY
 
 **Notify keys:** `default`, `email`, `slack_workspace`, `slack_channel`, `discord`, `telegram`
 
-**Other keys:** `github`, `ai.provider`, `ai.model_id`, `ai.anthropic`, `ai.openai`, `ai.openrouter`
+**Other keys:** `name`, `github`, `ai.provider`, `ai.model_id`, `ai.anthropic`, `ai.openai`, `ai.openrouter`, `fix_prs`
 
 ### Set a notify value
 
@@ -109,7 +109,16 @@ satori-v2 settings ai.provider --clear
 satori-v2 settings ai.anthropic --clear
 ```
 
-Setting `ai.provider` picks a default model from the provider’s allowed list when the current model is not valid for that provider. Clear `ai.model_id` by clearing `ai.provider` instead.
+The models you can select are the ones the provider itself lists: for Anthropic and OpenAI, the models your stored API key can use, so store the key first; for OpenRouter, its public list. A model outside that list is rejected. Setting `ai.provider` picks a default model from that list when the current model is not valid for that provider. Clear `ai.model_id` by clearing `ai.provider` instead.
+
+```sh
+# Profile name and automatic fix pull requests
+satori-v2 settings name "Ada Lovelace"
+satori-v2 settings fix_prs true
+satori-v2 settings fix_prs --clear
+```
+
+`fix_prs` is `true` or `false`; see [Automatic fix pull requests](issues.md#automatic-fix-pull-requests).
 
 ## Saved parameters and secrets
 

@@ -55,9 +55,26 @@ The console script is named `satori-v2` so it can coexist with the v1 `satori` C
 
 To use Satori-CI, you need to get your API Token. Follow these steps:
 
-1. Log in to the Satori website [https://satori.ci/login](https://satori.ci/login).
-2. Navigate in the Satori CI website to your Profile.
-3. Copy your API Token.
+1. Log in to the [dashboard](https://dashboard.satori.ci).
+2. Open **API tokens** in the sidebar and create a token: give it a name, the access it needs and an expiration.
+3. Copy the token (it starts with `sat_`). It is shown only once.
+
+A token only does what its scopes allow. Each resource has a `read` scope, which lists and shows, and a `write` scope, which does everything else:
+
+| Resource | Scopes | Write lets the token |
+| --- | --- | --- |
+| Jobs | `jobs:read`, `jobs:write` | Run, schedule, stop and delete jobs |
+| Reports | `executions:read`, `executions:write` | Stop, delete and share reports |
+| Findings | `findings:read`, `findings:write` | Triage, comment and request AI fixes |
+| Advisories | `advisories:read`, `advisories:write` | Create, publish and delete advisories |
+| Repositories | `repos:read`, `repos:write` | Open playbook pull requests |
+| SSH | `ssh:read`, `ssh:write` | Open sessions (`read` connects to a running execution) |
+| Settings | `settings:read`, `settings:write` | Change settings and saved parameters and secrets |
+| Organizations | `organizations:read`, `organizations:write` | Create, rename and delete organizations and manage members |
+
+For everyday CLI use, check both boxes of the **All resources** row. A token expires after 7, 30, 90 (the default) or 365 days, or never. It can be limited to one [organization](../organizations.md), and then it only acts on that one. Tokens are created and revoked only in the dashboard: a token cannot create another. A command that needs a scope the token lacks is refused.
+
+An API token from the v1 Profile page at [satori.ci](https://satori.ci/login) still works.
 
 **Step 3: Configure Satori-CI**
 

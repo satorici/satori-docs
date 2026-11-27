@@ -90,6 +90,8 @@ satori-v2 report V1StGXR8Z5jdHi6BmyT2k stop
 
 `satori-v2 execution stop ID` does the same. Stopping is asynchronous: the report moves to `CANCELED` once its container is torn down, so check it with `satori-v2 report ID`.
 
+You can stop and delete your own reports on any plan. Stopping or deleting a report of another member of the organization needs a PRO or ENTERPRISE plan, and a report of another account cannot be changed even when it is public.
+
 To stop whole jobs instead of a single report:
 
 | Command | Description |

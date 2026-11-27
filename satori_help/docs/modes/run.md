@@ -228,6 +228,8 @@ The following file/data flags are not available yet in CLI v2. The v1 syntax is 
 
 **Note:** when `--count` is greater than 1 and you also pass `--output` or `--live-output`, the CLI prints a warning and only the output of the **first** execution is shown. With `--report`, a summary table of all executions is shown instead of a single report.
 
+`--cpu` and `--memory` need a PRO or ENTERPRISE plan; `--image` works on any plan. On the COMMUNITY plan the flags are rejected, and the `cpu`, `memory` and `storage` of the playbook `settings` are ignored, so the playbook still runs with the default resources.
+
 CLI flags take precedence over the values defined in the playbook `settings:` section (`cpu`, `memory`, `image`, `timeout`). `--notify` replaces playbook `settings.notify` entirely when provided (it does not merge). See [Notifications](../notifications.md#playbook-settings).
 
 ::: warning On development
